@@ -6,9 +6,9 @@ if path not in sys.path:
 import numpy as np
 import networkx as nx
 import math
-from PDClass import PDClass
+from src.BackgroundDistributions.PDClass import PDClass
 ##################################################################################################################################################################
-class UniDistSimple(PDCLass):
+class UniDistSimple(PDClass):
     def __init__(self, G):
         super().__init__(G)
         self.findDistribution()
@@ -39,11 +39,11 @@ class UniDistSimple(PDCLass):
     def getExpectationFromExpLambda(self, a):
         return a/(1+a)
 ###################################################################################################################################################################
-	def getExpectation(self, i, j, **kwargs):
-		kwargs['isSimple'] = True
-		p = self.getPOS(i, j, **kwargs)
-		E = self.getExpectationFromPOS(p)
-		return E
+    def getExpectation(self, i, j, **kwargs):
+        kwargs['isSimple'] = True
+        p = self.getPOS(i, j, **kwargs)
+        E = self.getExpectationFromPOS(p)
+        return E
 ##################################################################################################################################################################
     def explambda(self, i, j):
         expL = math.exp(self.la)*math.exp(self.la)

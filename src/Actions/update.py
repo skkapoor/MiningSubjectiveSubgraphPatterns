@@ -16,67 +16,194 @@ from src.Utils.Measures import computeDescriptionLength, computeInterestingness
 from src.Patterns.Pattern import Pattern
 
 class EvaluateUpdate:
-    # Now this data structure should contain all the possible removals
-    # along with pattern number as key and Information Gain and list of nodes as value
-    def __init__(self, gtype='U', isSimple=True, l=6):
+    """
+    This data structure shall contain all the possible updates
+    along with pattern number as key and other parameters as value
+    """
+    def __init__(self, gtype='U', isSimple=True, l=6, imode=2):
+        """
+        initialization function
+
+        Parameters
+        ----------
+        gtype : str, optional
+            Input Graph type, 'U': Undirected, 'D': Directed, by default 'U'
+        isSimple : bool, optional
+            if input graph is a simple graph then True else False if it is a multigraph, by default True
+        l : int, optional
+            Total number of unique action types that can be performed, by default 6
+        imode : int, optional
+            Interestingness mode--- 1: fraction, 2: Difference, by default 2
+        """
         self.Data = dict()
         self.gtype = gtype
         self.isSimple = isSimple
         self.l = l # possible types (give number) of action, default is 6
+        self.imode = imode
         print('initialized EvaluateUpdate')
 
     def evaluateAllConstraints(self, G, PD):
+        """
+        function to evaluate all constraints and make a list of candidate constraints which are feasible to update
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background distribution
+        """
         self.Data = dict()
         for i in PD.lprevUpdate.keys():
             self.evaluateConstraint(G, PD, i)
         return
 
-    def evaluateConstraint(self, G, PD, i):
+    def evaluateConstraint(self, G, PD, id):
+        """
+        function to evaluate if a constraint is a feasible candidate for update
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        id : int
+            identifier of a constraint to be evaluated
+        """
         if self.gtype == 'U':
-            NL = PD.lprevUpdate[i][1]
+            NL = PD.lprevUpdate[id][1]
             H = G.subgraph(NL)
-            nlambda = PD.updateDistribution( H, idx=None, val_retrun='return', case=3, dropLidx=[i] ) #// ToDo: Add code to coumpute new lambda
+            P = Pattern(H)
+            Params = dict()
+            Params['Pat'] = Pattern(H)
+            nlambda = PD.updateDistribution( Params['Pat'].G, idx=None, val_retrun='return', case=3, dropLidx=[id] ) #// ToDo: Add code to coumpute new lambda
+            Params['codeLengthC'] = getCodeLengthParallel( Params['Pat'].G, PD, NL=Params['Pat'].NL, case=2, isSimple=self.isSimple, gtype=self.gtype ) #now case is 1 as none of teh lambdas shall be removed
+            Params['codeLengthCprime'] = getCodeLengthParallel( Params['Pat'].G, PD, NL=Params['Pat'].NL, case=5, dropLidx=[id], nlambda=nlambda, isSimple=self.isSimple, gtype=self.gtype )  #now case is 4 as one lambda is to be dropped to compute new codelength
+            Params['Pat'].setIC_dssg( Params['codeLengthC'] - Params['codeLengthCprime'] )
+            Params['Pat'].setDL( computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), W=Params['Pat'].NCount, l=self.l, excActionType=False, kws=Params['Pat'].kws, isSimple=self.isSimple ) )
+            Params['Pat'].setI( computeInterestingness( Params['Pat'].IC_dssg, Params['Pat'].DL, mode=self.imode) )
 
-            codeLengthC = getCodeLengthParallel(G, PD, NL=NL, case=2, isSimple=self.isSimple, gtype=self.gtype) #now case is 1 as none of teh lambdas shall be removed
-            codeLengthCprime = getCodeLengthParallel(G, PD, NL=NL, case=5, dropLidx=[i], nlambda=nlambda, isSimple=self.isSimple, gtype=self.gtype)  #now case is 4 as one lambda is to be dropped to compute new codelength
-
-            IC = codeLengthC - codeLengthCprime
-            DL = computeDescriptionLength(dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), W=len(NL), l=self.l, excActionType=False)
-            IG = computeInterestingness(IC, DL, mode=2)
-
-            if IG > 0:
-                H = G.subgraph(NL)
-                P = Pattern(H)
-                P.setIC_dssg(IC)
-                P.setDL(DL)
-                P.setI(IG)
-                P.setPrevOrder(i)
-                P.setPatType('Update')
-                P.setLambda(nlambda)
-                self.Data[i] = P
+            if Params['Pat'].I > 0:
+                Params['Pat'].setPrevOrder(id)
+                Params['Pat'].setPatType('update')
+                Params['Pat'].setLambda(nlambda)
+                self.Data[id] = Params
         else:
-            inNL = PD.lprevUpdate[i][1]
-            outNL = PD.lprevUpdate[i][2]
-
+            inNL = PD.lprevUpdate[id][1]
+            outNL = PD.lprevUpdate[id][2]
             HD = getDirectedSubgraph( G, inNL, outNL, self.isSimple )
+            Params = dict()
+            Params['Pat'] = Pattern(HD)
+            nlambda = PD.updateDistribution( Params['Pat'].G, idx=None, val_retrun='return', case=3, dropLidx=[id] ) #// ToDo: Add code to coumpute new lambda
+            Params['codeLengthC'] = getCodeLengthParallel(Params['Pat'].G, PD, inNL=Params['Pat'].inNL, outNL=Params['Pat'].outNL, case=1, isSimple=self.isSimple, gtype=self.gtype) #now case is 1 as none of teh lambdas shall be removed
+            Params['codeLengthCprime'] = getCodeLengthParallel(Params['Pat'].G, PD, inNL=Params['Pat'].inNL, outNL=Params['Pat'].outNL, case=5, dropLidx=[id], nlambda=nlambda, isSimple=self.isSimple, gtype=self.gtype)  #now case is 4 as one lambda is to be dropped to compute new codelength
+            Params['Pat'].setIC_dssg( Params['codeLengthC'] - Params['codeLengthCprime'] )
+            Params['Pat'].setDL( computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), WI=Params['Pat'].inNL, WO=Params['Pat'].outNL, l=self.l, excActionType=False, kws=Params['Pat'].kws, isSimple=self.isSimple ) )
+            Params['Pat'].setI( computeInterestingness( Params['Pat'].IC_dssg, Params['Pat'].DL, mode=self.imode) )
 
-            nlambda = PD.updateDistribution( HD, idx=None, val_retrun='return', case=3, dropLidx=[i] ) #// ToDo: Add code to coumpute new lambda
+            if Params['Pat'].I > 0:
+                Params['Pat'].setPrevOrder(id)
+                Params['Pat'].setPatType('update')
+                Params['Pat'].setLambda(nlambda)
+                self.Data[id] = Params
+        return
 
-            codeLengthC = getCodeLengthParallel(G, PD, inNL=inNL, outNL=outNL, case=1, isSimple=self.isSimple, gtype=self.gtype) #now case is 1 as none of teh lambdas shall be removed
-            codeLengthCprime = getCodeLengthParallel(G, PD, inNL=inNL, outNL=outNL, case=5, dropLidx=[i], nlambda=nlambda, isSimple=self.isSimple, gtype=self.gtype)  #now case is 4 as one lambda is to be dropped to compute new codelength
+    def updateConstraintEvaluation(self, G, PD, id, condition=1):
+        """
+        function to now evaluate and update a possible candidate
 
-            IC = codeLengthC - codeLengthCprime
-            DL = computeDescriptionLength(dlmode=4, gtype=self.gtype, C=len(PD.lprevUpdate), WI=inNL, WO=outNL, l=self.l, excActionType=False)
-            IG = computeInterestingness(IC, DL, mode=2)
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        id : int
+            identifier of candidate to the updated
+        condition : int, optional
+            1 if codelength does not changes, else 2, by default 1
+        """
+        if condition == 1:
+            if self.gtype == 'U':
+                DL = computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), W=self.Data[id]['Pat'].NCount, l=self.l, excActionType=False, kws=self.Data[id]['Pat'].kws, isSimple=self.isSimple )
+                IG = computeInterestingness( self.Data[id]['Pat'].IC_dssg, DL, mode=2 )
+                self.Data[id]['Pat'].setDL(DL)
+                self.Data[id]['Pat'].setI(IG)
+            else:
+                DL = computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), WI=self.Data[id]['Pat'].inNL, WO=self.Data[id]['Pat'].outNL, l=self.l, excActionType=False, kws=self.Data[id]['Pat'].kws, isSimple=self.isSimple )
+                IG = computeInterestingness( self.Data[id]['Pat'].IC_dssg, DL, mode=2 )
+                self.Data[id]['Pat'].setDL(DL)
+                self.Data[id]['Pat'].setI(IG)
+        elif condition == 2:
+            self.evaluateConstraint(G, PD, id)
+        return
 
-            if IG > 0:
-                H = getDirectedSubgraph(G, inNL, outNL, isSimple=self.isSimple)
-                P = Pattern(H)
-                P.setIC_dssg(IC)
-                P.setDL(DL)
-                P.setI(IG)
-                P.setPrevOrder(i)
-                P.setPatType('Update')
-                P.setLambda(nlambda)
-                self.Data[i] = P
+    def checkAndUpdateAllPossibilities(self, G, PD, prevPat):
+        """
+        function to update the parameters associated to each possible candidates
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background distribution
+        prevPat : Pattern
+            Pattern  corresponding to the previously performed action. Note that this pattern shall contains the set of nodes that are involved in previous action, 
+            both as prior and posterior
+        """
+        if self.gtype == 'U':
+            for k,v in self.Data.items():
+                if len(set(v['Pat'].NL).intersection(set(prevPat.NL))) > 1:
+                    self.updateConstraintEvaluation(G, PD, k, 2)
+                else:
+                    self.updateConstraintEvaluation(G, PD, k, 1)
+        else:
+            for k,v in self.Data.items():
+                inInt = len(set(v['Pat'].inNL).intersection(set(prevPat.inNL)))
+                outInt = len(set(v['Pat'].outNL).intersection(set(prevPat.outNL)))
+                if inInt > 1 and outInt > 1:
+                    self.updateConstraintEvaluation(G, PD, k, 2)
+                else:
+                    self.updateConstraintEvaluation(G, PD, k, 1)
+        return
+
+    def getBestOption(self):
+        """
+        function to return the best candidate to update
+
+        Returns
+        -------
+        dict
+            dictionary containing a Pattern, and the two corresponding codelength associated to the pattern, i.e., prior and posterior to performing update action.
+        """
+        if len(self.Data) < 1:
+            return None
+        else:
+            bestR = max(self.Data.items(), key=lambda x: x[1]['Pat'].I)
+            return bestR[1]
+
+    def updateDistribution(self, PD, bestU):
+        """
+        function to update background distribution.
+        * Now here we remove the knowledge of pervious pattern which is now updated and add the knowledge of pattern which is the result of update
+        * hence we remove the previous lambda associated with the pattern and add a new lambda for updated pattern
+
+        Parameters
+        ----------
+        PD : PDClass
+            Background distribution
+        bestM : Pattern
+            last update pattern
+        """
+        if bestU.prev_order in self.Data: #? Removing the candidate from potential list
+            del self.Data[bestU['Pat'].prev_order]
+        else:
+            print('Trying to remove key:{} in merge Data but key not found'.format(bestU['Pat'].prev_order))
+        out = PD.lprevUpdate.pop(bestU['Pat'].prev_order, None)
+        if out is None:
+            print('Something is fishy')
+        else:
+            PD.updateDistribution( bestU['Pat'].G, idx=bestU['Pat'].cur_order, val_retrun='save', case=2 )
         return

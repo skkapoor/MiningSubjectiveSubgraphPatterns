@@ -915,7 +915,7 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
     return bestPattern, candidatesIn, candidatesOut, operation
 ##################################################################################################################################################################
 @ray.remote
-def searchPattern(seed, G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
+def searchPattern(seed, G, PD, q, mode, gtype, isSimple, incEdge):
     """function to search for a pattern starting from a given seed subgraph
 
     Args:
@@ -1030,13 +1030,31 @@ def findBestPattern(G, PD, q, seedMode, nKseed, mode = 1, gtype = 'U', isSimple=
     Gid = ray.put(G)
     PDid = ray.put(PD)
 
-    Results = ray.get([searchPattern.remote(seed, Gid, PDid, q, seedMode, nKseed, mode, gtype, isSimple, incEdge) for seed in seedNodes])
+    Results = ray.get([searchPattern.remote(seed, Gid, PDid, q, mode, gtype, isSimple, incEdge) for seed in seedNodes])
     print('res length', len(Results))
-    for rs in Results:
-        print(rs.I, rs.NCount)
     bestPattern = max(Results, key=lambda x: x.I)
 
     return bestPattern
+##################################################################################################################################################################
+def runNKseeds(G, PD, q, seedMode, nKseed, mode = 1, gtype = 'U', isSimple=True, incEdge = False):
+    seedNodes = getSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge)
+
+    Gid = ray.put(G)
+    PDid = ray.put(PD)
+
+    Results = ray.get([searchPattern.remote(seed, Gid, PDid, q, mode, gtype, isSimple, incEdge) for seed in seedNodes])
+    print('res length', len(Results))
+
+    return Results
+##################################################################################################################################################################
+def runGivenSeeds(G, PD, q, seedNodes, mode = 1, gtype = 'U', isSimple=True, incEdge = False):
+    Gid = ray.put(G)
+    PDid = ray.put(PD)
+
+    Results = ray.get([searchPattern.remote(seed, Gid, PDid, q, mode, gtype, isSimple, incEdge) for seed in seedNodes])
+    print('res length', len(Results))
+
+    return Results
 ##################################################################################################################################################################
 ##################################################################################################################################################################
 ##################################################################################################################################################################

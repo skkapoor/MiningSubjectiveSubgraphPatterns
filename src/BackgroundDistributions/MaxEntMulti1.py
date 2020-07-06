@@ -1,7 +1,12 @@
 import numpy as np
 import networkx as nx
 import math
-from PDClass import PDClass
+import os
+import sys
+path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
+if path not in sys.path:
+	sys.path.append(path)
+from src.BackgroundDistributions.PDClass import PDClass
 ###################################################################################################################################################################
 class MaxEntMulti1U(PDClass):
     def __init__(self, G = None):
@@ -90,11 +95,11 @@ class MaxEntMulti1U(PDClass):
     def getExpectationFromPOS(self, a):
         return (1-a)/a
 ###################################################################################################################################################################
-	def getExpectation(self, i, j, **kwargs):
-		kwargs['isSimple'] = False
-		p = self.getPOS(i, j, **kwargs)
-		E = self.getExpectationFromPOS(p)
-		return E
+    def getExpectation(self, i, j, **kwargs):
+        kwargs['isSimple'] = False
+        p = self.getPOS(i, j, **kwargs)
+        E = self.getExpectationFromPOS(p)
+        return E
 ###################################################################################################################################################################
     def explambda(self, i, j):
         expL = math.exp(self.la[self.jrows[i]]/2)*math.exp(self.la[self.jrows[j]]/2)

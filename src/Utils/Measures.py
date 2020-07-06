@@ -197,15 +197,27 @@ def DL_Nodes(V, W, q):
     dl = W * incCost + excCost
     return dl
 ##################################################################################################################################################################
-def DL_Edges(nw, kw, isSimple=True, kws=None, delta=None):
-    """function to encode the number of edges in a subgraph
+def DL_Edges(nw, kw, isSimple=True, kws=None, delta=2):
+    """
+    function to encode the number of edges in a subgraph
 
-    Args:
-        nw (int): Maximum possible edges in a simple graph or maximum number of feasible vertex-pair in simple or multigraph
-        kw (int): Number of edges in simple graph pattern or number of vertex-pair in a multigraph connected with each other by atleast one edge
+    Parameters
+    ----------
+    nw : int
+        Maximum possible edges in a simple graph or maximum number of feasible vertex-pair in simple or multigraph
+    kw : int
+        Number of edges in simple graph pattern or multigraph pattern
+    isSimple : bool, optional
+        True if Graph is a simple graph else false for multigraph, by default True
+    kws : int, optional
+        number of vertex-pair in a multigraph connected with each other by atleast one edge, by default None
+    delta : int, optional
+        accuracy to delta decimal points, by default 2
 
-    Returns:
-        float: number of bits required to communicate this information to the user
+    Returns
+    -------
+    float
+        number of bits required to communicate this information to the user
     """
     dl = 0
     if isSimple:
@@ -511,7 +523,7 @@ def computeDescriptionLength(**kwargs):
             DL += DL_Nodes(kwargs['V'], kwargs['WI'], kwargs['q']) ## encoding inNodes in pattern
             DL += DL_Nodes(kwargs['V'], kwargs['WO'], kwargs['q']) ## encoding outNodes in pattern
         return DL
-    elif dlmode == 2 or dlmode ==3: #add action
+    elif dlmode == 2 or dlmode == 3: #add action
         DL = 0.0
         nw = 0
         assert 'kw' in kwargs, "kw is not provided"
