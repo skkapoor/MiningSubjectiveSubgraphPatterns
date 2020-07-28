@@ -21,7 +21,7 @@ class EvaluateSplit:
     This data structure shall contain all the possible splits
     along with pattern number as key and other parameters as value
     """
-    def __init__(self, gtype='U', isSimple=True, l=6, imode=2):
+    def __init__(self, gtype='U', isSimple=True, l=6, imode=2, minsize=2):
         """
         initialization function
 
@@ -41,6 +41,7 @@ class EvaluateSplit:
         self.isSimple = isSimple
         self.l = l # possible types (give number) of action, default is 6
         self.imode = imode
+        self.minsize = minsize
         print('initialized EvaluateSplit')
 
     def evaluateAllConstraints(self, G, PD):
@@ -117,6 +118,7 @@ class EvaluateSplit:
             baseParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - baseParams['codeLengthCprime'] )
             baseParams['Pat'].setDL( computeDescriptionLength( case=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, compos=baseParams['compos'], isSimple=self.isSimple ) )
             baseParams['Pat'].setI( computeInterestingness( baseParams['Pat'].IC_dssg, baseParams['Pat'].DL, mode=2 ) )
+            baseParams['Pat'].setPatType('split')
 
             #now try reducing each component
             FinalParams = baseParams
@@ -291,7 +293,7 @@ class EvaluateSplit:
         float
             commputed codelength
         """
-        codeLength = 0.0
+        codelength = 0.0
         if condition == 1:
             codelength = getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=Params['Pat'].NL )
             return codelength
@@ -358,6 +360,7 @@ class EvaluateSplit:
             baseParams['outNodesInc'] = 0
             compPats = dict()
             in_nodes_union = set()
+            out_nodes_union = set()
             for k,v in fcomponents.items():
                 compPats[k] = Pattern(v)
                 baseParams['inNodesInc'] += compPats[k].InNCount
@@ -372,6 +375,7 @@ class EvaluateSplit:
             baseParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - baseParams['codeLengthCprime'] )
             baseParams['Pat'].setDL( computeDescriptionLength( case=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, compos=baseParams['compos'], isSimple=self.isSimple ) )
             baseParams['Pat'].setI( computeInterestingness( baseParams['Pat'].IC_dssg, baseParams['Pat'].DL, mode=2 ) )
+            baseParams['Pat'].setPatType('split')
 
             #now try reducing each component
             FinalParams = baseParams
@@ -598,7 +602,7 @@ class EvaluateSplit:
         float
             commputed codelength
         """
-        codeLength = 0.0
+        codelength = 0.0
         if condition == 1:
             codelength = getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=Params['Pat'].inNL, outNL=Params['Pat'].outNL )
             return codelength

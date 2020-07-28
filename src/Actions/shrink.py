@@ -131,6 +131,7 @@ class EvaluateShrink:
             FinalParams['Pat'] = baseParams['Pat'].copy()
             if bestParams['Pat'].I > FinalParams['SPat'].I:
                 FinalParams['Pat'].setPrevOrder(id)
+                FinalParams['Pat'].setPatType('shrink')
                 FinalParams['SPat'].setPrevOrder(id)
                 FinalParams['SPat'].setPatType('shrink')
                 self.Data[id] = FinalParams
@@ -277,6 +278,7 @@ class EvaluateShrink:
             FinalParams['Pat'] = baseParams['Pat'].copy()
             if bestParams['Pat'].I > FinalParams['SPat'].I:
                 FinalParams['Pat'].setPrevOrder(id)
+                FinalParams['Pat'].setPatType('shrink')
                 FinalParams['SPat'].setPrevOrder(id)
                 FinalParams['SPat'].setPatType('shrink')
                 self.Data[id] = FinalParams
@@ -552,7 +554,7 @@ class EvaluateShrink:
 
     def getBestOption(self):
         """
-        function to return the best candidate to split
+        function to return the best candidate to shrink
 
         Returns
         -------

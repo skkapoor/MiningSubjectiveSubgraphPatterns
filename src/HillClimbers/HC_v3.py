@@ -25,6 +25,7 @@ import time
 def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
     # G = Gid
     # PD = ray.get(PDid)
+    interestValue = None
     curlist = list(set(Gid.neighbors(LNit)).union(set([LNit])))
     H = Gid.subgraph(curlist)
     if len(curlist)>1:
@@ -50,6 +51,7 @@ def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
 def computeInterestParallelD(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
     # G = Gid
     # PD = ray.get(PDid)
+    interestValue = None
     curlistOut = list(set(Gid.predecessors(LNit)).union(set([LNit])))
     curlistIn = list(set(Gid.successors(LNit)).union(set([LNit])))
     H = getDirectedSubgraph(Gid, curlistIn, curlistOut, isSimple)
@@ -452,6 +454,7 @@ class HillClimber_v3:
         best_params = dict()
         best_params['I'] = pattern.I
         best_node = None
+        bestPattern = None
 
         best_node, best_params = self.extendPatternUtil(pattern, candidates)
 
@@ -808,7 +811,7 @@ class HillClimber_v3:
             #First remove irrelevant keys in IN candidate list
             inNeighbor = list(self.G.successors(best_node))
             for iN in inNeighbor:
-                if len(set(self.G.predecessors(oN)).intersection(bestPattern.outNL)) == 0:
+                if len(set(self.G.predecessors(iN)).intersection(bestPattern.outNL)) == 0:
                     if iN in candidatesIn:
                         del candidatesIn[iN]
             #update rest of the keys
@@ -962,7 +965,7 @@ class HillClimber_v3:
                     term = True
         else:
             candidatesIn = dict()
-            candidateOut = dict()
+            candidatesOut = dict()
             if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
                 for u in list(self.G.successors(seed)):
                     candidatesIn[u] = dict()

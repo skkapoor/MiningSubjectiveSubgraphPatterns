@@ -16,9 +16,9 @@ from src.Utils.Measures import computeDescriptionLength, computeInterestingness
 from src.Patterns.Pattern import Pattern
 from src.HillClimbers.HC_v4 import findBestPattern, runNKseeds, runGivenSeeds, getSeeds
 
-class EvaluateRemove:
+class EvaluateAdd:
     """
-    This data structure shall contain all the possible removal candidates
+    This data structure shall contain all the possible addition candidates
     along with pattern number as key and other information as value
     """
     def __init__(self, gtype='U', isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType='interest', seedRuns=10, q=0.01, incEdges=False):
@@ -94,16 +94,17 @@ class EvaluateRemove:
                 nlambda = PD.updateDistribution(bestPattern.G, None, 'return', 2, None)
                 codeLengthC = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple)
                 codeLengthCprime = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
-                DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=bestPattern.NCount, kw=bestPattern.ECount, q=q, isSimple=isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
+                DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=bestPattern.NCount, kw=bestPattern.ECount, q=self.q, isSimple=self.isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
             else:
                 nlambda = PD.updateDistribution(bestPattern.G, None, 'return', 2, None)
                 codeLengthC = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple)
                 codeLengthCprime = getCodeLengthParallel(G, PD, inNL=bestPattern.inNL, outNL=bestPattern.outNL, case=2, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
-                DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=bestPattern.inNL, WO=bestPattern.outNL, kw=bestPattern.ECount, q=q, isSimple=isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
+                DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=bestPattern.inNL, WO=bestPattern.outNL, kw=bestPattern.ECount, q=self.q, isSimple=self.isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
             IC_dssg = codeLengthC - codeLengthCprime
             bestPattern.setIC_dssg(IC_dssg)
             bestPattern.setDL(DL)
             bestPattern.setI( computeInterestingness(bestPattern.IC_dssg, bestPattern.DL, mode=self.imode) )
+            bestPattern.setPatType('add')
             Params = dict()
             Params['Pat'] = bestPattern
             Params['codeLengthC'] = codeLengthC

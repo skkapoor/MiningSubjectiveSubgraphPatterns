@@ -353,6 +353,7 @@ class HillClimber_v1:
 		best_params = dict()
 		best_params['I'] = pattern.I
 		best_node = None
+		bestPattern = None
 
 		for cand in candidates:
 			cur = self.extendPatternUtil(pattern, cand)

@@ -28,13 +28,19 @@ class MaxEntMulti1U(PDClass):
         prows = self.degrees/n
         prowsunique,irows,self.jrows,vrows = np.unique(prows, return_index=True, return_inverse=True, return_counts=True)
         nunique = len(prowsunique)
+        bins = np.zeros(nunique)
+        if irows[0] == 1:
+            bins[0] == 1
+        for i in range(1, nunique):
+            if irows[i-1] == irows[i]-1:
+                bins[i] = 1
         self.la = -np.ones(nunique)
         h = np.zeros(nunique)
         nit = 1000
         tol = 1e-14
         self.errors = np.empty(0)
         ######################
-        lb = -5 
+        lb = -5
         for k in range(nit):
             E = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.la/2)),np.outer(np.exp(self.la/2), np.ones(nunique).T))
             ps = np.divide(E, 1-E)
@@ -53,6 +59,8 @@ class MaxEntMulti1U(PDClass):
             for f in np.logspace(lb,1,20):
                 latry=self.la+f*deltala
                 Etry = np.multiply(np.outer(np.ones(nunique).T, np.exp(latry/2)),np.outer(np.exp(latry/2), np.ones(nunique).T))
+                if np.max(np.max(Etry - np.diag(np.multiply(bins, np.diag(Etry))))) >= 1:
+                    break
                 pstry = np.divide(Etry, 1-Etry)
                 glatry = np.multiply(-n*prowsunique+np.dot(pstry, vrows)-np.diag(pstry), vrows)
                 errortry = np.linalg.norm(glatry)
@@ -72,7 +80,7 @@ class MaxEntMulti1U(PDClass):
 
         E = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.la/2)),np.outer(np.exp(self.la/2), np.ones(nunique).T))
         self.ps = np.divide(E, 1-E)
-        self.gla = np.multiply(-n*prowsunique+np.dot(ps, vrows)-np.diag(ps), vrows)
+        self.gla = np.multiply(-n*prowsunique+np.dot(self.ps, vrows)-np.diag(self.ps), vrows)
         self.errors = np.append(self.errors, np.linalg.norm(self.gla))
 ###################################################################################################################################################################
     def getAB(self):
@@ -90,14 +98,19 @@ class MaxEntMulti1U(PDClass):
         return a,b
 ###################################################################################################################################################################
     def getExpectationFromExpLambda(self, a):
+        if 1-a < 1e-10:
+            return 1e10
         return a/(1-a)
 ###################################################################################################################################################################
     def getExpectationFromPOS(self, a):
         return (1-a)/a
 ###################################################################################################################################################################
     def getExpectation(self, i, j, **kwargs):
-        kwargs['isSimple'] = False
+        if i==j:
+            return 0.0
         p = self.getPOS(i, j, **kwargs)
+        # if p < 1e-2:
+        #     print(i, j, p)
         E = self.getExpectationFromPOS(p)
         return E
 ###################################################################################################################################################################
@@ -253,6 +266,10 @@ class MaxEntMulti1D(PDClass):
         return a/(1-a)
 ###################################################################################################################################################################
     def getExpectationFromPOS(self, a):
+        if a < 1e-10:
+            a = 1e-10
+        if a > 1.0 - 1e-10:
+            a = 1.0 - 1e-10
         return (1-a)/a
 ###################################################################################################################################################################
     def getExpectation(self, i, j, **kwargs):

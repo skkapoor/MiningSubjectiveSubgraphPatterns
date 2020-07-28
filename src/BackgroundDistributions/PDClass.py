@@ -242,6 +242,7 @@ class PDClass:
             nlambda = kwargs['nlambda']
         if 'isSimple' in kwargs:
             isSimple = kwargs['isSimple']
+        expL = 0.0
         if case==1:
             #Original Exp Lambda
             expL = self.explambda(i, j)
@@ -256,7 +257,7 @@ class PDClass:
             #Adding one new Lambda
             expL *= math.exp(nlambda)
 
-        pos = 1 - expL
+        pos = 1.0 - expL
         if isSimple:
             pos = expL/(1+expL)
         return pos

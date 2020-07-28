@@ -435,6 +435,7 @@ class HillClimber_v2:
         best_params = dict()
         best_params['I'] = pattern.I
         best_node = None
+        bestPattern = None
 
         best_node, best_params = self.extendPatternUtil(pattern, candidates)
 
@@ -791,7 +792,7 @@ class HillClimber_v2:
             #First remove irrelevant keys in IN candidate list
             inNeighbor = list(self.G.successors(best_node))
             for iN in inNeighbor:
-                if len(set(self.G.predecessors(oN)).intersection(bestPattern.outNL)) == 0:
+                if len(set(self.G.predecessors(iN)).intersection(bestPattern.outNL)) == 0:
                     if iN in candidatesIn:
                         del candidatesIn[iN]
             #update rest of the keys
@@ -945,7 +946,7 @@ class HillClimber_v2:
                     term = True
         else:
             candidatesIn = dict()
-            candidateOut = dict()
+            candidatesOut = dict()
             if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
                 for u in list(self.G.successors(seed)):
                     candidatesIn[u] = dict()

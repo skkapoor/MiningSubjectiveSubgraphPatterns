@@ -69,7 +69,7 @@ class MaxEntSimpleU(PDClass):
 
 		E = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.la/2)),np.outer(np.exp(self.la/2), np.ones(nunique).T))
 		self.ps = np.divide(E, 1+E)
-		self.gla = np.multiply(-n*prowsunique+np.dot(ps, vrows)-np.diag(ps), vrows)
+		self.gla = np.multiply(-n*prowsunique+np.dot(self.ps, vrows)-np.diag(self.ps), vrows)
 		self.errors = np.append(self.errors, np.linalg.norm(self.gla))
 ###################################################################################################################################################################
 	def getAB(self):

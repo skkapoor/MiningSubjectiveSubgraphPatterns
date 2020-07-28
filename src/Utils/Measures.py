@@ -13,13 +13,38 @@ def KL(q, p):
     Returns:
         float: KL-divergence value
     """
+    t1 = 0.0
+    t2 = 0.0
     if p < 1e-10:
         p = 1e-10
     if p > 1 - 1e-10:
         p = 1-1e-10
     try:
-        t1 = 0.0 if q == 0.0 else q * math.log2(q / p)
-        t2 = 0.0 if q == 1.0 else (1 - q) * math.log2((1 - q) / (1 - p))
+        t1 = 0.0 if q == 0.0 else q * math.log(q / p)
+        t2 = 0.0 if q == 1.0 else (1 - q) * math.log((1 - q) / (1 - p))
+    except:
+        print('Math Domain Error', p, q)
+    return t1 + t2
+
+def KL_g(q, p):
+    """function to compute KL-divergence between two Bernoulli Distributions
+
+    Args:
+        q (float): probability of success of posterior distribution
+        p ([type]): probability of success of prior distribution
+
+    Returns:
+        float: KL-divergence value
+    """
+    t1 = 0.0
+    t2 = 0.0
+    if p < 1e-10:
+        p = 1e-10
+    if p > 1 - 1e-10:
+        p = 1-1e-10
+    try:
+        t1 = 0.0 if q == 0.0 else q * math.log(q / p)
+        t2 = 0.0 if q == 1.0 else (1 - q)/q * math.log((1 - q) / (1 - p))
     except:
         print('Math Domain Error', p, q)
     return t1 + t2
@@ -154,8 +179,11 @@ def IC_DSIMP(kw, nw, mu, p_):
     Returns:
         float: The information content (as per definition in DSIMP) of a multigraph pattern
     """
-    ic = p_ * ( kw - nw ) + p_ * ( mu + nw ) * math.log ((mu + nw) / (kw + nw))
-    return ic
+    # ic = p_ * ( kw - mu ) + p_ * ( mu + nw ) * math.log10 ((mu + nw) / (kw + nw))
+    eps = kw/nw
+    ps = 1.0/(eps+1.0)
+    ic = KL_g(ps, p_)
+    return ic*nw
 ##################################################################################################################################################################
 def IC_DSSG(CL_I, CL_F):
     """function to compute the information content of a pattern as proposed in DSSG, i.e., the gain in codelength of a model
@@ -204,13 +232,13 @@ def DL_Edges(nw, kw, isSimple=True, kws=None, delta=2):
     Parameters
     ----------
     nw : int
-        Maximum possible edges in a simple graph or maximum number of feasible vertex-pair in simple or multigraph
+        Maximum possible edges in a simple graph or maximum number of feasible vertex-pair in simple or multigraph\\
     kw : int
-        Number of edges in simple graph pattern or multigraph pattern
+        Number of edges in simple graph pattern or multigraph pattern\\
     isSimple : bool, optional
-        True if Graph is a simple graph else false for multigraph, by default True
+        True if Graph is a simple graph else false for multigraph, by default True\\
     kws : int, optional
-        number of vertex-pair in a multigraph connected with each other by atleast one edge, by default None
+        number of vertex-pair in a multigraph connected with each other by atleast one edge, by default None\\
     delta : int, optional
         accuracy to delta decimal points, by default 2
 
@@ -239,13 +267,13 @@ def computeSumOfEdgeProbablity(PD, **kwargs):
         PD (PDClass): Background distribution of the dataset, in this case it shall be a product of Bernoulli's distribution
 
     **kwargs:
-        gtype (str): 'D'-directed, 'U'-undirected
-        NL (list): list of nodes, required if graph is orginally undirected
-        inNL (list): list of inNodes, required if graph is originally directed
-        outNL (list): list of outNodes, required if graph is originally directed
-        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
-        dropLidx (int or list): index of lambda if required to be dropped, default is None
-        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        gtype (str): 'D'-directed, 'U'-undirected\\
+        NL (list): list of nodes, required if graph is orginally undirected\\
+        inNL (list): list of inNodes, required if graph is originally directed\\
+        outNL (list): list of outNodes, required if graph is originally directed\\
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2\\
+        dropLidx (int or list): index of lambda if required to be dropped, default is None\\
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0\\
         isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is True
 
     Returns:
@@ -330,7 +358,7 @@ def computeSumOfExpectations(PD, **kwargs):
         NL = kwargs['NL']
         for i in range(len(NL)-1):
             for j in range(i+1, len(NL)):
-                p = PD.getPOS(NL[i], NL[j], case, dropLidx, nlambda, isSimple)
+                p = PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
                 SumExpect += PD.getExpectation(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
     else:
         assert 'inNL' in kwargs, "inNL shall be provided if gtype is 'D'"
@@ -712,6 +740,7 @@ def computeSumOfEdgeProbablityBetweenNodeAndList(PD, node, NL, **kwargs):
     dropLidx = None
     nlambda = 0.0
     isSimple = True
+
     if 'case' in kwargs:
         case = kwargs['case']
     if 'dropLidx' in kwargs:
@@ -720,8 +749,8 @@ def computeSumOfEdgeProbablityBetweenNodeAndList(PD, node, NL, **kwargs):
         nlambda = kwargs['nlambda']
     if 'isSimple' in kwargs:
         isSimple = kwargs['isSimple']
-    if 'dir_mode' in kwargs:
-        dir_mode = kwargs['dir_mode']
+    assert 'dir_mode' in kwargs, 'dir_mode is required, it can be either 1 or 2'
+    dir_mode = kwargs['dir_mode']
 
     if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and dir_mode == 1):
         for i in NL:
@@ -768,8 +797,8 @@ def computeSumOfExpectationsBetweenNodeAndList(PD, node, NL, **kwargs):
         nlambda = kwargs['nlambda']
     if 'isSimple' in kwargs:
         isSimple = kwargs['isSimple']
-    if 'mode' in kwargs:
-        mode = kwargs['mode']
+    assert 'mode' in kwargs, 'mode is required, it can be either 1 or 2'
+    mode = kwargs['mode']
 
     if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and mode == 1):
         for i in NL:
@@ -816,8 +845,8 @@ def computeMinPOSBetweenNodeAndList(PD, node, NL, **kwargs):
         nlambda = kwargs['nlambda']
     if 'isSimple' in kwargs:
         isSimple = kwargs['isSimple']
-    if 'mode' in kwargs:
-        mode = kwargs['mode']
+    assert 'mode' in kwargs, 'mode is required, it can be either 1 or 2'
+    mode = kwargs['mode']
 
     if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and mode == 1):
         for i in NL:
@@ -865,19 +894,21 @@ def computePWparametersBetweenNodeAndList(PD, node, NL, **kwargs):
         nlambda = kwargs['nlambda']
     if 'isSimple' in kwargs:
         isSimple = kwargs['isSimple']
-    if 'mode' in kwargs:
-        mode = kwargs['mode']
+    assert 'mode' in kwargs, 'mode is requrired, it can be either 1 or 2'
+    mode = kwargs['mode']
 
     if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and mode == 1):
         for i in NL:
-            p = PD.getPOS(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
-            minp = min(minp, p)
-            SumExpect += PD.getExpectationFromPOS(p)
+            if i != node:
+                p = PD.getPOS(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                minp = min(minp, p)
+                SumExpect += PD.getExpectationFromPOS(p)
     else:
         for i in NL:
-            p = PD.getPOS(i, node, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
-            minp = min(minp, p)
-            SumExpect += PD.getExpectationFromPOS(p)
+            if i != node:
+                p = PD.getPOS(i, node, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                minp = min(minp, p)
+                SumExpect += PD.getExpectationFromPOS(p)
     return SumExpect, minp
 ##################################################################################################################################################################
 def getDirectedSubgraph(G, WI, WO, isSimple):
@@ -942,7 +973,7 @@ def getCodeLength(G, PD, **kwargs):
             outNL = kwargs['outNL']
             for v in inNL:
                 for u in outNL:
-                    if i != j:
+                    if u != v:
                         pos = PD.getPOS(u, v, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
                         numE = G.number_of_edges(u, v)
                         codelength += math.log2(math.pow(1.0-pos, 1.0-numE)*math.pow(pos, numE))
@@ -961,7 +992,7 @@ def getCodeLength(G, PD, **kwargs):
             outNL = kwargs['outNL']
             for v in inNL:
                 for u in outNL:
-                    if i != j:
+                    if u != v:
                         pos = PD.getPOS(u, v, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
                         numE = G.number_of_edges(u, v)
                         codelength += math.log2(math.pow(1.0-pos, numE)*pos)

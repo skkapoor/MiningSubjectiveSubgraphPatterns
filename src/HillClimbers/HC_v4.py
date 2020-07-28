@@ -29,6 +29,7 @@ def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
     # G = Gid
     # PD = ray.get(PDid)
     curlist = list(set(Gid.neighbors(LNit)).union(set([LNit])))
+    interestValue = -float('nan')
     H = Gid.subgraph(curlist)
     if len(curlist)>1:
         ic = 0.0
@@ -57,6 +58,7 @@ def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
 def computeInterestParallelD(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
     # G = Gid
     # PD = ray.get(PDid)
+    interestValue = None
     curlistOut = list(set(Gid.predecessors(LNit)).union(set([LNit])))
     curlistIn = list(set(Gid.successors(LNit)).union(set([LNit])))
     H = getDirectedSubgraph(Gid, curlistIn, curlistOut, isSimple)
@@ -126,6 +128,7 @@ def getSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
         interestList = []
         for ii in interestListids:
             interestList.append(tuple([ray.get(ii[0]), ray.get(ii[1])]))
+            # print([ray.get(ii[0]), ray.get(ii[1])])
         interestList = sorted(interestList, key=lambda kv: kv[1], reverse=True)
         mRange = min([nKseed, len(interestList)])
         seedNodes = [0]*mRange
@@ -149,6 +152,8 @@ def extendPatternUtil(pattern, candidates, G, PD, q, mode, gtype, isSimple, incE
     Returns:
         int, dict: best node id, dictionary of parameters cmputed for the input node
     """
+    if len(candidates) < 1:
+        return None, None
     best_node = None
     params = None
     ic = 0.0
@@ -171,16 +176,16 @@ def extendPatternUtil(pattern, candidates, G, PD, q, mode, gtype, isSimple, incE
             computeDescriptionLength( dlmode=dlmode, V=G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1]['kw_surplus'], q=q, kws=pattern.kws+x[1]['kws_surplus'], isSimple = isSimple ) ) )
         params['mu_w_new'] = pattern.expectedEdges + params['mu_w_surplus']
         params['kw_new'] = pattern.ECount + params['kw_surplus']
-        params['kws_new'] = pattern.ECount + params['kws_surplus']
+        params['kws_new'] = pattern.kws + params['kws_surplus']
         ic = AD(params['kw_new'], params['mu_w_new'])
         dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=pattern.NCount+1, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
     elif mode == 3:
-        best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_DSIMP( pattern.ECount+x[1]['kw_surplus'], NW(pattern.NCount+1), pattern.expectedEdges + x[1]['mu_w_surplus'], min(pattern.minPOS,x[1]['p0_surplus']) ),\
+        best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_DSIMP( pattern.ECount+x[1]['kw_surplus'], NW(pattern.NCount+1), pattern.expectedEdges + x[1]['mu_w_surplus'], min(pattern.minPOS, x[1]['p0_surplus']) ),\
             computeDescriptionLength( dlmode=dlmode, V=G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1]['kw_surplus'], q=q, kws=pattern.kws+x[1]['kws_surplus'], isSimple = isSimple ) ) )
         params['mu_w_new'] = pattern.expectedEdges + params['mu_w_surplus']
         params['p0_new'] = min(pattern.minPOS, params['p0_surplus'])
         params['kw_new'] = pattern.ECount + params['kw_surplus']
-        params['kws_new'] = pattern.ECount + params['kws_surplus']
+        params['kws_new'] = pattern.kws + params['kws_surplus']
         params['nw_new'] = NW(pattern.NCount+1)
         ic = IC_DSIMP(params['kw_new'], params['nw_new'], params['mu_w_new'], params['p0_new'])
         dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=pattern.NCount+1, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
@@ -189,6 +194,8 @@ def extendPatternUtil(pattern, candidates, G, PD, q, mode, gtype, isSimple, incE
     params['ic'] = ic
     params['dl'] = dl
     params['I'] = I
+
+    # print(best_node, params)
 
     return best_node, params
 ##################################################################################################################################################################
@@ -239,7 +246,7 @@ def shrinkPatternUtil(pattern, nodeToCheck, G, PD, q, mode, gtype, isSimple, inc
     for p in pattern.NL:
         kw_deficit  += G.number_of_edges(p, nodeToCheck)
         kws_deficit  += (G.number_of_edges(p, nodeToCheck)>0)
-    curNL = pattern.NL
+    curNL = pattern.NL[:]
 
     params = dict()
     ic = 0.0
@@ -264,6 +271,7 @@ def shrinkPatternUtil(pattern, nodeToCheck, G, PD, q, mode, gtype, isSimple, inc
     else:
         params['kw_new'] = pattern.ECount - kw_deficit
         params['kws_new'] = pattern.kws - kws_deficit
+        params['nw_new'] = NW(len(curNL)-1)
         params['mu_w_deficit'], params['p0_deficit'] = computePWparametersBetweenNodeAndList(PD, nodeToCheck, curNL, gtype=gtype, isSimple=isSimple)
         if pattern.minPOS == params['p0_deficit']:
             curNL.remove(nodeToCheck)
@@ -409,7 +417,7 @@ def climbOneStep(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge):
         # print('In climb one step')
         # print('\tSize of candidates: ', len(candidates))
         # print('\tBefore operation')
-        # print('\teP: ', pattern.sumPOS, 'interest: ', pattern.I)
+        # print('\teP: ', pattern.IC_dsimp, 'interest: ', pattern.I, pattern.NL)
 
         operation = 'none'
         nodeAddedFinal = None
@@ -419,6 +427,7 @@ def climbOneStep(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge):
         best_params = dict()
         best_params['I'] = pattern.I
         best_node = None
+        bestPattern = None
 
         best_node, best_params = extendPatternUtil(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge)
 
@@ -428,13 +437,16 @@ def climbOneStep(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge):
         #         best_params = cur.copy()
         #         best_node = cand
 
-        if best_params['I'] > pattern.I:
+        if best_params is not None and best_params['I'] > pattern.I:
             # print('Added', best_node)
             bestPattern = extendPatternFinal(pattern, best_node, best_params, G, PD, q, mode, gtype, isSimple, incEdge)
             nodeAddedFinal = best_node
             operation = 'addition'
 
         if 'none' in operation and pattern.NCount > 2:
+            best_params = dict()
+            best_params['I'] = pattern.I
+            best_node = None
             for cand in pattern.NL:
                 cur = shrinkPatternUtil(pattern, cand, G, PD, q, mode, gtype, isSimple, incEdge)
                 if best_params['I'] < cur['I']:
@@ -448,16 +460,18 @@ def climbOneStep(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge):
 
         # update candidate list now
         # print(operation, "\t", bestPattern.NL)
-
+        ndprint = None
         if 'addition' in operation:
             candidates = updateCandidateAddition(nodeAddedFinal, bestPattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge)
+            ndprint = nodeAddedFinal
 
         elif 'deletion' in operation:
             candidates = updateCandidateDeletion(nodeRemovedFinal, bestPattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge)
+            ndprint = nodeRemovedFinal
 
         # return relevant information
-        # print('\tAfter Operation ', operation)
-        # print('\tpw: ', pattern.sumPOS, 'interest: ', pattern.I)
+        # print('\tAfter Operation ', operation, ndprint)
+        # print('\tpw: ', pattern.IC_dsimp, 'interest: ', pattern.I, pattern.NL)
         return pattern, candidates, operation
 ##################################################################################################################################################################
 def extendPatternUtilD(pattern, candidates, dir_mode, G, PD, q, mode, gtype, isSimple, incEdge):
@@ -466,6 +480,8 @@ def extendPatternUtilD(pattern, candidates, dir_mode, G, PD, q, mode, gtype, isS
     # dir_mode (int): required id gtype is 'D"; 1 - from node to list (evaluating outnode) and 2 from list to node (evaluating innode)
 
     ######### Check in-node and out-node addition ############
+    if len(candidates) < 1:
+        return None, None
     best_node = None
     params = None
     ic = 0.0
@@ -496,7 +512,7 @@ def extendPatternUtilD(pattern, candidates, dir_mode, G, PD, q, mode, gtype, isS
             computeDescriptionLength( dlmode=dlmode, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1]['nw_surplus'], kw=pattern.ECount+x[1]['kw_surplus'], q=q, isSimple=isSimple, kws=pattern.kws+x[1]['kws_surplus'] ) ) )
         params['mu_w_new'] = pattern.expectedEdges + params['mu_w_surplus']
         params['kw_new'] = pattern.ECount + params['kw_surplus']
-        params['kws_new'] = pattern.ECount + params['kws_surplus']
+        params['kws_new'] = pattern.kws + params['kws_surplus']
         params['nw_new'] = pattern.nw + params['nw_surplus']
         ic = AD(params['kw_new'], params['mu_w_new'])
         dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params['nw_new'], kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
@@ -506,7 +522,7 @@ def extendPatternUtilD(pattern, candidates, dir_mode, G, PD, q, mode, gtype, isS
         params['mu_w_new'] = pattern.expectedEdges + params['mu_w_surplus']
         params['p0_new'] = min(pattern.minPOS, params['p0_surplus'])
         params['kw_new'] = pattern.ECount + params['kw_surplus']
-        params['kws_new'] = pattern.ECount + params['kws_surplus']
+        params['kws_new'] = pattern.kws + params['kws_surplus']
         params['nw_new'] = pattern.nw + params['nw_surplus']
         ic = IC_DSIMP(params['kw_new'], params['nw_new'], params['mu_w_new'], params['p0_new'])
         dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params['nw_new'], kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
@@ -801,7 +817,7 @@ def updateCandidateDeletionD(best_node, bestPattern, candidatesIn, candidatesOut
         #First remove irrelevant keys in IN candidate list
         inNeighbor = list(G.successors(best_node))
         for iN in inNeighbor:
-            if len(set(G.predecessors(oN)).intersection(bestPattern.outNL)) == 0:
+            if len(set(G.predecessors(iN)).intersection(bestPattern.outNL)) == 0:
                 if iN in candidatesIn:
                     del candidatesIn[iN]
         #update rest of the keys
@@ -853,8 +869,8 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
     bestOutNode, bestOutParams = extendPatternUtilD(pattern, candidatesOut, 1, G, PD, q, mode, gtype, isSimple, incEdge)
 
     #Perform best addition
-    if bestInParams['I'] > pattern.I or bestOutParams['I'] > pattern.I:
-        if bestInParams['I'] > bestOutParams['I']:
+    if (bestInParams is not None and bestInParams['I'] > pattern.I) or (bestOutParams is not None and bestOutParams['I'] > pattern.I):
+        if bestInParams is not None and (bestOutParams is None or bestInParams['I'] > bestOutParams['I']):
             bestPattern = extendPatternFinal(pattern, bestInNode, bestInParams, 'in', G, PD, q, mode, gtype, isSimple, incEdge)
             nodeAddedFinal = bestInNode
             operation = 'inaddition'
@@ -866,6 +882,13 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
 
     # If no extension, shrink pattern
     if 'none' in operation:
+        bestInParams = dict()
+        bestInParams['I'] = pattern.I
+        bestInNode = None
+
+        bestOutParams = dict()
+        bestOutParams['I'] = pattern.I
+        bestOutNode = None
         #Check all possible in-node removal
         if pattern.InNCount > 1:
             for node in pattern.inNL:
@@ -908,10 +931,10 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
             candidatesIn, candidateOut = updateCandidateDeletionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, 'out', G, PD, q, mode, gtype, isSimple, incEdge)
 
     # return relevant information
-    print('Best Pattern eP: ', bestPattern.sumPOS, 'interest: ', bestPattern.I)
+    # print('Best Pattern eP: ', bestPattern.sumPOS, 'interest: ', bestPattern.I)
     # print("inNL", bestPattern.inNL)
     # print("outNL", bestPattern.outNL)
-    print("Operation", operation, bestInNode, bestOutNode)
+    # print("Operation", operation, bestInNode, bestOutNode)
     return bestPattern, candidatesIn, candidatesOut, operation
 ##################################################################################################################################################################
 @ray.remote
@@ -960,7 +983,7 @@ def searchPattern(seed, G, PD, q, mode, gtype, isSimple, incEdge):
                 term = True
     else:
         candidatesIn = dict()
-        candidateOut = dict()
+        candidatesOut = dict()
         if mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
             for u in list(G.successors(seed)):
                 candidatesIn[u] = dict()
@@ -1013,7 +1036,8 @@ def searchPattern(seed, G, PD, q, mode, gtype, isSimple, incEdge):
             pattern, candidatesIn, candidatesOut, operation = climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, isSimple, incEdge)
             if 'none' in operation:
                 term = True
-
+        if pattern.NCount < 3 or (pattern.InNCount < 2 and pattern.OutNCount < 2):
+            pattern.I = 0.0
     #return pattern and other information
     return pattern
 ##################################################################################################################################################################
@@ -1031,9 +1055,10 @@ def findBestPattern(G, PD, q, seedMode, nKseed, mode = 1, gtype = 'U', isSimple=
     PDid = ray.put(PD)
 
     Results = ray.get([searchPattern.remote(seed, Gid, PDid, q, mode, gtype, isSimple, incEdge) for seed in seedNodes])
+    for r in Results:
+        print(r.IC_dsimp, r.DL, r.NCount, r.I, r.NL)
     print('res length', len(Results))
-    bestPattern = max(Results, key=lambda x: x.I)
-
+    bestPattern = max(Results, key=lambda x: x.NCount)
     return bestPattern
 ##################################################################################################################################################################
 def runNKseeds(G, PD, q, seedMode, nKseed, mode = 1, gtype = 'U', isSimple=True, incEdge = False):

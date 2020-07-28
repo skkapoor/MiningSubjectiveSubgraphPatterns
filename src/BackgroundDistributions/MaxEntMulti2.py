@@ -117,8 +117,8 @@ class MaxEntMulti2U(PDClass):
 		self.ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
 		self.ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
 
-		gla_la = np.multiply(-prowsunique[:,0]+np.dot(ps_la, vrows)-np.diag(ps_la), vrows)
-		gla_mu = np.multiply(-prowsunique[:,1]+np.dot(ps_mu, vrows)-np.diag(ps_mu), vrows)
+		gla_la = np.multiply(-prowsunique[:,0]+np.dot(self.ps_la, vrows)-np.diag(self.ps_la), vrows)
+		gla_mu = np.multiply(-prowsunique[:,1]+np.dot(self.ps_mu, vrows)-np.diag(self.ps_mu), vrows)
 
 		self.gla = np.append(gla_la, gla_mu)
 		self.errors = np.append(self.errors, np.linalg.norm(self.gla))
@@ -207,7 +207,7 @@ class MaxEntMulti2U(PDClass):
 				b = c
 
 		lambdac = round((a + b) / 2, 10)
-		self.lprevUpdate[count] = tuple([lambdac, nodes])
+		self.lprevUpdate[idx] = tuple([lambdac, nodes])
 
 		f_c = 0.0
 		for i in range(numNodes):
@@ -535,7 +535,7 @@ class  MaxEntMulti2D(PDClass):
 				b = c
 
 		lambdac = round((a + b) / 2, 10)
-		self.lprevUpdate[count] = tuple([lambdac, inNL, outNL])
+		self.lprevUpdate[idx] = tuple([lambdac, inNL, outNL])
 
 		f_c = 0.0
 		for i in range(numOutNodes):

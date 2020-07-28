@@ -92,7 +92,7 @@ class EvaluateRemove:
             inNL = PD.lprevUpdate[id][1]
             outNL = PD.lprevUpdate[id][2]
             HD = getDirectedSubgraph(G, inNL, outNL, self.isSimple)
-            Params['Pat'] = Pattern(H)
+            Params['Pat'] = Pattern(HD)
             Params['codeLengthC'] = getCodeLengthParallel(G, PD, inNL=inNL, outNL=outNL, case=1, isSimple=self.isSimple, gtype=self.gtype) #now case is 1 as none of teh lambdas shall be removed
             Params['codeLengthCprime'] = getCodeLengthParallel(G, PD, inNL=inNL, outNL=outNL, case=4, dropLidx=[id], isSimple=self.isSimple, gtype=self.gtype)  #now case is 4 as one lambda is to be dropped to compute new codelength
             Params['Pat'].setIC_dssg( Params['codeLengthC'] - Params['codeLengthCprime'] )
