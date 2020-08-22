@@ -113,6 +113,8 @@ def writeResults(Patterns, fname):
     return
 
 def RunSSG(fname):
+    if not ray.is_initialized():
+        ray.init()
     DS, Params = readConfFile(fname)
     for d in DS:
         Patterns = RunSSGUtil(d, Params)
@@ -122,9 +124,7 @@ def RunSSG(fname):
 
 
 if __name__ == "__main__":
-    if not ray.is_initialized():
-        ray.init()
     parser = argparse.ArgumentParser(description='Running SSG')
-    parser.add_argument(dest ='filename', metavar ='filename', type=str, help='configuration filename to run SSG.py') 
+    parser.add_argument(dest ='filename', metavar ='filename', type=str, help='configuration filename to run SSG.py')
     args = parser.parse_args()
     RunSSG(args.filename)

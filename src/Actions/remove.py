@@ -145,16 +145,25 @@ class EvaluateRemove:
             Pattern  corresponding to the previously performed action. Note that this pattern shall contains the set of nodes that are involved in previous action, 
             both as prior and posterior
         """
+        ### removing candidate if any other action was performed on it ###
+        if prevPat.pat_type is not 'remove':
+            if prevPat.pat_type in ['merge']:
+                for p in prevPat.prev_order:
+                    if p in self.Data:
+                        del self.Data[p]
+            elif prevPat.pat_type in ['shrink', 'split', 'update']:
+                if prevPat.prev_order in self.Data:
+                    del self.Data[prevPat.prev_order]
         if self.gtype == 'U':
             for k,v in self.Data.items():
-                if len(set(v.NL).intersection(set(prevPat.NL))) > 1:
+                if len(set(v['Pat'].NL).intersection(set(prevPat.NL))) > 1:
                     self.updateConstraintEvaluation(G, PD, k, 2)
                 else:
                     self.updateConstraintEvaluation(G, PD, k, 1)
         else:
             for k,v in self.Data.items():
-                inInt = len(set(v.inNL).intersection(set(prevPat.inNL)))
-                outInt = len(set(v.outNL).intersection(set(prevPat.outNL)))
+                inInt = len(set(v['Pat'].inNL).intersection(set(prevPat.inNL)))
+                outInt = len(set(v['Pat'].outNL).intersection(set(prevPat.outNL)))
                 if inInt > 1 and outInt > 1:
                     self.updateConstraintEvaluation(G, PD, k, 2)
                 else:
@@ -187,6 +196,7 @@ class EvaluateRemove:
         bestR : Pattern
             last remove pattern
         """
+        del self.Data[bestR['Pat'].prev_order]
         out = PD.lprevUpdate.pop(bestR['Pat'].prev_order, None)
         if out is None:
             print("Something is fishy")

@@ -179,11 +179,11 @@ def IC_DSIMP(kw, nw, mu, p_):
     Returns:
         float: The information content (as per definition in DSIMP) of a multigraph pattern
     """
-    # ic = p_ * ( kw - mu ) + p_ * ( mu + nw ) * math.log10 ((mu + nw) / (kw + nw))
-    eps = kw/nw
-    ps = 1.0/(eps+1.0)
-    ic = KL_g(ps, p_)
-    return ic*nw
+    ic = p_ * ( kw - mu ) + p_ * ( mu + nw ) * math.log ((mu + nw) / (kw + nw))
+    # eps = kw/nw
+    # ps = 1.0/(eps+1.0)
+    # ic = KL_g(ps, p_)
+    return ic
 ##################################################################################################################################################################
 def IC_DSSG(CL_I, CL_F):
     """function to compute the information content of a pattern as proposed in DSSG, i.e., the gain in codelength of a model
@@ -539,7 +539,8 @@ def computeDescriptionLength(**kwargs):
     isSimple = True
     if 'isSimple' in kwargs:
         isSimple = kwargs['isSimple']
-        assert not isSimple and 'kws' in kwargs, "'kws' is required to encode edges if isSimple is False"
+        if not isSimple:
+            assert 'kws' in kwargs, "'kws' is required to encode edges if isSimple is False"
 
     if dlmode == 1:
         DL = 0.0
@@ -575,7 +576,7 @@ def computeDescriptionLength(**kwargs):
         else:
             DL += DL_Edges(nw, kwargs['kw'], isSimple, kwargs['kws'], 2)
         if dlmode == 3 and not excActionType:
-            assert 'l' in kwargs['l'],"'l' not provided"
+            assert 'l' in kwargs,"'l' not provided"
             DL += math.log2(kwargs['l']) ## encoding action type
         return DL
     elif dlmode == 4: #remove action
@@ -584,6 +585,7 @@ def computeDescriptionLength(**kwargs):
         DL += math.log2(kwargs['C']) ## encoding constraint id
         if not excActionType:
             DL += math.log2(kwargs['l']) ## encoding action type
+        return DL
     elif dlmode == 5: #update action
         DL = 0.0
         assert 'C' in kwargs, "number of constraints 'C' is required"
@@ -601,6 +603,7 @@ def computeDescriptionLength(**kwargs):
             DL += DL_Edges(nw, kwargs['kw'], isSimple, kwargs['kws'], 2)
         if not excActionType:
             DL += math.log2(kwargs['l']) ## encoding action type
+        return DL
     elif dlmode == 6: #shrink action
         DL = 0.0
         assert 'C' in kwargs, "number of constraints 'C' is required"
@@ -628,6 +631,7 @@ def computeDescriptionLength(**kwargs):
             DL += math.log2(ncr(kwargs['WOS'], kwargs['WOS'] - len(kwargs['WO']))) ## encoding outNodes removed in a pattern
         if not excActionType:
             DL += math.log2(kwargs['l']) ## encoding action type
+        return DL
     elif dlmode == 7: #split action
         DL = 0.0
         # Todo check this code
@@ -666,6 +670,7 @@ def computeDescriptionLength(**kwargs):
             DL += math.log2(ncr(kwargs['WOS'], WST_o)) ## encoding outNodes in each component
         if not excActionType:
             DL += math.log2(kwargs['l']) ## encoding action type
+        return DL
     elif dlmode == 8: #merge action
         DL = 0.0
         assert 'C' in kwargs, "number of constraints 'C' is required"
@@ -683,6 +688,7 @@ def computeDescriptionLength(**kwargs):
             DL += DL_Edges(nw, kwargs['kw'], isSimple, kwargs['kws'], 2)
         if not excActionType:
             DL += math.log2(kwargs['l']) ## encoding action type
+        return DL
     return
 ##################################################################################################################################################################
 def computeInterestingness(IC, DL, **kwargs):
@@ -740,6 +746,7 @@ def computeSumOfEdgeProbablityBetweenNodeAndList(PD, node, NL, **kwargs):
     dropLidx = None
     nlambda = 0.0
     isSimple = True
+    dir_mode = None
 
     if 'case' in kwargs:
         case = kwargs['case']
@@ -749,8 +756,9 @@ def computeSumOfEdgeProbablityBetweenNodeAndList(PD, node, NL, **kwargs):
         nlambda = kwargs['nlambda']
     if 'isSimple' in kwargs:
         isSimple = kwargs['isSimple']
-    assert 'dir_mode' in kwargs, 'dir_mode is required, it can be either 1 or 2'
-    dir_mode = kwargs['dir_mode']
+    if kwargs['gtype'] == 'D':
+        assert 'dir_mode' in kwargs, 'dir_mode is required if gtype is \'D\', it can be either 1 or 2'
+        dir_mode = kwargs['dir_mode']
 
     if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and dir_mode == 1):
         for i in NL:
@@ -771,7 +779,7 @@ def computeSumOfExpectationsBetweenNodeAndList(PD, node, NL, **kwargs):
 
     **kwargs:
         gtype (str): 'D'-directed, 'U'-undirected
-        mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node
+        dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node
         case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
         dropLidx (int or list): index of lambda if required to be dropped, default is None
         nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
@@ -789,6 +797,7 @@ def computeSumOfExpectationsBetweenNodeAndList(PD, node, NL, **kwargs):
     dropLidx = None
     nlambda = 0.0
     isSimple = True
+    dir_mode = None
     if 'case' in kwargs:
         case = kwargs['case']
     if 'dropLidx' in kwargs:
@@ -797,10 +806,11 @@ def computeSumOfExpectationsBetweenNodeAndList(PD, node, NL, **kwargs):
         nlambda = kwargs['nlambda']
     if 'isSimple' in kwargs:
         isSimple = kwargs['isSimple']
-    assert 'mode' in kwargs, 'mode is required, it can be either 1 or 2'
-    mode = kwargs['mode']
+    if kwargs['gtype'] == 'D':
+        assert 'dir_mode' in kwargs, 'dir_mode is required if gtype is \'D\', it can be either 1 or 2'
+        dir_mode = kwargs['dir_mode']
 
-    if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and mode == 1):
+    if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and dir_mode == 1):
         for i in NL:
             SumExpect += PD.getExpectation(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
     else:
@@ -819,7 +829,7 @@ def computeMinPOSBetweenNodeAndList(PD, node, NL, **kwargs):
 
     **kwargs:
         gtype (str): 'D'-directed, 'U'-undirected
-        mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node; default is 1
+        dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node; default is 1
         case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
         dropLidx (int or list): index of lambda if required to be dropped, default is None
         nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
@@ -837,6 +847,7 @@ def computeMinPOSBetweenNodeAndList(PD, node, NL, **kwargs):
     dropLidx = None
     nlambda = 0.0
     isSimple = True
+    dir_mode = None
     if 'case' in kwargs:
         case = kwargs['case']
     if 'dropLidx' in kwargs:
@@ -845,10 +856,11 @@ def computeMinPOSBetweenNodeAndList(PD, node, NL, **kwargs):
         nlambda = kwargs['nlambda']
     if 'isSimple' in kwargs:
         isSimple = kwargs['isSimple']
-    assert 'mode' in kwargs, 'mode is required, it can be either 1 or 2'
-    mode = kwargs['mode']
+    if kwargs['gtype'] == 'D':
+        assert 'dir_mode' in kwargs, 'dir_mode is required if gtype is \'D\', it can be either 1 or 2'
+        dir_mode = kwargs['dir_mode']
 
-    if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and mode == 1):
+    if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and dir_mode == 1):
         for i in NL:
             minp = min(minp, PD.getPOS(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple))
     else:
@@ -867,7 +879,7 @@ def computePWparametersBetweenNodeAndList(PD, node, NL, **kwargs):
 
     **kwargs:
         gtype (str): 'D'-directed, 'U'-undirected
-        mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node
+        dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node
         case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
         dropLidx (int or list): index of lambda if required to be dropped, default is None
         nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
@@ -886,6 +898,7 @@ def computePWparametersBetweenNodeAndList(PD, node, NL, **kwargs):
     dropLidx = None
     nlambda = 0.0
     isSimple = True
+    dir_mode = None
     if 'case' in kwargs:
         case = kwargs['case']
     if 'dropLidx' in kwargs:
@@ -894,10 +907,11 @@ def computePWparametersBetweenNodeAndList(PD, node, NL, **kwargs):
         nlambda = kwargs['nlambda']
     if 'isSimple' in kwargs:
         isSimple = kwargs['isSimple']
-    assert 'mode' in kwargs, 'mode is requrired, it can be either 1 or 2'
-    mode = kwargs['mode']
+    if kwargs['gtype'] == 'D':
+        assert 'dir_mode' in kwargs, 'dir_mode is required if gtype is \'D\', it can be either 1 or 2'
+        dir_mode = kwargs['dir_mode']
 
-    if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and mode == 1):
+    if kwargs['gtype'] == 'U' or (kwargs['gtype'] == 'D' and dir_mode == 1):
         for i in NL:
             if i != node:
                 p = PD.getPOS(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
@@ -955,8 +969,6 @@ def getCodeLength(G, PD, **kwargs):
         nlambda = kwargs['nlambda']
     if 'isSimple' in kwargs:
         isSimple = kwargs['isSimple']
-    if 'mode' in kwargs:
-        mode = kwargs['mode']
     codelength = 0.0
     if isSimple == True:
         if kwargs['gtype'] == 'U':
@@ -1001,8 +1013,10 @@ def getCodeLength(G, PD, **kwargs):
 def getCodeLengthParallel(G, PD, **kwargs):
     assert 'gtype' in kwargs, "gtype is must to compute codelength"
     if 'case' in kwargs:
-        assert kwargs['case']>3 and 'dropLidx' in kwargs and isinstance(kwargs['dropLidx'], list), "for case types 2-5, dropLidx (list) shall be provided"
-        assert kwargs['case']>1 and kwargs['case']%2==1 and 'nlambda' in kwargs, "for case types 3 and 5, nlambda shall be provided"
+        if kwargs['case']>3:
+            assert 'dropLidx' in kwargs and isinstance(kwargs['dropLidx'], list), "for case types 4-5, dropLidx (list) shall be provided"
+        if kwargs['case']>1 and kwargs['case']%2==1:
+            assert 'nlambda' in kwargs, "for case types 3 and 5, nlambda shall be provided"
     case = 2
     dropLidx = None
     nlambda = 0.0
@@ -1021,7 +1035,7 @@ def getCodeLengthParallel(G, PD, **kwargs):
     if kwargs['gtype'] == 'U':
         assert 'NL' in kwargs, "NL is required if gtype is 'U'"
         NL = kwargs['NL']
-        codelength = sum(ray.get([getCodeLengthUtil.remote(Gid, PDid, NL[i], NL[i+1,], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple) for i in range(len(NL)-1)]))
+        codelength = sum(ray.get([getCodeLengthUtil.remote(Gid, PDid, NL[i], NL[i+1:], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple) for i in range(len(NL)-1)]))
     else:
         assert 'inNL' in kwargs and 'outNL' in kwargs, "inNL and outNL are required if gtype is 'D'"
         inNL = kwargs['inNL']

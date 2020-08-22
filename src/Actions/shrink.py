@@ -109,18 +109,18 @@ class EvaluateShrink:
             baseParams['codeLengthC'] = getCodeLengthParallel( H, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=baseParams['Pat'].NL )
             baseParams['codeLengthCprime'] = baseParams['codeLengthC']
             baseParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - baseParams['codeLengthCprime'] )
-            baseParams['Pat'].setDL( computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, W=baseParams['Pat'].NCount, kw=baseParams['Pat'].ECount, isSimple=self.isSimple, kws=baseParams['Pat'].kws ))
+            baseParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, W=baseParams['Pat'].NCount, kw=baseParams['Pat'].ECount, isSimple=self.isSimple, kws=baseParams['Pat'].kws ))
             baseParams['Pat'].setI( computeInterestingness( baseParams['Pat'].IC_dssg, baseParams['Pat'].DL, mode=self.imode ) )
 
             curPat = fcomponents[0]
 
             bestParams = None
-            if curPat.number_of_nodes < baseParams['Pat'].NCount:
+            if curPat.number_of_nodes() < baseParams['Pat'].NCount:
                 bestParams = dict()
                 bestParams['Pat'] = Pattern(curPat)
-                bestParams['codeLengthCprime']  = computeCodeLengthShrinkU(self, G, PD, 2, baseParams, bestParams, id)
+                bestParams['codeLengthCprime']  = self.computeCodeLengthShrinkU(G, PD, 2, baseParams, bestParams, id)
                 bestParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - bestParams['codeLengthCprime'] )
-                bestParams['Pat'].setDL( computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, W=bestParams['Pat'].NCount, kw=bestParams['Pat'].ECount, isSimple=self.isSimple, kws=bestParams['Pat'].kws ) )
+                bestParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, W=bestParams['Pat'].NCount, kw=bestParams['Pat'].ECount, isSimple=self.isSimple, kws=bestParams['Pat'].kws ) )
                 bestParams['Pat'].setI( computeInterestingness( bestParams['Pat'].IC_dssg, bestParams['Pat'].DL, mode=self.imode ) )
             else:
                 bestParams = baseParams
@@ -170,7 +170,7 @@ class EvaluateShrink:
                 curParams['Pat'].removeNode(node)
                 curParams['codeLengthCprime'] = FinalParams['codeLengthCprime'] - self.computeCLgainRemoveNodeU(G, PD, curParams['Pat'].NL, node, [Lid])
                 curParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - curParams['codeLengthCprime'] )
-                curParams['Pat'].setDL( computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, W=curParams['Pat'].NCount, kw=curParams['Pat'].ECount, isSimple=self.isSimple, kws=curParams['Pat'].kws ) )
+                curParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, W=curParams['Pat'].NCount, kw=curParams['Pat'].ECount, isSimple=self.isSimple, kws=curParams['Pat'].kws ) )
                 curParams['Pat'].setI( computeInterestingness( curParams['Pat'].IC_dssg, curParams['Pat'].DL, mode=self.imode ) )
                 if curParams['Pat'].I > bestParams['Pat'].I:
                     bestParams = curParams
@@ -180,10 +180,10 @@ class EvaluateShrink:
                 doshrink = True
         if count_remove_nodes > 0 or FinalParams['Pat'].NCount < baseParams['Pat'].NCount:
             FinalParams['codeLengthC'] = baseParams['codeLengthC']
-            FinalParams['Pat'].setLambda( PD.updateDistribution( pat=FinalParams['Pat'].G, idx=None, val_retrun='return', case=3, dropLidx=[Lid]) ) #// Todo: computeNewLambda
-            FinalParams['codeLengthCprime'] = computeCodeLengthShrinkU(self, G, PD, 3, baseParams, FinalParams, Lid, FinalParams['Pat'].la) #// Todo computeNewCodeLength
+            FinalParams['Pat'].setLambda( PD.updateDistribution( pat=FinalParams['Pat'].G, idx=None, val_return='return', case=3, dropLidx=[Lid]) ) #// Todo: computeNewLambda
+            FinalParams['codeLengthCprime'] = self.computeCodeLengthShrinkU(G, PD, 3, baseParams, FinalParams, Lid, FinalParams['Pat'].la) #// Todo computeNewCodeLength
             FinalParams['Pat'].setIC_dssg( FinalParams['codeLengthC'] - FinalParams['codeLengthCprime'] )
-            FinalParams['Pat'].setDL( computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, W=FinalParams['Pat'].NCount, kw=FinalParams['Pat'].ECount, excActionType=False, l=self.l, isSimple=self.isSimple, kws=FinalParams['Pat'].kws ) )
+            FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, W=FinalParams['Pat'].NCount, kw=FinalParams['Pat'].ECount, excActionType=False, l=self.l, isSimple=self.isSimple, kws=FinalParams['Pat'].kws ) )
             FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=self.imode ) )
         return FinalParams
 
@@ -258,16 +258,16 @@ class EvaluateShrink:
             baseParams['codeLengthC'] = getCodeLengthParallel( H, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=baseParams['Pat'].inNL, outNL=baseParams['Pat'].outNL )
             baseParams['codeLengthCprime'] = baseParams['codeLengthC']
             baseParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - baseParams['codeLengthCprime'] )
-            baseParams['Pat'].setDL( computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=baseParams['Pat'].InNL, WO=baseParams['Pat'].OutNL, kw=baseParams['Pat'].ECount, isSimple=self.isSimple, kws=baseParams['Pat'].kws ))
+            baseParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=baseParams['Pat'].InNL, WO=baseParams['Pat'].OutNL, kw=baseParams['Pat'].ECount, isSimple=self.isSimple, kws=baseParams['Pat'].kws ))
             baseParams['Pat'].setI( computeInterestingness( baseParams['Pat'].IC_dssg, baseParams['Pat'].DL, mode=self.imode ) )
 
             bestParams = None
-            if curPat.number_of_nodes < baseParams['Pat'].NCount:
+            if curPat.number_of_nodes() < baseParams['Pat'].NCount:
                 bestParams = dict()
                 bestParams['Pat'] = Pattern(curPat)
                 bestParams['codeLengthCprime'] = self.computeCodeLengthShrinkD( G, PD, 2, baseParams, bestParams, id )
                 bestParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - bestParams['codeLengthCprime'] )
-                bestParams['Pat'].setDL( computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=bestParams['Pat'].InNL, WO=bestParams['Pat'].OutNL, kw=bestParams['Pat'].ECount, isSimple=self.isSimple, kws=bestParams['Pat'].kws ) )
+                bestParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=bestParams['Pat'].InNL, WO=bestParams['Pat'].OutNL, kw=bestParams['Pat'].ECount, isSimple=self.isSimple, kws=bestParams['Pat'].kws ) )
                 bestParams['Pat'].setI( computeInterestingness( bestParams['Pat'].IC_dssg, bestParams['Pat'].DL, mode=self.imode ) )
             else:
                 bestParams = baseParams
@@ -317,7 +317,7 @@ class EvaluateShrink:
                 curParams['Pat'].removeInNode(node)
                 curParams['codeLengthCprime'] = FinalParams['codeLengthCprime'] - self.computeCLgainRemoveNodeD(G, PD, curParams['Pat'].outNL, node, [Lid], 1)
                 curParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - curParams['codeLengthCprime'] )
-                curParams['Pat'].setDL( computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=curParams['Pat'].InNL, WO=curParams['Pat'].OutNL, kw=curParams['Pat'].ECount, isSimple=self.isSimple, kws=curParams['Pat'].kws ) )
+                curParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=curParams['Pat'].InNL, WO=curParams['Pat'].OutNL, kw=curParams['Pat'].ECount, isSimple=self.isSimple, kws=curParams['Pat'].kws ) )
                 curParams['Pat'].setI( computeInterestingness( curParams['Pat'].IC_dssg, curParams['Pat'].DL, mode=self.imode ) )
                 if curParams['Pat'].I > bestParams['Pat'].I:
                     bestParams = curParams
@@ -327,7 +327,7 @@ class EvaluateShrink:
                 curParams['Pat'].removeOutNode(node)
                 curParams['codeLengthCprime'] = FinalParams['codeLengthCprime'] - self.computeCLgainRemoveNodeD(G, PD, curParams['Pat'].inNL, node, [Lid], 2)
                 curParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - curParams['codeLengthCprime'] )
-                curParams['Pat'].setDL( computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=curParams['Pat'].InNL, WO=curParams['Pat'].OutNL, kw=curParams['Pat'].ECount, isSimple=self.isSimple, kws=curParams['Pat'].kws ) )
+                curParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=curParams['Pat'].InNL, WO=curParams['Pat'].OutNL, kw=curParams['Pat'].ECount, isSimple=self.isSimple, kws=curParams['Pat'].kws ) )
                 curParams['Pat'].setI( computeInterestingness( curParams['Pat'].IC_dssg, curParams['Pat'].DL, mode=self.imode ) )
                 if curParams['Pat'].I > bestParams['Pat'].I:
                     bestParams = curParams
@@ -337,10 +337,10 @@ class EvaluateShrink:
                 doshrink = True
         if count_remove_nodes > 0 or (FinalParams['Pat'].InNCount < baseParams['Pat'].InNCount and FinalParams['Pat'].OutNCount < baseParams['Pat'].OutNCount) :
             FinalParams['codeLengthC'] = baseParams['codeLengthC']
-            FinalParams['Pat'].setLambda( PD.updateDistribution( FinalParams['Pat'].G, idx=None, val_retrun='return', case=3, dropLidx=[Lid]) ) #// Todo: computeNewLambda
+            FinalParams['Pat'].setLambda( PD.updateDistribution( FinalParams['Pat'].G, idx=None, val_return='return', case=3, dropLidx=[Lid]) ) #// Todo: computeNewLambda
             FinalParams['codeLengthCprime'] = self.computeCodeLengthShrinkD( G, PD, 3, baseParams, FinalParams, Lid, FinalParams['Pat'].la) #// Todo computeNewCodeLength
             FinalParams['Pat'].setIC_dssg( FinalParams['codeLengthC'] - FinalParams['codeLengthCprime'] )
-            FinalParams['Pat'].setDL( computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=FinalParams['Pat'].InNL, WO=FinalParams['Pat'].OutNL, kw=FinalParams['Pat'].ECount, excActionType=False, l=self.l, isSimple=self.isSimple, kws=FinalParams['Pat'].kws ) )
+            FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=FinalParams['Pat'].InNL, WO=FinalParams['Pat'].OutNL, kw=FinalParams['Pat'].ECount, excActionType=False, l=self.l, isSimple=self.isSimple, kws=FinalParams['Pat'].kws ) )
             FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=self.imode ) )
         return FinalParams
 
@@ -425,7 +425,7 @@ class EvaluateShrink:
         float
             commputed codelength
         """
-        codeLength = 0.0
+        codelength = 0.0
         if condition == 1:
             codelength = getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=baseParams['Pat'].NL )
             return codelength
@@ -470,7 +470,7 @@ class EvaluateShrink:
         float
             commputed codelength
         """
-        codeLength = 0.0
+        codelength = 0.0
         if condition == 1:
             codelength = getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=baseParams['Pat'].inNL, outNL=baseParams['Pat'].outNL )
             return codelength
@@ -509,15 +509,19 @@ class EvaluateShrink:
         """
         if condition == 1:
             if self.gtype == 'U':
-                DL = computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id]['Pat'].NCount, W=self.Data[id]['SPat'].NCount, kw=self.Data[id]['SPat'].ECount, excActionType=False, l=self.l, isSimple=self.isSimple, kws=self.Data[id]['SPat'].kws )
-                IG = computeInterestingness( self.Data[id].IC_dssg, DL, mode=self.imode )
-                self.Data[id].setDL(DL)
-                self.Data[id].setI(IG)
+                DL = computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id]['Pat'].NCount, W=self.Data[id]['SPat'].NCount, kw=self.Data[id]['SPat'].ECount, excActionType=False, l=self.l, isSimple=self.isSimple, kws=self.Data[id]['SPat'].kws )
+                IG = computeInterestingness( self.Data[id]['SPat'].IC_dssg, DL, mode=self.imode )
+                self.Data[id]['Pat'].setDL(DL)
+                self.Data[id]['Pat'].setI(IG)
+                self.Data[id]['SPat'].setDL(DL)
+                self.Data[id]['SPat'].setI(IG)
             else:
-                DL = computeDescriptionLength( case=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id]['Pat'].InNCount, WOS=self.Data[id]['Pat'].OutNCount, WI=self.Data[id]['SPat'].InNL, WO=self.Data[id]['SPat'].OutNL, kw=self.Data[id]['SPat'].ECount, excActionType=False, l=self.l, isSimple=self.isSimple, kws=self.Data[id]['SPat'].kws )
-                IG = computeInterestingness( self.Data[id].IC_dssg, DL, mode=self.imode )
-                self.Data[id].setDL(DL)
-                self.Data[id].setI(IG)
+                DL = computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id]['Pat'].InNCount, WOS=self.Data[id]['Pat'].OutNCount, WI=self.Data[id]['SPat'].InNL, WO=self.Data[id]['SPat'].OutNL, kw=self.Data[id]['SPat'].ECount, excActionType=False, l=self.l, isSimple=self.isSimple, kws=self.Data[id]['SPat'].kws )
+                IG = computeInterestingness( self.Data[id]['SPat'].IC_dssg, DL, mode=self.imode )
+                self.Data[id]['Pat'].setDL(DL)
+                self.Data[id]['Pat'].setI(IG)
+                self.Data[id]['SPat'].setDL(DL)
+                self.Data[id]['SPat'].setI(IG)
         elif condition == 2:
             self.evaluateConstraint(G, PD, id)
         return
@@ -536,16 +540,25 @@ class EvaluateShrink:
             Pattern  corresponding to the previously performed action. Note that this pattern shall contains the set of nodes that are involved in previous action,
             both as prior and posterior
         """
+        ### removing candidate if any other action was performed on it ###
+        if prevPat.pat_type is not 'shrink':
+            if prevPat.pat_type in ['merge']:
+                for p in prevPat.prev_order:
+                    if p in self.Data:
+                        del self.Data[p]
+            elif prevPat.pat_type in ['update', 'split', 'remove']:
+                if prevPat.prev_order in self.Data:
+                    del self.Data[prevPat.prev_order]
         if self.gtype == 'U':
             for k,v in self.Data.items():
-                if len(set(v.NL).intersection(set(prevPat.NL))) > 1:
+                if len(set(v['Pat'].NL).intersection(set(prevPat.NL))) > 1:
                     self.updateConstraintEvaluation(G, PD, k, 2)
                 else:
                     self.updateConstraintEvaluation(G, PD, k, 1)
         else:
             for k,v in self.Data.items():
-                inInt = len(set(v.inNL).intersection(set(prevPat.inNL)))
-                outInt = len(set(v.outNL).intersection(set(prevPat.outNL)))
+                inInt = len(set(v['Pat'].inNL).intersection(set(prevPat.inNL)))
+                outInt = len(set(v['Pat'].outNL).intersection(set(prevPat.outNL)))
                 if inInt > 1 and outInt > 1:
                     self.updateConstraintEvaluation(G, PD, k, 2)
                 else:
@@ -581,15 +594,13 @@ class EvaluateShrink:
             last shrinked pattern
         """
         #* Here bestSh is a dictionary as saved in self.Data
-        if bestSh['SPat'].prev_order in self.Data: #? Removing the candidate from potential list
-            del self.Data[bestSh['Pat'].prev_order]
-        else:
-            print('Trying to remove key:{} in merge Data but key not found'.format(bestSh['Pat'].prev_order))
+        del self.Data[bestSh['Pat'].prev_order]
         out = PD.lprevUpdate.pop(bestSh['Pat'].prev_order, None)
         if out is None:
             print('Something is fishy')
         else:
-            PD.updateDistribution( bestSh['SPat'].G, idx=bestSh['SPat'].cur_order, val_retrun='save', case=2 )
+            la = PD.updateDistribution( bestSh['SPat'].G, idx=bestSh['SPat'].cur_order, val_return='save', case=2 )
+            bestSh['SPat'].setLambda(la)
         return
 
 

@@ -74,39 +74,43 @@ class EvaluateUpdate:
         if self.gtype == 'U':
             NL = PD.lprevUpdate[id][1]
             H = G.subgraph(NL)
-            P = Pattern(H)
-            Params = dict()
-            Params['Pat'] = Pattern(H)
-            nlambda = PD.updateDistribution( Params['Pat'].G, idx=None, val_retrun='return', case=3, dropLidx=[id] ) #// ToDo: Add code to coumpute new lambda
-            Params['codeLengthC'] = getCodeLengthParallel( Params['Pat'].G, PD, NL=Params['Pat'].NL, case=2, isSimple=self.isSimple, gtype=self.gtype ) #now case is 1 as none of teh lambdas shall be removed
-            Params['codeLengthCprime'] = getCodeLengthParallel( Params['Pat'].G, PD, NL=Params['Pat'].NL, case=5, dropLidx=[id], nlambda=nlambda, isSimple=self.isSimple, gtype=self.gtype )  #now case is 4 as one lambda is to be dropped to compute new codelength
-            Params['Pat'].setIC_dssg( Params['codeLengthC'] - Params['codeLengthCprime'] )
-            Params['Pat'].setDL( computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), W=Params['Pat'].NCount, l=self.l, excActionType=False, kws=Params['Pat'].kws, isSimple=self.isSimple ) )
-            Params['Pat'].setI( computeInterestingness( Params['Pat'].IC_dssg, Params['Pat'].DL, mode=self.imode) )
+            if nx.number_connected_components(H) == 1:
+                Params = dict()
+                Params['Pat'] = Pattern(H)
+                nlambda = PD.updateDistribution( Params['Pat'].G, idx=None, val_return='return', case=3, dropLidx=[id] ) #// ToDo: Add code to coumpute new lambda
+                Params['codeLengthC'] = getCodeLengthParallel( Params['Pat'].G, PD, NL=Params['Pat'].NL, case=2, isSimple=self.isSimple, gtype=self.gtype ) #now case is 1 as none of teh lambdas shall be removed
+                Params['codeLengthCprime'] = getCodeLengthParallel( Params['Pat'].G, PD, NL=Params['Pat'].NL, case=5, dropLidx=[id], nlambda=nlambda, isSimple=self.isSimple, gtype=self.gtype )  #now case is 4 as one lambda is to be dropped to compute new codelength
+                Params['Pat'].setIC_dssg( Params['codeLengthC'] - Params['codeLengthCprime'] )
+                Params['Pat'].setDL( computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), W=Params['Pat'].NCount, l=self.l, excActionType=False, kw=Params['Pat'].ECount, kws=Params['Pat'].kws, isSimple=self.isSimple ) )
+                Params['Pat'].setI( computeInterestingness( Params['Pat'].IC_dssg, Params['Pat'].DL, mode=self.imode) )
 
-            if Params['Pat'].I > 0:
-                Params['Pat'].setPrevOrder(id)
-                Params['Pat'].setPatType('update')
-                Params['Pat'].setLambda(nlambda)
-                self.Data[id] = Params
+                if Params['Pat'].I > 0:# in original paper we updated only those patterns for which density increases, but here we do not
+                # if Params['Pat'].I > 0 and Params['Pat'].ECount > PD.lprevUpdate[id][2]: # uncomment this line and comment able line for original paper version
+                    Params['Pat'].setPrevOrder(id)
+                    Params['Pat'].setPatType('update')
+                    Params['Pat'].setLambda(nlambda)
+                    self.Data[id] = Params
         else:
             inNL = PD.lprevUpdate[id][1]
             outNL = PD.lprevUpdate[id][2]
             HD = getDirectedSubgraph( G, inNL, outNL, self.isSimple )
-            Params = dict()
-            Params['Pat'] = Pattern(HD)
-            nlambda = PD.updateDistribution( Params['Pat'].G, idx=None, val_retrun='return', case=3, dropLidx=[id] ) #// ToDo: Add code to coumpute new lambda
-            Params['codeLengthC'] = getCodeLengthParallel(Params['Pat'].G, PD, inNL=Params['Pat'].inNL, outNL=Params['Pat'].outNL, case=1, isSimple=self.isSimple, gtype=self.gtype) #now case is 1 as none of teh lambdas shall be removed
-            Params['codeLengthCprime'] = getCodeLengthParallel(Params['Pat'].G, PD, inNL=Params['Pat'].inNL, outNL=Params['Pat'].outNL, case=5, dropLidx=[id], nlambda=nlambda, isSimple=self.isSimple, gtype=self.gtype)  #now case is 4 as one lambda is to be dropped to compute new codelength
-            Params['Pat'].setIC_dssg( Params['codeLengthC'] - Params['codeLengthCprime'] )
-            Params['Pat'].setDL( computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), WI=Params['Pat'].inNL, WO=Params['Pat'].outNL, l=self.l, excActionType=False, kws=Params['Pat'].kws, isSimple=self.isSimple ) )
-            Params['Pat'].setI( computeInterestingness( Params['Pat'].IC_dssg, Params['Pat'].DL, mode=self.imode) )
+            H = nx.Graph(HD)
+            if nx.number_connected_components(H) == 1:
+                Params = dict()
+                Params['Pat'] = Pattern(HD)
+                nlambda = PD.updateDistribution( Params['Pat'].G, idx=None, val_return='return', case=3, dropLidx=[id] ) #// ToDo: Add code to coumpute new lambda
+                Params['codeLengthC'] = getCodeLengthParallel(Params['Pat'].G, PD, inNL=Params['Pat'].inNL, outNL=Params['Pat'].outNL, case=1, isSimple=self.isSimple, gtype=self.gtype) #now case is 1 as none of teh lambdas shall be removed
+                Params['codeLengthCprime'] = getCodeLengthParallel(Params['Pat'].G, PD, inNL=Params['Pat'].inNL, outNL=Params['Pat'].outNL, case=5, dropLidx=[id], nlambda=nlambda, isSimple=self.isSimple, gtype=self.gtype)  #now case is 4 as one lambda is to be dropped to compute new codelength
+                Params['Pat'].setIC_dssg( Params['codeLengthC'] - Params['codeLengthCprime'] )
+                Params['Pat'].setDL( computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), WI=Params['Pat'].inNL, WO=Params['Pat'].outNL, l=self.l, excActionType=False, kw=Params['Pat'].ECount, kws=Params['Pat'].kws, isSimple=self.isSimple ) )
+                Params['Pat'].setI( computeInterestingness( Params['Pat'].IC_dssg, Params['Pat'].DL, mode=self.imode) )
 
-            if Params['Pat'].I > 0:
-                Params['Pat'].setPrevOrder(id)
-                Params['Pat'].setPatType('update')
-                Params['Pat'].setLambda(nlambda)
-                self.Data[id] = Params
+                if Params['Pat'].I > 0: # in original paper we updated only those patterns for which density increases, but here we do not
+                # if Params['Pat'].I > 0 and Params['Pat'].ECount > PD.lprevUpdate[id][3]: # uncomment this line and comment able line for original paper version
+                    Params['Pat'].setPrevOrder(id)
+                    Params['Pat'].setPatType('update')
+                    Params['Pat'].setLambda(nlambda)
+                    self.Data[id] = Params
         return
 
     def updateConstraintEvaluation(self, G, PD, id, condition=1):
@@ -126,12 +130,12 @@ class EvaluateUpdate:
         """
         if condition == 1:
             if self.gtype == 'U':
-                DL = computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), W=self.Data[id]['Pat'].NCount, l=self.l, excActionType=False, kws=self.Data[id]['Pat'].kws, isSimple=self.isSimple )
+                DL = computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), W=self.Data[id]['Pat'].NCount, l=self.l, excActionType=False, kw=self.Data[id]['Pat'].ECount, kws=self.Data[id]['Pat'].kws, isSimple=self.isSimple )
                 IG = computeInterestingness( self.Data[id]['Pat'].IC_dssg, DL, mode=2 )
                 self.Data[id]['Pat'].setDL(DL)
                 self.Data[id]['Pat'].setI(IG)
             else:
-                DL = computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), WI=self.Data[id]['Pat'].inNL, WO=self.Data[id]['Pat'].outNL, l=self.l, excActionType=False, kws=self.Data[id]['Pat'].kws, isSimple=self.isSimple )
+                DL = computeDescriptionLength( dlmode=5, gtype=self.gtype, C=len(PD.lprevUpdate), WI=self.Data[id]['Pat'].inNL, WO=self.Data[id]['Pat'].outNL, l=self.l, excActionType=False, kw=self.Data[id]['Pat'].ECount, kws=self.Data[id]['Pat'].kws, isSimple=self.isSimple )
                 IG = computeInterestingness( self.Data[id]['Pat'].IC_dssg, DL, mode=2 )
                 self.Data[id]['Pat'].setDL(DL)
                 self.Data[id]['Pat'].setI(IG)
@@ -153,6 +157,15 @@ class EvaluateUpdate:
             Pattern  corresponding to the previously performed action. Note that this pattern shall contains the set of nodes that are involved in previous action, 
             both as prior and posterior
         """
+        ### removing candidate if any other action was performed on it ###
+        if prevPat.pat_type is not 'update':
+            if prevPat.pat_type in ['merge']:
+                for p in prevPat.prev_order:
+                    if p in self.Data:
+                        del self.Data[p]
+            elif prevPat.pat_type in ['shrink', 'split', 'remove']:
+                if prevPat.prev_order in self.Data:
+                    del self.Data[prevPat.prev_order]
         if self.gtype == 'U':
             for k,v in self.Data.items():
                 if len(set(v['Pat'].NL).intersection(set(prevPat.NL))) > 1:
@@ -197,13 +210,10 @@ class EvaluateUpdate:
         bestM : Pattern
             last update pattern
         """
-        if bestU.prev_order in self.Data: #? Removing the candidate from potential list
-            del self.Data[bestU['Pat'].prev_order]
-        else:
-            print('Trying to remove key:{} in merge Data but key not found'.format(bestU['Pat'].prev_order))
+        del self.Data[bestU['Pat'].prev_order]
         out = PD.lprevUpdate.pop(bestU['Pat'].prev_order, None)
         if out is None:
             print('Something is fishy')
         else:
-            PD.updateDistribution( bestU['Pat'].G, idx=bestU['Pat'].cur_order, val_retrun='save', case=2 )
+            PD.updateDistribution( bestU['Pat'].G, idx=bestU['Pat'].cur_order, val_return='save', case=2 )
         return

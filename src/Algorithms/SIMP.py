@@ -1,19 +1,17 @@
 import os
+import shutil
 import sys
+
+import pandas as pd
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
 if path not in sys.path:
 	sys.path.append(path)
-import math
-import numpy as np
 import networkx as nx
 import time
 import argparse
 import configparser
 import ast
-import string
 import ray
-
-from src.Patterns.Pattern import Pattern
 
 from src.BackgroundDistributions.MaxEntMulti1 import MaxEntMulti1U as PDMEM1U
 from src.BackgroundDistributions.MaxEntMulti1 import MaxEntMulti1D as PDMEM1D
@@ -46,6 +44,7 @@ def readConfFile(fname):
     return
 
 def getGraphAndBD(d, Params):
+    files = None
     if os.path.exists(path+'Data/SIMP/'+d):
         files = os.listdir(path+'Data/SIMP/'+d)
     Ffiles = dict()
@@ -108,21 +107,49 @@ def RunSIMPUtil(d, Params):
         if len(Patterns) >= mxpats:
             print('Founded maximum required patterns, finishing the task.....!!!!')
             flag = False
-    return Patterns
+    return Patterns, gtype
 
-def writeResults(Patterns, fname):
-    if len(Patterns) == 0:
-        print('no patterns found')
-        return
-    for p in Patterns:
-        print(p.I, p.NCount, nx.density(p.G))
+def makeWritePath(ds):
+    if not os.path.exists(path+'Results/'):
+        os.mkdir(path+'Results/')
+    if not os.path.exists(path+'Results/SIMP/'):
+        os.mkdir(path+'Results/SIMP/')
+    if not os.path.exists(path+'Results/SIMP/'+ds+'/'):
+        os.mkdir(path+'Results/SIMP/'+ds+'/')
+    wpath = path+'Results/SIMP/'+ds+'/'+'run_'+str(int(time.time()))
+    os.mkdir(wpath)
+    return wpath+'/'
+
+def writeToCSV(df, dfname, wpath):
+    df.to_csv(wpath+dfname+'.csv', index=False, sep=';')
     return
+
+def writeResults(Patterns, df):
+    for pat in Patterns:
+        df = df.append(pat.getDictForm(), ignore_index=True)
+    return df
 
 def RunSIMP(fname):
     DS, Params = readConfFile(fname)
     for d in DS:
-        Patterns = RunSIMPUtil(d, Params)
-        writeResults(Patterns, fname)
+        wpath = makeWritePath(d)
+        log = open(wpath+'run.logs', 'a')
+        sys.stdout = log
+        Patterns, gtype = RunSIMPUtil(d, Params)
+        p_cols = None
+        if gtype is 'U':
+            p_cols = ['state_info', 'pat_type', 'prev_order', 'cur_order', 'NCount', 'ECount', 'Density',\
+                'I', 'DL', 'IC_ssg', 'AD', 'IC_dssg', 'IC_dsimp', 'la', 'sumPOS', 'expectedEdges', 'NL',\
+                'kws', 'nw', 'minPOS']
+        else:
+            p_cols = ['state_info', 'pat_type', 'prev_order', 'cur_order', 'InNCount', 'OutNCount', 'ECount', 'Density',\
+                'I', 'DL', 'IC_ssg', 'AD', 'IC_dssg', 'IC_dsimp', 'la', 'sumPOS', 'expectedEdges', 'inNL',\
+                'outNL', 'kws', 'nw', 'minPOS']
+        df_patterns = pd.DataFrame(columns = p_cols)
+        df_patterns = writeResults(Patterns, df_patterns)
+        writeToCSV(df_patterns, 'patterns', wpath)
+        shutil.copy(path+'Confs/'+fname, wpath+'conf.txt')
+        log.close()
     return
 
 

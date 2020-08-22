@@ -11,10 +11,10 @@ if path not in sys.path:
 from src.Utils.Measures import NW_D, NW
 ###################################################################################################################################################################
 class Pattern:
-    state_info = -1
-    pat_type = 'UNKNOWN'
 ###################################################################################################################################################################
     def __init__(self, G, order = 0):
+        self.state_info = -1
+        self.pat_type = 'UNKNOWN'
         self.G = G.copy()
         self.NL = []
         self.inNL = []
@@ -75,7 +75,7 @@ class Pattern:
         return
 ###################################################################################################################################################################
     def updateGraphProperties(self):
-        if isinstance(self.G, nx.DiGraph):
+        if self.G.is_directed():
             inL = dict(self.G.in_degree())
             outL = dict(self.G.out_degree())
             self.inNL = []
@@ -92,15 +92,16 @@ class Pattern:
             self.OutNCount = len(self.outNL)
             self.ECount = self.G.number_of_edges()
             self.nw = NW_D(self.inNL, self.outNL)
-        elif isinstance(self.G, nx.Graph):
+        else:
             self.NL = sorted(list(self.G.nodes()))
             self.NCount = self.G.number_of_nodes()
             self.ECount = self.G.number_of_edges()
             self.nw = NW(self.NCount)
-        if isinstance(self.G, nx.MultiDiGraph):
-            self.kws = nx.DiGraph(self.G).number_of_edges()
-        elif isinstance(self.G, nx.MultiGraph):
-            self.kws = nx.Graph(self.G).number_of_edges()
+        if self.G.is_multigraph():
+            if self.G.is_directed():
+                self.kws = nx.DiGraph(self.G).number_of_edges()
+            else:
+                self.kws = nx.Graph(self.G).number_of_edges()
         else:
             self.kws = self.ECount
         return
@@ -170,22 +171,20 @@ class Pattern:
         return
 ###################################################################################################################################################################
     def removeNode(self, node):
-        assert isinstance(self.G, nx.Graph) and not isinstance(self.G, nx.DiGraph), "function removeNode() is only for type nx.Graph or nx.MultiGraph"
+        assert isinstance(self.G, nx.Graph) and not self.G.is_directed(), "function removeNode() is only for type nx.Graph or nx.MultiGraph"
         self.G.remove_node(node)
         self.NL.remove(node)
         self.NCount = len(self.NL)
         self.ECount = self.G.number_of_edges()
         self.nw = NW(self.NCount)
-        if isinstance(self.G, nx.MultiDiGraph):
-            self.kws = nx.DiGraph(self.G).number_of_edges()
-        elif isinstance(self.G, nx.MultiGraph):
+        if self.G.is_multigraph():
             self.kws = nx.Graph(self.G).number_of_edges()
         else:
             self.kws = self.ECount
         return
 ###################################################################################################################################################################
     def removeInNode(self, nodeIn):
-        assert isinstance(self.G, nx.DiGraph), "function removeInNode() is only for type nx.DiGraph or nx.MultiDiGraph"
+        assert isinstance(self.G, nx.Graph) and self.G.is_directed(), "function removeInNode() is only for type nx.DiGraph or nx.MultiDiGraph"
         predL = list(self.G.predecessors(nodeIn))
         for g in predL:
             self.G.remove_edges_from([(g, nodeIn)]*self.G.number_of_edges(g, nodeIn))
@@ -198,16 +197,14 @@ class Pattern:
         self.InNCount = len(self.inNL)
         self.ECount = self.G.number_of_edges()
         self.nw = NW_D(self.inNL, self.outNL)
-        if isinstance(self.G, nx.MultiDiGraph):
+        if self.G.is_multigraph():
             self.kws = nx.DiGraph(self.G).number_of_edges()
-        elif isinstance(self.G, nx.MultiGraph):
-            self.kws = nx.Graph(self.G).number_of_edges()
         else:
             self.kws = self.ECount
         return
 ###################################################################################################################################################################
     def removeOutNode(self, nodeOut):
-        assert isinstance(self.G, nx.DiGraph), "function removeOutNode() is only for type nx.DiGraph or nx.MultiDiGraph"
+        assert isinstance(self.G, nx.Graph) and self.G.is_directed(), "function removeOutNode() is only for type nx.DiGraph or nx.MultiDiGraph"
         succL = list(self.G.successors(nodeOut))
         for g in succL:
             self.G.remove_edges_from([(nodeOut, g)]*self.G.number_of_edges(nodeOut, g))
@@ -220,13 +217,57 @@ class Pattern:
         self.OutNCount -= 1
         self.ECount = self.G.number_of_edges()
         self.nw = NW_D(self.inNL, self.outNL)
-        if isinstance(self.G, nx.MultiDiGraph):
+        if self.G.is_multigraph():
             self.kws = nx.DiGraph(self.G).number_of_edges()
-        elif isinstance(self.G, nx.MultiGraph):
-            self.kws = nx.Graph(self.G).number_of_edges()
         else:
             self.kws = self.ECount
         return
+
+    def __repr__(self):
+        st = "\t\tpat_type: {}\n".format(self.pat_type)
+        st += "\t\tstate_info: {}\n".format(self.state_info)
+        if self.G.is_directed():
+            st += "\t\tInNCount: {}\tOutNCount: {}\n".format(self.InNCount, self.OutNCount)
+        else:
+            st += "\t\tNCount: {}\n".format(self.NCount)
+        if self.G.is_multigraph():
+            st += "\t\tECount: {}\tkws: {}\n".format(self.ECount. self.kws)
+        else:
+            st += "\t\tECount: {}\n".format(self.ECount)
+        st += "\t\tDensity: {:.5f}\n".format(nx.density(self.G))
+        st += "\t\tPrev_index: {}\tCur_index: {}\n".format(self.prev_order, self.cur_order)
+        st += "\t\tI: {:.5f}\tDL: {:.5f}\n".format(self.I, self.DL)
+        st += "\t\tIC_ssg: {:.5f}\tAD: {:.5f}\tIC_dssg: {:.5f}\tIC_dsimp: {:.5f}\n".format(self.IC_ssg, self.AD, self.IC_dssg, self.IC_dsimp)
+        st += "\t\tla: {}\n".format(self.la)
+        st += "\t\tsumPOS: {:.5f}\texpectedEdges: {:.5f}\n".format(self.sumPOS, self.expectedEdges)
+        if self.G.is_directed():
+            st += "\t\tinNL: "+", ".join(map(str, self.inNL))+"\n"
+            st += "\t\toutNL: "+", ".join(map(str, self.outNL))+"\n"
+        else:
+            st += "\t\tNL: "+", ".join(map(str, self.NL))+"\n"
+        return st
+
+    def getDictForm(self):
+        dt = dict()
+        members = [attr for attr in dir(self) if not callable(getattr(self, attr)) and not attr.startswith("__")]
+        members = set(members) - set(['G'])
+        if self.G.is_directed():
+            members = set(members) - set(['NCount', 'NL'])
+        else:
+            members = set(members) - set(['InNCount', 'OutNCount', 'inNL', 'outNL'])
+        if not self.G.is_multigraph():
+            members = set(members) - set('kws')
+        for k in members:
+            if isinstance(self.__dict__[k], (list, tuple, set)):
+                # dt[k] = ", ".join(map(str, self.__dict__[k]))
+                dt[k] = list(self.__dict__[k])
+            else:
+                dt[k] = self.__dict__[k]
+        dt['Density'] = nx.density(self.G)
+        return dt
+
+    # def __str__():
+    #     return
 ###################################################################################################################################################################
     def copy(self):
         PC = Pattern(self.G)

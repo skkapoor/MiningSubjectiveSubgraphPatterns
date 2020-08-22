@@ -116,7 +116,7 @@ class EvaluateSplit:
             baseParams['codeLengthC'] = getCodeLengthParallel( H, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=baseParams['Pat'].NL )
             baseParams['codeLengthCprime'] = self.computeCodeLengthSplitU(G, PD, 2, baseParams, id) #// Todo : write code for this part
             baseParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - baseParams['codeLengthCprime'] )
-            baseParams['Pat'].setDL( computeDescriptionLength( case=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, compos=baseParams['compos'], isSimple=self.isSimple ) )
+            baseParams['Pat'].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, compos=baseParams['compos'], isSimple=self.isSimple ) )
             baseParams['Pat'].setI( computeInterestingness( baseParams['Pat'].IC_dssg, baseParams['Pat'].DL, mode=2 ) )
             baseParams['Pat'].setPatType('split')
 
@@ -128,10 +128,10 @@ class EvaluateSplit:
             #compute new lambdas for each new pattern/component
             #// Todo: write code
             for k,v in FinalParams['compos'].items():
-                v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_retrun='return', case=3, dropLidx=[id]) )
+                v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_return='return', case=3, dropLidx=[id]) )
             FinalParams['codeLengthCprime'] = self.computeCodeLengthSplitU(G, PD, 3, FinalParams, id) #// Todo : write code for this part
             FinalParams['Pat'].setIC_dssg( FinalParams['codeLengthC'] - FinalParams['codeLengthCprime'] )
-            FinalParams['Pat'].setDL( computeDescriptionLength( case=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams['Pat'].NCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+            FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams['Pat'].NCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
             FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=2 ) )
             # Now set these values to all component patterns
             #// Todo: Write Code
@@ -187,7 +187,7 @@ class EvaluateSplit:
                 FinalParams['codeLengthCprime'] = bestCLprime
                 FinalParams['compos'][k].removeNode(bestRNode)
                 FinalParams['Pat'].setIC_dssg( FinalParams['codeLengthC'] - FinalParams['codeLengthCprime'] )
-                FinalParams['Pat'].setDL( computeDescriptionLength( case=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams['Pat'].NCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+                FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams['Pat'].NCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
                 FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=2 ) )
                 FinalParams['NodesInc'] -= 1
                 FinalParams['excludedNL'].append(bestRNode)
@@ -373,7 +373,7 @@ class EvaluateSplit:
             baseParams['codeLengthC'] = getCodeLengthParallel( H, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=baseParams['Pat'].inNL, outNL=baseParams['Pat'].outNL )
             baseParams['codeLengthCprime'] = self.computeCodeLengthSplitD(G, PD, 2, baseParams, i) #// Todo : write code for this part
             baseParams['Pat'].setIC_dssg( baseParams['codeLengthC'] - baseParams['codeLengthCprime'] )
-            baseParams['Pat'].setDL( computeDescriptionLength( case=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, compos=baseParams['compos'], isSimple=self.isSimple ) )
+            baseParams['Pat'].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, compos=baseParams['compos'], isSimple=self.isSimple ) )
             baseParams['Pat'].setI( computeInterestingness( baseParams['Pat'].IC_dssg, baseParams['Pat'].DL, mode=2 ) )
             baseParams['Pat'].setPatType('split')
 
@@ -385,10 +385,10 @@ class EvaluateSplit:
             #compute new lambdas for each new pattern/component
             #// Todo: write code
             for k,v in FinalParams['compos'].items():
-                v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_retrun='return', case=3, dropLidx=[i]) )
+                v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_return='return', case=3, dropLidx=[i]) )
             FinalParams['codeLengthCprime'] = self.computeCodeLengthSplitD(G, PD, 3, FinalParams, i) #// Todo : write code for this part
             FinalParams['Pat'].setIC_dssg( FinalParams['codeLengthC'] - FinalParams['codeLengthCprime'] )
-            FinalParams['Pat'].setDL( computeDescriptionLength( case=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams['Pat'].InNCount, WOS=FinalParams['Pat'].OutNCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+            FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams['Pat'].InNCount, WOS=FinalParams['Pat'].OutNCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
             FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=2 ) )
             # Now set these values to all component patterns
             #// Todo: Write Code
@@ -465,7 +465,7 @@ class EvaluateSplit:
                     FinalParams['outNodesInc'] -= 1
                     FinalParams['excludedOutNL'].append(bestRNode)
                 FinalParams['Pat'].setIC_dssg( FinalParams['codeLengthC'] - FinalParams['codeLengthCprime'] )
-                FinalParams['Pat'].setDL( computeDescriptionLength( case=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams['Pat'].InNCount, WOS=FinalParams['Pat'].OutNCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+                FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams['Pat'].InNCount, WOS=FinalParams['Pat'].OutNCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
                 FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=2 ) )
                 count_remove_nodes += 1
                 doshrink = True
@@ -669,12 +669,15 @@ class EvaluateSplit:
         """
         if condition == 1:
             if self.gtype == 'U':
-                DL = computeDescriptionLength( case=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id]['Pat'].NCount, compos=self.Data[id]['compos'], excActionType=False, l=self.l, isSimple=self.isSimple )
+                DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id]['Pat'].NCount, compos=self.Data[id]['compos'], excActionType=False, l=self.l, isSimple=self.isSimple )
                 IG = computeInterestingness( self.self.Data[id]['Pat'].IC_dssg, DL, mode=2 )
                 self.Data[id]['Pat'].setDL(DL)
                 self.Data[id]['Pat'].setI(IG)
+            for k,v in self.Data[id]['compos'].items():
+                v.setDL( self.Data[id]['Pat'].DL )
+                v.setI( self.Data[id]['Pat'].I )
             else:
-                DL = computeDescriptionLength( case=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id]['Pat'].InNCount, WOS=self.Data[id]['Pat'].OutNCount, compos=self.Data[id]['compos'], excActionType=False, l=self.l, isSimple=self.isSimple )
+                DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id]['Pat'].InNCount, WOS=self.Data[id]['Pat'].OutNCount, compos=self.Data[id]['compos'], excActionType=False, l=self.l, isSimple=self.isSimple )
                 IG = computeInterestingness( self.Data[id]['Pat'].IC_dssg, DL, mode=2 )
                 self.Data[id]['Pat'].setDL(DL)
                 self.Data[id]['Pat'].setI(IG)
@@ -702,16 +705,25 @@ class EvaluateSplit:
             Pattern  corresponding to the previously performed action. Note that this pattern shall contains the set of nodes that are involved in previous action,
             both as prior and posterior
         """
+        ### removing candidate if any other action was performed on it ###
+        if prevPat.pat_type is not 'split':
+            if prevPat.pat_type in ['merge']:
+                for p in prevPat.prev_order:
+                    if p in self.Data:
+                        del self.Data[p]
+            elif prevPat.pat_type in ['shrink', 'update', 'remove']:
+                if prevPat.prev_order in self.Data:
+                    del self.Data[prevPat.prev_order]
         if self.gtype == 'U':
             for k,v in self.Data.items():
-                if len(set(v.NL).intersection(set(prevPat.NL))) > 1:
+                if len(set(v['Pat'].NL).intersection(set(prevPat.NL))) > 1:
                     self.updateConstraintEvaluation(G, PD, k, 2)
                 else:
                     self.updateConstraintEvaluation(G, PD, k, 1)
         else:
             for k,v in self.Data.items():
-                inInt = len(set(v.inNL).intersection(set(prevPat.inNL)))
-                outInt = len(set(v.outNL).intersection(set(prevPat.outNL)))
+                inInt = len(set(v['Pat'].inNL).intersection(set(prevPat.inNL)))
+                outInt = len(set(v['Pat'].outNL).intersection(set(prevPat.outNL)))
                 if inInt > 1 and outInt > 1:
                     self.updateConstraintEvaluation(G, PD, k, 2)
                 else:
@@ -747,14 +759,12 @@ class EvaluateSplit:
             last split pattern
         """
         #* Here bestSp is a dictionary as saved in self.Data
-        if bestSp['Pat'].prev_order in self.Data: #? Removing the candidate from potential list
-            del self.Data[bestSp['Pat'].prev_order]
-        else:
-            print('Trying to remove key:{} in merge Data but key not found'.format(bestSp['Pat'].prev_order))
+        del self.Data[bestSp['Pat'].prev_order]
         out = PD.lprevUpdate.pop(bestSp['Pat'].prev_order, None)
         if out is None:
             print('Something is fishy')
         else:
             for k,v in bestSp['compos'].items():
-                PD.updateDistribution( v.G, idx=v.cur_order, val_retrun='save', case=2 )
+                la = PD.updateDistribution( v.G, idx=v.cur_order, val_return='save', case=2 )
+                v.setLambda(la)
         return

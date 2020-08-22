@@ -113,9 +113,9 @@ class EvaluateMerge:
         """
         Params = dict()
         Params['Pat'] = P
-        nlambda = PD.updateDistribution( Params['Pat'].G, idx=None, val_retrun='return', case=3, dropLidx=[k1, k2] ) #// TODO: handle this issue, code it !!!!!!!!
+        nlambda = PD.updateDistribution( Params['Pat'].G, idx=None, val_return='return', case=3, dropLidx=[k1, k2] ) #// TODO: handle this issue, code it !!!!!!!!
         Params['codeLengthC'] = getCodeLengthParallel( Params['Pat'].G, PD, gtype=self.gtype, case=2, NL=Params['Pat'].NL, isSimple=self.isSimple )
-        Params['CodeLengthCprime'] = getCodeLengthParallel( Params['Pat'].G, PD, gtype=self.gtype, case=5, NL=Params['Pat'].NL, isSimple=self.isSimple, dropLidx=[k1, k2], nlambda=nlambda )
+        Params['codeLengthCprime'] = getCodeLengthParallel( Params['Pat'].G, PD, gtype=self.gtype, case=5, NL=Params['Pat'].NL, isSimple=self.isSimple, dropLidx=[k1, k2], nlambda=nlambda )
         Params['Pat'].setIC_dssg( Params['codeLengthC'] - Params['codeLengthCprime'] )
         Params['Pat'].setDL( computeDescriptionLength( dlmode=8, excActionType=False, l=6, gtype=self.gtype, W=Params['Pat'].NCount, kw=Params['Pat'].ECount, C=len(PD.lprevUpdate), kws=Params['Pat'].kws, isSimple=self.isSimple ) )
         Params['Pat'].setI( computeInterestingness( Params['Pat'].IC_dssg, Params['Pat'].DL, mode=self.imode) )
@@ -143,9 +143,9 @@ class EvaluateMerge:
         """
         Params = dict()
         Params['Pat'] = P
-        nlambda = PD.updateDistribution( Params['Pat'].G, idx=None, val_retrun='return', case=3, dropLidx=[k1, k2] ) #// TODO: handle this issue, code it !!!!!!!!
+        nlambda = PD.updateDistribution( Params['Pat'].G, idx=None, val_return='return', case=3, dropLidx=[k1, k2] ) #// TODO: handle this issue, code it !!!!!!!!
         Params['codeLengthC'] = getCodeLengthParallel( Params['Pat'].G, PD, gtype=self.gtype, case=2, inNL=Params['Pat'].inNL, outNL=Params['Pat'].outNL, isSimple=self.isSimple )
-        Params['CodeLengthCprime'] = getCodeLengthParallel( Params['Pat'].G, PD, gtype=self.gtype, case=5, inNL=Params['Pat'].inNL, outNL=Params['Pat'].outNL, isSimple=self.isSimple, dropLidx=[k1, k2], nlambda=nlambda )
+        Params['codeLengthCprime'] = getCodeLengthParallel( Params['Pat'].G, PD, gtype=self.gtype, case=5, inNL=Params['Pat'].inNL, outNL=Params['Pat'].outNL, isSimple=self.isSimple, dropLidx=[k1, k2], nlambda=nlambda )
         Params['Pat'].setIC_dssg( Params['codeLengthC'] - Params['codeLengthCprime'] )
         Params['Pat'].setDL( computeDescriptionLength( dlmode=8, excActionType=False, l=6, gtype=self.gtype, WI=Params['Pat'].inNL, WO=Params['Pat'].outNL, kw=Params['Pat'].ECount, C=len(PD.lprevUpdate), kws=Params['Pat'].kws, isSimple=self.isSimple ) )
         Params['Pat'].setI( computeInterestingness( Params['Pat'].IC_dssg, Params['Pat'].DL, mode=self.imode) )
@@ -200,10 +200,11 @@ class EvaluateMerge:
             Pattern corresponding to the previously performed action. Note that this pattern shall contains the set of nodes that are involved in previous action,
             both as prior and posterior
         """
+        keyUpdate = []
         if self.gtype == 'U':
             for k,v in self.Data.items():
                 if len(set(v['Pat'].NL).intersection(set(prevPat.NL))) > 1:
-                    self.updateConstraintEvaluation(G, PD, k, 2)
+                    keyUpdate.append(k)
                 else:
                     self.updateConstraintEvaluation(G, PD, k, 1)
         else:
@@ -211,9 +212,12 @@ class EvaluateMerge:
                 inInt = len(set(v['Pat'].inNL).intersection(set(prevPat.inNL)))
                 outInt = len(set(v['Pat'].outNL).intersection(set(prevPat.outNL)))
                 if inInt > 1 and outInt > 1:
-                    self.updateConstraintEvaluation(G, PD, k, 2)
+                    keyUpdate.append(k)
                 else:
                     self.updateConstraintEvaluation(G, PD, k, 1)
+        for k in keyUpdate:
+            del self.Data[k]
+            self.updateConstraintEvaluation(G, PD, k, 2)
         return
 
     def doProcessWithNewConstraint(self, G, PD, prevPat):
@@ -266,9 +270,12 @@ class EvaluateMerge:
             pkeys = set(prevPat.prev_order)
         else:
             pkeys = set([prevPat.prev_order])
+        delkeys = []
         for k in keys:
             if len(set(k).intersection(pkeys)) == 1:
-                del self.Data[k]
+                delkeys.append(k)
+        for k in delkeys:
+            del self.Data[k]
         return
 
     def updateDistribution(self, PD, bestM):
@@ -284,16 +291,14 @@ class EvaluateMerge:
         bestM : Pattern
             last merge pattern
         """
-        if bestM['Pat'].prev_order in self.Data: #? Removing the candidate from potential list
-            del self.Data[bestM['Pat'].prev_order]
-        else:
-            print('Trying to remove key:{} in merge Data but key not found'.format(bestM['Pat'].prev_order))
+        del self.Data[bestM['Pat'].prev_order]
         out1 = PD.lprevUpdate.pop(bestM['Pat'].prev_order[0], None)
         out2 = PD.lprevUpdate.pop(bestM['Pat'].prev_order[1], None)
         if out1 is None or out2 is None:
             print('Something is fishy')
         else:
-            PD.updateDistribution( bestM['Pat'].G, idx=bestM.cur_order, val_retrun='save', case=2 )
+            la = PD.updateDistribution( bestM['Pat'].G, idx=bestM['Pat'].cur_order, val_return='save', case=2 )
+            bestM['Pat'].setLambda(la)
         return
 
     def getBestOption(self):
@@ -308,6 +313,6 @@ class EvaluateMerge:
         if len(self.Data) < 1:
             return None
         else:
-            bestR = max(self.Data.items(), key=lambda x: x[1].I)
-            return bestR[1]
+            bestM = max(self.Data.items(), key=lambda x: x[1]['Pat'].I)
+            return bestM[1]
 

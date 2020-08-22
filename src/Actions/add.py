@@ -54,6 +54,7 @@ class EvaluateAdd:
         self.isSimple = isSimple
         self.l = l # possible types (give number) of action, default is 6
         self.imode = imode
+        self.icmode = ic_mode
         self.minsize = minsize
         self.q = q
         self.seedMode = seedType
@@ -63,7 +64,7 @@ class EvaluateAdd:
 
     def evaluateNew(self, G, PD):
         self.seeds = getSeeds(G, PD, self.q, self.seedMode, self.seedRuns, self.icmode, self.gtype, self.isSimple, self.incEdges)
-        self.Data = runGivenSeeds(G, PD, self.q, self.nodes, self.icmode, self.gtype, self.isSimple, self.incEdges)
+        self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
         return
 
     def checkAndUpdateAllPossibilities(self, G, PD, PrevPat):
@@ -93,12 +94,12 @@ class EvaluateAdd:
             if self.gtype == 'U':
                 nlambda = PD.updateDistribution(bestPattern.G, None, 'return', 2, None)
                 codeLengthC = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple)
-                codeLengthCprime = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
+                codeLengthCprime = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=3, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
                 DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=bestPattern.NCount, kw=bestPattern.ECount, q=self.q, isSimple=self.isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
             else:
                 nlambda = PD.updateDistribution(bestPattern.G, None, 'return', 2, None)
                 codeLengthC = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple)
-                codeLengthCprime = getCodeLengthParallel(G, PD, inNL=bestPattern.inNL, outNL=bestPattern.outNL, case=2, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
+                codeLengthCprime = getCodeLengthParallel(G, PD, inNL=bestPattern.inNL, outNL=bestPattern.outNL, case=3, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
                 DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=bestPattern.inNL, WO=bestPattern.outNL, kw=bestPattern.ECount, q=self.q, isSimple=self.isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
             IC_dssg = codeLengthC - codeLengthCprime
             bestPattern.setIC_dssg(IC_dssg)
@@ -127,5 +128,13 @@ class EvaluateAdd:
         """
         self.Data = []
         self.seeds = []
-        PD.updateDistribution( bestA['Pat'].G, idx=bestA.cur_order, val_retrun='save', case=2 )
+        la = PD.updateDistribution( bestA['Pat'].G, idx=bestA['Pat'].cur_order, val_return='save', case=2 )
+        bestA['Pat'].setLambda(la)
+        return
+
+    def printCands(self):
+        if len(self.Data):
+            for k in range(len(self.Data)):
+                print('\t\t', k, self.Data[k])
+                print('\n')
         return

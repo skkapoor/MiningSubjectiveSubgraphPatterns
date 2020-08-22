@@ -53,7 +53,7 @@ class PDClass:
         numInNodes = None
         numOutNodes = None
 
-        if isinstance(pat, nx.DiGraph):
+        if pat.is_directed():
             inL = dict(pat.in_degree())
             outL = dict(pat.out_degree())
             inNL = []
@@ -67,23 +67,21 @@ class PDClass:
             numInNodes = len(inNL)
             numOutNodes = len(outNL)
             numEdges = pat.number_of_edges()
-        elif isinstance(pat, nx.Graph):
+        else:
             numNodes = pat.number_of_nodes()
             numEdges = pat.number_of_edges()
             nodes = sorted(list(pat.nodes()))
-        else:
-            print('Invalid type of pat object in UpdateDistribution')
 
         expLambda = None
         if case == 1:
-            if isinstance(pat, nx.DiGraph):
+            if pat.is_directed():
                 expLambda = [None]*numOutNodes
                 for i in range(numOutNodes):
                     expLambda[i] = [0.0]*numInNodes
                 for i in range(numOutNodes):
                     for j in range(numInNodes):
                         expLambda[i][j] = self.explambda(outNL[i], inNL[j])
-            elif isinstance(pat, nx.Graph):
+            else:
                 expLambda = [None]*numNodes
                 for i in range(numNodes):
                     expLambda[i] = [0.0]*numNodes
@@ -92,14 +90,14 @@ class PDClass:
                         expLambda[i][j] = self.explambda(nodes[i], nodes[j])
 
         elif case == 2:
-            if isinstance(pat, nx.DiGraph):
+            if pat.is_directed():
                 expLambda = [None]*numOutNodes
                 for i in range(numOutNodes):
                     expLambda[i] = [0.0]*numInNodes
                 for i in range(numOutNodes):
                     for j in range(numInNodes):
                         expLambda[i][j] = self.explambdaIncLprev(outNL[i], inNL[j])
-            elif isinstance(pat, nx.Graph):
+            else:
                 expLambda = [None]*numNodes
                 for i in range(numNodes):
                     expLambda[i] = [0.0]*numNodes
@@ -108,14 +106,14 @@ class PDClass:
                         expLambda[i][j] = self.explambdaIncLprev(nodes[i], nodes[j])
 
         elif case == 3:
-            if isinstance(pat, nx.DiGraph):
+            if pat.is_directed():
                 expLambda = [None]*numOutNodes
                 for i in range(numOutNodes):
                     expLambda[i] = [0.0]*numInNodes
                 for i in range(numOutNodes):
                     for j in range(numInNodes):
                         expLambda[i][j] = self.explambdaIncLprevButDropSomeLas(outNL[i], inNL[j], dropLidx)
-            elif isinstance(pat, nx.Graph):
+            else:
                 expLambda = [None]*numNodes
                 for i in range(numNodes):
                     expLambda[i] = [0.0]*numNodes
@@ -138,9 +136,9 @@ class PDClass:
             f_a = 0.0
             f_b = 0.0
             f_c = 0.0
-            c = round((a + b) / 2, 13)
+            c = round((a + b) / 2, 12)
 
-            if isinstance(pat, nx.DiGraph):
+            if pat.is_directed():
                 for i in range(numOutNodes):
                     for j in range(numInNodes):
                         try:
@@ -152,7 +150,7 @@ class PDClass:
                             f_c+=self.getExpectationFromExpLambda(v_c)
                         except OverflowError as error:
                             print(error,a,b)
-            elif isinstance(pat, nx.Graph):
+            else:
                 for i in range(numNodes):
                     for j in range(i+1, numNodes):
                         try:
