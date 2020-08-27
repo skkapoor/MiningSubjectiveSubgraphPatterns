@@ -1,6 +1,3 @@
-# Mining Subjective Subgraph Patterns
-This repository contains the combined code of SSG, SIMP, DSSG and DSIMP
-
 <main>
 
 <article id="content">
@@ -13,7 +10,7 @@ This repository contains the combined code of SSG, SIMP, DSSG and DSIMP
 
 <section id="section-intro">This project contains the implementation of SSG, SIMP, DSSG and DSIMP algorithms. Depending upon the usage kindly cite the following papers:
 
-<div>`**SSG:** ﻿
+<div>**SSG:** ﻿
 
 <pre class="print">@Article{vanLeeuwen2016,
 	author={van Leeuwen, Matthijs and De Bie, Tijl and 
@@ -32,7 +29,7 @@ This repository contains the combined code of SSG, SIMP, DSSG and DSIMP
 
 </div>
 
-<div>`**SIMP:** ﻿
+<div>**SIMP:** ﻿
 
 <pre class="print">@Article{Kapoor2020a,
 	author={Kapoor, Sarang and Saxena, Dhish Kumar
@@ -50,7 +47,7 @@ This repository contains the combined code of SSG, SIMP, DSSG and DSIMP
 
 </div>
 
-<div>`**DSSG:** ﻿
+<div>**DSSG:** ﻿
 
 <pre class="print">@Article{Kapoor2020b,
 	author={Kapoor, Sarang and Saxena, Dhish Kumar
@@ -63,17 +60,13 @@ This repository contains the combined code of SSG, SIMP, DSSG and DSIMP
 
 </div>
 
-<div>`**DSIMP:** ﻿`</div>
+<div>**DSIMP:** ﻿</div>
 
 </section>
 
-<section>
-
-</section>
 
 To run the code pre-requites are:
-
-<pre> 
+ 
 
 *   Python 3.6
 
@@ -83,25 +76,20 @@ To run the code pre-requites are:
 
 *   Pandas
 
-</pre>
 
 <section>To run the code excute the corresponding Algorithm file in the directory 'src/Algorithms' with required configuration file name passed in the arguments. For example:
 
 <pre> 
 		```sh
-		:~MiningSubjectiveSubgraphPatterns$ python src/Algorithms/SSG.py SSG.ini
+		$ python src/Algorithms/SSG.py SSG.ini
 		```
 	</pre>
 
 The file SSG.ini shall be found in directory 'Confs'.</section>
 
-<section>For any queries kindly write an email to [sarang.iitr@gmail.com](mailto:sarang.iitr@gmail.com)</section>
+<section>For any queries kindly write an email to __sarang.iitr@gmail.com__</section>
 
 </article>
-
-<nav id="sidebar">
-
-</nav>
 
 </main>
 
