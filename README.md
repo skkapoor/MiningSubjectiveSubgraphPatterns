@@ -10,7 +10,7 @@
 
 <section id="section-intro">This project contains the implementation of SSG, SIMP, DSSG and DSIMP algorithms. Depending upon the usage kindly cite the following papers:
 
-<div>**SSG:** ﻿
+**SSG:** ﻿
 
 <pre class="print">@Article{vanLeeuwen2016,
 	author={van Leeuwen, Matthijs and De Bie, Tijl and 
@@ -27,9 +27,9 @@
 	doi={10.1007/s10994-015-5539-3},
 	url={https://doi.org/10.1007/s10994-015-5539-3}} </pre>
 
-</div>
 
-<div>**SIMP:** ﻿
+
+**SIMP:** ﻿
 
 <pre class="print">@Article{Kapoor2020a,
 	author={Kapoor, Sarang and Saxena, Dhish Kumar
@@ -45,9 +45,9 @@
 	doi={10.1007/s10994-020-05873-9},
 	url={https://doi.org/10.1007/s10994-020-05873-9}} </pre>
 
-</div>
 
-<div>**DSSG:** ﻿
+
+**DSSG:** ﻿
 
 <pre class="print">@Article{Kapoor2020b,
 	author={Kapoor, Sarang and Saxena, Dhish Kumar
@@ -60,7 +60,7 @@
 
 </div>
 
-<div>**DSIMP:** ﻿</div>
+**DSIMP:**
 
 </section>
 
@@ -79,22 +79,17 @@ To run the code pre-requites are:
 
 <section>To run the code excute the corresponding Algorithm file in the directory 'src/Algorithms' with required configuration file name passed in the arguments. For example:
 
-<pre> 
-		```sh
-		$ python src/Algorithms/SSG.py SSG.ini
-		```
-	</pre>
+```sh
+:~MiningSubjectiveSubgraphPatterns$ python src/Algorithms/SSG.py SSG.ini
+```
 
 The file SSG.ini shall be found in directory 'Confs'.</section>
 
-<section>For any queries kindly write an email to __sarang.iitr@gmail.com__</section>
+For any queries kindly write an email to [sarang.iitr@gmail.com](mailti:sarang.iitr@gmail.com)
 
 </article>
 
 </main>
 
-<footer id="footer">
 
-© 2020 Copyright <cite>Sarang Kapoor</cite>.
-
-</footer>
+__© 2020 Copyright__  **Sarang Kapoor**
