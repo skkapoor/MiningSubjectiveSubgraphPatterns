@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>src.Actions.add API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.Actions.add</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+import os
+import sys
+path = os.getcwd().split(&#39;MiningSubjectiveSubgraphPatterns&#39;)[0]+&#39;MiningSubjectiveSubgraphPatterns/&#39;
+if path not in sys.path:
+        sys.path.append(path)
+
+from src.Utils.Measures import getCodeLength, getCodeLengthParallel, getDirectedSubgraph
+from src.Utils.Measures import computeDescriptionLength, computeInterestingness
+from src.Patterns.Pattern import Pattern
+from src.HillClimbers.HC_v4 import findBestPattern, runNKseeds, runGivenSeeds, getSeeds
+###################################################################################################################################################################
+class EvaluateAdd:
+    &#34;&#34;&#34;
+    This data structure shall contain all the possible addition candidates
+    along with pattern number as key and other information as value
+    &#34;&#34;&#34;
+    def __init__(self, gtype=&#39;U&#39;, isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType=&#39;interest&#39;, seedRuns=10, q=0.01, incEdges=False):
+        &#34;&#34;&#34;
+        initialization function
+
+        Parameters
+        ----------
+        gtype : str, optional
+            Input Graph type, &#39;U&#39;: Undirected, &#39;D&#39;: Directed, by default &#39;U&#39;
+        isSimple : bool, optional
+            if input graph is a simple graph then True else False if it is a multigraph, by default True
+        l : int, optional
+            Total number of unique action types that can be performed, by default 6
+        icmode : int, optional
+            Mode for information content--- 1: IC_ssg, 2: AD (aggregate deviation), 3: IC_dsimp, by default 1
+        imode : int, optional
+            Interestingness mode--- 1: fraction, 2: Difference, by default 2
+        minsize : int, optional
+            Minimum size of pattern, by default 2
+        seedType : str, optional
+            Type of seed run for the hill climber, it can be &#34;all&#34;, &#34;uniform&#34;, &#34;degree&#34; or &#34;interest&#34;, by default &#34;interest&#34;
+        seedRuns : int, optional
+            Minimum size of pattern, by default 2
+        q : float, optional
+            Expected size of pattern, given as a factor of original size of the input graph, ranges 0.0-1.0, by default 0.01
+        incEdges : bool, optional
+            True in edges to be encoded for description length else false, by default false
+        &#34;&#34;&#34;
+        self.Data = dict()
+        self.seeds = list()
+        self.gtype = gtype
+        self.isSimple = isSimple
+        self.l = l # possible types (give number) of action, default is 6
+        self.imode = imode
+        self.icmode = ic_mode
+        self.minsize = minsize
+        self.q = q
+        self.seedMode = seedType
+        self.seedRuns = seedRuns
+        self.incEdges = incEdges
+        print(&#39;Initialized EvaluateAdd&#39;)
+###################################################################################################################################################################
+    def evaluateNew(self, G, PD):
+        &#34;&#34;&#34;
+        function to evaluate all independent seed runs
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        PD : PDClass
+            Input background distribution
+        &#34;&#34;&#34;
+        self.seeds = getSeeds(G, PD, self.q, self.seedMode, self.seedRuns, self.icmode, self.gtype, self.isSimple, self.incEdges)
+        self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
+        return
+###################################################################################################################################################################
+    def checkAndUpdateAllPossibilities(self, G, PD, PrevPat):
+        &#34;&#34;&#34;
+        function to update the candidate list
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        PD : PDClass
+            Input background distribution
+        PrevPat : src.Patterns.Pattern
+            resultant pattern of last performed action
+        &#34;&#34;&#34;
+        #First if the last action is add then we are required to find a new pattern again, that is, running a hill climber for top-k seeds fresh.
+        if len(self.Data) &lt; 1:
+            self.evaluateNew(G, PD)
+        else:
+            #second if there is an overlap of nodes affected (to specific a node-pair) then we find a new pattern and run the hill climber for top-k seeds fresh.
+            bestPattern = max(self.Data, key=lambda x: x.I)
+            if self.gtype == &#39;U&#39;:
+                if len(set(bestPattern.NL).intersection(set(PrevPat.NL))) &gt; 1:
+                    self.evaluateNew(G, PD)
+            else:
+                inInt = len(set(bestPattern.inNL).intersection(set(PrevPat.inNL)))
+                outInt = len(set(bestPattern.outNL).intersection(set(PrevPat.outNL)))
+                if inInt &gt; 1 and outInt &gt; 1:
+                    self.evaluateNew(G, PD)
+        return
+###################################################################################################################################################################
+    def getBestOption(self, G, PD):
+        &#34;&#34;&#34;
+        function to return the best candidate to add
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        PD : PDClass
+            Input background distribution
+
+        Returns
+        -------
+        dict
+            dictionary containing a Pattern to add and correspoding prior and posterior codelengths
+        &#34;&#34;&#34;
+        if len(self.Data) &gt; 0:
+            bestPattern = max(self.Data, key=lambda x: x.I)
+            codeLengthC = None
+            codeLengthCprime = None
+            DL = None
+            dlmode = 3
+            if self.gtype == &#39;U&#39;:
+                nlambda = PD.updateDistribution(bestPattern.G, None, &#39;return&#39;, 2, None)
+                codeLengthC = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple)
+                codeLengthCprime = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=3, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
+                DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=bestPattern.NCount, kw=bestPattern.ECount, q=self.q, isSimple=self.isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
+            else:
+                nlambda = PD.updateDistribution(bestPattern.G, None, &#39;return&#39;, 2, None)
+                codeLengthC = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple)
+                codeLengthCprime = getCodeLengthParallel(G, PD, inNL=bestPattern.inNL, outNL=bestPattern.outNL, case=3, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
+                DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=bestPattern.inNL, WO=bestPattern.outNL, kw=bestPattern.ECount, q=self.q, isSimple=self.isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
+            IC_dssg = codeLengthC - codeLengthCprime
+            bestPattern.setIC_dssg(IC_dssg)
+            bestPattern.setDL(DL)
+            bestPattern.setI( computeInterestingness(bestPattern.IC_dssg, bestPattern.DL, mode=self.imode) )
+            bestPattern.setPatType(&#39;add&#39;)
+            Params = dict()
+            Params[&#39;Pat&#39;] = bestPattern
+            Params[&#39;codeLengthC&#39;] = codeLengthC
+            Params[&#39;codeLengthCprime&#39;] = codeLengthCprime
+            return Params
+        else:
+            return None
+###################################################################################################################################################################
+    def updateDistribution(self, PD, bestA):
+        &#34;&#34;&#34;
+        function to update background distribution.
+        * Now here we add a new lambda for the added pattern.
+
+        Parameters
+        ----------
+        PD : PDClass
+            Background distribution
+        bestA : dict
+            last added action details
+        &#34;&#34;&#34;
+        self.Data = []
+        self.seeds = []
+        la = PD.updateDistribution( bestA[&#39;Pat&#39;].G, idx=bestA[&#39;Pat&#39;].cur_order, val_return=&#39;save&#39;, case=2 )
+        bestA[&#39;Pat&#39;].setLambda(la)
+        return
+###################################################################################################################################################################
+    def printCands(self):
+        &#34;&#34;&#34;
+        function to print all current candidates
+        &#34;&#34;&#34;
+        if len(self.Data):
+            for k in range(len(self.Data)):
+                print(&#39;\t\t&#39;, k, self.Data[k])
+                print(&#39;\n&#39;)
+        return
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.Actions.add.EvaluateAdd"><code class="flex name class">
+<span>class <span class="ident">EvaluateAdd</span></span>
+<span>(</span><span>gtype='U', isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType='interest', seedRuns=10, q=0.01, incEdges=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This data structure shall contain all the possible addition candidates
+along with pattern number as key and other information as value</p>
+<p>initialization function</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>gtype</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Input Graph type, 'U': Undirected, 'D': Directed, by default 'U'</dd>
+<dt><strong><code>isSimple</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>if input graph is a simple graph then True else False if it is a multigraph, by default True</dd>
+<dt><strong><code>l</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Total number of unique action types that can be performed, by default 6</dd>
+<dt><strong><code>icmode</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Mode for information content&mdash; 1: IC_ssg, 2: AD (aggregate deviation), 3: IC_dsimp, by default 1</dd>
+<dt><strong><code>imode</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Interestingness mode&mdash; 1: fraction, 2: Difference, by default 2</dd>
+<dt><strong><code>minsize</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Minimum size of pattern, by default 2</dd>
+<dt><strong><code>seedType</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Type of seed run for the hill climber, it can be "all", "uniform", "degree" or "interest", by default "interest"</dd>
+<dt><strong><code>seedRuns</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Minimum size of pattern, by default 2</dd>
+<dt><strong><code>q</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>Expected size of pattern, given as a factor of original size of the input graph, ranges 0.0-1.0, by default 0.01</dd>
+<dt><strong><code>incEdges</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>True in edges to be encoded for description length else false, by default false</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EvaluateAdd:
+    &#34;&#34;&#34;
+    This data structure shall contain all the possible addition candidates
+    along with pattern number as key and other information as value
+    &#34;&#34;&#34;
+    def __init__(self, gtype=&#39;U&#39;, isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType=&#39;interest&#39;, seedRuns=10, q=0.01, incEdges=False):
+        &#34;&#34;&#34;
+        initialization function
+
+        Parameters
+        ----------
+        gtype : str, optional
+            Input Graph type, &#39;U&#39;: Undirected, &#39;D&#39;: Directed, by default &#39;U&#39;
+        isSimple : bool, optional
+            if input graph is a simple graph then True else False if it is a multigraph, by default True
+        l : int, optional
+            Total number of unique action types that can be performed, by default 6
+        icmode : int, optional
+            Mode for information content--- 1: IC_ssg, 2: AD (aggregate deviation), 3: IC_dsimp, by default 1
+        imode : int, optional
+            Interestingness mode--- 1: fraction, 2: Difference, by default 2
+        minsize : int, optional
+            Minimum size of pattern, by default 2
+        seedType : str, optional
+            Type of seed run for the hill climber, it can be &#34;all&#34;, &#34;uniform&#34;, &#34;degree&#34; or &#34;interest&#34;, by default &#34;interest&#34;
+        seedRuns : int, optional
+            Minimum size of pattern, by default 2
+        q : float, optional
+            Expected size of pattern, given as a factor of original size of the input graph, ranges 0.0-1.0, by default 0.01
+        incEdges : bool, optional
+            True in edges to be encoded for description length else false, by default false
+        &#34;&#34;&#34;
+        self.Data = dict()
+        self.seeds = list()
+        self.gtype = gtype
+        self.isSimple = isSimple
+        self.l = l # possible types (give number) of action, default is 6
+        self.imode = imode
+        self.icmode = ic_mode
+        self.minsize = minsize
+        self.q = q
+        self.seedMode = seedType
+        self.seedRuns = seedRuns
+        self.incEdges = incEdges
+        print(&#39;Initialized EvaluateAdd&#39;)
+###################################################################################################################################################################
+    def evaluateNew(self, G, PD):
+        &#34;&#34;&#34;
+        function to evaluate all independent seed runs
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        PD : PDClass
+            Input background distribution
+        &#34;&#34;&#34;
+        self.seeds = getSeeds(G, PD, self.q, self.seedMode, self.seedRuns, self.icmode, self.gtype, self.isSimple, self.incEdges)
+        self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
+        return
+###################################################################################################################################################################
+    def checkAndUpdateAllPossibilities(self, G, PD, PrevPat):
+        &#34;&#34;&#34;
+        function to update the candidate list
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        PD : PDClass
+            Input background distribution
+        PrevPat : src.Patterns.Pattern
+            resultant pattern of last performed action
+        &#34;&#34;&#34;
+        #First if the last action is add then we are required to find a new pattern again, that is, running a hill climber for top-k seeds fresh.
+        if len(self.Data) &lt; 1:
+            self.evaluateNew(G, PD)
+        else:
+            #second if there is an overlap of nodes affected (to specific a node-pair) then we find a new pattern and run the hill climber for top-k seeds fresh.
+            bestPattern = max(self.Data, key=lambda x: x.I)
+            if self.gtype == &#39;U&#39;:
+                if len(set(bestPattern.NL).intersection(set(PrevPat.NL))) &gt; 1:
+                    self.evaluateNew(G, PD)
+            else:
+                inInt = len(set(bestPattern.inNL).intersection(set(PrevPat.inNL)))
+                outInt = len(set(bestPattern.outNL).intersection(set(PrevPat.outNL)))
+                if inInt &gt; 1 and outInt &gt; 1:
+                    self.evaluateNew(G, PD)
+        return
+###################################################################################################################################################################
+    def getBestOption(self, G, PD):
+        &#34;&#34;&#34;
+        function to return the best candidate to add
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        PD : PDClass
+            Input background distribution
+
+        Returns
+        -------
+        dict
+            dictionary containing a Pattern to add and correspoding prior and posterior codelengths
+        &#34;&#34;&#34;
+        if len(self.Data) &gt; 0:
+            bestPattern = max(self.Data, key=lambda x: x.I)
+            codeLengthC = None
+            codeLengthCprime = None
+            DL = None
+            dlmode = 3
+            if self.gtype == &#39;U&#39;:
+                nlambda = PD.updateDistribution(bestPattern.G, None, &#39;return&#39;, 2, None)
+                codeLengthC = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple)
+                codeLengthCprime = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=3, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
+                DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=bestPattern.NCount, kw=bestPattern.ECount, q=self.q, isSimple=self.isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
+            else:
+                nlambda = PD.updateDistribution(bestPattern.G, None, &#39;return&#39;, 2, None)
+                codeLengthC = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple)
+                codeLengthCprime = getCodeLengthParallel(G, PD, inNL=bestPattern.inNL, outNL=bestPattern.outNL, case=3, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
+                DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=bestPattern.inNL, WO=bestPattern.outNL, kw=bestPattern.ECount, q=self.q, isSimple=self.isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
+            IC_dssg = codeLengthC - codeLengthCprime
+            bestPattern.setIC_dssg(IC_dssg)
+            bestPattern.setDL(DL)
+            bestPattern.setI( computeInterestingness(bestPattern.IC_dssg, bestPattern.DL, mode=self.imode) )
+            bestPattern.setPatType(&#39;add&#39;)
+            Params = dict()
+            Params[&#39;Pat&#39;] = bestPattern
+            Params[&#39;codeLengthC&#39;] = codeLengthC
+            Params[&#39;codeLengthCprime&#39;] = codeLengthCprime
+            return Params
+        else:
+            return None
+###################################################################################################################################################################
+    def updateDistribution(self, PD, bestA):
+        &#34;&#34;&#34;
+        function to update background distribution.
+        * Now here we add a new lambda for the added pattern.
+
+        Parameters
+        ----------
+        PD : PDClass
+            Background distribution
+        bestA : dict
+            last added action details
+        &#34;&#34;&#34;
+        self.Data = []
+        self.seeds = []
+        la = PD.updateDistribution( bestA[&#39;Pat&#39;].G, idx=bestA[&#39;Pat&#39;].cur_order, val_return=&#39;save&#39;, case=2 )
+        bestA[&#39;Pat&#39;].setLambda(la)
+        return
+###################################################################################################################################################################
+    def printCands(self):
+        &#34;&#34;&#34;
+        function to print all current candidates
+        &#34;&#34;&#34;
+        if len(self.Data):
+            for k in range(len(self.Data)):
+                print(&#39;\t\t&#39;, k, self.Data[k])
+                print(&#39;\n&#39;)
+        return</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="src.Actions.add.EvaluateAdd.checkAndUpdateAllPossibilities"><code class="name flex">
+<span>def <span class="ident">checkAndUpdateAllPossibilities</span></span>(<span>self, G, PD, PrevPat)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to update the candidate list</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkx graph</code></dt>
+<dd>input graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Input background distribution</dd>
+<dt><strong><code>PrevPat</code></strong> :&ensp;<code><a title="src.Patterns.Pattern" href="../Patterns/Pattern.html">src.Patterns.Pattern</a></code></dt>
+<dd>resultant pattern of last performed action</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def checkAndUpdateAllPossibilities(self, G, PD, PrevPat):
+    &#34;&#34;&#34;
+    function to update the candidate list
+
+    Parameters
+    ----------
+    G : networkx graph
+        input graph
+    PD : PDClass
+        Input background distribution
+    PrevPat : src.Patterns.Pattern
+        resultant pattern of last performed action
+    &#34;&#34;&#34;
+    #First if the last action is add then we are required to find a new pattern again, that is, running a hill climber for top-k seeds fresh.
+    if len(self.Data) &lt; 1:
+        self.evaluateNew(G, PD)
+    else:
+        #second if there is an overlap of nodes affected (to specific a node-pair) then we find a new pattern and run the hill climber for top-k seeds fresh.
+        bestPattern = max(self.Data, key=lambda x: x.I)
+        if self.gtype == &#39;U&#39;:
+            if len(set(bestPattern.NL).intersection(set(PrevPat.NL))) &gt; 1:
+                self.evaluateNew(G, PD)
+        else:
+            inInt = len(set(bestPattern.inNL).intersection(set(PrevPat.inNL)))
+            outInt = len(set(bestPattern.outNL).intersection(set(PrevPat.outNL)))
+            if inInt &gt; 1 and outInt &gt; 1:
+                self.evaluateNew(G, PD)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.add.EvaluateAdd.evaluateNew"><code class="name flex">
+<span>def <span class="ident">evaluateNew</span></span>(<span>self, G, PD)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to evaluate all independent seed runs</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkx graph</code></dt>
+<dd>input graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Input background distribution</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluateNew(self, G, PD):
+    &#34;&#34;&#34;
+    function to evaluate all independent seed runs
+
+    Parameters
+    ----------
+    G : networkx graph
+        input graph
+    PD : PDClass
+        Input background distribution
+    &#34;&#34;&#34;
+    self.seeds = getSeeds(G, PD, self.q, self.seedMode, self.seedRuns, self.icmode, self.gtype, self.isSimple, self.incEdges)
+    self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.add.EvaluateAdd.getBestOption"><code class="name flex">
+<span>def <span class="ident">getBestOption</span></span>(<span>self, G, PD)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to return the best candidate to add</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkx graph</code></dt>
+<dd>input graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Input background distribution</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>dictionary containing a Pattern to add and correspoding prior and posterior codelengths</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getBestOption(self, G, PD):
+    &#34;&#34;&#34;
+    function to return the best candidate to add
+
+    Parameters
+    ----------
+    G : networkx graph
+        input graph
+    PD : PDClass
+        Input background distribution
+
+    Returns
+    -------
+    dict
+        dictionary containing a Pattern to add and correspoding prior and posterior codelengths
+    &#34;&#34;&#34;
+    if len(self.Data) &gt; 0:
+        bestPattern = max(self.Data, key=lambda x: x.I)
+        codeLengthC = None
+        codeLengthCprime = None
+        DL = None
+        dlmode = 3
+        if self.gtype == &#39;U&#39;:
+            nlambda = PD.updateDistribution(bestPattern.G, None, &#39;return&#39;, 2, None)
+            codeLengthC = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple)
+            codeLengthCprime = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=3, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
+            DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=bestPattern.NCount, kw=bestPattern.ECount, q=self.q, isSimple=self.isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
+        else:
+            nlambda = PD.updateDistribution(bestPattern.G, None, &#39;return&#39;, 2, None)
+            codeLengthC = getCodeLengthParallel(G, PD, NL=bestPattern.NL, case=2, gtype=self.gtype, isSimple=self.isSimple)
+            codeLengthCprime = getCodeLengthParallel(G, PD, inNL=bestPattern.inNL, outNL=bestPattern.outNL, case=3, gtype=self.gtype, isSimple=self.isSimple, nlambda=nlambda)
+            DL = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=bestPattern.inNL, WO=bestPattern.outNL, kw=bestPattern.ECount, q=self.q, isSimple=self.isSimple, kws=bestPattern.kws, excActionType=False, l=self.l)
+        IC_dssg = codeLengthC - codeLengthCprime
+        bestPattern.setIC_dssg(IC_dssg)
+        bestPattern.setDL(DL)
+        bestPattern.setI( computeInterestingness(bestPattern.IC_dssg, bestPattern.DL, mode=self.imode) )
+        bestPattern.setPatType(&#39;add&#39;)
+        Params = dict()
+        Params[&#39;Pat&#39;] = bestPattern
+        Params[&#39;codeLengthC&#39;] = codeLengthC
+        Params[&#39;codeLengthCprime&#39;] = codeLengthCprime
+        return Params
+    else:
+        return None</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.add.EvaluateAdd.printCands"><code class="name flex">
+<span>def <span class="ident">printCands</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to print all current candidates</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def printCands(self):
+    &#34;&#34;&#34;
+    function to print all current candidates
+    &#34;&#34;&#34;
+    if len(self.Data):
+        for k in range(len(self.Data)):
+            print(&#39;\t\t&#39;, k, self.Data[k])
+            print(&#39;\n&#39;)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.add.EvaluateAdd.updateDistribution"><code class="name flex">
+<span>def <span class="ident">updateDistribution</span></span>(<span>self, PD, bestA)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to update background distribution.
+* Now here we add a new lambda for the added pattern.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution</dd>
+<dt><strong><code>bestA</code></strong> :&ensp;<code>dict</code></dt>
+<dd>last added action details</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateDistribution(self, PD, bestA):
+    &#34;&#34;&#34;
+    function to update background distribution.
+    * Now here we add a new lambda for the added pattern.
+
+    Parameters
+    ----------
+    PD : PDClass
+        Background distribution
+    bestA : dict
+        last added action details
+    &#34;&#34;&#34;
+    self.Data = []
+    self.seeds = []
+    la = PD.updateDistribution( bestA[&#39;Pat&#39;].G, idx=bestA[&#39;Pat&#39;].cur_order, val_return=&#39;save&#39;, case=2 )
+    bestA[&#39;Pat&#39;].setLambda(la)
+    return</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.Actions" href="index.html">src.Actions</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.Actions.add.EvaluateAdd" href="#src.Actions.add.EvaluateAdd">EvaluateAdd</a></code></h4>
+<ul class="">
+<li><code><a title="src.Actions.add.EvaluateAdd.checkAndUpdateAllPossibilities" href="#src.Actions.add.EvaluateAdd.checkAndUpdateAllPossibilities">checkAndUpdateAllPossibilities</a></code></li>
+<li><code><a title="src.Actions.add.EvaluateAdd.evaluateNew" href="#src.Actions.add.EvaluateAdd.evaluateNew">evaluateNew</a></code></li>
+<li><code><a title="src.Actions.add.EvaluateAdd.getBestOption" href="#src.Actions.add.EvaluateAdd.getBestOption">getBestOption</a></code></li>
+<li><code><a title="src.Actions.add.EvaluateAdd.printCands" href="#src.Actions.add.EvaluateAdd.printCands">printCands</a></code></li>
+<li><code><a title="src.Actions.add.EvaluateAdd.updateDistribution" href="#src.Actions.add.EvaluateAdd.updateDistribution">updateDistribution</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,2751 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>src.Actions.split API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.Actions.split</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+import os
+import sys
+path = os.getcwd().split(&#39;MiningSubjectiveSubgraphPatterns&#39;)[0]+&#39;MiningSubjectiveSubgraphPatterns/&#39;
+if path not in sys.path:
+    sys.path.append(path)
+import math
+import networkx as nx
+
+from src.Utils.Measures import getCodeLength, getCodeLengthParallel, getDirectedSubgraph
+from src.Utils.Measures import computeDescriptionLength, computeInterestingness
+from src.Utils.Measures import LN, DL_Edges, ncr, NW, NW_D
+from src.Patterns.Pattern import Pattern
+###################################################################################################################################################################
+class EvaluateSplit:
+    &#34;&#34;&#34;
+    This data structure shall contain all the possible splits
+    along with pattern number as key and other parameters as value
+    &#34;&#34;&#34;
+    def __init__(self, gtype=&#39;U&#39;, isSimple=True, l=6, imode=2, minsize=2):
+        &#34;&#34;&#34;
+        initialization function
+
+        Parameters
+        ----------
+        gtype : str, optional
+            Input Graph type, &#39;U&#39;: Undirected, &#39;D&#39;: Directed, by default &#39;U&#39;
+        isSimple : bool, optional
+            if input graph is a simple graph then True else False if it is a multigraph, by default True
+        l : int, optional
+            Total number of unique action types that can be performed, by default 6
+        imode : int, optional
+            Interestingness mode--- 1: fraction, 2: Difference, by default 2
+        &#34;&#34;&#34;
+        self.Data = dict()
+        self.gtype = gtype
+        self.isSimple = isSimple
+        self.l = l # possible types (give number) of action, default is 6
+        self.imode = imode
+        self.minsize = minsize
+        print(&#39;initialized EvaluateSplit&#39;)
+###################################################################################################################################################################
+    def evaluateAllConstraints(self, G, PD):
+        &#34;&#34;&#34;
+        function to evaluate all constraints and make a list of candidate constraints which are feasible to split
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background distribution
+        &#34;&#34;&#34;
+        self.Data = dict()
+        for i in PD.lprevUpdate.keys():
+            self.evaluateConstraint(G, PD, i)
+        return
+###################################################################################################################################################################
+    def evaluateConstraint(self, G, PD, id):
+        &#34;&#34;&#34;
+        function to evaluate if a constraint is a feasible candidate for split
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        id : int
+            identifier of a constraint to be evaluated
+        &#34;&#34;&#34;
+        if self.gtype == &#39;U&#39;:
+            self.processAsU(G, PD, id)
+        elif self.gtype == &#39;D&#39;:
+            self.processAsD(G, PD, id)
+        return
+###################################################################################################################################################################
+    def processAsU(self, G, PD, id):
+        &#34;&#34;&#34;
+        Utility function for split action when the input graph is undirected.
+        This function idenfies the final components from each possible candidate split and compute the corresponding measures.
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        id : int
+            identifier of a constraint to be evaluated
+        &#34;&#34;&#34;
+        NL = PD.lprevUpdate[id][1]
+        H = G.subgraph(NL)
+        components = nx.connected_component_subgraphs(H, copy=True)
+        fcomponents = dict()
+        it = 0
+        for comp in components:
+            if comp.number_of_nodes() &gt; self.minsize:
+                fcomponents[it] = comp
+        if len(fcomponents) &gt; 1: #* If components are more than one then only we can split this pattern
+            baseParams = dict()
+            baseParams[&#39;Pat&#39;] = Pattern(H)
+            baseParams[&#39;NodesInc&#39;] = 0
+            compPats = dict()
+            nodes_union = set()
+            for k,v in fcomponents.items():
+                compPats[k] = Pattern(v)
+                baseParams[&#39;NodesInc&#39;] += v.number_of_nodes()
+                nodes_union = nodes_union.union(set(compPats[k].NL))
+            baseParams[&#39;compos&#39;] = compPats
+            baseParams[&#39;excludedNL&#39;] = list( set(baseParams[&#39;Pat&#39;].NL) - nodes_union )
+            baseParams[&#39;codeLengthC&#39;] = getCodeLengthParallel( H, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=baseParams[&#39;Pat&#39;].NL )
+            baseParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitU(G, PD, 2, baseParams, id) #// Todo : write code for this part
+            baseParams[&#39;Pat&#39;].setIC_dssg( baseParams[&#39;codeLengthC&#39;] - baseParams[&#39;codeLengthCprime&#39;] )
+            baseParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams[&#39;Pat&#39;].NCount, compos=baseParams[&#39;compos&#39;], isSimple=self.isSimple ) )
+            baseParams[&#39;Pat&#39;].setI( computeInterestingness( baseParams[&#39;Pat&#39;].IC_dssg, baseParams[&#39;Pat&#39;].DL, mode=2 ) )
+            baseParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+
+            #now try reducing each component
+            FinalParams = baseParams
+            for k in baseParams[&#39;compos&#39;].keys():
+                FinalParams = self.getReducedComponentU(G, PD, FinalParams, id, k)
+
+            #compute new lambdas for each new pattern/component
+            for k,v in FinalParams[&#39;compos&#39;].items():
+                v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_return=&#39;return&#39;, case=3, dropLidx=[id]) )
+            FinalParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitU(G, PD, 3, FinalParams, id) #// Todo : write code for this part
+            FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+            FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams[&#39;Pat&#39;].NCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+            FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+            # Now set these values to all component patterns
+            for k,v in FinalParams[&#39;compos&#39;].items():
+                v.setIC_dssg( FinalParams[&#39;Pat&#39;].IC_dssg )
+                v.setDL( FinalParams[&#39;Pat&#39;].DL )
+                v.setI( FinalParams[&#39;Pat&#39;].I )
+                v.setPrevOrder(id)
+                v.setPatType(&#39;split&#39;)
+            self.Data[id] = FinalParams
+        return
+###################################################################################################################################################################
+    def getReducedComponentU(self, G, PD, FinalParams, Lid, k):
+        &#34;&#34;&#34;
+        Utility function used when the input graph is undirected to remove nodes from each component of the candidate split
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        FinalParams : dict
+            current value of prameters corresponding to the current split of the candidate constraint
+        Lid : int
+            identifier for the the candidate constraint for split
+        k : int
+            identifier for the component number of the candidate after split
+
+        Returns
+        -------
+        dict
+            FinalParams: Updated after reducing a component
+        &#34;&#34;&#34;
+        doshrink = True
+        while doshrink:
+            doshrink = False
+            bestRNode = None
+            bestCLprime = None
+            bestDL = None
+            bestI = FinalParams[&#39;Pat&#39;].I
+            for node in FinalParams[&#39;compos&#39;][k].NL:
+                curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeU(G, PD, list(set(FinalParams[&#39;compos&#39;][k].NL)-set([node])), node, [Lid])
+                curIC = FinalParams[&#39;codeLengthC&#39;] - curCLprime
+                curDL = FinalParams[&#39;Pat&#39;].DL - self.getDescriptionLengthChangeU(FinalParams[&#39;compos&#39;][k], node, FinalParams[&#39;Pat&#39;].NCount, FinalParams[&#39;NodesInc&#39;])
+                curI =  computeInterestingness( curIC, curDL, mode=2 )
+                if curI &gt; bestI:
+                    bestRNode = node
+                    bestCLprime = curCLprime
+                    bestDL = curDL
+                    bestI = curI
+            if bestI &gt; FinalParams[&#39;Pat&#39;].I:
+                FinalParams[&#39;codeLengthCprime&#39;] = bestCLprime
+                FinalParams[&#39;compos&#39;][k].removeNode(bestRNode)
+                FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+                FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams[&#39;Pat&#39;].NCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+                FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+                FinalParams[&#39;NodesInc&#39;] -= 1
+                FinalParams[&#39;excludedNL&#39;].append(bestRNode)
+                doshrink = True
+
+        return FinalParams
+###################################################################################################################################################################
+    def computeCLgainRemoveNodeU(self, G, PD, nodes, node, dropLidx):
+        &#34;&#34;&#34;
+        Utility function to compute the gain/change in codelength by removing a node from a pattern.
+        This function is used if the input graph is undirected.
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        nodes : list
+            list of nodes
+        node : int
+            node to be removed
+        dropLidx : int
+            identifier of the constarint which is evaluated
+
+        Returns
+        -------
+        float
+            gain/change in codelength
+        &#34;&#34;&#34;
+        CL_I = 0.0
+        CL_F = 0.0
+        for i in nodes:
+            pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
+            pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+            numE = G.number_of_edges(i, node)
+            if self.isSimple:
+                CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
+                CL_F += math.log2(math.pow(1.0-pos_F, 1.0-numE)*math.pow(pos_F, numE))
+            else:
+                CL_I += math.log2(math.pow(1.0-pos_I, numE)*pos_I)
+                CL_F += math.log2(math.pow(1.0-pos_F, numE)*pos_F)
+        return -CL_I - (-CL_F)
+###################################################################################################################################################################
+    def getDescriptionLengthChangeU(self, Pat, node, WI, W):
+        &#34;&#34;&#34;
+        Utility function which computes the change in description length on removing a node.
+        This function is used when the input graph is undirected
+
+        Parameters
+        ----------
+        Pat : Pattern
+            Input Pattern from which a node is removed
+        node : int
+            Node to be removed
+        WI : int
+            Initial number of nodes in the current candidate constraint/pattern
+        W : int
+            number of nodes included in any one component of the candidate constraint after split
+
+        Returns
+        -------
+        float
+            change in description length
+        &#34;&#34;&#34;
+        change = 0.0
+        change += LN(Pat.NCount) - LN(Pat.NCount - 1)
+        change += ncr(WI, W) - ncr(WI, W-1)
+        pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
+        nECount = Pat.ECount
+        nNW = Pat.nw
+        nkws = Pat.kws
+        for k in Pat.NL:
+            nECount -= Pat.G.number_of_edges(k, node)
+            nkws -= ( Pat.G.number_of_edges(k, node) &gt; 0 )
+        nNW -= (Pat.NCount - 1)
+        nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
+        change += pDLEdge - nDLEdge
+        return change
+###################################################################################################################################################################
+    def computeCodeLengthSplitU(self, G, PD, condition, Params, Lidx=None):
+        &#34;&#34;&#34;
+        function to compute codelength, if input graph is undirected
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        condition : int
+            condition to compute codelength
+            1: Codelength of initial pattern or a single component
+            2: Condition 1 + intra-component codelength computation
+            3: Condition 2 but with a new lambda for each component
+        Params : dict
+            value of prameters corresponding to the current split of the candidate constraint
+        Lidx : int, optional
+            identifier of the constarint which is evaluated and dropped in some cases, by default None
+
+        Returns
+        -------
+        float
+            commputed codelength
+        &#34;&#34;&#34;
+        codelength = 0.0
+        if condition == 1:
+            codelength = getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=Params[&#39;Pat&#39;].NL )
+            return codelength
+        elif condition == 2:
+            # intra-component codelength computation
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=v.NL )
+            # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+            keys = Params[&#39;compos&#39;].keys()
+            for k1 in range(len(keys)-1):
+                for k2 in range(k1+1, len(keys)):
+                    codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].NL, outNL=Params[&#39;compos&#39;][k2].NL, dropLidx=[Lidx] )
+            # compute for excluded nodes
+            if len(Params[&#39;excludedNL&#39;]) &gt; 0:
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, NL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=v.NL, outNL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+        elif condition == 3:
+            # intra-component codelength computation
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=5, isSimple=self.isSimple, NL=v.NL, dropLidx=[Lidx], nlambda=v.la )
+            # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+            keys = Params[&#39;compos&#39;].keys()
+            for k1 in range(len(keys)-1):
+                for k2 in range(k1+1, len(keys)):
+                    codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].NL, outNL=Params[&#39;compos&#39;][k2].NL, dropLidx=[Lidx] )
+            # compute for excluded nodes
+            if len(Params[&#39;excludedNL&#39;]) &gt; 0:
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, NL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=v.NL, outNL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+        return codelength
+###################################################################################################################################################################
+    def processAsD(self, G, PD, i):
+        &#34;&#34;&#34;
+        Utility function for split action when the input graph is directed.
+        This function idenfies the final components from each possible candidate split and compute the corresponding measures.
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        id : int
+            identifier of a constraint to be evaluated
+        &#34;&#34;&#34;
+        inNL = PD.lprevUpdate[i][1]
+        outNL = PD.lprevUpdate[i][2]
+        HD = getDirectedSubgraph( G, inNL, outNL, self.isSimple )
+        H = nx.Graph(HD)
+        components = nx.connected_component_subgraphs(H, copy=True)
+        fcomponents = dict()
+        it = 0
+        for comp in components:
+            if comp.number_of_nodes() &gt; self.minsize:
+                C_inNL = list(set(comp.nodes()).intersection(set(inNL)))
+                C_outNL = list(set(comp.nodes()).intersection(set(outNL)))
+                fcomponents[it] = getDirectedSubgraph(G, C_inNL, C_outNL, self.isSimple)
+        if len(fcomponents) &gt; 1: #* If components are more than one then only we can split this pattern
+            baseParams = dict()
+            baseParams[&#39;Pat&#39;] = Pattern(HD)
+            baseParams[&#39;inNodesInc&#39;] = 0
+            baseParams[&#39;outNodesInc&#39;] = 0
+            compPats = dict()
+            in_nodes_union = set()
+            out_nodes_union = set()
+            for k,v in fcomponents.items():
+                compPats[k] = Pattern(v)
+                baseParams[&#39;inNodesInc&#39;] += compPats[k].InNCount
+                baseParams[&#39;outNodesInc&#39;] += compPats[k].OutNCount
+                in_nodes_union = in_nodes_union.union(set(compPats[k].inNL))
+                out_nodes_union = out_nodes_union.union(set(compPats[k].outNL))
+            baseParams[&#39;compos&#39;] = compPats
+            baseParams[&#39;excludedInNL&#39;] = list( set(baseParams[&#39;Pat&#39;].inNL) - in_nodes_union )
+            baseParams[&#39;excludedOutNL&#39;] = list( set(baseParams[&#39;Pat&#39;].outNL) - out_nodes_union )
+            baseParams[&#39;codeLengthC&#39;] = getCodeLengthParallel( H, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=baseParams[&#39;Pat&#39;].inNL, outNL=baseParams[&#39;Pat&#39;].outNL )
+            baseParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitD(G, PD, 2, baseParams, i) #// Todo : write code for this part
+            baseParams[&#39;Pat&#39;].setIC_dssg( baseParams[&#39;codeLengthC&#39;] - baseParams[&#39;codeLengthCprime&#39;] )
+            baseParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams[&#39;Pat&#39;].InNCount, WOS=baseParams[&#39;Pat&#39;].OutNCount, compos=baseParams[&#39;compos&#39;], isSimple=self.isSimple ) )
+            baseParams[&#39;Pat&#39;].setI( computeInterestingness( baseParams[&#39;Pat&#39;].IC_dssg, baseParams[&#39;Pat&#39;].DL, mode=2 ) )
+            baseParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+
+            #now try reducing each component
+            FinalParams = baseParams
+            for k in baseParams[&#39;compos&#39;].keys():
+                FinalParams = self.getReducedComponentD(G, PD, FinalParams, i, k)
+
+            #compute new lambdas for each new pattern/component
+            #// Todo: write code
+            for k,v in FinalParams[&#39;compos&#39;].items():
+                v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_return=&#39;return&#39;, case=3, dropLidx=[i]) )
+            FinalParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitD(G, PD, 3, FinalParams, i) #// Todo : write code for this part
+            FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+            FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams[&#39;Pat&#39;].InNCount, WOS=FinalParams[&#39;Pat&#39;].OutNCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+            FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+            # Now set these values to all component patterns
+            #// Todo: Write Code
+            for k,v in FinalParams[&#39;compos&#39;].items():
+                v.setIC_dssg( FinalParams[&#39;Pat&#39;].IC_dssg )
+                v.setDL( FinalParams[&#39;Pat&#39;].DL )
+                v.setI( FinalParams[&#39;Pat&#39;].I )
+                v.setPrevOrder(i)
+                v.setPatType(&#39;split&#39;)
+            self.Data[i] = FinalParams
+        return
+###################################################################################################################################################################
+    def getReducedComponentD(self, G, PD, FinalParams, Lid, k):
+        &#34;&#34;&#34;
+        Utility function used when the input graph is directed to remove nodes from each component of the candidate split
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        FinalParams : dict
+            current value of prameters corresponding to the current split of the candidate constraint
+        Lid : int
+            identifier for the the candidate constraint for split
+        k : int
+            identifier for the component number of the candidate after split
+
+        Returns
+        -------
+        dict
+            FinalParams: Updated after reducing a component
+        &#34;&#34;&#34;
+        doshrink = True
+        count_remove_nodes = 0
+        while doshrink:
+            doshrink = False
+            bestRNode = None
+            bestCLprime = None
+            bestDL = None
+            bestI = FinalParams[&#39;Pat&#39;].I
+            bestType = None
+            for node in FinalParams[&#39;compos&#39;][k].inNL:
+                curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeD( G, PD, FinalParams[&#39;compos&#39;][k].outNL, node, [Lid], 1 ) #// Todo: check this code
+                curIC = FinalParams[&#39;codeLengthC&#39;] - curCLprime
+                curDL = FinalParams[&#39;Pat&#39;].DL - self.getDescriptionLengthChangeD( FinalParams[&#39;compos&#39;][k], node, FinalParams[&#39;Pat&#39;].InNCount, FinalParams[&#39;inNodesInc&#39;], 1 ) #// Todo: check this code
+                curI =  computeInterestingness( curIC, curDL, mode=2 )
+                if curI &gt; bestI:
+                    bestRNode = node
+                    bestCLprime = curCLprime
+                    bestDL = curDL
+                    bestI = curI
+                    bestType = &#39;in&#39;
+            for node in FinalParams[&#39;compos&#39;][k].outNL:
+                curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeD( G, PD, FinalParams[&#39;compos&#39;][k].inNL, node, [Lid], 2 ) #// Todo: check this code
+                curIC = FinalParams[&#39;codeLengthC&#39;] - curCLprime
+                curDL = FinalParams[&#39;Pat&#39;].DL - self.getDescriptionLengthChangeD( FinalParams[&#39;compos&#39;][k], node, FinalParams[&#39;Pat&#39;].OutNCount, FinalParams[&#39;outNodesInc&#39;], 2 ) #// Todo: check this code
+                curI =  computeInterestingness( curIC, curDL, mode=2 )
+                if curI &gt; bestI:
+                    bestRNode = node
+                    bestCLprime = curCLprime
+                    bestDL = curDL
+                    bestI = curI
+                    bestType = &#39;out&#39;
+            if bestI &gt; FinalParams[&#39;Pat&#39;].I:
+                FinalParams[&#39;codeLengthCprime&#39;] = bestCLprime
+                if &#39;in&#39; in bestType:
+                    FinalParams[&#39;compos&#39;][k].removeInNode(bestRNode)
+                    FinalParams[&#39;inNodesInc&#39;] -= 1
+                    FinalParams[&#39;excludedInNL&#39;].append(bestRNode)
+                else:
+                    FinalParams[&#39;compos&#39;][k].removeOutNode(bestRNode)
+                    FinalParams[&#39;outNodesInc&#39;] -= 1
+                    FinalParams[&#39;excludedOutNL&#39;].append(bestRNode)
+                FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+                FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams[&#39;Pat&#39;].InNCount, WOS=FinalParams[&#39;Pat&#39;].OutNCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+                FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+                count_remove_nodes += 1
+                doshrink = True
+
+        return FinalParams
+###################################################################################################################################################################
+    def computeCLgainRemoveNodeD(self, G, PD, nodes, node, dropLidx, dir):
+        &#34;&#34;&#34;
+        Utility function to compute the gain/change in codelength by removing a node from a pattern.
+        This function is used if the input graph is directed.
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        nodes : list
+            list of nodes
+        node : int
+            node to be removed
+        dropLidx : int
+            identifier of the constarint which is evaluated
+        dir : int
+            dir direction, 1: list to node, i.e., node is inNode
+                           2: node to list, i.e., node is outNode
+
+        Returns
+        -------
+        float
+            gain/change in codelength
+        &#34;&#34;&#34;
+        CL_I = 0.0
+        CL_F = 0.0
+        if dir==2:
+            for i in nodes:
+                pos_I = PD.getPOS(node, i, case=2, isSimple=self.isSimple)
+                pos_F = PD.getPOS(node, i, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                numE = G.number_of_edges(node, i)
+                if self.isSimple:
+                    CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
+                    CL_F += math.log2(math.pow(1.0-pos_F, 1.0-numE)*math.pow(pos_F, numE))
+                else:
+                    CL_I += math.log2(math.pow(1.0-pos_I, numE)*pos_I)
+                    CL_F += math.log2(math.pow(1.0-pos_F, numE)*pos_F)
+        elif dir==1:
+            for i in nodes:
+                pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
+                pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                numE = G.number_of_edges(i, node)
+                if self.isSimple:
+                    CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
+                    CL_F += math.log2(math.pow(1.0-pos_F, 1.0-numE)*math.pow(pos_F, numE))
+                else:
+                    CL_I += math.log2( math.pow( 1.0-pos_I, numE )*pos_I )
+                    CL_F += math.log2( math.pow( 1.0-pos_F, numE )*pos_F )
+        return -CL_I - (-CL_F)
+###################################################################################################################################################################
+    def getDescriptionLengthChangeD(self, Pat, node, WI, W, tp):
+        &#34;&#34;&#34;
+        Utility function which computes the change in description length on removing a node.
+        This function is used when the input graph is directed
+
+        Parameters
+        ----------
+        Pat : Pattern
+            Input Pattern from which a node is removed
+        node : int
+            Node to be removed
+        WI : int
+            Initial number of nodes in the current candidate constraint/pattern
+        W : int
+            number of nodes included in any one component of the candidate constraint after split
+        tp : int
+            1 : if node is InNode
+            2 : if node is OutNode
+
+        Returns
+        -------
+        float
+            change in description length
+        &#34;&#34;&#34;
+        change = 0.0
+        if tp == 1:
+            change += LN(Pat.InNCount) - LN(Pat.InNCount - 1)
+            change += ncr(WI, W) - ncr(WI, W-1)
+            pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
+            nECount = Pat.ECount
+            nNW = Pat.nw
+            nkws = Pat.kws
+            for k in Pat.outNL:
+                nECount -= Pat.G.number_of_edges(k, node)
+                nkws -= ( Pat.G.number_of_edges(k, node) &gt; 0)
+            nNW -= (Pat.OutNCount)
+            nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
+            change += pDLEdge - nDLEdge
+        else:
+            change += LN(Pat.OutNCount) - LN(Pat.OutNCount - 1)
+            change += ncr(WI, W) - ncr(WI, W-1)
+            pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
+            nECount = Pat.ECount
+            nNW = Pat.nw
+            nkws = Pat.kws
+            for k in Pat.inNL:
+                nECount -= Pat.G.number_of_edges(node, k)
+                nkws -= ( Pat.G.number_of_edges(node, k) &gt; 0)
+            nNW -= (Pat.InNCount)
+            nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
+            change += pDLEdge - nDLEdge
+        return change
+###################################################################################################################################################################
+    def computeCodeLengthSplitD(self, G, PD, condition, Params, Lidx=None):
+        &#34;&#34;&#34;
+        function to compute codelength, if input graph is directed
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        condition : int
+            condition to compute codelength
+            1: Codelength of initial pattern or a single component
+            2: Condition 1 + intra-component codelength computation
+            3: Condition 2 but with a new lambda for each component
+        Params : dict
+            value of prameters corresponding to the current split of the candidate constraint
+        Lidx : int, optional
+            identifier of the constarint which is evaluated and dropped in some cases, by default None
+
+        Returns
+        -------
+        float
+            commputed codelength
+        &#34;&#34;&#34;
+        codelength = 0.0
+        if condition == 1:
+            codelength = getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=Params[&#39;Pat&#39;].inNL, outNL=Params[&#39;Pat&#39;].outNL )
+            return codelength
+        elif condition == 2:
+            # intra-component codelength computation
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=v.inNL, outNL=v.outNL )
+            # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+            keys = Params[&#39;compos&#39;].keys()
+            for k1 in range(len(keys)-1):
+                for k2 in range(k1+1, len(keys)):
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].inNL, outNL=Params[&#39;compos&#39;][k2].outNL, dropLidx=[Lidx] )
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].outNL, outNL=Params[&#39;compos&#39;][k2].inNL, dropLidx=[Lidx] )
+            # compute for excluded nodes
+            if len(Params[&#39;excludedInNL&#39;]) &gt; 0:
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=v.outNL, dropLidx=[Lidx] )
+            if len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=v.inNL, outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+            if len(Params[&#39;excludedInNL&#39;]) &gt; 0 and len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+        elif condition == 3:
+            # intra-component codelength computation
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=5, isSimple=self.isSimple, inNL=v.inNL, outNL=v.outNL, dropLidx=[Lidx], nlambda=v.la )
+            # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+            keys = Params[&#39;compos&#39;].keys()
+            for k1 in range(len(keys)-1):
+                for k2 in range(k1+1, len(keys)):
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].inNL, outNL=Params[&#39;compos&#39;][k2].outNL, dropLidx=[Lidx] )
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].outNL, outNL=Params[&#39;compos&#39;][k2].inNL, dropLidx=[Lidx] )
+            # compute for excluded nodes
+            if len(Params[&#39;excludedInNL&#39;]) &gt; 0:
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=v.outNL, dropLidx=[Lidx] )
+            if len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=v.inNL, outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+            if len(Params[&#39;excludedInNL&#39;]) &gt; 0 and len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+        return codelength
+###################################################################################################################################################################
+    def updateConstraintEvaluation(self, G, PD, id, condition=1):
+        &#34;&#34;&#34;
+        function to now evaluate and update a possible candidate
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        id : int
+            identifier of candidate to the updated
+        condition : int, optional
+            1 if codelength does not changes, else 2, by default 1
+
+        #? To understand when a candidate need to be updated or added in the potential list, we shall ealise thatonly the patternx from previous states can only be split.
+        #? As any action performed will result in a connected pattern(s), thus the list of potential candidates is only updated at the start of the state
+        #? Now with any other action performed there are only two possibilities for each candidate
+        #? First either the Description Length changes (Condition==1)
+        #? Or Second, both the codelength and description length changes (Condition==2)
+        &#34;&#34;&#34;
+        if condition == 1:
+            if self.gtype == &#39;U&#39;:
+                DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id][&#39;Pat&#39;].NCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
+                IG = computeInterestingness( self.self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
+                self.Data[id][&#39;Pat&#39;].setDL(DL)
+                self.Data[id][&#39;Pat&#39;].setI(IG)
+            for k,v in self.Data[id][&#39;compos&#39;].items():
+                v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+                v.setI( self.Data[id][&#39;Pat&#39;].I )
+            else:
+                DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id][&#39;Pat&#39;].InNCount, WOS=self.Data[id][&#39;Pat&#39;].OutNCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
+                IG = computeInterestingness( self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
+                self.Data[id][&#39;Pat&#39;].setDL(DL)
+                self.Data[id][&#39;Pat&#39;].setI(IG)
+            for k,v in self.Data[id][&#39;compos&#39;].items():
+                v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+                v.setI( self.Data[id][&#39;Pat&#39;].I )
+        elif condition == 2:
+            if self.gtype == &#39;U&#39;:
+                self.processAsU(G, PD, id)
+            elif self.gtype == &#39;D&#39;:
+                self.processAsD(G, PD, id)
+        return
+###################################################################################################################################################################
+    def checkAndUpdateAllPossibilities(self, G, PD, prevPat):
+        &#34;&#34;&#34;
+        function to update the parameters associated to each possible candidates
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background distribution
+        prevPat : Pattern
+            Pattern  corresponding to the previously performed action. Note that this pattern shall contains the set of nodes that are involved in previous action,
+            both as prior and posterior
+        &#34;&#34;&#34;
+        ### removing candidate if any other action was performed on it ###
+        if prevPat.pat_type is not &#39;split&#39;:
+            if prevPat.pat_type in [&#39;merge&#39;]:
+                for p in prevPat.prev_order:
+                    if p in self.Data:
+                        del self.Data[p]
+            elif prevPat.pat_type in [&#39;shrink&#39;, &#39;update&#39;, &#39;remove&#39;]:
+                if prevPat.prev_order in self.Data:
+                    del self.Data[prevPat.prev_order]
+        if self.gtype == &#39;U&#39;:
+            for k,v in self.Data.items():
+                if len(set(v[&#39;Pat&#39;].NL).intersection(set(prevPat.NL))) &gt; 1:
+                    self.updateConstraintEvaluation(G, PD, k, 2)
+                else:
+                    self.updateConstraintEvaluation(G, PD, k, 1)
+        else:
+            for k,v in self.Data.items():
+                inInt = len(set(v[&#39;Pat&#39;].inNL).intersection(set(prevPat.inNL)))
+                outInt = len(set(v[&#39;Pat&#39;].outNL).intersection(set(prevPat.outNL)))
+                if inInt &gt; 1 and outInt &gt; 1:
+                    self.updateConstraintEvaluation(G, PD, k, 2)
+                else:
+                    self.updateConstraintEvaluation(G, PD, k, 1)
+        return
+###################################################################################################################################################################
+    def getBestOption(self):
+        &#34;&#34;&#34;
+        function to return the best candidate to split
+
+        Returns
+        -------
+        dict
+            dictionary containing a Pattern, and the two corresponding codelength associated to the pattern, i.e., prior and posterior to performing split action.
+        &#34;&#34;&#34;
+        if len(self.Data) &lt; 1:
+            return None
+        else:
+            bestR = max(self.Data.items(), key=lambda x: x[1][&#39;Pat&#39;].I)
+            return bestR[1]
+###################################################################################################################################################################
+    def updateDistribution(self, PD, bestSp):
+        &#34;&#34;&#34;
+        function to update background distribution.
+        * Now here we remove the knowledge of pervious pattern which is now updated and add the knowledge of pattern which is the result of split
+        * hence we remove the previous lambda associated with the pattern and add a new lambdas for all new pattern
+
+        Parameters
+        ----------
+        PD : PDClass
+            Background distribution
+        bestSp : dict
+            last split action details
+        &#34;&#34;&#34;
+        #* Here bestSp is a dictionary as saved in self.Data
+        del self.Data[bestSp[&#39;Pat&#39;].prev_order]
+        out = PD.lprevUpdate.pop(bestSp[&#39;Pat&#39;].prev_order, None)
+        if out is None:
+            print(&#39;Something is fishy&#39;)
+        else:
+            for k,v in bestSp[&#39;compos&#39;].items():
+                la = PD.updateDistribution( v.G, idx=v.cur_order, val_return=&#39;save&#39;, case=2 )
+                v.setLambda(la)
+        return
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.Actions.split.EvaluateSplit"><code class="flex name class">
+<span>class <span class="ident">EvaluateSplit</span></span>
+<span>(</span><span>gtype='U', isSimple=True, l=6, imode=2, minsize=2)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This data structure shall contain all the possible splits
+along with pattern number as key and other parameters as value</p>
+<p>initialization function</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>gtype</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Input Graph type, 'U': Undirected, 'D': Directed, by default 'U'</dd>
+<dt><strong><code>isSimple</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>if input graph is a simple graph then True else False if it is a multigraph, by default True</dd>
+<dt><strong><code>l</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Total number of unique action types that can be performed, by default 6</dd>
+<dt><strong><code>imode</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Interestingness mode&mdash; 1: fraction, 2: Difference, by default 2</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EvaluateSplit:
+    &#34;&#34;&#34;
+    This data structure shall contain all the possible splits
+    along with pattern number as key and other parameters as value
+    &#34;&#34;&#34;
+    def __init__(self, gtype=&#39;U&#39;, isSimple=True, l=6, imode=2, minsize=2):
+        &#34;&#34;&#34;
+        initialization function
+
+        Parameters
+        ----------
+        gtype : str, optional
+            Input Graph type, &#39;U&#39;: Undirected, &#39;D&#39;: Directed, by default &#39;U&#39;
+        isSimple : bool, optional
+            if input graph is a simple graph then True else False if it is a multigraph, by default True
+        l : int, optional
+            Total number of unique action types that can be performed, by default 6
+        imode : int, optional
+            Interestingness mode--- 1: fraction, 2: Difference, by default 2
+        &#34;&#34;&#34;
+        self.Data = dict()
+        self.gtype = gtype
+        self.isSimple = isSimple
+        self.l = l # possible types (give number) of action, default is 6
+        self.imode = imode
+        self.minsize = minsize
+        print(&#39;initialized EvaluateSplit&#39;)
+###################################################################################################################################################################
+    def evaluateAllConstraints(self, G, PD):
+        &#34;&#34;&#34;
+        function to evaluate all constraints and make a list of candidate constraints which are feasible to split
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background distribution
+        &#34;&#34;&#34;
+        self.Data = dict()
+        for i in PD.lprevUpdate.keys():
+            self.evaluateConstraint(G, PD, i)
+        return
+###################################################################################################################################################################
+    def evaluateConstraint(self, G, PD, id):
+        &#34;&#34;&#34;
+        function to evaluate if a constraint is a feasible candidate for split
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        id : int
+            identifier of a constraint to be evaluated
+        &#34;&#34;&#34;
+        if self.gtype == &#39;U&#39;:
+            self.processAsU(G, PD, id)
+        elif self.gtype == &#39;D&#39;:
+            self.processAsD(G, PD, id)
+        return
+###################################################################################################################################################################
+    def processAsU(self, G, PD, id):
+        &#34;&#34;&#34;
+        Utility function for split action when the input graph is undirected.
+        This function idenfies the final components from each possible candidate split and compute the corresponding measures.
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        id : int
+            identifier of a constraint to be evaluated
+        &#34;&#34;&#34;
+        NL = PD.lprevUpdate[id][1]
+        H = G.subgraph(NL)
+        components = nx.connected_component_subgraphs(H, copy=True)
+        fcomponents = dict()
+        it = 0
+        for comp in components:
+            if comp.number_of_nodes() &gt; self.minsize:
+                fcomponents[it] = comp
+        if len(fcomponents) &gt; 1: #* If components are more than one then only we can split this pattern
+            baseParams = dict()
+            baseParams[&#39;Pat&#39;] = Pattern(H)
+            baseParams[&#39;NodesInc&#39;] = 0
+            compPats = dict()
+            nodes_union = set()
+            for k,v in fcomponents.items():
+                compPats[k] = Pattern(v)
+                baseParams[&#39;NodesInc&#39;] += v.number_of_nodes()
+                nodes_union = nodes_union.union(set(compPats[k].NL))
+            baseParams[&#39;compos&#39;] = compPats
+            baseParams[&#39;excludedNL&#39;] = list( set(baseParams[&#39;Pat&#39;].NL) - nodes_union )
+            baseParams[&#39;codeLengthC&#39;] = getCodeLengthParallel( H, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=baseParams[&#39;Pat&#39;].NL )
+            baseParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitU(G, PD, 2, baseParams, id) #// Todo : write code for this part
+            baseParams[&#39;Pat&#39;].setIC_dssg( baseParams[&#39;codeLengthC&#39;] - baseParams[&#39;codeLengthCprime&#39;] )
+            baseParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams[&#39;Pat&#39;].NCount, compos=baseParams[&#39;compos&#39;], isSimple=self.isSimple ) )
+            baseParams[&#39;Pat&#39;].setI( computeInterestingness( baseParams[&#39;Pat&#39;].IC_dssg, baseParams[&#39;Pat&#39;].DL, mode=2 ) )
+            baseParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+
+            #now try reducing each component
+            FinalParams = baseParams
+            for k in baseParams[&#39;compos&#39;].keys():
+                FinalParams = self.getReducedComponentU(G, PD, FinalParams, id, k)
+
+            #compute new lambdas for each new pattern/component
+            for k,v in FinalParams[&#39;compos&#39;].items():
+                v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_return=&#39;return&#39;, case=3, dropLidx=[id]) )
+            FinalParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitU(G, PD, 3, FinalParams, id) #// Todo : write code for this part
+            FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+            FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams[&#39;Pat&#39;].NCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+            FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+            # Now set these values to all component patterns
+            for k,v in FinalParams[&#39;compos&#39;].items():
+                v.setIC_dssg( FinalParams[&#39;Pat&#39;].IC_dssg )
+                v.setDL( FinalParams[&#39;Pat&#39;].DL )
+                v.setI( FinalParams[&#39;Pat&#39;].I )
+                v.setPrevOrder(id)
+                v.setPatType(&#39;split&#39;)
+            self.Data[id] = FinalParams
+        return
+###################################################################################################################################################################
+    def getReducedComponentU(self, G, PD, FinalParams, Lid, k):
+        &#34;&#34;&#34;
+        Utility function used when the input graph is undirected to remove nodes from each component of the candidate split
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        FinalParams : dict
+            current value of prameters corresponding to the current split of the candidate constraint
+        Lid : int
+            identifier for the the candidate constraint for split
+        k : int
+            identifier for the component number of the candidate after split
+
+        Returns
+        -------
+        dict
+            FinalParams: Updated after reducing a component
+        &#34;&#34;&#34;
+        doshrink = True
+        while doshrink:
+            doshrink = False
+            bestRNode = None
+            bestCLprime = None
+            bestDL = None
+            bestI = FinalParams[&#39;Pat&#39;].I
+            for node in FinalParams[&#39;compos&#39;][k].NL:
+                curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeU(G, PD, list(set(FinalParams[&#39;compos&#39;][k].NL)-set([node])), node, [Lid])
+                curIC = FinalParams[&#39;codeLengthC&#39;] - curCLprime
+                curDL = FinalParams[&#39;Pat&#39;].DL - self.getDescriptionLengthChangeU(FinalParams[&#39;compos&#39;][k], node, FinalParams[&#39;Pat&#39;].NCount, FinalParams[&#39;NodesInc&#39;])
+                curI =  computeInterestingness( curIC, curDL, mode=2 )
+                if curI &gt; bestI:
+                    bestRNode = node
+                    bestCLprime = curCLprime
+                    bestDL = curDL
+                    bestI = curI
+            if bestI &gt; FinalParams[&#39;Pat&#39;].I:
+                FinalParams[&#39;codeLengthCprime&#39;] = bestCLprime
+                FinalParams[&#39;compos&#39;][k].removeNode(bestRNode)
+                FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+                FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams[&#39;Pat&#39;].NCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+                FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+                FinalParams[&#39;NodesInc&#39;] -= 1
+                FinalParams[&#39;excludedNL&#39;].append(bestRNode)
+                doshrink = True
+
+        return FinalParams
+###################################################################################################################################################################
+    def computeCLgainRemoveNodeU(self, G, PD, nodes, node, dropLidx):
+        &#34;&#34;&#34;
+        Utility function to compute the gain/change in codelength by removing a node from a pattern.
+        This function is used if the input graph is undirected.
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        nodes : list
+            list of nodes
+        node : int
+            node to be removed
+        dropLidx : int
+            identifier of the constarint which is evaluated
+
+        Returns
+        -------
+        float
+            gain/change in codelength
+        &#34;&#34;&#34;
+        CL_I = 0.0
+        CL_F = 0.0
+        for i in nodes:
+            pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
+            pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+            numE = G.number_of_edges(i, node)
+            if self.isSimple:
+                CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
+                CL_F += math.log2(math.pow(1.0-pos_F, 1.0-numE)*math.pow(pos_F, numE))
+            else:
+                CL_I += math.log2(math.pow(1.0-pos_I, numE)*pos_I)
+                CL_F += math.log2(math.pow(1.0-pos_F, numE)*pos_F)
+        return -CL_I - (-CL_F)
+###################################################################################################################################################################
+    def getDescriptionLengthChangeU(self, Pat, node, WI, W):
+        &#34;&#34;&#34;
+        Utility function which computes the change in description length on removing a node.
+        This function is used when the input graph is undirected
+
+        Parameters
+        ----------
+        Pat : Pattern
+            Input Pattern from which a node is removed
+        node : int
+            Node to be removed
+        WI : int
+            Initial number of nodes in the current candidate constraint/pattern
+        W : int
+            number of nodes included in any one component of the candidate constraint after split
+
+        Returns
+        -------
+        float
+            change in description length
+        &#34;&#34;&#34;
+        change = 0.0
+        change += LN(Pat.NCount) - LN(Pat.NCount - 1)
+        change += ncr(WI, W) - ncr(WI, W-1)
+        pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
+        nECount = Pat.ECount
+        nNW = Pat.nw
+        nkws = Pat.kws
+        for k in Pat.NL:
+            nECount -= Pat.G.number_of_edges(k, node)
+            nkws -= ( Pat.G.number_of_edges(k, node) &gt; 0 )
+        nNW -= (Pat.NCount - 1)
+        nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
+        change += pDLEdge - nDLEdge
+        return change
+###################################################################################################################################################################
+    def computeCodeLengthSplitU(self, G, PD, condition, Params, Lidx=None):
+        &#34;&#34;&#34;
+        function to compute codelength, if input graph is undirected
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        condition : int
+            condition to compute codelength
+            1: Codelength of initial pattern or a single component
+            2: Condition 1 + intra-component codelength computation
+            3: Condition 2 but with a new lambda for each component
+        Params : dict
+            value of prameters corresponding to the current split of the candidate constraint
+        Lidx : int, optional
+            identifier of the constarint which is evaluated and dropped in some cases, by default None
+
+        Returns
+        -------
+        float
+            commputed codelength
+        &#34;&#34;&#34;
+        codelength = 0.0
+        if condition == 1:
+            codelength = getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=Params[&#39;Pat&#39;].NL )
+            return codelength
+        elif condition == 2:
+            # intra-component codelength computation
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=v.NL )
+            # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+            keys = Params[&#39;compos&#39;].keys()
+            for k1 in range(len(keys)-1):
+                for k2 in range(k1+1, len(keys)):
+                    codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].NL, outNL=Params[&#39;compos&#39;][k2].NL, dropLidx=[Lidx] )
+            # compute for excluded nodes
+            if len(Params[&#39;excludedNL&#39;]) &gt; 0:
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, NL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=v.NL, outNL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+        elif condition == 3:
+            # intra-component codelength computation
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=5, isSimple=self.isSimple, NL=v.NL, dropLidx=[Lidx], nlambda=v.la )
+            # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+            keys = Params[&#39;compos&#39;].keys()
+            for k1 in range(len(keys)-1):
+                for k2 in range(k1+1, len(keys)):
+                    codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].NL, outNL=Params[&#39;compos&#39;][k2].NL, dropLidx=[Lidx] )
+            # compute for excluded nodes
+            if len(Params[&#39;excludedNL&#39;]) &gt; 0:
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, NL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=v.NL, outNL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+        return codelength
+###################################################################################################################################################################
+    def processAsD(self, G, PD, i):
+        &#34;&#34;&#34;
+        Utility function for split action when the input graph is directed.
+        This function idenfies the final components from each possible candidate split and compute the corresponding measures.
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        id : int
+            identifier of a constraint to be evaluated
+        &#34;&#34;&#34;
+        inNL = PD.lprevUpdate[i][1]
+        outNL = PD.lprevUpdate[i][2]
+        HD = getDirectedSubgraph( G, inNL, outNL, self.isSimple )
+        H = nx.Graph(HD)
+        components = nx.connected_component_subgraphs(H, copy=True)
+        fcomponents = dict()
+        it = 0
+        for comp in components:
+            if comp.number_of_nodes() &gt; self.minsize:
+                C_inNL = list(set(comp.nodes()).intersection(set(inNL)))
+                C_outNL = list(set(comp.nodes()).intersection(set(outNL)))
+                fcomponents[it] = getDirectedSubgraph(G, C_inNL, C_outNL, self.isSimple)
+        if len(fcomponents) &gt; 1: #* If components are more than one then only we can split this pattern
+            baseParams = dict()
+            baseParams[&#39;Pat&#39;] = Pattern(HD)
+            baseParams[&#39;inNodesInc&#39;] = 0
+            baseParams[&#39;outNodesInc&#39;] = 0
+            compPats = dict()
+            in_nodes_union = set()
+            out_nodes_union = set()
+            for k,v in fcomponents.items():
+                compPats[k] = Pattern(v)
+                baseParams[&#39;inNodesInc&#39;] += compPats[k].InNCount
+                baseParams[&#39;outNodesInc&#39;] += compPats[k].OutNCount
+                in_nodes_union = in_nodes_union.union(set(compPats[k].inNL))
+                out_nodes_union = out_nodes_union.union(set(compPats[k].outNL))
+            baseParams[&#39;compos&#39;] = compPats
+            baseParams[&#39;excludedInNL&#39;] = list( set(baseParams[&#39;Pat&#39;].inNL) - in_nodes_union )
+            baseParams[&#39;excludedOutNL&#39;] = list( set(baseParams[&#39;Pat&#39;].outNL) - out_nodes_union )
+            baseParams[&#39;codeLengthC&#39;] = getCodeLengthParallel( H, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=baseParams[&#39;Pat&#39;].inNL, outNL=baseParams[&#39;Pat&#39;].outNL )
+            baseParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitD(G, PD, 2, baseParams, i) #// Todo : write code for this part
+            baseParams[&#39;Pat&#39;].setIC_dssg( baseParams[&#39;codeLengthC&#39;] - baseParams[&#39;codeLengthCprime&#39;] )
+            baseParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams[&#39;Pat&#39;].InNCount, WOS=baseParams[&#39;Pat&#39;].OutNCount, compos=baseParams[&#39;compos&#39;], isSimple=self.isSimple ) )
+            baseParams[&#39;Pat&#39;].setI( computeInterestingness( baseParams[&#39;Pat&#39;].IC_dssg, baseParams[&#39;Pat&#39;].DL, mode=2 ) )
+            baseParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+
+            #now try reducing each component
+            FinalParams = baseParams
+            for k in baseParams[&#39;compos&#39;].keys():
+                FinalParams = self.getReducedComponentD(G, PD, FinalParams, i, k)
+
+            #compute new lambdas for each new pattern/component
+            #// Todo: write code
+            for k,v in FinalParams[&#39;compos&#39;].items():
+                v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_return=&#39;return&#39;, case=3, dropLidx=[i]) )
+            FinalParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitD(G, PD, 3, FinalParams, i) #// Todo : write code for this part
+            FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+            FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams[&#39;Pat&#39;].InNCount, WOS=FinalParams[&#39;Pat&#39;].OutNCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+            FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+            # Now set these values to all component patterns
+            #// Todo: Write Code
+            for k,v in FinalParams[&#39;compos&#39;].items():
+                v.setIC_dssg( FinalParams[&#39;Pat&#39;].IC_dssg )
+                v.setDL( FinalParams[&#39;Pat&#39;].DL )
+                v.setI( FinalParams[&#39;Pat&#39;].I )
+                v.setPrevOrder(i)
+                v.setPatType(&#39;split&#39;)
+            self.Data[i] = FinalParams
+        return
+###################################################################################################################################################################
+    def getReducedComponentD(self, G, PD, FinalParams, Lid, k):
+        &#34;&#34;&#34;
+        Utility function used when the input graph is directed to remove nodes from each component of the candidate split
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        FinalParams : dict
+            current value of prameters corresponding to the current split of the candidate constraint
+        Lid : int
+            identifier for the the candidate constraint for split
+        k : int
+            identifier for the component number of the candidate after split
+
+        Returns
+        -------
+        dict
+            FinalParams: Updated after reducing a component
+        &#34;&#34;&#34;
+        doshrink = True
+        count_remove_nodes = 0
+        while doshrink:
+            doshrink = False
+            bestRNode = None
+            bestCLprime = None
+            bestDL = None
+            bestI = FinalParams[&#39;Pat&#39;].I
+            bestType = None
+            for node in FinalParams[&#39;compos&#39;][k].inNL:
+                curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeD( G, PD, FinalParams[&#39;compos&#39;][k].outNL, node, [Lid], 1 ) #// Todo: check this code
+                curIC = FinalParams[&#39;codeLengthC&#39;] - curCLprime
+                curDL = FinalParams[&#39;Pat&#39;].DL - self.getDescriptionLengthChangeD( FinalParams[&#39;compos&#39;][k], node, FinalParams[&#39;Pat&#39;].InNCount, FinalParams[&#39;inNodesInc&#39;], 1 ) #// Todo: check this code
+                curI =  computeInterestingness( curIC, curDL, mode=2 )
+                if curI &gt; bestI:
+                    bestRNode = node
+                    bestCLprime = curCLprime
+                    bestDL = curDL
+                    bestI = curI
+                    bestType = &#39;in&#39;
+            for node in FinalParams[&#39;compos&#39;][k].outNL:
+                curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeD( G, PD, FinalParams[&#39;compos&#39;][k].inNL, node, [Lid], 2 ) #// Todo: check this code
+                curIC = FinalParams[&#39;codeLengthC&#39;] - curCLprime
+                curDL = FinalParams[&#39;Pat&#39;].DL - self.getDescriptionLengthChangeD( FinalParams[&#39;compos&#39;][k], node, FinalParams[&#39;Pat&#39;].OutNCount, FinalParams[&#39;outNodesInc&#39;], 2 ) #// Todo: check this code
+                curI =  computeInterestingness( curIC, curDL, mode=2 )
+                if curI &gt; bestI:
+                    bestRNode = node
+                    bestCLprime = curCLprime
+                    bestDL = curDL
+                    bestI = curI
+                    bestType = &#39;out&#39;
+            if bestI &gt; FinalParams[&#39;Pat&#39;].I:
+                FinalParams[&#39;codeLengthCprime&#39;] = bestCLprime
+                if &#39;in&#39; in bestType:
+                    FinalParams[&#39;compos&#39;][k].removeInNode(bestRNode)
+                    FinalParams[&#39;inNodesInc&#39;] -= 1
+                    FinalParams[&#39;excludedInNL&#39;].append(bestRNode)
+                else:
+                    FinalParams[&#39;compos&#39;][k].removeOutNode(bestRNode)
+                    FinalParams[&#39;outNodesInc&#39;] -= 1
+                    FinalParams[&#39;excludedOutNL&#39;].append(bestRNode)
+                FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+                FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams[&#39;Pat&#39;].InNCount, WOS=FinalParams[&#39;Pat&#39;].OutNCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+                FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+                count_remove_nodes += 1
+                doshrink = True
+
+        return FinalParams
+###################################################################################################################################################################
+    def computeCLgainRemoveNodeD(self, G, PD, nodes, node, dropLidx, dir):
+        &#34;&#34;&#34;
+        Utility function to compute the gain/change in codelength by removing a node from a pattern.
+        This function is used if the input graph is directed.
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        nodes : list
+            list of nodes
+        node : int
+            node to be removed
+        dropLidx : int
+            identifier of the constarint which is evaluated
+        dir : int
+            dir direction, 1: list to node, i.e., node is inNode
+                           2: node to list, i.e., node is outNode
+
+        Returns
+        -------
+        float
+            gain/change in codelength
+        &#34;&#34;&#34;
+        CL_I = 0.0
+        CL_F = 0.0
+        if dir==2:
+            for i in nodes:
+                pos_I = PD.getPOS(node, i, case=2, isSimple=self.isSimple)
+                pos_F = PD.getPOS(node, i, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                numE = G.number_of_edges(node, i)
+                if self.isSimple:
+                    CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
+                    CL_F += math.log2(math.pow(1.0-pos_F, 1.0-numE)*math.pow(pos_F, numE))
+                else:
+                    CL_I += math.log2(math.pow(1.0-pos_I, numE)*pos_I)
+                    CL_F += math.log2(math.pow(1.0-pos_F, numE)*pos_F)
+        elif dir==1:
+            for i in nodes:
+                pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
+                pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                numE = G.number_of_edges(i, node)
+                if self.isSimple:
+                    CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
+                    CL_F += math.log2(math.pow(1.0-pos_F, 1.0-numE)*math.pow(pos_F, numE))
+                else:
+                    CL_I += math.log2( math.pow( 1.0-pos_I, numE )*pos_I )
+                    CL_F += math.log2( math.pow( 1.0-pos_F, numE )*pos_F )
+        return -CL_I - (-CL_F)
+###################################################################################################################################################################
+    def getDescriptionLengthChangeD(self, Pat, node, WI, W, tp):
+        &#34;&#34;&#34;
+        Utility function which computes the change in description length on removing a node.
+        This function is used when the input graph is directed
+
+        Parameters
+        ----------
+        Pat : Pattern
+            Input Pattern from which a node is removed
+        node : int
+            Node to be removed
+        WI : int
+            Initial number of nodes in the current candidate constraint/pattern
+        W : int
+            number of nodes included in any one component of the candidate constraint after split
+        tp : int
+            1 : if node is InNode
+            2 : if node is OutNode
+
+        Returns
+        -------
+        float
+            change in description length
+        &#34;&#34;&#34;
+        change = 0.0
+        if tp == 1:
+            change += LN(Pat.InNCount) - LN(Pat.InNCount - 1)
+            change += ncr(WI, W) - ncr(WI, W-1)
+            pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
+            nECount = Pat.ECount
+            nNW = Pat.nw
+            nkws = Pat.kws
+            for k in Pat.outNL:
+                nECount -= Pat.G.number_of_edges(k, node)
+                nkws -= ( Pat.G.number_of_edges(k, node) &gt; 0)
+            nNW -= (Pat.OutNCount)
+            nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
+            change += pDLEdge - nDLEdge
+        else:
+            change += LN(Pat.OutNCount) - LN(Pat.OutNCount - 1)
+            change += ncr(WI, W) - ncr(WI, W-1)
+            pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
+            nECount = Pat.ECount
+            nNW = Pat.nw
+            nkws = Pat.kws
+            for k in Pat.inNL:
+                nECount -= Pat.G.number_of_edges(node, k)
+                nkws -= ( Pat.G.number_of_edges(node, k) &gt; 0)
+            nNW -= (Pat.InNCount)
+            nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
+            change += pDLEdge - nDLEdge
+        return change
+###################################################################################################################################################################
+    def computeCodeLengthSplitD(self, G, PD, condition, Params, Lidx=None):
+        &#34;&#34;&#34;
+        function to compute codelength, if input graph is directed
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        condition : int
+            condition to compute codelength
+            1: Codelength of initial pattern or a single component
+            2: Condition 1 + intra-component codelength computation
+            3: Condition 2 but with a new lambda for each component
+        Params : dict
+            value of prameters corresponding to the current split of the candidate constraint
+        Lidx : int, optional
+            identifier of the constarint which is evaluated and dropped in some cases, by default None
+
+        Returns
+        -------
+        float
+            commputed codelength
+        &#34;&#34;&#34;
+        codelength = 0.0
+        if condition == 1:
+            codelength = getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=Params[&#39;Pat&#39;].inNL, outNL=Params[&#39;Pat&#39;].outNL )
+            return codelength
+        elif condition == 2:
+            # intra-component codelength computation
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=v.inNL, outNL=v.outNL )
+            # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+            keys = Params[&#39;compos&#39;].keys()
+            for k1 in range(len(keys)-1):
+                for k2 in range(k1+1, len(keys)):
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].inNL, outNL=Params[&#39;compos&#39;][k2].outNL, dropLidx=[Lidx] )
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].outNL, outNL=Params[&#39;compos&#39;][k2].inNL, dropLidx=[Lidx] )
+            # compute for excluded nodes
+            if len(Params[&#39;excludedInNL&#39;]) &gt; 0:
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=v.outNL, dropLidx=[Lidx] )
+            if len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=v.inNL, outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+            if len(Params[&#39;excludedInNL&#39;]) &gt; 0 and len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+        elif condition == 3:
+            # intra-component codelength computation
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=5, isSimple=self.isSimple, inNL=v.inNL, outNL=v.outNL, dropLidx=[Lidx], nlambda=v.la )
+            # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+            keys = Params[&#39;compos&#39;].keys()
+            for k1 in range(len(keys)-1):
+                for k2 in range(k1+1, len(keys)):
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].inNL, outNL=Params[&#39;compos&#39;][k2].outNL, dropLidx=[Lidx] )
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].outNL, outNL=Params[&#39;compos&#39;][k2].inNL, dropLidx=[Lidx] )
+            # compute for excluded nodes
+            if len(Params[&#39;excludedInNL&#39;]) &gt; 0:
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=v.outNL, dropLidx=[Lidx] )
+            if len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+                for k,v in Params[&#39;compos&#39;].items():
+                    codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=v.inNL, outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+            if len(Params[&#39;excludedInNL&#39;]) &gt; 0 and len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+        return codelength
+###################################################################################################################################################################
+    def updateConstraintEvaluation(self, G, PD, id, condition=1):
+        &#34;&#34;&#34;
+        function to now evaluate and update a possible candidate
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background Distribution
+        id : int
+            identifier of candidate to the updated
+        condition : int, optional
+            1 if codelength does not changes, else 2, by default 1
+
+        #? To understand when a candidate need to be updated or added in the potential list, we shall ealise thatonly the patternx from previous states can only be split.
+        #? As any action performed will result in a connected pattern(s), thus the list of potential candidates is only updated at the start of the state
+        #? Now with any other action performed there are only two possibilities for each candidate
+        #? First either the Description Length changes (Condition==1)
+        #? Or Second, both the codelength and description length changes (Condition==2)
+        &#34;&#34;&#34;
+        if condition == 1:
+            if self.gtype == &#39;U&#39;:
+                DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id][&#39;Pat&#39;].NCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
+                IG = computeInterestingness( self.self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
+                self.Data[id][&#39;Pat&#39;].setDL(DL)
+                self.Data[id][&#39;Pat&#39;].setI(IG)
+            for k,v in self.Data[id][&#39;compos&#39;].items():
+                v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+                v.setI( self.Data[id][&#39;Pat&#39;].I )
+            else:
+                DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id][&#39;Pat&#39;].InNCount, WOS=self.Data[id][&#39;Pat&#39;].OutNCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
+                IG = computeInterestingness( self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
+                self.Data[id][&#39;Pat&#39;].setDL(DL)
+                self.Data[id][&#39;Pat&#39;].setI(IG)
+            for k,v in self.Data[id][&#39;compos&#39;].items():
+                v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+                v.setI( self.Data[id][&#39;Pat&#39;].I )
+        elif condition == 2:
+            if self.gtype == &#39;U&#39;:
+                self.processAsU(G, PD, id)
+            elif self.gtype == &#39;D&#39;:
+                self.processAsD(G, PD, id)
+        return
+###################################################################################################################################################################
+    def checkAndUpdateAllPossibilities(self, G, PD, prevPat):
+        &#34;&#34;&#34;
+        function to update the parameters associated to each possible candidates
+
+        Parameters
+        ----------
+        G : Networkx Graph
+            Input Graph
+        PD : PDClass
+            Background distribution
+        prevPat : Pattern
+            Pattern  corresponding to the previously performed action. Note that this pattern shall contains the set of nodes that are involved in previous action,
+            both as prior and posterior
+        &#34;&#34;&#34;
+        ### removing candidate if any other action was performed on it ###
+        if prevPat.pat_type is not &#39;split&#39;:
+            if prevPat.pat_type in [&#39;merge&#39;]:
+                for p in prevPat.prev_order:
+                    if p in self.Data:
+                        del self.Data[p]
+            elif prevPat.pat_type in [&#39;shrink&#39;, &#39;update&#39;, &#39;remove&#39;]:
+                if prevPat.prev_order in self.Data:
+                    del self.Data[prevPat.prev_order]
+        if self.gtype == &#39;U&#39;:
+            for k,v in self.Data.items():
+                if len(set(v[&#39;Pat&#39;].NL).intersection(set(prevPat.NL))) &gt; 1:
+                    self.updateConstraintEvaluation(G, PD, k, 2)
+                else:
+                    self.updateConstraintEvaluation(G, PD, k, 1)
+        else:
+            for k,v in self.Data.items():
+                inInt = len(set(v[&#39;Pat&#39;].inNL).intersection(set(prevPat.inNL)))
+                outInt = len(set(v[&#39;Pat&#39;].outNL).intersection(set(prevPat.outNL)))
+                if inInt &gt; 1 and outInt &gt; 1:
+                    self.updateConstraintEvaluation(G, PD, k, 2)
+                else:
+                    self.updateConstraintEvaluation(G, PD, k, 1)
+        return
+###################################################################################################################################################################
+    def getBestOption(self):
+        &#34;&#34;&#34;
+        function to return the best candidate to split
+
+        Returns
+        -------
+        dict
+            dictionary containing a Pattern, and the two corresponding codelength associated to the pattern, i.e., prior and posterior to performing split action.
+        &#34;&#34;&#34;
+        if len(self.Data) &lt; 1:
+            return None
+        else:
+            bestR = max(self.Data.items(), key=lambda x: x[1][&#39;Pat&#39;].I)
+            return bestR[1]
+###################################################################################################################################################################
+    def updateDistribution(self, PD, bestSp):
+        &#34;&#34;&#34;
+        function to update background distribution.
+        * Now here we remove the knowledge of pervious pattern which is now updated and add the knowledge of pattern which is the result of split
+        * hence we remove the previous lambda associated with the pattern and add a new lambdas for all new pattern
+
+        Parameters
+        ----------
+        PD : PDClass
+            Background distribution
+        bestSp : dict
+            last split action details
+        &#34;&#34;&#34;
+        #* Here bestSp is a dictionary as saved in self.Data
+        del self.Data[bestSp[&#39;Pat&#39;].prev_order]
+        out = PD.lprevUpdate.pop(bestSp[&#39;Pat&#39;].prev_order, None)
+        if out is None:
+            print(&#39;Something is fishy&#39;)
+        else:
+            for k,v in bestSp[&#39;compos&#39;].items():
+                la = PD.updateDistribution( v.G, idx=v.cur_order, val_return=&#39;save&#39;, case=2 )
+                v.setLambda(la)
+        return</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="src.Actions.split.EvaluateSplit.checkAndUpdateAllPossibilities"><code class="name flex">
+<span>def <span class="ident">checkAndUpdateAllPossibilities</span></span>(<span>self, G, PD, prevPat)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to update the parameters associated to each possible candidates</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution</dd>
+<dt><strong><code>prevPat</code></strong> :&ensp;<code>Pattern</code></dt>
+<dd>Pattern
+corresponding to the previously performed action. Note that this pattern shall contains the set of nodes that are involved in previous action,
+both as prior and posterior</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def checkAndUpdateAllPossibilities(self, G, PD, prevPat):
+    &#34;&#34;&#34;
+    function to update the parameters associated to each possible candidates
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background distribution
+    prevPat : Pattern
+        Pattern  corresponding to the previously performed action. Note that this pattern shall contains the set of nodes that are involved in previous action,
+        both as prior and posterior
+    &#34;&#34;&#34;
+    ### removing candidate if any other action was performed on it ###
+    if prevPat.pat_type is not &#39;split&#39;:
+        if prevPat.pat_type in [&#39;merge&#39;]:
+            for p in prevPat.prev_order:
+                if p in self.Data:
+                    del self.Data[p]
+        elif prevPat.pat_type in [&#39;shrink&#39;, &#39;update&#39;, &#39;remove&#39;]:
+            if prevPat.prev_order in self.Data:
+                del self.Data[prevPat.prev_order]
+    if self.gtype == &#39;U&#39;:
+        for k,v in self.Data.items():
+            if len(set(v[&#39;Pat&#39;].NL).intersection(set(prevPat.NL))) &gt; 1:
+                self.updateConstraintEvaluation(G, PD, k, 2)
+            else:
+                self.updateConstraintEvaluation(G, PD, k, 1)
+    else:
+        for k,v in self.Data.items():
+            inInt = len(set(v[&#39;Pat&#39;].inNL).intersection(set(prevPat.inNL)))
+            outInt = len(set(v[&#39;Pat&#39;].outNL).intersection(set(prevPat.outNL)))
+            if inInt &gt; 1 and outInt &gt; 1:
+                self.updateConstraintEvaluation(G, PD, k, 2)
+            else:
+                self.updateConstraintEvaluation(G, PD, k, 1)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.computeCLgainRemoveNodeD"><code class="name flex">
+<span>def <span class="ident">computeCLgainRemoveNodeD</span></span>(<span>self, G, PD, nodes, node, dropLidx, dir)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Utility function to compute the gain/change in codelength by removing a node from a pattern.
+This function is used if the input graph is directed.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background Distribution</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of nodes</dd>
+<dt><strong><code>node</code></strong> :&ensp;<code>int</code></dt>
+<dd>node to be removed</dd>
+<dt><strong><code>dropLidx</code></strong> :&ensp;<code>int</code></dt>
+<dd>identifier of the constarint which is evaluated</dd>
+<dt><strong><code>dir</code></strong> :&ensp;<code>int</code></dt>
+<dd>dir direction, 1: list to node, i.e., node is inNode
+2: node to list, i.e., node is outNode</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>gain/change in codelength</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeCLgainRemoveNodeD(self, G, PD, nodes, node, dropLidx, dir):
+    &#34;&#34;&#34;
+    Utility function to compute the gain/change in codelength by removing a node from a pattern.
+    This function is used if the input graph is directed.
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background Distribution
+    nodes : list
+        list of nodes
+    node : int
+        node to be removed
+    dropLidx : int
+        identifier of the constarint which is evaluated
+    dir : int
+        dir direction, 1: list to node, i.e., node is inNode
+                       2: node to list, i.e., node is outNode
+
+    Returns
+    -------
+    float
+        gain/change in codelength
+    &#34;&#34;&#34;
+    CL_I = 0.0
+    CL_F = 0.0
+    if dir==2:
+        for i in nodes:
+            pos_I = PD.getPOS(node, i, case=2, isSimple=self.isSimple)
+            pos_F = PD.getPOS(node, i, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+            numE = G.number_of_edges(node, i)
+            if self.isSimple:
+                CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
+                CL_F += math.log2(math.pow(1.0-pos_F, 1.0-numE)*math.pow(pos_F, numE))
+            else:
+                CL_I += math.log2(math.pow(1.0-pos_I, numE)*pos_I)
+                CL_F += math.log2(math.pow(1.0-pos_F, numE)*pos_F)
+    elif dir==1:
+        for i in nodes:
+            pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
+            pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+            numE = G.number_of_edges(i, node)
+            if self.isSimple:
+                CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
+                CL_F += math.log2(math.pow(1.0-pos_F, 1.0-numE)*math.pow(pos_F, numE))
+            else:
+                CL_I += math.log2( math.pow( 1.0-pos_I, numE )*pos_I )
+                CL_F += math.log2( math.pow( 1.0-pos_F, numE )*pos_F )
+    return -CL_I - (-CL_F)</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.computeCLgainRemoveNodeU"><code class="name flex">
+<span>def <span class="ident">computeCLgainRemoveNodeU</span></span>(<span>self, G, PD, nodes, node, dropLidx)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Utility function to compute the gain/change in codelength by removing a node from a pattern.
+This function is used if the input graph is undirected.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background Distribution</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of nodes</dd>
+<dt><strong><code>node</code></strong> :&ensp;<code>int</code></dt>
+<dd>node to be removed</dd>
+<dt><strong><code>dropLidx</code></strong> :&ensp;<code>int</code></dt>
+<dd>identifier of the constarint which is evaluated</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>gain/change in codelength</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeCLgainRemoveNodeU(self, G, PD, nodes, node, dropLidx):
+    &#34;&#34;&#34;
+    Utility function to compute the gain/change in codelength by removing a node from a pattern.
+    This function is used if the input graph is undirected.
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background Distribution
+    nodes : list
+        list of nodes
+    node : int
+        node to be removed
+    dropLidx : int
+        identifier of the constarint which is evaluated
+
+    Returns
+    -------
+    float
+        gain/change in codelength
+    &#34;&#34;&#34;
+    CL_I = 0.0
+    CL_F = 0.0
+    for i in nodes:
+        pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
+        pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+        numE = G.number_of_edges(i, node)
+        if self.isSimple:
+            CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
+            CL_F += math.log2(math.pow(1.0-pos_F, 1.0-numE)*math.pow(pos_F, numE))
+        else:
+            CL_I += math.log2(math.pow(1.0-pos_I, numE)*pos_I)
+            CL_F += math.log2(math.pow(1.0-pos_F, numE)*pos_F)
+    return -CL_I - (-CL_F)</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.computeCodeLengthSplitD"><code class="name flex">
+<span>def <span class="ident">computeCodeLengthSplitD</span></span>(<span>self, G, PD, condition, Params, Lidx=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute codelength, if input graph is directed</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background Distribution</dd>
+<dt><strong><code>condition</code></strong> :&ensp;<code>int</code></dt>
+<dd>condition to compute codelength
+1: Codelength of initial pattern or a single component
+2: Condition 1 + intra-component codelength computation
+3: Condition 2 but with a new lambda for each component</dd>
+<dt><strong><code>Params</code></strong> :&ensp;<code>dict</code></dt>
+<dd>value of prameters corresponding to the current split of the candidate constraint</dd>
+<dt><strong><code>Lidx</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>identifier of the constarint which is evaluated and dropped in some cases, by default None</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>commputed codelength</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeCodeLengthSplitD(self, G, PD, condition, Params, Lidx=None):
+    &#34;&#34;&#34;
+    function to compute codelength, if input graph is directed
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background Distribution
+    condition : int
+        condition to compute codelength
+        1: Codelength of initial pattern or a single component
+        2: Condition 1 + intra-component codelength computation
+        3: Condition 2 but with a new lambda for each component
+    Params : dict
+        value of prameters corresponding to the current split of the candidate constraint
+    Lidx : int, optional
+        identifier of the constarint which is evaluated and dropped in some cases, by default None
+
+    Returns
+    -------
+    float
+        commputed codelength
+    &#34;&#34;&#34;
+    codelength = 0.0
+    if condition == 1:
+        codelength = getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=Params[&#39;Pat&#39;].inNL, outNL=Params[&#39;Pat&#39;].outNL )
+        return codelength
+    elif condition == 2:
+        # intra-component codelength computation
+        for k,v in Params[&#39;compos&#39;].items():
+            codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=v.inNL, outNL=v.outNL )
+        # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+        keys = Params[&#39;compos&#39;].keys()
+        for k1 in range(len(keys)-1):
+            for k2 in range(k1+1, len(keys)):
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].inNL, outNL=Params[&#39;compos&#39;][k2].outNL, dropLidx=[Lidx] )
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].outNL, outNL=Params[&#39;compos&#39;][k2].inNL, dropLidx=[Lidx] )
+        # compute for excluded nodes
+        if len(Params[&#39;excludedInNL&#39;]) &gt; 0:
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=v.outNL, dropLidx=[Lidx] )
+        if len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=v.inNL, outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+        if len(Params[&#39;excludedInNL&#39;]) &gt; 0 and len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+            codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+    elif condition == 3:
+        # intra-component codelength computation
+        for k,v in Params[&#39;compos&#39;].items():
+            codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=5, isSimple=self.isSimple, inNL=v.inNL, outNL=v.outNL, dropLidx=[Lidx], nlambda=v.la )
+        # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+        keys = Params[&#39;compos&#39;].keys()
+        for k1 in range(len(keys)-1):
+            for k2 in range(k1+1, len(keys)):
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].inNL, outNL=Params[&#39;compos&#39;][k2].outNL, dropLidx=[Lidx] )
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].outNL, outNL=Params[&#39;compos&#39;][k2].inNL, dropLidx=[Lidx] )
+        # compute for excluded nodes
+        if len(Params[&#39;excludedInNL&#39;]) &gt; 0:
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=v.outNL, dropLidx=[Lidx] )
+        if len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=v.inNL, outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+        if len(Params[&#39;excludedInNL&#39;]) &gt; 0 and len(Params[&#39;excludedOutNL&#39;]) &gt; 0:
+            codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params[&#39;excludedInNL&#39;], outNL=Params[&#39;excludedOutNL&#39;], dropLidx=[Lidx] )
+    return codelength</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.computeCodeLengthSplitU"><code class="name flex">
+<span>def <span class="ident">computeCodeLengthSplitU</span></span>(<span>self, G, PD, condition, Params, Lidx=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute codelength, if input graph is undirected</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background Distribution</dd>
+<dt><strong><code>condition</code></strong> :&ensp;<code>int</code></dt>
+<dd>condition to compute codelength
+1: Codelength of initial pattern or a single component
+2: Condition 1 + intra-component codelength computation
+3: Condition 2 but with a new lambda for each component</dd>
+<dt><strong><code>Params</code></strong> :&ensp;<code>dict</code></dt>
+<dd>value of prameters corresponding to the current split of the candidate constraint</dd>
+<dt><strong><code>Lidx</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>identifier of the constarint which is evaluated and dropped in some cases, by default None</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>commputed codelength</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeCodeLengthSplitU(self, G, PD, condition, Params, Lidx=None):
+    &#34;&#34;&#34;
+    function to compute codelength, if input graph is undirected
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background Distribution
+    condition : int
+        condition to compute codelength
+        1: Codelength of initial pattern or a single component
+        2: Condition 1 + intra-component codelength computation
+        3: Condition 2 but with a new lambda for each component
+    Params : dict
+        value of prameters corresponding to the current split of the candidate constraint
+    Lidx : int, optional
+        identifier of the constarint which is evaluated and dropped in some cases, by default None
+
+    Returns
+    -------
+    float
+        commputed codelength
+    &#34;&#34;&#34;
+    codelength = 0.0
+    if condition == 1:
+        codelength = getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=Params[&#39;Pat&#39;].NL )
+        return codelength
+    elif condition == 2:
+        # intra-component codelength computation
+        for k,v in Params[&#39;compos&#39;].items():
+            codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=v.NL )
+        # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+        keys = Params[&#39;compos&#39;].keys()
+        for k1 in range(len(keys)-1):
+            for k2 in range(k1+1, len(keys)):
+                codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].NL, outNL=Params[&#39;compos&#39;][k2].NL, dropLidx=[Lidx] )
+        # compute for excluded nodes
+        if len(Params[&#39;excludedNL&#39;]) &gt; 0:
+            codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, NL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=v.NL, outNL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+    elif condition == 3:
+        # intra-component codelength computation
+        for k,v in Params[&#39;compos&#39;].items():
+            codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=5, isSimple=self.isSimple, NL=v.NL, dropLidx=[Lidx], nlambda=v.la )
+        # inter-component codelength computation, i.e., one list of the component and other list of all the rest of the node
+        keys = Params[&#39;compos&#39;].keys()
+        for k1 in range(len(keys)-1):
+            for k2 in range(k1+1, len(keys)):
+                codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=Params[&#39;compos&#39;][k1].NL, outNL=Params[&#39;compos&#39;][k2].NL, dropLidx=[Lidx] )
+        # compute for excluded nodes
+        if len(Params[&#39;excludedNL&#39;]) &gt; 0:
+            codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, NL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+            for k,v in Params[&#39;compos&#39;].items():
+                codelength += getCodeLengthParallel( G, PD, gtype=&#39;D&#39;, case=4, isSimple=self.isSimple, inNL=v.NL, outNL=Params[&#39;excludedNL&#39;], dropLidx=[Lidx] )
+    return codelength</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.evaluateAllConstraints"><code class="name flex">
+<span>def <span class="ident">evaluateAllConstraints</span></span>(<span>self, G, PD)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to evaluate all constraints and make a list of candidate constraints which are feasible to split</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluateAllConstraints(self, G, PD):
+    &#34;&#34;&#34;
+    function to evaluate all constraints and make a list of candidate constraints which are feasible to split
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background distribution
+    &#34;&#34;&#34;
+    self.Data = dict()
+    for i in PD.lprevUpdate.keys():
+        self.evaluateConstraint(G, PD, i)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.evaluateConstraint"><code class="name flex">
+<span>def <span class="ident">evaluateConstraint</span></span>(<span>self, G, PD, id)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to evaluate if a constraint is a feasible candidate for split</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background Distribution</dd>
+<dt><strong><code>id</code></strong> :&ensp;<code>int</code></dt>
+<dd>identifier of a constraint to be evaluated</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluateConstraint(self, G, PD, id):
+    &#34;&#34;&#34;
+    function to evaluate if a constraint is a feasible candidate for split
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background Distribution
+    id : int
+        identifier of a constraint to be evaluated
+    &#34;&#34;&#34;
+    if self.gtype == &#39;U&#39;:
+        self.processAsU(G, PD, id)
+    elif self.gtype == &#39;D&#39;:
+        self.processAsD(G, PD, id)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.getBestOption"><code class="name flex">
+<span>def <span class="ident">getBestOption</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to return the best candidate to split</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>dictionary containing a Pattern, and the two corresponding codelength associated to the pattern, i.e., prior and posterior to performing split action.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getBestOption(self):
+    &#34;&#34;&#34;
+    function to return the best candidate to split
+
+    Returns
+    -------
+    dict
+        dictionary containing a Pattern, and the two corresponding codelength associated to the pattern, i.e., prior and posterior to performing split action.
+    &#34;&#34;&#34;
+    if len(self.Data) &lt; 1:
+        return None
+    else:
+        bestR = max(self.Data.items(), key=lambda x: x[1][&#39;Pat&#39;].I)
+        return bestR[1]</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.getDescriptionLengthChangeD"><code class="name flex">
+<span>def <span class="ident">getDescriptionLengthChangeD</span></span>(<span>self, Pat, node, WI, W, tp)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Utility function which computes the change in description length on removing a node.
+This function is used when the input graph is directed</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>Pat</code></strong> :&ensp;<code>Pattern</code></dt>
+<dd>Input Pattern from which a node is removed</dd>
+<dt><strong><code>node</code></strong> :&ensp;<code>int</code></dt>
+<dd>Node to be removed</dd>
+<dt><strong><code>WI</code></strong> :&ensp;<code>int</code></dt>
+<dd>Initial number of nodes in the current candidate constraint/pattern</dd>
+<dt><strong><code>W</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of nodes included in any one component of the candidate constraint after split</dd>
+<dt><strong><code>tp</code></strong> :&ensp;<code>int</code></dt>
+<dd>1 : if node is InNode
+2 : if node is OutNode</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>change in description length</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getDescriptionLengthChangeD(self, Pat, node, WI, W, tp):
+    &#34;&#34;&#34;
+    Utility function which computes the change in description length on removing a node.
+    This function is used when the input graph is directed
+
+    Parameters
+    ----------
+    Pat : Pattern
+        Input Pattern from which a node is removed
+    node : int
+        Node to be removed
+    WI : int
+        Initial number of nodes in the current candidate constraint/pattern
+    W : int
+        number of nodes included in any one component of the candidate constraint after split
+    tp : int
+        1 : if node is InNode
+        2 : if node is OutNode
+
+    Returns
+    -------
+    float
+        change in description length
+    &#34;&#34;&#34;
+    change = 0.0
+    if tp == 1:
+        change += LN(Pat.InNCount) - LN(Pat.InNCount - 1)
+        change += ncr(WI, W) - ncr(WI, W-1)
+        pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
+        nECount = Pat.ECount
+        nNW = Pat.nw
+        nkws = Pat.kws
+        for k in Pat.outNL:
+            nECount -= Pat.G.number_of_edges(k, node)
+            nkws -= ( Pat.G.number_of_edges(k, node) &gt; 0)
+        nNW -= (Pat.OutNCount)
+        nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
+        change += pDLEdge - nDLEdge
+    else:
+        change += LN(Pat.OutNCount) - LN(Pat.OutNCount - 1)
+        change += ncr(WI, W) - ncr(WI, W-1)
+        pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
+        nECount = Pat.ECount
+        nNW = Pat.nw
+        nkws = Pat.kws
+        for k in Pat.inNL:
+            nECount -= Pat.G.number_of_edges(node, k)
+            nkws -= ( Pat.G.number_of_edges(node, k) &gt; 0)
+        nNW -= (Pat.InNCount)
+        nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
+        change += pDLEdge - nDLEdge
+    return change</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.getDescriptionLengthChangeU"><code class="name flex">
+<span>def <span class="ident">getDescriptionLengthChangeU</span></span>(<span>self, Pat, node, WI, W)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Utility function which computes the change in description length on removing a node.
+This function is used when the input graph is undirected</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>Pat</code></strong> :&ensp;<code>Pattern</code></dt>
+<dd>Input Pattern from which a node is removed</dd>
+<dt><strong><code>node</code></strong> :&ensp;<code>int</code></dt>
+<dd>Node to be removed</dd>
+<dt><strong><code>WI</code></strong> :&ensp;<code>int</code></dt>
+<dd>Initial number of nodes in the current candidate constraint/pattern</dd>
+<dt><strong><code>W</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of nodes included in any one component of the candidate constraint after split</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>change in description length</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getDescriptionLengthChangeU(self, Pat, node, WI, W):
+    &#34;&#34;&#34;
+    Utility function which computes the change in description length on removing a node.
+    This function is used when the input graph is undirected
+
+    Parameters
+    ----------
+    Pat : Pattern
+        Input Pattern from which a node is removed
+    node : int
+        Node to be removed
+    WI : int
+        Initial number of nodes in the current candidate constraint/pattern
+    W : int
+        number of nodes included in any one component of the candidate constraint after split
+
+    Returns
+    -------
+    float
+        change in description length
+    &#34;&#34;&#34;
+    change = 0.0
+    change += LN(Pat.NCount) - LN(Pat.NCount - 1)
+    change += ncr(WI, W) - ncr(WI, W-1)
+    pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
+    nECount = Pat.ECount
+    nNW = Pat.nw
+    nkws = Pat.kws
+    for k in Pat.NL:
+        nECount -= Pat.G.number_of_edges(k, node)
+        nkws -= ( Pat.G.number_of_edges(k, node) &gt; 0 )
+    nNW -= (Pat.NCount - 1)
+    nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
+    change += pDLEdge - nDLEdge
+    return change</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.getReducedComponentD"><code class="name flex">
+<span>def <span class="ident">getReducedComponentD</span></span>(<span>self, G, PD, FinalParams, Lid, k)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Utility function used when the input graph is directed to remove nodes from each component of the candidate split</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background Distribution</dd>
+<dt><strong><code>FinalParams</code></strong> :&ensp;<code>dict</code></dt>
+<dd>current value of prameters corresponding to the current split of the candidate constraint</dd>
+<dt><strong><code>Lid</code></strong> :&ensp;<code>int</code></dt>
+<dd>identifier for the the candidate constraint for split</dd>
+<dt><strong><code>k</code></strong> :&ensp;<code>int</code></dt>
+<dd>identifier for the component number of the candidate after split</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>FinalParams: Updated after reducing a component</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getReducedComponentD(self, G, PD, FinalParams, Lid, k):
+    &#34;&#34;&#34;
+    Utility function used when the input graph is directed to remove nodes from each component of the candidate split
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background Distribution
+    FinalParams : dict
+        current value of prameters corresponding to the current split of the candidate constraint
+    Lid : int
+        identifier for the the candidate constraint for split
+    k : int
+        identifier for the component number of the candidate after split
+
+    Returns
+    -------
+    dict
+        FinalParams: Updated after reducing a component
+    &#34;&#34;&#34;
+    doshrink = True
+    count_remove_nodes = 0
+    while doshrink:
+        doshrink = False
+        bestRNode = None
+        bestCLprime = None
+        bestDL = None
+        bestI = FinalParams[&#39;Pat&#39;].I
+        bestType = None
+        for node in FinalParams[&#39;compos&#39;][k].inNL:
+            curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeD( G, PD, FinalParams[&#39;compos&#39;][k].outNL, node, [Lid], 1 ) #// Todo: check this code
+            curIC = FinalParams[&#39;codeLengthC&#39;] - curCLprime
+            curDL = FinalParams[&#39;Pat&#39;].DL - self.getDescriptionLengthChangeD( FinalParams[&#39;compos&#39;][k], node, FinalParams[&#39;Pat&#39;].InNCount, FinalParams[&#39;inNodesInc&#39;], 1 ) #// Todo: check this code
+            curI =  computeInterestingness( curIC, curDL, mode=2 )
+            if curI &gt; bestI:
+                bestRNode = node
+                bestCLprime = curCLprime
+                bestDL = curDL
+                bestI = curI
+                bestType = &#39;in&#39;
+        for node in FinalParams[&#39;compos&#39;][k].outNL:
+            curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeD( G, PD, FinalParams[&#39;compos&#39;][k].inNL, node, [Lid], 2 ) #// Todo: check this code
+            curIC = FinalParams[&#39;codeLengthC&#39;] - curCLprime
+            curDL = FinalParams[&#39;Pat&#39;].DL - self.getDescriptionLengthChangeD( FinalParams[&#39;compos&#39;][k], node, FinalParams[&#39;Pat&#39;].OutNCount, FinalParams[&#39;outNodesInc&#39;], 2 ) #// Todo: check this code
+            curI =  computeInterestingness( curIC, curDL, mode=2 )
+            if curI &gt; bestI:
+                bestRNode = node
+                bestCLprime = curCLprime
+                bestDL = curDL
+                bestI = curI
+                bestType = &#39;out&#39;
+        if bestI &gt; FinalParams[&#39;Pat&#39;].I:
+            FinalParams[&#39;codeLengthCprime&#39;] = bestCLprime
+            if &#39;in&#39; in bestType:
+                FinalParams[&#39;compos&#39;][k].removeInNode(bestRNode)
+                FinalParams[&#39;inNodesInc&#39;] -= 1
+                FinalParams[&#39;excludedInNL&#39;].append(bestRNode)
+            else:
+                FinalParams[&#39;compos&#39;][k].removeOutNode(bestRNode)
+                FinalParams[&#39;outNodesInc&#39;] -= 1
+                FinalParams[&#39;excludedOutNL&#39;].append(bestRNode)
+            FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+            FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams[&#39;Pat&#39;].InNCount, WOS=FinalParams[&#39;Pat&#39;].OutNCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+            FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+            count_remove_nodes += 1
+            doshrink = True
+
+    return FinalParams</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.getReducedComponentU"><code class="name flex">
+<span>def <span class="ident">getReducedComponentU</span></span>(<span>self, G, PD, FinalParams, Lid, k)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Utility function used when the input graph is undirected to remove nodes from each component of the candidate split</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background Distribution</dd>
+<dt><strong><code>FinalParams</code></strong> :&ensp;<code>dict</code></dt>
+<dd>current value of prameters corresponding to the current split of the candidate constraint</dd>
+<dt><strong><code>Lid</code></strong> :&ensp;<code>int</code></dt>
+<dd>identifier for the the candidate constraint for split</dd>
+<dt><strong><code>k</code></strong> :&ensp;<code>int</code></dt>
+<dd>identifier for the component number of the candidate after split</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>FinalParams: Updated after reducing a component</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getReducedComponentU(self, G, PD, FinalParams, Lid, k):
+    &#34;&#34;&#34;
+    Utility function used when the input graph is undirected to remove nodes from each component of the candidate split
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background Distribution
+    FinalParams : dict
+        current value of prameters corresponding to the current split of the candidate constraint
+    Lid : int
+        identifier for the the candidate constraint for split
+    k : int
+        identifier for the component number of the candidate after split
+
+    Returns
+    -------
+    dict
+        FinalParams: Updated after reducing a component
+    &#34;&#34;&#34;
+    doshrink = True
+    while doshrink:
+        doshrink = False
+        bestRNode = None
+        bestCLprime = None
+        bestDL = None
+        bestI = FinalParams[&#39;Pat&#39;].I
+        for node in FinalParams[&#39;compos&#39;][k].NL:
+            curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeU(G, PD, list(set(FinalParams[&#39;compos&#39;][k].NL)-set([node])), node, [Lid])
+            curIC = FinalParams[&#39;codeLengthC&#39;] - curCLprime
+            curDL = FinalParams[&#39;Pat&#39;].DL - self.getDescriptionLengthChangeU(FinalParams[&#39;compos&#39;][k], node, FinalParams[&#39;Pat&#39;].NCount, FinalParams[&#39;NodesInc&#39;])
+            curI =  computeInterestingness( curIC, curDL, mode=2 )
+            if curI &gt; bestI:
+                bestRNode = node
+                bestCLprime = curCLprime
+                bestDL = curDL
+                bestI = curI
+        if bestI &gt; FinalParams[&#39;Pat&#39;].I:
+            FinalParams[&#39;codeLengthCprime&#39;] = bestCLprime
+            FinalParams[&#39;compos&#39;][k].removeNode(bestRNode)
+            FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+            FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams[&#39;Pat&#39;].NCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+            FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+            FinalParams[&#39;NodesInc&#39;] -= 1
+            FinalParams[&#39;excludedNL&#39;].append(bestRNode)
+            doshrink = True
+
+    return FinalParams</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.processAsD"><code class="name flex">
+<span>def <span class="ident">processAsD</span></span>(<span>self, G, PD, i)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Utility function for split action when the input graph is directed.
+This function idenfies the final components from each possible candidate split and compute the corresponding measures.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background Distribution</dd>
+<dt><strong><code>id</code></strong> :&ensp;<code>int</code></dt>
+<dd>identifier of a constraint to be evaluated</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def processAsD(self, G, PD, i):
+    &#34;&#34;&#34;
+    Utility function for split action when the input graph is directed.
+    This function idenfies the final components from each possible candidate split and compute the corresponding measures.
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background Distribution
+    id : int
+        identifier of a constraint to be evaluated
+    &#34;&#34;&#34;
+    inNL = PD.lprevUpdate[i][1]
+    outNL = PD.lprevUpdate[i][2]
+    HD = getDirectedSubgraph( G, inNL, outNL, self.isSimple )
+    H = nx.Graph(HD)
+    components = nx.connected_component_subgraphs(H, copy=True)
+    fcomponents = dict()
+    it = 0
+    for comp in components:
+        if comp.number_of_nodes() &gt; self.minsize:
+            C_inNL = list(set(comp.nodes()).intersection(set(inNL)))
+            C_outNL = list(set(comp.nodes()).intersection(set(outNL)))
+            fcomponents[it] = getDirectedSubgraph(G, C_inNL, C_outNL, self.isSimple)
+    if len(fcomponents) &gt; 1: #* If components are more than one then only we can split this pattern
+        baseParams = dict()
+        baseParams[&#39;Pat&#39;] = Pattern(HD)
+        baseParams[&#39;inNodesInc&#39;] = 0
+        baseParams[&#39;outNodesInc&#39;] = 0
+        compPats = dict()
+        in_nodes_union = set()
+        out_nodes_union = set()
+        for k,v in fcomponents.items():
+            compPats[k] = Pattern(v)
+            baseParams[&#39;inNodesInc&#39;] += compPats[k].InNCount
+            baseParams[&#39;outNodesInc&#39;] += compPats[k].OutNCount
+            in_nodes_union = in_nodes_union.union(set(compPats[k].inNL))
+            out_nodes_union = out_nodes_union.union(set(compPats[k].outNL))
+        baseParams[&#39;compos&#39;] = compPats
+        baseParams[&#39;excludedInNL&#39;] = list( set(baseParams[&#39;Pat&#39;].inNL) - in_nodes_union )
+        baseParams[&#39;excludedOutNL&#39;] = list( set(baseParams[&#39;Pat&#39;].outNL) - out_nodes_union )
+        baseParams[&#39;codeLengthC&#39;] = getCodeLengthParallel( H, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, inNL=baseParams[&#39;Pat&#39;].inNL, outNL=baseParams[&#39;Pat&#39;].outNL )
+        baseParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitD(G, PD, 2, baseParams, i) #// Todo : write code for this part
+        baseParams[&#39;Pat&#39;].setIC_dssg( baseParams[&#39;codeLengthC&#39;] - baseParams[&#39;codeLengthCprime&#39;] )
+        baseParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams[&#39;Pat&#39;].InNCount, WOS=baseParams[&#39;Pat&#39;].OutNCount, compos=baseParams[&#39;compos&#39;], isSimple=self.isSimple ) )
+        baseParams[&#39;Pat&#39;].setI( computeInterestingness( baseParams[&#39;Pat&#39;].IC_dssg, baseParams[&#39;Pat&#39;].DL, mode=2 ) )
+        baseParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+
+        #now try reducing each component
+        FinalParams = baseParams
+        for k in baseParams[&#39;compos&#39;].keys():
+            FinalParams = self.getReducedComponentD(G, PD, FinalParams, i, k)
+
+        #compute new lambdas for each new pattern/component
+        #// Todo: write code
+        for k,v in FinalParams[&#39;compos&#39;].items():
+            v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_return=&#39;return&#39;, case=3, dropLidx=[i]) )
+        FinalParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitD(G, PD, 3, FinalParams, i) #// Todo : write code for this part
+        FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+        FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams[&#39;Pat&#39;].InNCount, WOS=FinalParams[&#39;Pat&#39;].OutNCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+        FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+        # Now set these values to all component patterns
+        #// Todo: Write Code
+        for k,v in FinalParams[&#39;compos&#39;].items():
+            v.setIC_dssg( FinalParams[&#39;Pat&#39;].IC_dssg )
+            v.setDL( FinalParams[&#39;Pat&#39;].DL )
+            v.setI( FinalParams[&#39;Pat&#39;].I )
+            v.setPrevOrder(i)
+            v.setPatType(&#39;split&#39;)
+        self.Data[i] = FinalParams
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.processAsU"><code class="name flex">
+<span>def <span class="ident">processAsU</span></span>(<span>self, G, PD, id)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Utility function for split action when the input graph is undirected.
+This function idenfies the final components from each possible candidate split and compute the corresponding measures.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background Distribution</dd>
+<dt><strong><code>id</code></strong> :&ensp;<code>int</code></dt>
+<dd>identifier of a constraint to be evaluated</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def processAsU(self, G, PD, id):
+    &#34;&#34;&#34;
+    Utility function for split action when the input graph is undirected.
+    This function idenfies the final components from each possible candidate split and compute the corresponding measures.
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background Distribution
+    id : int
+        identifier of a constraint to be evaluated
+    &#34;&#34;&#34;
+    NL = PD.lprevUpdate[id][1]
+    H = G.subgraph(NL)
+    components = nx.connected_component_subgraphs(H, copy=True)
+    fcomponents = dict()
+    it = 0
+    for comp in components:
+        if comp.number_of_nodes() &gt; self.minsize:
+            fcomponents[it] = comp
+    if len(fcomponents) &gt; 1: #* If components are more than one then only we can split this pattern
+        baseParams = dict()
+        baseParams[&#39;Pat&#39;] = Pattern(H)
+        baseParams[&#39;NodesInc&#39;] = 0
+        compPats = dict()
+        nodes_union = set()
+        for k,v in fcomponents.items():
+            compPats[k] = Pattern(v)
+            baseParams[&#39;NodesInc&#39;] += v.number_of_nodes()
+            nodes_union = nodes_union.union(set(compPats[k].NL))
+        baseParams[&#39;compos&#39;] = compPats
+        baseParams[&#39;excludedNL&#39;] = list( set(baseParams[&#39;Pat&#39;].NL) - nodes_union )
+        baseParams[&#39;codeLengthC&#39;] = getCodeLengthParallel( H, PD, gtype=self.gtype, case=2, isSimple=self.isSimple, NL=baseParams[&#39;Pat&#39;].NL )
+        baseParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitU(G, PD, 2, baseParams, id) #// Todo : write code for this part
+        baseParams[&#39;Pat&#39;].setIC_dssg( baseParams[&#39;codeLengthC&#39;] - baseParams[&#39;codeLengthCprime&#39;] )
+        baseParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams[&#39;Pat&#39;].NCount, compos=baseParams[&#39;compos&#39;], isSimple=self.isSimple ) )
+        baseParams[&#39;Pat&#39;].setI( computeInterestingness( baseParams[&#39;Pat&#39;].IC_dssg, baseParams[&#39;Pat&#39;].DL, mode=2 ) )
+        baseParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+
+        #now try reducing each component
+        FinalParams = baseParams
+        for k in baseParams[&#39;compos&#39;].keys():
+            FinalParams = self.getReducedComponentU(G, PD, FinalParams, id, k)
+
+        #compute new lambdas for each new pattern/component
+        for k,v in FinalParams[&#39;compos&#39;].items():
+            v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_return=&#39;return&#39;, case=3, dropLidx=[id]) )
+        FinalParams[&#39;codeLengthCprime&#39;] = self.computeCodeLengthSplitU(G, PD, 3, FinalParams, id) #// Todo : write code for this part
+        FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
+        FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams[&#39;Pat&#39;].NCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
+        FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+        # Now set these values to all component patterns
+        for k,v in FinalParams[&#39;compos&#39;].items():
+            v.setIC_dssg( FinalParams[&#39;Pat&#39;].IC_dssg )
+            v.setDL( FinalParams[&#39;Pat&#39;].DL )
+            v.setI( FinalParams[&#39;Pat&#39;].I )
+            v.setPrevOrder(id)
+            v.setPatType(&#39;split&#39;)
+        self.Data[id] = FinalParams
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.updateConstraintEvaluation"><code class="name flex">
+<span>def <span class="ident">updateConstraintEvaluation</span></span>(<span>self, G, PD, id, condition=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to now evaluate and update a possible candidate</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>Networkx Graph</code></dt>
+<dd>Input Graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background Distribution</dd>
+<dt><strong><code>id</code></strong> :&ensp;<code>int</code></dt>
+<dd>identifier of candidate to the updated</dd>
+<dt><strong><code>condition</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>1 if codelength does not changes, else 2, by default 1</dd>
+</dl>
+<h1 id="to-understand-when-a-candidate-need-to-be-updated-or-added-in-the-potential-list-we-shall-ealise-thatonly-the-patternx-from-previous-states-can-only-be-split">? To understand when a candidate need to be updated or added in the potential list, we shall ealise thatonly the patternx from previous states can only be split.</h1>
+<h1 id="as-any-action-performed-will-result-in-a-connected-patterns-thus-the-list-of-potential-candidates-is-only-updated-at-the-start-of-the-state">? As any action performed will result in a connected pattern(s), thus the list of potential candidates is only updated at the start of the state</h1>
+<h1 id="now-with-any-other-action-performed-there-are-only-two-possibilities-for-each-candidate">? Now with any other action performed there are only two possibilities for each candidate</h1>
+<h1 id="first-either-the-description-length-changes-condition1">? First either the Description Length changes (Condition==1)</h1>
+<h1 id="or-second-both-the-codelength-and-description-length-changes-condition2">? Or Second, both the codelength and description length changes (Condition==2)</h1></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateConstraintEvaluation(self, G, PD, id, condition=1):
+    &#34;&#34;&#34;
+    function to now evaluate and update a possible candidate
+
+    Parameters
+    ----------
+    G : Networkx Graph
+        Input Graph
+    PD : PDClass
+        Background Distribution
+    id : int
+        identifier of candidate to the updated
+    condition : int, optional
+        1 if codelength does not changes, else 2, by default 1
+
+    #? To understand when a candidate need to be updated or added in the potential list, we shall ealise thatonly the patternx from previous states can only be split.
+    #? As any action performed will result in a connected pattern(s), thus the list of potential candidates is only updated at the start of the state
+    #? Now with any other action performed there are only two possibilities for each candidate
+    #? First either the Description Length changes (Condition==1)
+    #? Or Second, both the codelength and description length changes (Condition==2)
+    &#34;&#34;&#34;
+    if condition == 1:
+        if self.gtype == &#39;U&#39;:
+            DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id][&#39;Pat&#39;].NCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
+            IG = computeInterestingness( self.self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
+            self.Data[id][&#39;Pat&#39;].setDL(DL)
+            self.Data[id][&#39;Pat&#39;].setI(IG)
+        for k,v in self.Data[id][&#39;compos&#39;].items():
+            v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+            v.setI( self.Data[id][&#39;Pat&#39;].I )
+        else:
+            DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id][&#39;Pat&#39;].InNCount, WOS=self.Data[id][&#39;Pat&#39;].OutNCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
+            IG = computeInterestingness( self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
+            self.Data[id][&#39;Pat&#39;].setDL(DL)
+            self.Data[id][&#39;Pat&#39;].setI(IG)
+        for k,v in self.Data[id][&#39;compos&#39;].items():
+            v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+            v.setI( self.Data[id][&#39;Pat&#39;].I )
+    elif condition == 2:
+        if self.gtype == &#39;U&#39;:
+            self.processAsU(G, PD, id)
+        elif self.gtype == &#39;D&#39;:
+            self.processAsD(G, PD, id)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Actions.split.EvaluateSplit.updateDistribution"><code class="name flex">
+<span>def <span class="ident">updateDistribution</span></span>(<span>self, PD, bestSp)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to update background distribution.
+* Now here we remove the knowledge of pervious pattern which is now updated and add the knowledge of pattern which is the result of split
+* hence we remove the previous lambda associated with the pattern and add a new lambdas for all new pattern</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution</dd>
+<dt><strong><code>bestSp</code></strong> :&ensp;<code>dict</code></dt>
+<dd>last split action details</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateDistribution(self, PD, bestSp):
+    &#34;&#34;&#34;
+    function to update background distribution.
+    * Now here we remove the knowledge of pervious pattern which is now updated and add the knowledge of pattern which is the result of split
+    * hence we remove the previous lambda associated with the pattern and add a new lambdas for all new pattern
+
+    Parameters
+    ----------
+    PD : PDClass
+        Background distribution
+    bestSp : dict
+        last split action details
+    &#34;&#34;&#34;
+    #* Here bestSp is a dictionary as saved in self.Data
+    del self.Data[bestSp[&#39;Pat&#39;].prev_order]
+    out = PD.lprevUpdate.pop(bestSp[&#39;Pat&#39;].prev_order, None)
+    if out is None:
+        print(&#39;Something is fishy&#39;)
+    else:
+        for k,v in bestSp[&#39;compos&#39;].items():
+            la = PD.updateDistribution( v.G, idx=v.cur_order, val_return=&#39;save&#39;, case=2 )
+            v.setLambda(la)
+    return</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.Actions" href="index.html">src.Actions</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.Actions.split.EvaluateSplit" href="#src.Actions.split.EvaluateSplit">EvaluateSplit</a></code></h4>
+<ul class="">
+<li><code><a title="src.Actions.split.EvaluateSplit.checkAndUpdateAllPossibilities" href="#src.Actions.split.EvaluateSplit.checkAndUpdateAllPossibilities">checkAndUpdateAllPossibilities</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.computeCLgainRemoveNodeD" href="#src.Actions.split.EvaluateSplit.computeCLgainRemoveNodeD">computeCLgainRemoveNodeD</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.computeCLgainRemoveNodeU" href="#src.Actions.split.EvaluateSplit.computeCLgainRemoveNodeU">computeCLgainRemoveNodeU</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.computeCodeLengthSplitD" href="#src.Actions.split.EvaluateSplit.computeCodeLengthSplitD">computeCodeLengthSplitD</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.computeCodeLengthSplitU" href="#src.Actions.split.EvaluateSplit.computeCodeLengthSplitU">computeCodeLengthSplitU</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.evaluateAllConstraints" href="#src.Actions.split.EvaluateSplit.evaluateAllConstraints">evaluateAllConstraints</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.evaluateConstraint" href="#src.Actions.split.EvaluateSplit.evaluateConstraint">evaluateConstraint</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.getBestOption" href="#src.Actions.split.EvaluateSplit.getBestOption">getBestOption</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.getDescriptionLengthChangeD" href="#src.Actions.split.EvaluateSplit.getDescriptionLengthChangeD">getDescriptionLengthChangeD</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.getDescriptionLengthChangeU" href="#src.Actions.split.EvaluateSplit.getDescriptionLengthChangeU">getDescriptionLengthChangeU</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.getReducedComponentD" href="#src.Actions.split.EvaluateSplit.getReducedComponentD">getReducedComponentD</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.getReducedComponentU" href="#src.Actions.split.EvaluateSplit.getReducedComponentU">getReducedComponentU</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.processAsD" href="#src.Actions.split.EvaluateSplit.processAsD">processAsD</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.processAsU" href="#src.Actions.split.EvaluateSplit.processAsU">processAsU</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.updateConstraintEvaluation" href="#src.Actions.split.EvaluateSplit.updateConstraintEvaluation">updateConstraintEvaluation</a></code></li>
+<li><code><a title="src.Actions.split.EvaluateSplit.updateDistribution" href="#src.Actions.split.EvaluateSplit.updateDistribution">updateDistribution</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

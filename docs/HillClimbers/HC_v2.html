@@ -1,0 +1,3412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>src.HillClimbers.HC_v2 API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.HillClimbers.HC_v2</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">################ This file contains a second version (better than first verson) of hill climber with again sequential implementation ##############################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+import os
+import sys
+path = os.getcwd().split(&#39;MiningSubjectiveSubgraphPatterns&#39;)[0]+&#39;MiningSubjectiveSubgraphPatterns/&#39;
+if path not in sys.path:
+        sys.path.append(path)
+import math
+import numpy as np
+import copy
+import networkx as nx
+
+from src.Patterns.Pattern import Pattern
+from src.Utils.Measures import computeSumOfEdgeProbablity, IC_SSG, NW, NW_D
+from src.Utils.Measures import computeDescriptionLength, computeInterestingness
+from src.Utils.Measures import computeSumOfEdgeProbablityBetweenNodeAndList
+from src.Utils.Measures import computeSumOfExpectations, computeSumOfExpectationsBetweenNodeAndList
+from src.Utils.Measures import computePWparameters, computePWparametersBetweenNodeAndList, computeMinPOSBetweenNodeAndList
+from src.Utils.Measures import AD, IC_DSIMP, getDirectedSubgraph
+##################################################################################################################################################################
+class HillClimber_v2:
+    &#34;&#34;&#34;This is a Hill Climber Class Version 1; used for discovering new patterns in a graph dataset
+    &#34;&#34;&#34;
+    PD = None
+##################################################################################################################################################################
+    def __init__(self, G, q, seedMode, nKseed, mode = 1, gtype = &#39;U&#39;, isSimple=True, incEdge = False):
+        &#34;&#34;&#34;
+        Args:
+            G (netwokx graph): input graph dataset
+            q (float): expected pattern size in range between 0.0-1.0
+            seedMode (str): type of seed mode to use in this hill climber
+            nKseed (int): number of seed runs to be performed to find one pattern
+            mode (int, optional): Information content mode: here mode can be 1 for SSG,
+                                2 for Aggregate deviation and 3 for measure in DSIMP.
+                                Defaults to 1.
+            gtype (str, optional): input graph type: &#39;U&#39; for undirected and &#39;D&#39; for directed. Defaults to &#39;U&#39;.
+            isSimple (bool, optional): True is input graph is a simple graph else false. Defaults to True.
+            incEdge (bool, optional): If edges shall be described in description of a pattern. Defaults to True.
+        &#34;&#34;&#34;
+        self.G = G.copy()
+        self.seedMode = seedMode
+        self.nKseed = nKseed
+        self.allSeedCheck = []
+        self.mode = mode # here mode can be 1 for SSG, 2 for Aggregate deviation and 3 for measure in DSIMP
+        self.gtype = gtype
+        self.isSimple = isSimple
+        self.incEdge = incEdge
+        self.q = q
+##################################################################################################################################################################
+    def setPD(self, PD):
+        &#34;&#34;&#34;Function to set background distribution
+
+        Args:
+            PD (PDClass): Background distribution of input graph
+        &#34;&#34;&#34;
+        self.PD = PD
+        return
+##################################################################################################################################################################
+    def getSeeds(self):
+        &#34;&#34;&#34;Function to get seeds to run the hill climber
+
+        Raises:
+            Exception 1: if self.nKseed != mNumNodes:
+                raise Exception(&#34;Number of seeds should be equal to number of nodes here.&#34;)
+            Exception: raise Exception(&#39;no valid seed mode given&#39;)
+
+        Returns:
+            list: seed node&#39;s list
+        &#34;&#34;&#34;
+        mNumNodes = self.G.number_of_nodes()
+        seedNodes = [None]*self.nKseed
+        if &#39;all&#39; in self.seedMode:
+            if self.nKseed != mNumNodes:
+                raise Exception(&#34;Number of seeds should be equal to number of nodes here.&#34;)
+
+            for r in range(self.nKseed):
+                seedNodes[r] = r
+
+        elif &#39;uniform&#39; in self.seedMode:
+            randoml = list(self.G.nodes())
+            np.random.shuffle(randoml)
+            for r in range(self.nKseed):
+                seedNodes[r] = randoml[r]
+
+        elif &#39;degree&#39; in self.seedMode:
+            degreeList = sorted(dict(self.G.degree()).items(), key=lambda kv: kv[1], reverse=True)
+            for r in range(self.nKseed):
+                seedNodes[r] = degreeList[r][0]
+
+        elif &#39;interest&#39; in self.seedMode:
+            ListNode = sorted(list(self.G.nodes()))
+            interestList = []
+            if self.gtype == &#39;U&#39;:
+                for LNit in ListNode:
+                    print(LNit)
+                    curlist = list(set(self.G.neighbors(LNit)).union(set([LNit])))
+                    H = self.G.subgraph(curlist)
+                    if len(curlist)&gt;1:
+                        ic = 0.0
+                        dl = 0.0
+                        if self.mode == 1:
+                            pw = computeSumOfEdgeProbablity(self.PD, gtype=self.gtype, NL=curlist, isSimple=self.isSimple)
+                            ic = IC_SSG(3, pw=pw, W=H)
+                        elif self.mode == 2:
+                            mu_w = computeSumOfExpectations(self.PD, gtype=self.gtype, NL=curlist, isSimple=self.isSimple)
+                            ic = AD(H.number_of_edges(), mu_w)
+                        elif self.mode == 3:
+                            mu_w, p0 = computePWparameters(self.PD, gtype=self.gtype, NL=curlist, isSimple=self.isSimple)
+                            ic = IC_DSIMP(H.number_of_edges(), NW(len(curlist)), mu_w, p0)
+                        dlmode = 1
+                        if self.incEdge:
+                            dlmode = 2
+                        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=self.q)
+                        interestValue = computeInterestingness(ic, dl)
+                        interestList.append(tuple([LNit, interestValue]))
+            else:
+                for LNit in ListNode:
+                    print(LNit)
+                    curlistOut = list(set(self.G.predecessors(LNit)).union(set([LNit])))
+                    curlistIn = list(set(self.G.successors(LNit)).union(set([LNit])))
+                    H = getDirectedSubgraph(self.G, curlistIn, curlistOut, self.isSimple)
+                    if len(curlistIn)&gt;1 and len(curlistOut)&gt;1:
+                        ic = 0.0
+                        dl = 0.0
+                        if self.mode == 1:
+                            pw = computeSumOfEdgeProbablity(self.PD, gtype=self.gtype, inNL=curlistIn, outNL=curlistOut, isSimple=self.isSimple)
+                            ic = IC_SSG(3, pw=pw, W=H)
+                        elif self.mode == 2:
+                            mu_w = computeSumOfExpectations(self.PD, gtype=self.gtype, inNL=curlistIn, outNL=curlistOut, isSimple=self.isSimple)
+                            ic = AD(H.number_of_edges(), mu_w)
+                        elif self.mode == 3:
+                            mu_w, p0 = computePWparameters(self.PD, gtype=self.gtype, inNL=curlistIn, outNL=curlistOut, isSimple=self.isSimple)
+                            ic = IC_DSIMP(H.number_of_edges(), NW_D(curlistIn, curlistOut), mu_w, p0)
+                        dlmode = 1
+                        if self.incEdge:
+                            dlmode = 2
+                        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=self.q)
+                        interestValue = computeInterestingness(ic, dl)
+                        interestList.append(tuple([LNit, interestValue]))
+            interestList = sorted(interestList, key=lambda kv: kv[1], reverse=True)
+            mRange = min([self.nKseed, len(interestList)])
+            seedNodes = [0]*mRange
+            for r in range(mRange):
+                # print(r, interestList[r][0])
+                if interestList[r][0] is None:
+                    print(r, interestList[r][0])
+                seedNodes[r] = interestList[r][0]
+
+        else:
+            raise Exception(&#39;no valid seed mode given&#39;)
+        return seedNodes
+##################################################################################################################################################################
+    def hillclimber(self, minsize=0, mininterest = -100000.0):
+        &#34;&#34;&#34;function to most interesting subgraph pattern
+
+        Args:
+            minsize (int, optional): minimum size of the pattern. Defaults to 0.
+            mininterest (float, optional): minimum interestingness. Defaults to -100000.0.
+
+        Returns:
+            Pattern: most interesting subgraph pattern
+        &#34;&#34;&#34;
+        print(&#39;Already present patterns: &#39;, len(self.PD.lprevUpdate.items()))
+
+        seedNodes = self.getSeeds()
+
+        # Do requested runs
+        bestPattern = Pattern(nx.Graph())
+
+        for k in range(len(seedNodes)):
+            cP = self.searchPattern(seedNodes[k])
+            if cP.I &gt; bestPattern.I and cP.NCount &gt; minsize and cP.I &gt; mininterest:
+                bestPattern = cP.copy()
+            self.allSeedCheck.append(cP)
+
+        return bestPattern
+##################################################################################################################################################################
+    def extendPatternUtil(self, pattern, candidates):
+        &#34;&#34;&#34;Util function to check for the best candidate node to add
+
+        Args:
+            pattern (Pattern): input subgraph pattern
+            candidates (dict): dictionary of candidates that can be added with parameters as values
+
+        Returns:
+            int, dict: best node id, dictionary of parameters cmputed for the input node
+        &#34;&#34;&#34;
+        best_node = None
+        params = None
+        ic = 0.0
+
+        dlmode = 1
+        if self.incEdge:
+            dlmode = 2
+
+        if self.mode == 1:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_SSG( 1, pw=pattern.sumPOS+x[1][&#39;pw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], nw=NW(pattern.NCount+1) ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;pw_new&#39;] = pattern.sumPOS + params[&#39;pw_surplus&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            params[&#39;nw_new&#39;] = NW(pattern.NCount+1)
+            ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+        elif self.mode == 2:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( AD( pattern.ECount+x[1][&#39;kw_surplus&#39;], pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;] ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_DSIMP( pattern.ECount+x[1][&#39;kw_surplus&#39;], NW(pattern.NCount+1), pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;], min(pattern.minPOS,x[1][&#39;p0_surplus&#39;]) ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+            params[&#39;p0_new&#39;] = min(pattern.minPOS, params[&#39;p0_surplus&#39;])
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            params[&#39;nw_new&#39;] = NW(pattern.NCount+1)
+            ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=params[&#39;kw_new&#39;], q=self.q)
+        I = computeInterestingness(ic, dl)
+
+        params[&#39;ic&#39;] = ic
+        params[&#39;dl&#39;] = dl
+        params[&#39;I&#39;] = I
+
+        return best_node, params
+##################################################################################################################################################################
+    def extendPatternFinal(self, pattern, nodeToAdd, params):
+        &#34;&#34;&#34;function to update the subgraph pattern while adding the node resultng in maximum increase of interestingness value
+
+        Args:
+            pattern (Pattern): input subgraph pattern
+            nodeToAdd (int): node id of the vertex to be added
+            params (dict): corresponding parameters of the node to be added
+
+        Returns:
+            Pattern: updated subgraph pattern
+        &#34;&#34;&#34;
+        H = nx.Graph()
+        for p in pattern.NL:
+            if self.G.has_edge(p, nodeToAdd):
+                H.add_edge(p, nodeToAdd)
+        pattern.updateGraph(H)
+        if self.mode == 1:
+            pattern.setSumPOS(params[&#39;pw_new&#39;])
+            pattern.setIC_ssg(params[&#39;ic&#39;])
+        elif self.mode == 2:
+            pattern.setAD(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            pattern.setIC_dsimp(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+            pattern.setMinPOS(params[&#39;p0_new&#39;])
+        pattern.setDL(params[&#39;dl&#39;])
+        pattern.setI(params[&#39;I&#39;])
+        return pattern
+##################################################################################################################################################################
+    def shrinkPatternUtil(self, pattern, nodeToCheck):
+        &#34;&#34;&#34;Util function to check for the best candidate node to remove
+
+        Args:
+            pattern (Pattern): input subgraph pattern
+            nodeToCheck (int): node id of the vertex to check for removal
+
+        Returns:
+            dict: dictionary of parameters cmputed for the input node
+        &#34;&#34;&#34;
+        kw_deficit  = 0
+        for p in pattern.NL:
+            kw_deficit  += self.G.number_of_edges(p, nodeToCheck)
+        curNL = pattern.NL
+
+        params = dict()
+        ic = 0.0
+        dl = 0.0
+        if self.mode == 1:
+            params[&#39;pw_deficit&#39;] = computeSumOfEdgeProbablityBetweenNodeAndList(self.PD, nodeToCheck, curNL, gtype=self.gtype, isSimple=self.isSimple)
+            params[&#39;pw_new&#39;] = pattern.sumPOS - params[&#39;pw_deficit&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            params[&#39;nw_new&#39;] = NW(len(curNL)-1)
+            ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+        elif self.mode == 2:
+            params[&#39;mu_w_deficit&#39;] = computeSumOfExpectationsBetweenNodeAndList(self.PD, nodeToCheck, curNL, gtype=self.gtype, isSimple=self.isSimple)
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+        else:
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            params[&#39;mu_w_deficit&#39;], params[&#39;p0_deficit&#39;] = computePWparametersBetweenNodeAndList(self.PD, nodeToCheck, curNL, gtype=self.gtype, isSimple=self.isSimple)
+            if pattern.minPOS == params[&#39;p0_deficit&#39;]:
+                curNL.remove(nodeToCheck)
+                params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;] = computePWparameters(self.PD, gtype=self.gtype, NL=curNL, isSimple=self.isSimple)
+            else:
+                params[&#39;p0_new&#39;] = pattern.minPOS
+                params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+            ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+        dlmode = 1
+        if self.incEdge:
+            dlmode = 2
+        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), W=len(curNL)-1, kw=params[&#39;kw_new&#39;], q=self.q)
+        I = computeInterestingness(ic, dl)
+        params[&#39;ic&#39;] = ic
+        params[&#39;dl&#39;] = dl
+        params[&#39;I&#39;] = I
+        return params
+##################################################################################################################################################################
+    def shrinkPatternFinal(self, pattern, nodeToRemove, params):
+        &#34;&#34;&#34;function to update the subgraph pattern while removing the node resulting in maximum increase of interestingness value
+
+        Args:
+            pattern (Pattern): input subgraph pattern
+            nodeToAdd (int): node id of the vertex to be removed
+            params (dict): corresponding parameters of the node to be removed
+
+        Returns:
+            Pattern: updated subgraph pattern
+        &#34;&#34;&#34;
+        pattern.removeNode(nodeToRemove)
+        if self.mode == 1:
+            pattern.setSumPOS(params[&#39;pw_new&#39;])
+            pattern.setIC_ssg(params[&#39;ic&#39;])
+        elif self.mode == 2:
+            pattern.setAD(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            pattern.setIC_dsimp(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+            pattern.setMinPOS(params[&#39;p0_new&#39;])
+        pattern.setDL(params[&#39;dl&#39;])
+        pattern.setI(params[&#39;I&#39;])
+        return pattern
+##################################################################################################################################################################
+    def updateCandidateAddition(self, best_node, bestPattern, candidates):
+        neighborsA = list(self.G.neighbors(best_node))
+        if best_node in candidates:
+            del candidates[best_node]
+        else:
+            print(&#39;\t\tWarning:&#39;, best_node, &#39;is not in the candidate list&#39;)
+
+        #update parameters of previously present candidate list
+        if self.mode == 1:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;pw_surplus&#39;] += self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+        elif self.mode == 2:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+        elif self.mode == 3:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                candidates[u][&#39;p0_surplus&#39;] = min(candidates[u][&#39;p0_surplus&#39;], self.PD.getPOS(best_node, u, isSimple=self.isSimple))
+
+        pot_add = set(neighborsA) - set(candidates.keys()).union(set(bestPattern.NL))
+        #update candidate list by adding new candidates
+        if self.mode == 1:
+            for u in pot_add:
+                candidates[u] = dict()
+                candidates[u][&#39;kw_surplus&#39;] = 0
+                candidates[u][&#39;pw_surplus&#39;] = 0.0
+                for v in bestPattern.NL:
+                    candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                    candidates[u][&#39;pw_surplus&#39;] += self.PD.getPOS(v, u, isSimple=self.isSimple)
+        elif self.mode == 2:
+            for u in pot_add:
+                candidates[u] = dict()
+                candidates[u][&#39;kw_surplus&#39;] = 0
+                candidates[u][&#39;mu_w_surplus&#39;] = 0.0
+                for v in bestPattern.NL:
+                    candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                    candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+        elif self.mode == 3:
+            for u in pot_add:
+                candidates[u] = dict()
+                candidates[u][&#39;kw_surplus&#39;] = 0
+                candidates[u][&#39;mu_w_surplus&#39;] = 0.0
+                candidates[u][&#39;p0_surplus&#39;] = float(&#34;inf&#34;)
+                for v in bestPattern.NL:
+                    candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                    candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+                    candidates[u][&#39;p0_surplus&#39;] = min(candidates[u][&#39;p0_surplus&#39;], self.PD.getPOS(v, u, isSimple=self.isSimple))
+
+        return candidates
+##################################################################################################################################################################
+    def updateCandidateDeletion(self, best_node, bestPattern, candidates):
+
+
+        # remove irrelevant keys in candidates
+        neighborsR = set(self.G.neighbors(best_node))
+        pNL = set(bestPattern.NL)
+        for nR in neighborsR:
+            if len(set(self.G.neighbors(nR)).intersection(pNL)) == 0:
+                if nR in candidates:
+                    del candidates[nR]
+
+        # update rest of the keys in candidates
+        if self.mode == 1:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;pw_surplus&#39;] -= self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+        elif self.mode == 2:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+        elif self.mode == 3:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                cur_minPOS = self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                if abs(cur_minPOS - candidates[u][&#39;p0_surplus&#39;]) &lt; 1e-9:
+                    candidates[u][&#39;p0_surplus&#39;] = computeMinPOSBetweenNodeAndList(self.PD, u, list(pNL), gtype=self.gtype, isSimple=self.isSimple)
+
+        return candidates
+##################################################################################################################################################################
+    def climbOneStep(self, pattern, candidates):
+        &#34;&#34;&#34;function to climb one step at a time, i.e., either addition of node or removal from the subgraph pattern
+
+        Args:
+            pattern (Pattern): input subgraph pattern
+            candidates (set): set of candidate node that can be added such that the subgraph remains connected
+
+        Returns:
+            Pattern, list, str: Updated subgraph pattern, updated candidate list and operation performed
+        &#34;&#34;&#34;
+        print(&#39;In climb one step&#39;)
+        print(&#39;\tSize of candidates: &#39;, len(candidates))
+        print(&#39;\tBefore operation&#39;)
+        print(&#39;\teP: &#39;, pattern.sumPOS, &#39;interest: &#39;, pattern.I)
+
+        operation = &#39;none&#39;
+        nodeAddedFinal = None
+        nodeRemovedFinal = None
+
+        # Extend Pattern
+        best_params = dict()
+        best_params[&#39;I&#39;] = pattern.I
+        best_node = None
+        bestPattern = None
+
+        best_node, best_params = self.extendPatternUtil(pattern, candidates)
+
+        # for cand in candidates:
+        #     cur = self.extendPatternUtil(pattern, cand)
+        #     if best_params[&#39;I&#39;] &lt; cur[&#39;I&#39;]:
+        #         best_params = cur.copy()
+        #         best_node = cand
+
+        if best_params[&#39;I&#39;] &gt; pattern.I:
+            print(&#39;Added&#39;, best_node)
+            bestPattern = self.extendPatternFinal(pattern, best_node, best_params)
+            nodeAddedFinal = best_node
+            operation = &#39;addition&#39;
+
+        if &#39;none&#39; in operation and pattern.NCount &gt; 2:
+            for cand in pattern.NL:
+                cur = self.shrinkPatternUtil(pattern, cand)
+                if best_params[&#39;I&#39;] &lt; cur[&#39;I&#39;]:
+                    best_params = cur.copy()
+                    best_node = cand
+
+            if best_params[&#39;I&#39;] &gt; pattern.I:
+                bestPattern = self.shrinkPatternFinal(pattern, best_node, best_params)
+                nodeRemovedFinal = best_node
+                operation = &#39;deletion&#39;
+
+        # update candidate list now
+        # print(operation, &#34;\t&#34;, bestPattern.NL)
+
+        if &#39;addition&#39; in operation:
+            candidates = self.updateCandidateAddition(nodeAddedFinal, bestPattern, candidates)
+
+        elif &#39;deletion&#39; in operation:
+            candidates = self.updateCandidateDeletion(nodeRemovedFinal, bestPattern, candidates)
+
+        # return relevant information
+        print(&#39;\tAfter Operation &#39;, operation)
+        print(&#39;\tpw: &#39;, pattern.sumPOS, &#39;interest: &#39;, pattern.I)
+        return pattern, candidates, operation
+##################################################################################################################################################################
+    def extendPatternUtilD(self, pattern, candidates, dir_mode):
+        # add one node a time and check for best gain
+        # count edges from nodeToCheck to pattern
+        # dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list (evaluating outnode) and 2 from list to node (evaluating innode)
+
+        ######### Check in-node and out-node addition ############
+        best_node = None
+        params = None
+        ic = 0.0
+
+        dlmode = 1
+        if self.incEdge:
+            dlmode = 2
+
+        wi_count = pattern.InNCount
+        wo_count = pattern.OutNCount
+
+        if dir_mode == 1:
+            wo_count += 1
+        else:
+            wi_count += 1
+
+        if self.mode == 1:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_SSG( 1, pw=pattern.sumPOS+x[1][&#39;pw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], nw=pattern.nw+x[1][&#39;nw_surplus&#39;] ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1][&#39;nw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;pw_new&#39;] = pattern.sumPOS + params[&#39;pw_surplus&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            params[&#39;nw_new&#39;] = pattern.nw + params[&#39;nw_surplus&#39;]
+            ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+        elif self.mode == 2:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( AD( pattern.ECount+x[1][&#39;kw_surplus&#39;], pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;] ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1][&#39;nw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            params[&#39;nw_new&#39;] = pattern.nw + params[&#39;nw_surplus&#39;]
+            ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_DSIMP( pattern.ECount+x[1][&#39;kw_surplus&#39;], pattern.nw+x[1][&#39;nw_surplus&#39;], pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;], min(pattern.minPOS,x[1][&#39;p0_surplus&#39;]) ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1][&#39;nw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+            params[&#39;p0_new&#39;] = min(pattern.minPOS, params[&#39;p0_surplus&#39;])
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            params[&#39;nw_new&#39;] = pattern.nw + params[&#39;nw_surplus&#39;]
+            ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params[&#39;nw_new&#39;], kw=params[&#39;kw_new&#39;], q=self.q)
+        I = computeInterestingness(ic, dl)
+
+        params[&#39;ic&#39;] = ic
+        params[&#39;dl&#39;] = dl
+        params[&#39;I&#39;] = I
+
+        return best_node, params
+##################################################################################################################################################################
+    def extendPatternFinalD(self, pattern, nodeToAdd, params, typeOfAddition):
+        H = nx.DiGraph()
+        if &#39;in&#39; in typeOfAddition:
+            for p in pattern.outNL:
+                if self.G.has_edge(p, nodeToAdd):
+                    H.add_edge(p, nodeToAdd)
+        else:
+            for p in pattern.inNL:
+                if self.G.has_edge(nodeToAdd, p):
+                    H.add_edge(nodeToAdd, p)
+        pattern.updateGraph(H)
+        if self.mode == 1:
+            pattern.setSumPOS(params[&#39;pw_new&#39;])
+            pattern.setIC_ssg(params[&#39;ic&#39;])
+        elif self.mode == 2:
+            pattern.setAD(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            pattern.setIC_dsimp(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+            pattern.setMinPOS(params[&#39;p0_new&#39;])
+        pattern.setDL(params[&#39;dl&#39;])
+        pattern.setI(params[&#39;I&#39;])
+        return pattern
+##################################################################################################################################################################
+    def shrinkPatternUtilD(self, pattern, nodeToCheck, dir_mode):
+        # remove node at a time, compute final interestingness and return the updated pattern
+        # count edges from nodeToCheck to pattern
+
+        ########### Check in-node or out-node removal ############
+        kw_deficit  = 0
+        params = dict()
+        ic = 0.0
+        dl = 0.0
+        curInNL = pattern.inNL[:]
+        curOutNL = pattern.outNL[:]
+        curFunc = None
+        if dir_mode == 1:
+            for p in pattern.inNL:
+                if nodeToCheck!=p:
+                    kw_deficit += int(self.G.number_of_edges(nodeToCheck, p))
+            curOutNL.remove(nodeToCheck)
+            curFunc = curInNL
+        else:
+            for p in pattern.outNL:
+                if nodeToCheck!=p:
+                    kw_deficit += self.G.number_of_edges(p, nodeToCheck)
+            curInNL.remove(nodeToCheck)
+            curFunc = curOutNL
+
+        if self.mode == 1:
+            params[&#39;pw_deficit&#39;] = computeSumOfEdgeProbablityBetweenNodeAndList(self.PD, nodeToCheck, curFunc, dir_mode=dir_mode, gtype=self.gtype, isSimple=self.isSimple)
+            params[&#39;pw_new&#39;] = pattern.sumPOS - params[&#39;pw_deficit&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            params[&#39;nw_new&#39;] = NW_D(curInNL, curOutNL)
+            ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+        elif self.mode == 2:
+            params[&#39;mu_w_deficit&#39;] = computeSumOfExpectationsBetweenNodeAndList(self.PD, nodeToCheck, curFunc, dir_mode=dir_mode, gtype=self.gtype, isSimple=self.isSimple)
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+        else:
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            params[&#39;nw_new&#39;] = NW_D(curInNL, curOutNL)
+            params[&#39;mu_w_deficit&#39;], params[&#39;p0_deficit&#39;] = computePWparametersBetweenNodeAndList(self.PD, nodeToCheck, curFunc, dir_mode=dir_mode, gtype=self.gtype, isSimple=self.isSimple)
+            if pattern.minPOS == params[&#39;p0_deficit&#39;]:
+                params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;] = computePWparameters(self.PD, gtype=self.gtype, inNL = curInNL, outNL = curOutNL, isSimple=self.isSimple)
+            else:
+                params[&#39;p0_new&#39;] = pattern.minPOS
+                params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+            ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+        dlmode = 1
+        if self.incEdge:
+            dlmode = 2
+        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), WI=curInNL, WO=curOutNL, kw=params[&#39;kw_new&#39;], q=self.q)
+        I = computeInterestingness(ic, dl)
+        params[&#39;ic&#39;] = ic
+        params[&#39;dl&#39;] = dl
+        params[&#39;I&#39;] = I
+        return params
+##################################################################################################################################################################
+    def shrinkPatternFinalD(self, pattern, nodeToRemove, params, typeOfDeletion):
+        if &#39;in&#39; in typeOfDeletion:
+            pattern.removeInNode(nodeToRemove)
+        else:
+            pattern.removeOutNode(nodeToRemove)
+        if self.mode == 1:
+            pattern.setSumPOS(params[&#39;pw_new&#39;])
+            pattern.setIC_ssg(params[&#39;ic&#39;])
+        elif self.mode == 2:
+            pattern.setAD(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            pattern.setIC_dsimp(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+            pattern.setMinPOS(params[&#39;p0_new&#39;])
+        pattern.setDL(params[&#39;dl&#39;])
+        pattern.setI(params[&#39;I&#39;])
+        return pattern
+##################################################################################################################################################################
+    def updateCandidateAdditionD(self, best_node, bestPattern, candidatesIn, candidatesOut, typeOfAddition):
+        if &#39;in&#39; in typeOfAddition:
+            del candidatesIn[best_node]
+            #update parameters of previously present candidateOut list as new in-node is added
+            if self.mode == 1:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;pw_surplus&#39;] += self.PD.getPOS(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 2:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 3:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;p0_surplus&#39;] = min(candidatesOut[u][&#39;p0_surplus&#39;], self.PD.getPOS(u, best_node, isSimple=self.isSimple))
+                        candidatesOut[u][&#39;nw_surplus&#39;] += 1
+            #### similarly new out candidates are now introduced and added in the list as in-node is added
+            pot_add = set(self.G.predecessors(best_node)) - set(candidatesOut.keys()).union(set(bestPattern.outNL))
+            if self.mode == 1:
+                for u in pot_add:
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;pw_surplus&#39;] = 0.0
+                    for v in bestPattern.inNL:
+                        if u != v:
+                            candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, v)
+                            candidatesOut[u][&#39;pw_surplus&#39;] += self.PD.getPOS(u, v, isSimple=self.isSimple)
+                            candidatesOut[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 2:
+                for u in pot_add:
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] = 0.0
+                    for v in bestPattern.inNL:
+                        if u != v:
+                            candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, v)
+                            candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, v, isSimple=self.isSimple)
+                            candidatesOut[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 3:
+                for u in pot_add:
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] = 0.0
+                    candidatesOut[u][&#39;p0_surplus&#39;] = float(&#34;inf&#34;)
+                    for v in bestPattern.inNL:
+                        if u != v:
+                            candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, v)
+                            candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, v, isSimple=self.isSimple)
+                            candidatesOut[u][&#39;p0_surplus&#39;] = min(candidatesOut[u][&#39;p0_surplus&#39;], self.PD.getPOS(u, v, isSimple=self.isSimple))
+                            candidatesOut[u][&#39;nw_surplus&#39;] += 1
+        else:
+            del candidatesOut[best_node]
+            #update parameters of previously present candidateIn list as new out-node is added
+            if self.mode == 1:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;pw_surplus&#39;] += self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 2:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 3:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;p0_surplus&#39;] = min(candidatesIn[u][&#39;p0_surplus&#39;], self.PD.getPOS(best_node, u, isSimple=self.isSimple))
+                        candidatesIn[u][&#39;nw_surplus&#39;] += 1
+            #### similarly new &#34;in&#34; candidates are now introduced and added in the list as out-node is added
+            pot_add = set(self.G.successors(best_node)) - set(candidatesIn.keys()).union(set(bestPattern.inNL))
+            if self.mode == 1:
+                for u in pot_add:
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;pw_surplus&#39;] = 0.0
+                    for v in bestPattern.outNL:
+                        if u != v:
+                            candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                            candidatesIn[u][&#39;pw_surplus&#39;] += self.PD.getPOS(v, u, isSimple=self.isSimple)
+                            candidatesIn[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 2:
+                for u in pot_add:
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] = 0.0
+                    for v in bestPattern.outNL:
+                        if u != v:
+                            candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                            candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+                            candidatesIn[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 3:
+                for u in pot_add:
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] = 0.0
+                    candidatesIn[u][&#39;p0_surplus&#39;] = float(&#34;inf&#34;)
+                    for v in bestPattern.outNL:
+                        if u != v:
+                            candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                            candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+                            candidatesIn[u][&#39;p0_surplus&#39;] = min(candidatesIn[u][&#39;p0_surplus&#39;], self.PD.getPOS(v, u, isSimple=self.isSimple))
+                            candidatesIn[u][&#39;nw_surplus&#39;] += 1
+
+        return candidatesIn, candidatesOut
+##################################################################################################################################################################
+    def updateCandidateDeletionD(self, best_node, bestPattern, candidatesIn, candidatesOut, typeOfDeletion):
+        if &#39;in&#39; in typeOfDeletion:
+            #since an IN node is removed thus OUT candidate list is updated
+
+            #First remove irrelevant key in OUT candidate list
+            outNeighbor = list(self.G.predecessors(best_node))
+            for oN in outNeighbor:
+                if len(set(self.G.successors(oN)).intersection(bestPattern.inNL)) == 0:
+                    if oN in candidatesOut:
+                        del candidatesOut[oN]
+            #update rest of the keys
+            if self.mode == 1:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;pw_surplus&#39;] -= self.PD.getPOS(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] -= 1
+            elif self.mode == 2:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] -= 1
+            elif self.mode == 3:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] -= 1
+                        cur_minPOS = self.PD.getPOS(u, best_node, isSimple=self.isSimple)
+                        if abs(cur_minPOS - candidatesOut[u][&#39;p0_surplus&#39;]) &lt; 1e-9:
+                            candidatesOut[u][&#39;p0_surplus&#39;] = computeMinPOSBetweenNodeAndList(self.PD, u, bestPattern.inNL, dir_mode=1, gtype=self.gtype, isSimple=self.isSimple)
+        else:
+            #since an OUT node is removed thus IN candidate list is updated
+
+            #First remove irrelevant keys in IN candidate list
+            inNeighbor = list(self.G.successors(best_node))
+            for iN in inNeighbor:
+                if len(set(self.G.predecessors(iN)).intersection(bestPattern.outNL)) == 0:
+                    if iN in candidatesIn:
+                        del candidatesIn[iN]
+            #update rest of the keys
+            if self.mode == 1:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;pw_surplus&#39;] -= self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] -= 1
+            elif self.mode == 2:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] -= 1
+            elif self.mode == 3:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] -= 1
+                        cur_minPOS = self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                        if abs(cur_minPOS - candidatesIn[u][&#39;p0_surplus&#39;]) &lt; 1e-9:
+                            candidatesIn[u][&#39;p0_surplus&#39;] = computeMinPOSBetweenNodeAndList(self.PD, u, bestPattern.outNL, dir_mode=2, gtype=self.gtype, isSimple=self.isSimple)
+
+        return candidatesIn, candidatesOut
+##################################################################################################################################################################
+    def climbOneStepD(self, pattern, candidatesIn, candidatesOut):
+        operation = &#39;none&#39;
+        bestPattern = pattern.copy()
+        nodeAddedFinal = None
+        nodeRemovedFinal = None
+
+        # Extend Pattern
+        bestInParams = dict()
+        bestInParams[&#39;I&#39;] = pattern.I
+        bestInNode = None
+
+        bestOutParams = dict()
+        bestOutParams[&#39;I&#39;] = pattern.I
+        bestOutNode = None
+
+        #Check all possible in-node addition
+        bestInNode, bestInParams = self.extendPatternUtilD(pattern, candidatesIn, 2)
+
+        #Check all possible out-node addition
+        bestOutNode, bestOutParams = self.extendPatternUtilD(pattern, candidatesOut, 1)
+
+        #Perform best addition
+        if bestInParams[&#39;I&#39;] &gt; pattern.I or bestOutParams[&#39;I&#39;] &gt; pattern.I:
+            if bestInParams[&#39;I&#39;] &gt; bestOutParams[&#39;I&#39;]:
+                bestPattern = self.extendPatternFinal(pattern, bestInNode, bestInParams, &#39;in&#39;)
+                nodeAddedFinal = bestInNode
+                operation = &#39;inaddition&#39;
+            else:
+                bestPattern = self.extendPatternFinal(pattern, bestOutNode, bestOutParams, &#39;out&#39;)
+                nodeAddedFinal = bestOutNode
+                operation = &#39;outaddition&#39;
+
+
+        # If no extension, shrink pattern
+        if &#39;none&#39; in operation:
+            #Check all possible in-node removal
+            if pattern.InNCount &gt; 1:
+                for node in pattern.inNL:
+                    curIn = self.shrinkPatternUtilD(pattern, node, 2)
+                    if bestInParams[&#39;I&#39;] &lt; curIn[&#39;I&#39;]:
+                        bestInParams = curIn.copy()
+                        bestInNode = node
+
+            #Check all possible out-node removal
+            if pattern.OutNCount&gt;1:
+                for node in pattern.outNL:
+                    curOut = self.shrinkPatternUtilD(pattern, node, 1)
+                    if bestOutParams[&#39;I&#39;] &lt; curOut[&#39;I&#39;]:
+                        bestOutParams = curOut.copy()
+                        bestOutNode = node
+
+            #Perform best removal
+            if bestInParams[&#39;I&#39;] &gt; pattern.I or bestOutParams[&#39;I&#39;] &gt; pattern.I:
+                if bestInParams[&#39;I&#39;] &gt; bestOutParams[&#39;I&#39;]:
+                    bestPattern = self.shrinkPatternFinal(pattern, bestInNode, bestInParams, &#39;in&#39;)
+                    nodeRemovedFinal = bestInNode
+                    operation = &#39;indeletion&#39;
+                else:
+                    bestPattern = self.shrinkPatternFinal(pattern, bestOutNode, bestOutParams, &#39;out&#39;)
+                    nodeRemovedFinal = bestOutNode
+                    operation = &#39;outdeletion&#39;
+
+        # update candidate list now
+        # print(operation, &#34;\t&#34;, bestPattern.NL)
+
+        if &#39;addition&#39; in operation:
+            if &#39;in&#39; in operation:
+                candidatesIn, candidateOut = self.updateCandidateAdditionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;in&#39;)
+            else:
+                candidatesIn, candidateOut = self.updateCandidateAdditionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;out&#39;)
+        elif &#39;deletion&#39; in operation:
+            if &#39;in&#39; in operation:
+                candidatesIn, candidateOut = self.updateCandidateDeletionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;in&#39;)
+            else:
+                candidatesIn, candidateOut = self.updateCandidateDeletionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;out&#39;)
+
+        # return relevant information
+        print(&#39;Best Pattern eP: &#39;, bestPattern.sumPOS, &#39;interest: &#39;, bestPattern.I)
+        # print(&#34;inNL&#34;, bestPattern.inNL)
+        # print(&#34;outNL&#34;, bestPattern.outNL)
+        print(&#34;Operation&#34;, operation, bestInNode, bestOutNode)
+        return bestPattern, candidatesIn, candidatesOut, operation
+###################################################################################################################
+    def searchPattern(self, seed):
+        &#34;&#34;&#34;function to search for a pattern starting from a given seed subgraph
+
+        Args:
+            seed (int): seed subgraph of one node
+
+        Returns:
+            Pattern: found pattern for given seed
+        &#34;&#34;&#34;
+        pattern = None
+        if self.gtype == &#39;U&#39;:
+            candidates = dict()
+            if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
+                for u in list(self.G.neighbors(seed)):
+                    candidates[u] = dict()
+                    candidates[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidates[u][&#39;pw_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+            elif self.mode == 2: #we require again two parameters: number of edges and expectedEdge_surplus from node to pattern (subgraph)
+                for u in list(self.G.neighbors(seed)):
+                    candidates[u] = dict()
+                    candidates[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidates[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+            elif self.mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
+                for u in list(self.G.neighbors(seed)):
+                    candidates[u] = dict()
+                    candidates[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidates[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+                    candidates[u][&#39;p0_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+            else:
+                raise Exception(&#39;Invalid mode provided&#39;)
+
+            term = False
+
+            pattern = Pattern(nx.Graph(self.G.subgraph(seed)))
+            pattern.setPatType(&#39;Found&#39;)
+            # while termination==false climb one step at a time
+            while not term:
+                pattern, candidates, operation = self.climbOneStep(pattern, candidates)
+                print(operation)
+                if &#39;none&#39; in operation:
+                    term = True
+        else:
+            candidatesIn = dict()
+            candidatesOut = dict()
+            if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
+                for u in list(self.G.successors(seed)):
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidatesIn[u][&#39;pw_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 1
+            elif self.mode == 2: #we require again two parameters: number of edges and expectedEdge_surplus from node to pattern (subgraph)
+                for u in list(self.G.successors(seed)):
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 1
+            elif self.mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
+                for u in list(self.G.successors(seed)):
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;p0_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 1
+
+            if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
+                for u in list(self.G.predecessors(seed)):
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(u, seed)
+                    candidatesOut[u][&#39;pw_surplus&#39;] = self.PD.getPOS(u, seed, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 1
+            elif self.mode == 2: #we require again two parameters: number of edges and expectedEdge_surplus from node to pattern (subgraph)
+                for u in list(self.G.predecessors(seed)):
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(u, seed)
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(u, seed, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 1
+            elif self.mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
+                for u in list(self.G.predecessors(seed)):
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(u, seed)
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(u, seed, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;p0_surplus&#39;] = self.PD.getPOS(u, seed, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 1
+
+            term = False
+            pattern = Pattern(nx.DiGraph(self.G.subgraph(seed)))
+            pattern.setPatType(&#39;Found&#39;)
+            # while termination==false climb one step at a time
+            while not term:
+                pattern, candidatesIn, candidatesOut, operation = self.climbOneStepD(pattern, candidatesIn, candidatesOut)
+                if &#39;none&#39; in operation:
+                    term = True
+
+        #return pattern and other information
+        return pattern
+##################################################################################################################################################################
+    def addNewPatternList(self, NL, count, Pattype):
+        pattern = Pattern.Pattern(self.G.subgraph(NL).copy(), NL, 0, 0, self.PD.computeEdgeProbabilityListNodesIncLprev(NL), self.PD.computeInterestingnessListNodesIncLprev(NL), count)
+        pattern.updateGraphProperties()
+        self.PD.updateBackground(pattern, count)
+        pattern.setPatType(Pattype)
+        return pattern, self.PD.copy()
+##################################################################################################################################################################
+    def addNewPattern(self, pattern, count):
+        self.PD.updateBackground(pattern, count)
+        return self.PD.copy()
+##################################################################################################################################################################
+##################################################################################################################################################################
+##################################################################################################################################################################
+##################################################################################################################################################################</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2"><code class="flex name class">
+<span>class <span class="ident">HillClimber_v2</span></span>
+<span>(</span><span>G, q, seedMode, nKseed, mode=1, gtype='U', isSimple=True, incEdge=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is a Hill Climber Class Version 1; used for discovering new patterns in a graph dataset</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>netwokx graph</code></dt>
+<dd>input graph dataset</dd>
+<dt><strong><code>q</code></strong> :&ensp;<code>float</code></dt>
+<dd>expected pattern size in range between 0.0-1.0</dd>
+<dt><strong><code>seedMode</code></strong> :&ensp;<code>str</code></dt>
+<dd>type of seed mode to use in this hill climber</dd>
+<dt><strong><code>nKseed</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of seed runs to be performed to find one pattern</dd>
+<dt><strong><code>mode</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Information content mode: here mode can be 1 for SSG,
+2 for Aggregate deviation and 3 for measure in DSIMP.
+Defaults to 1.</dd>
+<dt><strong><code>gtype</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>input graph type: 'U' for undirected and 'D' for directed. Defaults to 'U'.</dd>
+<dt><strong><code>isSimple</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>True is input graph is a simple graph else false. Defaults to True.</dd>
+<dt><strong><code>incEdge</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>If edges shall be described in description of a pattern. Defaults to True.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HillClimber_v2:
+    &#34;&#34;&#34;This is a Hill Climber Class Version 1; used for discovering new patterns in a graph dataset
+    &#34;&#34;&#34;
+    PD = None
+##################################################################################################################################################################
+    def __init__(self, G, q, seedMode, nKseed, mode = 1, gtype = &#39;U&#39;, isSimple=True, incEdge = False):
+        &#34;&#34;&#34;
+        Args:
+            G (netwokx graph): input graph dataset
+            q (float): expected pattern size in range between 0.0-1.0
+            seedMode (str): type of seed mode to use in this hill climber
+            nKseed (int): number of seed runs to be performed to find one pattern
+            mode (int, optional): Information content mode: here mode can be 1 for SSG,
+                                2 for Aggregate deviation and 3 for measure in DSIMP.
+                                Defaults to 1.
+            gtype (str, optional): input graph type: &#39;U&#39; for undirected and &#39;D&#39; for directed. Defaults to &#39;U&#39;.
+            isSimple (bool, optional): True is input graph is a simple graph else false. Defaults to True.
+            incEdge (bool, optional): If edges shall be described in description of a pattern. Defaults to True.
+        &#34;&#34;&#34;
+        self.G = G.copy()
+        self.seedMode = seedMode
+        self.nKseed = nKseed
+        self.allSeedCheck = []
+        self.mode = mode # here mode can be 1 for SSG, 2 for Aggregate deviation and 3 for measure in DSIMP
+        self.gtype = gtype
+        self.isSimple = isSimple
+        self.incEdge = incEdge
+        self.q = q
+##################################################################################################################################################################
+    def setPD(self, PD):
+        &#34;&#34;&#34;Function to set background distribution
+
+        Args:
+            PD (PDClass): Background distribution of input graph
+        &#34;&#34;&#34;
+        self.PD = PD
+        return
+##################################################################################################################################################################
+    def getSeeds(self):
+        &#34;&#34;&#34;Function to get seeds to run the hill climber
+
+        Raises:
+            Exception 1: if self.nKseed != mNumNodes:
+                raise Exception(&#34;Number of seeds should be equal to number of nodes here.&#34;)
+            Exception: raise Exception(&#39;no valid seed mode given&#39;)
+
+        Returns:
+            list: seed node&#39;s list
+        &#34;&#34;&#34;
+        mNumNodes = self.G.number_of_nodes()
+        seedNodes = [None]*self.nKseed
+        if &#39;all&#39; in self.seedMode:
+            if self.nKseed != mNumNodes:
+                raise Exception(&#34;Number of seeds should be equal to number of nodes here.&#34;)
+
+            for r in range(self.nKseed):
+                seedNodes[r] = r
+
+        elif &#39;uniform&#39; in self.seedMode:
+            randoml = list(self.G.nodes())
+            np.random.shuffle(randoml)
+            for r in range(self.nKseed):
+                seedNodes[r] = randoml[r]
+
+        elif &#39;degree&#39; in self.seedMode:
+            degreeList = sorted(dict(self.G.degree()).items(), key=lambda kv: kv[1], reverse=True)
+            for r in range(self.nKseed):
+                seedNodes[r] = degreeList[r][0]
+
+        elif &#39;interest&#39; in self.seedMode:
+            ListNode = sorted(list(self.G.nodes()))
+            interestList = []
+            if self.gtype == &#39;U&#39;:
+                for LNit in ListNode:
+                    print(LNit)
+                    curlist = list(set(self.G.neighbors(LNit)).union(set([LNit])))
+                    H = self.G.subgraph(curlist)
+                    if len(curlist)&gt;1:
+                        ic = 0.0
+                        dl = 0.0
+                        if self.mode == 1:
+                            pw = computeSumOfEdgeProbablity(self.PD, gtype=self.gtype, NL=curlist, isSimple=self.isSimple)
+                            ic = IC_SSG(3, pw=pw, W=H)
+                        elif self.mode == 2:
+                            mu_w = computeSumOfExpectations(self.PD, gtype=self.gtype, NL=curlist, isSimple=self.isSimple)
+                            ic = AD(H.number_of_edges(), mu_w)
+                        elif self.mode == 3:
+                            mu_w, p0 = computePWparameters(self.PD, gtype=self.gtype, NL=curlist, isSimple=self.isSimple)
+                            ic = IC_DSIMP(H.number_of_edges(), NW(len(curlist)), mu_w, p0)
+                        dlmode = 1
+                        if self.incEdge:
+                            dlmode = 2
+                        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=self.q)
+                        interestValue = computeInterestingness(ic, dl)
+                        interestList.append(tuple([LNit, interestValue]))
+            else:
+                for LNit in ListNode:
+                    print(LNit)
+                    curlistOut = list(set(self.G.predecessors(LNit)).union(set([LNit])))
+                    curlistIn = list(set(self.G.successors(LNit)).union(set([LNit])))
+                    H = getDirectedSubgraph(self.G, curlistIn, curlistOut, self.isSimple)
+                    if len(curlistIn)&gt;1 and len(curlistOut)&gt;1:
+                        ic = 0.0
+                        dl = 0.0
+                        if self.mode == 1:
+                            pw = computeSumOfEdgeProbablity(self.PD, gtype=self.gtype, inNL=curlistIn, outNL=curlistOut, isSimple=self.isSimple)
+                            ic = IC_SSG(3, pw=pw, W=H)
+                        elif self.mode == 2:
+                            mu_w = computeSumOfExpectations(self.PD, gtype=self.gtype, inNL=curlistIn, outNL=curlistOut, isSimple=self.isSimple)
+                            ic = AD(H.number_of_edges(), mu_w)
+                        elif self.mode == 3:
+                            mu_w, p0 = computePWparameters(self.PD, gtype=self.gtype, inNL=curlistIn, outNL=curlistOut, isSimple=self.isSimple)
+                            ic = IC_DSIMP(H.number_of_edges(), NW_D(curlistIn, curlistOut), mu_w, p0)
+                        dlmode = 1
+                        if self.incEdge:
+                            dlmode = 2
+                        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=self.q)
+                        interestValue = computeInterestingness(ic, dl)
+                        interestList.append(tuple([LNit, interestValue]))
+            interestList = sorted(interestList, key=lambda kv: kv[1], reverse=True)
+            mRange = min([self.nKseed, len(interestList)])
+            seedNodes = [0]*mRange
+            for r in range(mRange):
+                # print(r, interestList[r][0])
+                if interestList[r][0] is None:
+                    print(r, interestList[r][0])
+                seedNodes[r] = interestList[r][0]
+
+        else:
+            raise Exception(&#39;no valid seed mode given&#39;)
+        return seedNodes
+##################################################################################################################################################################
+    def hillclimber(self, minsize=0, mininterest = -100000.0):
+        &#34;&#34;&#34;function to most interesting subgraph pattern
+
+        Args:
+            minsize (int, optional): minimum size of the pattern. Defaults to 0.
+            mininterest (float, optional): minimum interestingness. Defaults to -100000.0.
+
+        Returns:
+            Pattern: most interesting subgraph pattern
+        &#34;&#34;&#34;
+        print(&#39;Already present patterns: &#39;, len(self.PD.lprevUpdate.items()))
+
+        seedNodes = self.getSeeds()
+
+        # Do requested runs
+        bestPattern = Pattern(nx.Graph())
+
+        for k in range(len(seedNodes)):
+            cP = self.searchPattern(seedNodes[k])
+            if cP.I &gt; bestPattern.I and cP.NCount &gt; minsize and cP.I &gt; mininterest:
+                bestPattern = cP.copy()
+            self.allSeedCheck.append(cP)
+
+        return bestPattern
+##################################################################################################################################################################
+    def extendPatternUtil(self, pattern, candidates):
+        &#34;&#34;&#34;Util function to check for the best candidate node to add
+
+        Args:
+            pattern (Pattern): input subgraph pattern
+            candidates (dict): dictionary of candidates that can be added with parameters as values
+
+        Returns:
+            int, dict: best node id, dictionary of parameters cmputed for the input node
+        &#34;&#34;&#34;
+        best_node = None
+        params = None
+        ic = 0.0
+
+        dlmode = 1
+        if self.incEdge:
+            dlmode = 2
+
+        if self.mode == 1:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_SSG( 1, pw=pattern.sumPOS+x[1][&#39;pw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], nw=NW(pattern.NCount+1) ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;pw_new&#39;] = pattern.sumPOS + params[&#39;pw_surplus&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            params[&#39;nw_new&#39;] = NW(pattern.NCount+1)
+            ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+        elif self.mode == 2:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( AD( pattern.ECount+x[1][&#39;kw_surplus&#39;], pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;] ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_DSIMP( pattern.ECount+x[1][&#39;kw_surplus&#39;], NW(pattern.NCount+1), pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;], min(pattern.minPOS,x[1][&#39;p0_surplus&#39;]) ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+            params[&#39;p0_new&#39;] = min(pattern.minPOS, params[&#39;p0_surplus&#39;])
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            params[&#39;nw_new&#39;] = NW(pattern.NCount+1)
+            ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=params[&#39;kw_new&#39;], q=self.q)
+        I = computeInterestingness(ic, dl)
+
+        params[&#39;ic&#39;] = ic
+        params[&#39;dl&#39;] = dl
+        params[&#39;I&#39;] = I
+
+        return best_node, params
+##################################################################################################################################################################
+    def extendPatternFinal(self, pattern, nodeToAdd, params):
+        &#34;&#34;&#34;function to update the subgraph pattern while adding the node resultng in maximum increase of interestingness value
+
+        Args:
+            pattern (Pattern): input subgraph pattern
+            nodeToAdd (int): node id of the vertex to be added
+            params (dict): corresponding parameters of the node to be added
+
+        Returns:
+            Pattern: updated subgraph pattern
+        &#34;&#34;&#34;
+        H = nx.Graph()
+        for p in pattern.NL:
+            if self.G.has_edge(p, nodeToAdd):
+                H.add_edge(p, nodeToAdd)
+        pattern.updateGraph(H)
+        if self.mode == 1:
+            pattern.setSumPOS(params[&#39;pw_new&#39;])
+            pattern.setIC_ssg(params[&#39;ic&#39;])
+        elif self.mode == 2:
+            pattern.setAD(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            pattern.setIC_dsimp(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+            pattern.setMinPOS(params[&#39;p0_new&#39;])
+        pattern.setDL(params[&#39;dl&#39;])
+        pattern.setI(params[&#39;I&#39;])
+        return pattern
+##################################################################################################################################################################
+    def shrinkPatternUtil(self, pattern, nodeToCheck):
+        &#34;&#34;&#34;Util function to check for the best candidate node to remove
+
+        Args:
+            pattern (Pattern): input subgraph pattern
+            nodeToCheck (int): node id of the vertex to check for removal
+
+        Returns:
+            dict: dictionary of parameters cmputed for the input node
+        &#34;&#34;&#34;
+        kw_deficit  = 0
+        for p in pattern.NL:
+            kw_deficit  += self.G.number_of_edges(p, nodeToCheck)
+        curNL = pattern.NL
+
+        params = dict()
+        ic = 0.0
+        dl = 0.0
+        if self.mode == 1:
+            params[&#39;pw_deficit&#39;] = computeSumOfEdgeProbablityBetweenNodeAndList(self.PD, nodeToCheck, curNL, gtype=self.gtype, isSimple=self.isSimple)
+            params[&#39;pw_new&#39;] = pattern.sumPOS - params[&#39;pw_deficit&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            params[&#39;nw_new&#39;] = NW(len(curNL)-1)
+            ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+        elif self.mode == 2:
+            params[&#39;mu_w_deficit&#39;] = computeSumOfExpectationsBetweenNodeAndList(self.PD, nodeToCheck, curNL, gtype=self.gtype, isSimple=self.isSimple)
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+        else:
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            params[&#39;mu_w_deficit&#39;], params[&#39;p0_deficit&#39;] = computePWparametersBetweenNodeAndList(self.PD, nodeToCheck, curNL, gtype=self.gtype, isSimple=self.isSimple)
+            if pattern.minPOS == params[&#39;p0_deficit&#39;]:
+                curNL.remove(nodeToCheck)
+                params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;] = computePWparameters(self.PD, gtype=self.gtype, NL=curNL, isSimple=self.isSimple)
+            else:
+                params[&#39;p0_new&#39;] = pattern.minPOS
+                params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+            ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+        dlmode = 1
+        if self.incEdge:
+            dlmode = 2
+        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), W=len(curNL)-1, kw=params[&#39;kw_new&#39;], q=self.q)
+        I = computeInterestingness(ic, dl)
+        params[&#39;ic&#39;] = ic
+        params[&#39;dl&#39;] = dl
+        params[&#39;I&#39;] = I
+        return params
+##################################################################################################################################################################
+    def shrinkPatternFinal(self, pattern, nodeToRemove, params):
+        &#34;&#34;&#34;function to update the subgraph pattern while removing the node resulting in maximum increase of interestingness value
+
+        Args:
+            pattern (Pattern): input subgraph pattern
+            nodeToAdd (int): node id of the vertex to be removed
+            params (dict): corresponding parameters of the node to be removed
+
+        Returns:
+            Pattern: updated subgraph pattern
+        &#34;&#34;&#34;
+        pattern.removeNode(nodeToRemove)
+        if self.mode == 1:
+            pattern.setSumPOS(params[&#39;pw_new&#39;])
+            pattern.setIC_ssg(params[&#39;ic&#39;])
+        elif self.mode == 2:
+            pattern.setAD(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            pattern.setIC_dsimp(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+            pattern.setMinPOS(params[&#39;p0_new&#39;])
+        pattern.setDL(params[&#39;dl&#39;])
+        pattern.setI(params[&#39;I&#39;])
+        return pattern
+##################################################################################################################################################################
+    def updateCandidateAddition(self, best_node, bestPattern, candidates):
+        neighborsA = list(self.G.neighbors(best_node))
+        if best_node in candidates:
+            del candidates[best_node]
+        else:
+            print(&#39;\t\tWarning:&#39;, best_node, &#39;is not in the candidate list&#39;)
+
+        #update parameters of previously present candidate list
+        if self.mode == 1:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;pw_surplus&#39;] += self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+        elif self.mode == 2:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+        elif self.mode == 3:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                candidates[u][&#39;p0_surplus&#39;] = min(candidates[u][&#39;p0_surplus&#39;], self.PD.getPOS(best_node, u, isSimple=self.isSimple))
+
+        pot_add = set(neighborsA) - set(candidates.keys()).union(set(bestPattern.NL))
+        #update candidate list by adding new candidates
+        if self.mode == 1:
+            for u in pot_add:
+                candidates[u] = dict()
+                candidates[u][&#39;kw_surplus&#39;] = 0
+                candidates[u][&#39;pw_surplus&#39;] = 0.0
+                for v in bestPattern.NL:
+                    candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                    candidates[u][&#39;pw_surplus&#39;] += self.PD.getPOS(v, u, isSimple=self.isSimple)
+        elif self.mode == 2:
+            for u in pot_add:
+                candidates[u] = dict()
+                candidates[u][&#39;kw_surplus&#39;] = 0
+                candidates[u][&#39;mu_w_surplus&#39;] = 0.0
+                for v in bestPattern.NL:
+                    candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                    candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+        elif self.mode == 3:
+            for u in pot_add:
+                candidates[u] = dict()
+                candidates[u][&#39;kw_surplus&#39;] = 0
+                candidates[u][&#39;mu_w_surplus&#39;] = 0.0
+                candidates[u][&#39;p0_surplus&#39;] = float(&#34;inf&#34;)
+                for v in bestPattern.NL:
+                    candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                    candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+                    candidates[u][&#39;p0_surplus&#39;] = min(candidates[u][&#39;p0_surplus&#39;], self.PD.getPOS(v, u, isSimple=self.isSimple))
+
+        return candidates
+##################################################################################################################################################################
+    def updateCandidateDeletion(self, best_node, bestPattern, candidates):
+
+
+        # remove irrelevant keys in candidates
+        neighborsR = set(self.G.neighbors(best_node))
+        pNL = set(bestPattern.NL)
+        for nR in neighborsR:
+            if len(set(self.G.neighbors(nR)).intersection(pNL)) == 0:
+                if nR in candidates:
+                    del candidates[nR]
+
+        # update rest of the keys in candidates
+        if self.mode == 1:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;pw_surplus&#39;] -= self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+        elif self.mode == 2:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+        elif self.mode == 3:
+            for u in candidates.keys():
+                candidates[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                candidates[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                cur_minPOS = self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                if abs(cur_minPOS - candidates[u][&#39;p0_surplus&#39;]) &lt; 1e-9:
+                    candidates[u][&#39;p0_surplus&#39;] = computeMinPOSBetweenNodeAndList(self.PD, u, list(pNL), gtype=self.gtype, isSimple=self.isSimple)
+
+        return candidates
+##################################################################################################################################################################
+    def climbOneStep(self, pattern, candidates):
+        &#34;&#34;&#34;function to climb one step at a time, i.e., either addition of node or removal from the subgraph pattern
+
+        Args:
+            pattern (Pattern): input subgraph pattern
+            candidates (set): set of candidate node that can be added such that the subgraph remains connected
+
+        Returns:
+            Pattern, list, str: Updated subgraph pattern, updated candidate list and operation performed
+        &#34;&#34;&#34;
+        print(&#39;In climb one step&#39;)
+        print(&#39;\tSize of candidates: &#39;, len(candidates))
+        print(&#39;\tBefore operation&#39;)
+        print(&#39;\teP: &#39;, pattern.sumPOS, &#39;interest: &#39;, pattern.I)
+
+        operation = &#39;none&#39;
+        nodeAddedFinal = None
+        nodeRemovedFinal = None
+
+        # Extend Pattern
+        best_params = dict()
+        best_params[&#39;I&#39;] = pattern.I
+        best_node = None
+        bestPattern = None
+
+        best_node, best_params = self.extendPatternUtil(pattern, candidates)
+
+        # for cand in candidates:
+        #     cur = self.extendPatternUtil(pattern, cand)
+        #     if best_params[&#39;I&#39;] &lt; cur[&#39;I&#39;]:
+        #         best_params = cur.copy()
+        #         best_node = cand
+
+        if best_params[&#39;I&#39;] &gt; pattern.I:
+            print(&#39;Added&#39;, best_node)
+            bestPattern = self.extendPatternFinal(pattern, best_node, best_params)
+            nodeAddedFinal = best_node
+            operation = &#39;addition&#39;
+
+        if &#39;none&#39; in operation and pattern.NCount &gt; 2:
+            for cand in pattern.NL:
+                cur = self.shrinkPatternUtil(pattern, cand)
+                if best_params[&#39;I&#39;] &lt; cur[&#39;I&#39;]:
+                    best_params = cur.copy()
+                    best_node = cand
+
+            if best_params[&#39;I&#39;] &gt; pattern.I:
+                bestPattern = self.shrinkPatternFinal(pattern, best_node, best_params)
+                nodeRemovedFinal = best_node
+                operation = &#39;deletion&#39;
+
+        # update candidate list now
+        # print(operation, &#34;\t&#34;, bestPattern.NL)
+
+        if &#39;addition&#39; in operation:
+            candidates = self.updateCandidateAddition(nodeAddedFinal, bestPattern, candidates)
+
+        elif &#39;deletion&#39; in operation:
+            candidates = self.updateCandidateDeletion(nodeRemovedFinal, bestPattern, candidates)
+
+        # return relevant information
+        print(&#39;\tAfter Operation &#39;, operation)
+        print(&#39;\tpw: &#39;, pattern.sumPOS, &#39;interest: &#39;, pattern.I)
+        return pattern, candidates, operation
+##################################################################################################################################################################
+    def extendPatternUtilD(self, pattern, candidates, dir_mode):
+        # add one node a time and check for best gain
+        # count edges from nodeToCheck to pattern
+        # dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list (evaluating outnode) and 2 from list to node (evaluating innode)
+
+        ######### Check in-node and out-node addition ############
+        best_node = None
+        params = None
+        ic = 0.0
+
+        dlmode = 1
+        if self.incEdge:
+            dlmode = 2
+
+        wi_count = pattern.InNCount
+        wo_count = pattern.OutNCount
+
+        if dir_mode == 1:
+            wo_count += 1
+        else:
+            wi_count += 1
+
+        if self.mode == 1:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_SSG( 1, pw=pattern.sumPOS+x[1][&#39;pw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], nw=pattern.nw+x[1][&#39;nw_surplus&#39;] ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1][&#39;nw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;pw_new&#39;] = pattern.sumPOS + params[&#39;pw_surplus&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            params[&#39;nw_new&#39;] = pattern.nw + params[&#39;nw_surplus&#39;]
+            ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+        elif self.mode == 2:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( AD( pattern.ECount+x[1][&#39;kw_surplus&#39;], pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;] ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1][&#39;nw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            params[&#39;nw_new&#39;] = pattern.nw + params[&#39;nw_surplus&#39;]
+            ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_DSIMP( pattern.ECount+x[1][&#39;kw_surplus&#39;], pattern.nw+x[1][&#39;nw_surplus&#39;], pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;], min(pattern.minPOS,x[1][&#39;p0_surplus&#39;]) ),\
+                computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1][&#39;nw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+            params[&#39;p0_new&#39;] = min(pattern.minPOS, params[&#39;p0_surplus&#39;])
+            params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+            params[&#39;nw_new&#39;] = pattern.nw + params[&#39;nw_surplus&#39;]
+            ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params[&#39;nw_new&#39;], kw=params[&#39;kw_new&#39;], q=self.q)
+        I = computeInterestingness(ic, dl)
+
+        params[&#39;ic&#39;] = ic
+        params[&#39;dl&#39;] = dl
+        params[&#39;I&#39;] = I
+
+        return best_node, params
+##################################################################################################################################################################
+    def extendPatternFinalD(self, pattern, nodeToAdd, params, typeOfAddition):
+        H = nx.DiGraph()
+        if &#39;in&#39; in typeOfAddition:
+            for p in pattern.outNL:
+                if self.G.has_edge(p, nodeToAdd):
+                    H.add_edge(p, nodeToAdd)
+        else:
+            for p in pattern.inNL:
+                if self.G.has_edge(nodeToAdd, p):
+                    H.add_edge(nodeToAdd, p)
+        pattern.updateGraph(H)
+        if self.mode == 1:
+            pattern.setSumPOS(params[&#39;pw_new&#39;])
+            pattern.setIC_ssg(params[&#39;ic&#39;])
+        elif self.mode == 2:
+            pattern.setAD(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            pattern.setIC_dsimp(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+            pattern.setMinPOS(params[&#39;p0_new&#39;])
+        pattern.setDL(params[&#39;dl&#39;])
+        pattern.setI(params[&#39;I&#39;])
+        return pattern
+##################################################################################################################################################################
+    def shrinkPatternUtilD(self, pattern, nodeToCheck, dir_mode):
+        # remove node at a time, compute final interestingness and return the updated pattern
+        # count edges from nodeToCheck to pattern
+
+        ########### Check in-node or out-node removal ############
+        kw_deficit  = 0
+        params = dict()
+        ic = 0.0
+        dl = 0.0
+        curInNL = pattern.inNL[:]
+        curOutNL = pattern.outNL[:]
+        curFunc = None
+        if dir_mode == 1:
+            for p in pattern.inNL:
+                if nodeToCheck!=p:
+                    kw_deficit += int(self.G.number_of_edges(nodeToCheck, p))
+            curOutNL.remove(nodeToCheck)
+            curFunc = curInNL
+        else:
+            for p in pattern.outNL:
+                if nodeToCheck!=p:
+                    kw_deficit += self.G.number_of_edges(p, nodeToCheck)
+            curInNL.remove(nodeToCheck)
+            curFunc = curOutNL
+
+        if self.mode == 1:
+            params[&#39;pw_deficit&#39;] = computeSumOfEdgeProbablityBetweenNodeAndList(self.PD, nodeToCheck, curFunc, dir_mode=dir_mode, gtype=self.gtype, isSimple=self.isSimple)
+            params[&#39;pw_new&#39;] = pattern.sumPOS - params[&#39;pw_deficit&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            params[&#39;nw_new&#39;] = NW_D(curInNL, curOutNL)
+            ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+        elif self.mode == 2:
+            params[&#39;mu_w_deficit&#39;] = computeSumOfExpectationsBetweenNodeAndList(self.PD, nodeToCheck, curFunc, dir_mode=dir_mode, gtype=self.gtype, isSimple=self.isSimple)
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+        else:
+            params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+            params[&#39;nw_new&#39;] = NW_D(curInNL, curOutNL)
+            params[&#39;mu_w_deficit&#39;], params[&#39;p0_deficit&#39;] = computePWparametersBetweenNodeAndList(self.PD, nodeToCheck, curFunc, dir_mode=dir_mode, gtype=self.gtype, isSimple=self.isSimple)
+            if pattern.minPOS == params[&#39;p0_deficit&#39;]:
+                params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;] = computePWparameters(self.PD, gtype=self.gtype, inNL = curInNL, outNL = curOutNL, isSimple=self.isSimple)
+            else:
+                params[&#39;p0_new&#39;] = pattern.minPOS
+                params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+            ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+        dlmode = 1
+        if self.incEdge:
+            dlmode = 2
+        dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), WI=curInNL, WO=curOutNL, kw=params[&#39;kw_new&#39;], q=self.q)
+        I = computeInterestingness(ic, dl)
+        params[&#39;ic&#39;] = ic
+        params[&#39;dl&#39;] = dl
+        params[&#39;I&#39;] = I
+        return params
+##################################################################################################################################################################
+    def shrinkPatternFinalD(self, pattern, nodeToRemove, params, typeOfDeletion):
+        if &#39;in&#39; in typeOfDeletion:
+            pattern.removeInNode(nodeToRemove)
+        else:
+            pattern.removeOutNode(nodeToRemove)
+        if self.mode == 1:
+            pattern.setSumPOS(params[&#39;pw_new&#39;])
+            pattern.setIC_ssg(params[&#39;ic&#39;])
+        elif self.mode == 2:
+            pattern.setAD(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        elif self.mode == 3:
+            pattern.setIC_dsimp(params[&#39;ic&#39;])
+            pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+            pattern.setMinPOS(params[&#39;p0_new&#39;])
+        pattern.setDL(params[&#39;dl&#39;])
+        pattern.setI(params[&#39;I&#39;])
+        return pattern
+##################################################################################################################################################################
+    def updateCandidateAdditionD(self, best_node, bestPattern, candidatesIn, candidatesOut, typeOfAddition):
+        if &#39;in&#39; in typeOfAddition:
+            del candidatesIn[best_node]
+            #update parameters of previously present candidateOut list as new in-node is added
+            if self.mode == 1:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;pw_surplus&#39;] += self.PD.getPOS(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 2:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 3:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;p0_surplus&#39;] = min(candidatesOut[u][&#39;p0_surplus&#39;], self.PD.getPOS(u, best_node, isSimple=self.isSimple))
+                        candidatesOut[u][&#39;nw_surplus&#39;] += 1
+            #### similarly new out candidates are now introduced and added in the list as in-node is added
+            pot_add = set(self.G.predecessors(best_node)) - set(candidatesOut.keys()).union(set(bestPattern.outNL))
+            if self.mode == 1:
+                for u in pot_add:
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;pw_surplus&#39;] = 0.0
+                    for v in bestPattern.inNL:
+                        if u != v:
+                            candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, v)
+                            candidatesOut[u][&#39;pw_surplus&#39;] += self.PD.getPOS(u, v, isSimple=self.isSimple)
+                            candidatesOut[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 2:
+                for u in pot_add:
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] = 0.0
+                    for v in bestPattern.inNL:
+                        if u != v:
+                            candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, v)
+                            candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, v, isSimple=self.isSimple)
+                            candidatesOut[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 3:
+                for u in pot_add:
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 0
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] = 0.0
+                    candidatesOut[u][&#39;p0_surplus&#39;] = float(&#34;inf&#34;)
+                    for v in bestPattern.inNL:
+                        if u != v:
+                            candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, v)
+                            candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, v, isSimple=self.isSimple)
+                            candidatesOut[u][&#39;p0_surplus&#39;] = min(candidatesOut[u][&#39;p0_surplus&#39;], self.PD.getPOS(u, v, isSimple=self.isSimple))
+                            candidatesOut[u][&#39;nw_surplus&#39;] += 1
+        else:
+            del candidatesOut[best_node]
+            #update parameters of previously present candidateIn list as new out-node is added
+            if self.mode == 1:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;pw_surplus&#39;] += self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 2:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 3:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;p0_surplus&#39;] = min(candidatesIn[u][&#39;p0_surplus&#39;], self.PD.getPOS(best_node, u, isSimple=self.isSimple))
+                        candidatesIn[u][&#39;nw_surplus&#39;] += 1
+            #### similarly new &#34;in&#34; candidates are now introduced and added in the list as out-node is added
+            pot_add = set(self.G.successors(best_node)) - set(candidatesIn.keys()).union(set(bestPattern.inNL))
+            if self.mode == 1:
+                for u in pot_add:
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;pw_surplus&#39;] = 0.0
+                    for v in bestPattern.outNL:
+                        if u != v:
+                            candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                            candidatesIn[u][&#39;pw_surplus&#39;] += self.PD.getPOS(v, u, isSimple=self.isSimple)
+                            candidatesIn[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 2:
+                for u in pot_add:
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] = 0.0
+                    for v in bestPattern.outNL:
+                        if u != v:
+                            candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                            candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+                            candidatesIn[u][&#39;nw_surplus&#39;] += 1
+            elif self.mode == 3:
+                for u in pot_add:
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 0
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] = 0.0
+                    candidatesIn[u][&#39;p0_surplus&#39;] = float(&#34;inf&#34;)
+                    for v in bestPattern.outNL:
+                        if u != v:
+                            candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                            candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+                            candidatesIn[u][&#39;p0_surplus&#39;] = min(candidatesIn[u][&#39;p0_surplus&#39;], self.PD.getPOS(v, u, isSimple=self.isSimple))
+                            candidatesIn[u][&#39;nw_surplus&#39;] += 1
+
+        return candidatesIn, candidatesOut
+##################################################################################################################################################################
+    def updateCandidateDeletionD(self, best_node, bestPattern, candidatesIn, candidatesOut, typeOfDeletion):
+        if &#39;in&#39; in typeOfDeletion:
+            #since an IN node is removed thus OUT candidate list is updated
+
+            #First remove irrelevant key in OUT candidate list
+            outNeighbor = list(self.G.predecessors(best_node))
+            for oN in outNeighbor:
+                if len(set(self.G.successors(oN)).intersection(bestPattern.inNL)) == 0:
+                    if oN in candidatesOut:
+                        del candidatesOut[oN]
+            #update rest of the keys
+            if self.mode == 1:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;pw_surplus&#39;] -= self.PD.getPOS(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] -= 1
+            elif self.mode == 2:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] -= 1
+            elif self.mode == 3:
+                for u in candidatesOut.keys():
+                    if u != best_node:
+                        candidatesOut[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(u, best_node)
+                        candidatesOut[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] -= 1
+                        cur_minPOS = self.PD.getPOS(u, best_node, isSimple=self.isSimple)
+                        if abs(cur_minPOS - candidatesOut[u][&#39;p0_surplus&#39;]) &lt; 1e-9:
+                            candidatesOut[u][&#39;p0_surplus&#39;] = computeMinPOSBetweenNodeAndList(self.PD, u, bestPattern.inNL, dir_mode=1, gtype=self.gtype, isSimple=self.isSimple)
+        else:
+            #since an OUT node is removed thus IN candidate list is updated
+
+            #First remove irrelevant keys in IN candidate list
+            inNeighbor = list(self.G.successors(best_node))
+            for iN in inNeighbor:
+                if len(set(self.G.predecessors(iN)).intersection(bestPattern.outNL)) == 0:
+                    if iN in candidatesIn:
+                        del candidatesIn[iN]
+            #update rest of the keys
+            if self.mode == 1:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;pw_surplus&#39;] -= self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] -= 1
+            elif self.mode == 2:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] -= 1
+            elif self.mode == 3:
+                for u in candidatesIn.keys():
+                    if u != best_node:
+                        candidatesIn[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                        candidatesIn[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] -= 1
+                        cur_minPOS = self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                        if abs(cur_minPOS - candidatesIn[u][&#39;p0_surplus&#39;]) &lt; 1e-9:
+                            candidatesIn[u][&#39;p0_surplus&#39;] = computeMinPOSBetweenNodeAndList(self.PD, u, bestPattern.outNL, dir_mode=2, gtype=self.gtype, isSimple=self.isSimple)
+
+        return candidatesIn, candidatesOut
+##################################################################################################################################################################
+    def climbOneStepD(self, pattern, candidatesIn, candidatesOut):
+        operation = &#39;none&#39;
+        bestPattern = pattern.copy()
+        nodeAddedFinal = None
+        nodeRemovedFinal = None
+
+        # Extend Pattern
+        bestInParams = dict()
+        bestInParams[&#39;I&#39;] = pattern.I
+        bestInNode = None
+
+        bestOutParams = dict()
+        bestOutParams[&#39;I&#39;] = pattern.I
+        bestOutNode = None
+
+        #Check all possible in-node addition
+        bestInNode, bestInParams = self.extendPatternUtilD(pattern, candidatesIn, 2)
+
+        #Check all possible out-node addition
+        bestOutNode, bestOutParams = self.extendPatternUtilD(pattern, candidatesOut, 1)
+
+        #Perform best addition
+        if bestInParams[&#39;I&#39;] &gt; pattern.I or bestOutParams[&#39;I&#39;] &gt; pattern.I:
+            if bestInParams[&#39;I&#39;] &gt; bestOutParams[&#39;I&#39;]:
+                bestPattern = self.extendPatternFinal(pattern, bestInNode, bestInParams, &#39;in&#39;)
+                nodeAddedFinal = bestInNode
+                operation = &#39;inaddition&#39;
+            else:
+                bestPattern = self.extendPatternFinal(pattern, bestOutNode, bestOutParams, &#39;out&#39;)
+                nodeAddedFinal = bestOutNode
+                operation = &#39;outaddition&#39;
+
+
+        # If no extension, shrink pattern
+        if &#39;none&#39; in operation:
+            #Check all possible in-node removal
+            if pattern.InNCount &gt; 1:
+                for node in pattern.inNL:
+                    curIn = self.shrinkPatternUtilD(pattern, node, 2)
+                    if bestInParams[&#39;I&#39;] &lt; curIn[&#39;I&#39;]:
+                        bestInParams = curIn.copy()
+                        bestInNode = node
+
+            #Check all possible out-node removal
+            if pattern.OutNCount&gt;1:
+                for node in pattern.outNL:
+                    curOut = self.shrinkPatternUtilD(pattern, node, 1)
+                    if bestOutParams[&#39;I&#39;] &lt; curOut[&#39;I&#39;]:
+                        bestOutParams = curOut.copy()
+                        bestOutNode = node
+
+            #Perform best removal
+            if bestInParams[&#39;I&#39;] &gt; pattern.I or bestOutParams[&#39;I&#39;] &gt; pattern.I:
+                if bestInParams[&#39;I&#39;] &gt; bestOutParams[&#39;I&#39;]:
+                    bestPattern = self.shrinkPatternFinal(pattern, bestInNode, bestInParams, &#39;in&#39;)
+                    nodeRemovedFinal = bestInNode
+                    operation = &#39;indeletion&#39;
+                else:
+                    bestPattern = self.shrinkPatternFinal(pattern, bestOutNode, bestOutParams, &#39;out&#39;)
+                    nodeRemovedFinal = bestOutNode
+                    operation = &#39;outdeletion&#39;
+
+        # update candidate list now
+        # print(operation, &#34;\t&#34;, bestPattern.NL)
+
+        if &#39;addition&#39; in operation:
+            if &#39;in&#39; in operation:
+                candidatesIn, candidateOut = self.updateCandidateAdditionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;in&#39;)
+            else:
+                candidatesIn, candidateOut = self.updateCandidateAdditionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;out&#39;)
+        elif &#39;deletion&#39; in operation:
+            if &#39;in&#39; in operation:
+                candidatesIn, candidateOut = self.updateCandidateDeletionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;in&#39;)
+            else:
+                candidatesIn, candidateOut = self.updateCandidateDeletionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;out&#39;)
+
+        # return relevant information
+        print(&#39;Best Pattern eP: &#39;, bestPattern.sumPOS, &#39;interest: &#39;, bestPattern.I)
+        # print(&#34;inNL&#34;, bestPattern.inNL)
+        # print(&#34;outNL&#34;, bestPattern.outNL)
+        print(&#34;Operation&#34;, operation, bestInNode, bestOutNode)
+        return bestPattern, candidatesIn, candidatesOut, operation
+###################################################################################################################
+    def searchPattern(self, seed):
+        &#34;&#34;&#34;function to search for a pattern starting from a given seed subgraph
+
+        Args:
+            seed (int): seed subgraph of one node
+
+        Returns:
+            Pattern: found pattern for given seed
+        &#34;&#34;&#34;
+        pattern = None
+        if self.gtype == &#39;U&#39;:
+            candidates = dict()
+            if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
+                for u in list(self.G.neighbors(seed)):
+                    candidates[u] = dict()
+                    candidates[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidates[u][&#39;pw_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+            elif self.mode == 2: #we require again two parameters: number of edges and expectedEdge_surplus from node to pattern (subgraph)
+                for u in list(self.G.neighbors(seed)):
+                    candidates[u] = dict()
+                    candidates[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidates[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+            elif self.mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
+                for u in list(self.G.neighbors(seed)):
+                    candidates[u] = dict()
+                    candidates[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidates[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+                    candidates[u][&#39;p0_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+            else:
+                raise Exception(&#39;Invalid mode provided&#39;)
+
+            term = False
+
+            pattern = Pattern(nx.Graph(self.G.subgraph(seed)))
+            pattern.setPatType(&#39;Found&#39;)
+            # while termination==false climb one step at a time
+            while not term:
+                pattern, candidates, operation = self.climbOneStep(pattern, candidates)
+                print(operation)
+                if &#39;none&#39; in operation:
+                    term = True
+        else:
+            candidatesIn = dict()
+            candidatesOut = dict()
+            if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
+                for u in list(self.G.successors(seed)):
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidatesIn[u][&#39;pw_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 1
+            elif self.mode == 2: #we require again two parameters: number of edges and expectedEdge_surplus from node to pattern (subgraph)
+                for u in list(self.G.successors(seed)):
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 1
+            elif self.mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
+                for u in list(self.G.successors(seed)):
+                    candidatesIn[u] = dict()
+                    candidatesIn[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;p0_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] = 1
+
+            if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
+                for u in list(self.G.predecessors(seed)):
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(u, seed)
+                    candidatesOut[u][&#39;pw_surplus&#39;] = self.PD.getPOS(u, seed, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 1
+            elif self.mode == 2: #we require again two parameters: number of edges and expectedEdge_surplus from node to pattern (subgraph)
+                for u in list(self.G.predecessors(seed)):
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(u, seed)
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(u, seed, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 1
+            elif self.mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
+                for u in list(self.G.predecessors(seed)):
+                    candidatesOut[u] = dict()
+                    candidatesOut[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(u, seed)
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(u, seed, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;p0_surplus&#39;] = self.PD.getPOS(u, seed, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] = 1
+
+            term = False
+            pattern = Pattern(nx.DiGraph(self.G.subgraph(seed)))
+            pattern.setPatType(&#39;Found&#39;)
+            # while termination==false climb one step at a time
+            while not term:
+                pattern, candidatesIn, candidatesOut, operation = self.climbOneStepD(pattern, candidatesIn, candidatesOut)
+                if &#39;none&#39; in operation:
+                    term = True
+
+        #return pattern and other information
+        return pattern
+##################################################################################################################################################################
+    def addNewPatternList(self, NL, count, Pattype):
+        pattern = Pattern.Pattern(self.G.subgraph(NL).copy(), NL, 0, 0, self.PD.computeEdgeProbabilityListNodesIncLprev(NL), self.PD.computeInterestingnessListNodesIncLprev(NL), count)
+        pattern.updateGraphProperties()
+        self.PD.updateBackground(pattern, count)
+        pattern.setPatType(Pattype)
+        return pattern, self.PD.copy()
+##################################################################################################################################################################
+    def addNewPattern(self, pattern, count):
+        self.PD.updateBackground(pattern, count)
+        return self.PD.copy()</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.PD"><code class="name">var <span class="ident">PD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.addNewPattern"><code class="name flex">
+<span>def <span class="ident">addNewPattern</span></span>(<span>self, pattern, count)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addNewPattern(self, pattern, count):
+    self.PD.updateBackground(pattern, count)
+    return self.PD.copy()</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.addNewPatternList"><code class="name flex">
+<span>def <span class="ident">addNewPatternList</span></span>(<span>self, NL, count, Pattype)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addNewPatternList(self, NL, count, Pattype):
+    pattern = Pattern.Pattern(self.G.subgraph(NL).copy(), NL, 0, 0, self.PD.computeEdgeProbabilityListNodesIncLprev(NL), self.PD.computeInterestingnessListNodesIncLprev(NL), count)
+    pattern.updateGraphProperties()
+    self.PD.updateBackground(pattern, count)
+    pattern.setPatType(Pattype)
+    return pattern, self.PD.copy()</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.climbOneStep"><code class="name flex">
+<span>def <span class="ident">climbOneStep</span></span>(<span>self, pattern, candidates)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to climb one step at a time, i.e., either addition of node or removal from the subgraph pattern</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>pattern</code></strong> :&ensp;<code>Pattern</code></dt>
+<dd>input subgraph pattern</dd>
+<dt><strong><code>candidates</code></strong> :&ensp;<code>set</code></dt>
+<dd>set of candidate node that can be added such that the subgraph remains connected</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Pattern, list, str</code></dt>
+<dd>Updated subgraph pattern, updated candidate list and operation performed</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def climbOneStep(self, pattern, candidates):
+    &#34;&#34;&#34;function to climb one step at a time, i.e., either addition of node or removal from the subgraph pattern
+
+    Args:
+        pattern (Pattern): input subgraph pattern
+        candidates (set): set of candidate node that can be added such that the subgraph remains connected
+
+    Returns:
+        Pattern, list, str: Updated subgraph pattern, updated candidate list and operation performed
+    &#34;&#34;&#34;
+    print(&#39;In climb one step&#39;)
+    print(&#39;\tSize of candidates: &#39;, len(candidates))
+    print(&#39;\tBefore operation&#39;)
+    print(&#39;\teP: &#39;, pattern.sumPOS, &#39;interest: &#39;, pattern.I)
+
+    operation = &#39;none&#39;
+    nodeAddedFinal = None
+    nodeRemovedFinal = None
+
+    # Extend Pattern
+    best_params = dict()
+    best_params[&#39;I&#39;] = pattern.I
+    best_node = None
+    bestPattern = None
+
+    best_node, best_params = self.extendPatternUtil(pattern, candidates)
+
+    # for cand in candidates:
+    #     cur = self.extendPatternUtil(pattern, cand)
+    #     if best_params[&#39;I&#39;] &lt; cur[&#39;I&#39;]:
+    #         best_params = cur.copy()
+    #         best_node = cand
+
+    if best_params[&#39;I&#39;] &gt; pattern.I:
+        print(&#39;Added&#39;, best_node)
+        bestPattern = self.extendPatternFinal(pattern, best_node, best_params)
+        nodeAddedFinal = best_node
+        operation = &#39;addition&#39;
+
+    if &#39;none&#39; in operation and pattern.NCount &gt; 2:
+        for cand in pattern.NL:
+            cur = self.shrinkPatternUtil(pattern, cand)
+            if best_params[&#39;I&#39;] &lt; cur[&#39;I&#39;]:
+                best_params = cur.copy()
+                best_node = cand
+
+        if best_params[&#39;I&#39;] &gt; pattern.I:
+            bestPattern = self.shrinkPatternFinal(pattern, best_node, best_params)
+            nodeRemovedFinal = best_node
+            operation = &#39;deletion&#39;
+
+    # update candidate list now
+    # print(operation, &#34;\t&#34;, bestPattern.NL)
+
+    if &#39;addition&#39; in operation:
+        candidates = self.updateCandidateAddition(nodeAddedFinal, bestPattern, candidates)
+
+    elif &#39;deletion&#39; in operation:
+        candidates = self.updateCandidateDeletion(nodeRemovedFinal, bestPattern, candidates)
+
+    # return relevant information
+    print(&#39;\tAfter Operation &#39;, operation)
+    print(&#39;\tpw: &#39;, pattern.sumPOS, &#39;interest: &#39;, pattern.I)
+    return pattern, candidates, operation</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.climbOneStepD"><code class="name flex">
+<span>def <span class="ident">climbOneStepD</span></span>(<span>self, pattern, candidatesIn, candidatesOut)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def climbOneStepD(self, pattern, candidatesIn, candidatesOut):
+    operation = &#39;none&#39;
+    bestPattern = pattern.copy()
+    nodeAddedFinal = None
+    nodeRemovedFinal = None
+
+    # Extend Pattern
+    bestInParams = dict()
+    bestInParams[&#39;I&#39;] = pattern.I
+    bestInNode = None
+
+    bestOutParams = dict()
+    bestOutParams[&#39;I&#39;] = pattern.I
+    bestOutNode = None
+
+    #Check all possible in-node addition
+    bestInNode, bestInParams = self.extendPatternUtilD(pattern, candidatesIn, 2)
+
+    #Check all possible out-node addition
+    bestOutNode, bestOutParams = self.extendPatternUtilD(pattern, candidatesOut, 1)
+
+    #Perform best addition
+    if bestInParams[&#39;I&#39;] &gt; pattern.I or bestOutParams[&#39;I&#39;] &gt; pattern.I:
+        if bestInParams[&#39;I&#39;] &gt; bestOutParams[&#39;I&#39;]:
+            bestPattern = self.extendPatternFinal(pattern, bestInNode, bestInParams, &#39;in&#39;)
+            nodeAddedFinal = bestInNode
+            operation = &#39;inaddition&#39;
+        else:
+            bestPattern = self.extendPatternFinal(pattern, bestOutNode, bestOutParams, &#39;out&#39;)
+            nodeAddedFinal = bestOutNode
+            operation = &#39;outaddition&#39;
+
+
+    # If no extension, shrink pattern
+    if &#39;none&#39; in operation:
+        #Check all possible in-node removal
+        if pattern.InNCount &gt; 1:
+            for node in pattern.inNL:
+                curIn = self.shrinkPatternUtilD(pattern, node, 2)
+                if bestInParams[&#39;I&#39;] &lt; curIn[&#39;I&#39;]:
+                    bestInParams = curIn.copy()
+                    bestInNode = node
+
+        #Check all possible out-node removal
+        if pattern.OutNCount&gt;1:
+            for node in pattern.outNL:
+                curOut = self.shrinkPatternUtilD(pattern, node, 1)
+                if bestOutParams[&#39;I&#39;] &lt; curOut[&#39;I&#39;]:
+                    bestOutParams = curOut.copy()
+                    bestOutNode = node
+
+        #Perform best removal
+        if bestInParams[&#39;I&#39;] &gt; pattern.I or bestOutParams[&#39;I&#39;] &gt; pattern.I:
+            if bestInParams[&#39;I&#39;] &gt; bestOutParams[&#39;I&#39;]:
+                bestPattern = self.shrinkPatternFinal(pattern, bestInNode, bestInParams, &#39;in&#39;)
+                nodeRemovedFinal = bestInNode
+                operation = &#39;indeletion&#39;
+            else:
+                bestPattern = self.shrinkPatternFinal(pattern, bestOutNode, bestOutParams, &#39;out&#39;)
+                nodeRemovedFinal = bestOutNode
+                operation = &#39;outdeletion&#39;
+
+    # update candidate list now
+    # print(operation, &#34;\t&#34;, bestPattern.NL)
+
+    if &#39;addition&#39; in operation:
+        if &#39;in&#39; in operation:
+            candidatesIn, candidateOut = self.updateCandidateAdditionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;in&#39;)
+        else:
+            candidatesIn, candidateOut = self.updateCandidateAdditionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;out&#39;)
+    elif &#39;deletion&#39; in operation:
+        if &#39;in&#39; in operation:
+            candidatesIn, candidateOut = self.updateCandidateDeletionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;in&#39;)
+        else:
+            candidatesIn, candidateOut = self.updateCandidateDeletionD(nodeAddedFinal, bestPattern, candidatesIn, candidatesOut, &#39;out&#39;)
+
+    # return relevant information
+    print(&#39;Best Pattern eP: &#39;, bestPattern.sumPOS, &#39;interest: &#39;, bestPattern.I)
+    # print(&#34;inNL&#34;, bestPattern.inNL)
+    # print(&#34;outNL&#34;, bestPattern.outNL)
+    print(&#34;Operation&#34;, operation, bestInNode, bestOutNode)
+    return bestPattern, candidatesIn, candidatesOut, operation</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.extendPatternFinal"><code class="name flex">
+<span>def <span class="ident">extendPatternFinal</span></span>(<span>self, pattern, nodeToAdd, params)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to update the subgraph pattern while adding the node resultng in maximum increase of interestingness value</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>pattern</code></strong> :&ensp;<code>Pattern</code></dt>
+<dd>input subgraph pattern</dd>
+<dt><strong><code>nodeToAdd</code></strong> :&ensp;<code>int</code></dt>
+<dd>node id of the vertex to be added</dd>
+<dt><strong><code>params</code></strong> :&ensp;<code>dict</code></dt>
+<dd>corresponding parameters of the node to be added</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Pattern</code></dt>
+<dd>updated subgraph pattern</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extendPatternFinal(self, pattern, nodeToAdd, params):
+    &#34;&#34;&#34;function to update the subgraph pattern while adding the node resultng in maximum increase of interestingness value
+
+    Args:
+        pattern (Pattern): input subgraph pattern
+        nodeToAdd (int): node id of the vertex to be added
+        params (dict): corresponding parameters of the node to be added
+
+    Returns:
+        Pattern: updated subgraph pattern
+    &#34;&#34;&#34;
+    H = nx.Graph()
+    for p in pattern.NL:
+        if self.G.has_edge(p, nodeToAdd):
+            H.add_edge(p, nodeToAdd)
+    pattern.updateGraph(H)
+    if self.mode == 1:
+        pattern.setSumPOS(params[&#39;pw_new&#39;])
+        pattern.setIC_ssg(params[&#39;ic&#39;])
+    elif self.mode == 2:
+        pattern.setAD(params[&#39;ic&#39;])
+        pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+    elif self.mode == 3:
+        pattern.setIC_dsimp(params[&#39;ic&#39;])
+        pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        pattern.setMinPOS(params[&#39;p0_new&#39;])
+    pattern.setDL(params[&#39;dl&#39;])
+    pattern.setI(params[&#39;I&#39;])
+    return pattern</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.extendPatternFinalD"><code class="name flex">
+<span>def <span class="ident">extendPatternFinalD</span></span>(<span>self, pattern, nodeToAdd, params, typeOfAddition)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extendPatternFinalD(self, pattern, nodeToAdd, params, typeOfAddition):
+    H = nx.DiGraph()
+    if &#39;in&#39; in typeOfAddition:
+        for p in pattern.outNL:
+            if self.G.has_edge(p, nodeToAdd):
+                H.add_edge(p, nodeToAdd)
+    else:
+        for p in pattern.inNL:
+            if self.G.has_edge(nodeToAdd, p):
+                H.add_edge(nodeToAdd, p)
+    pattern.updateGraph(H)
+    if self.mode == 1:
+        pattern.setSumPOS(params[&#39;pw_new&#39;])
+        pattern.setIC_ssg(params[&#39;ic&#39;])
+    elif self.mode == 2:
+        pattern.setAD(params[&#39;ic&#39;])
+        pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+    elif self.mode == 3:
+        pattern.setIC_dsimp(params[&#39;ic&#39;])
+        pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        pattern.setMinPOS(params[&#39;p0_new&#39;])
+    pattern.setDL(params[&#39;dl&#39;])
+    pattern.setI(params[&#39;I&#39;])
+    return pattern</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.extendPatternUtil"><code class="name flex">
+<span>def <span class="ident">extendPatternUtil</span></span>(<span>self, pattern, candidates)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Util function to check for the best candidate node to add</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>pattern</code></strong> :&ensp;<code>Pattern</code></dt>
+<dd>input subgraph pattern</dd>
+<dt><strong><code>candidates</code></strong> :&ensp;<code>dict</code></dt>
+<dd>dictionary of candidates that can be added with parameters as values</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int, dict</code></dt>
+<dd>best node id, dictionary of parameters cmputed for the input node</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extendPatternUtil(self, pattern, candidates):
+    &#34;&#34;&#34;Util function to check for the best candidate node to add
+
+    Args:
+        pattern (Pattern): input subgraph pattern
+        candidates (dict): dictionary of candidates that can be added with parameters as values
+
+    Returns:
+        int, dict: best node id, dictionary of parameters cmputed for the input node
+    &#34;&#34;&#34;
+    best_node = None
+    params = None
+    ic = 0.0
+
+    dlmode = 1
+    if self.incEdge:
+        dlmode = 2
+
+    if self.mode == 1:
+        best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_SSG( 1, pw=pattern.sumPOS+x[1][&#39;pw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], nw=NW(pattern.NCount+1) ),\
+            computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+        params[&#39;pw_new&#39;] = pattern.sumPOS + params[&#39;pw_surplus&#39;]
+        params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+        params[&#39;nw_new&#39;] = NW(pattern.NCount+1)
+        ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+    elif self.mode == 2:
+        best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( AD( pattern.ECount+x[1][&#39;kw_surplus&#39;], pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;] ),\
+            computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+        params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+        params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+        ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+    elif self.mode == 3:
+        best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_DSIMP( pattern.ECount+x[1][&#39;kw_surplus&#39;], NW(pattern.NCount+1), pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;], min(pattern.minPOS,x[1][&#39;p0_surplus&#39;]) ),\
+            computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+        params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+        params[&#39;p0_new&#39;] = min(pattern.minPOS, params[&#39;p0_surplus&#39;])
+        params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+        params[&#39;nw_new&#39;] = NW(pattern.NCount+1)
+        ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+    dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), W=pattern.NCount+1, kw=params[&#39;kw_new&#39;], q=self.q)
+    I = computeInterestingness(ic, dl)
+
+    params[&#39;ic&#39;] = ic
+    params[&#39;dl&#39;] = dl
+    params[&#39;I&#39;] = I
+
+    return best_node, params</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.extendPatternUtilD"><code class="name flex">
+<span>def <span class="ident">extendPatternUtilD</span></span>(<span>self, pattern, candidates, dir_mode)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extendPatternUtilD(self, pattern, candidates, dir_mode):
+    # add one node a time and check for best gain
+    # count edges from nodeToCheck to pattern
+    # dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list (evaluating outnode) and 2 from list to node (evaluating innode)
+
+    ######### Check in-node and out-node addition ############
+    best_node = None
+    params = None
+    ic = 0.0
+
+    dlmode = 1
+    if self.incEdge:
+        dlmode = 2
+
+    wi_count = pattern.InNCount
+    wo_count = pattern.OutNCount
+
+    if dir_mode == 1:
+        wo_count += 1
+    else:
+        wi_count += 1
+
+    if self.mode == 1:
+        best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_SSG( 1, pw=pattern.sumPOS+x[1][&#39;pw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], nw=pattern.nw+x[1][&#39;nw_surplus&#39;] ),\
+            computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1][&#39;nw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+        params[&#39;pw_new&#39;] = pattern.sumPOS + params[&#39;pw_surplus&#39;]
+        params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+        params[&#39;nw_new&#39;] = pattern.nw + params[&#39;nw_surplus&#39;]
+        ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+    elif self.mode == 2:
+        best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( AD( pattern.ECount+x[1][&#39;kw_surplus&#39;], pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;] ),\
+            computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1][&#39;nw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+        params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+        params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+        params[&#39;nw_new&#39;] = pattern.nw + params[&#39;nw_surplus&#39;]
+        ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+    elif self.mode == 3:
+        best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_DSIMP( pattern.ECount+x[1][&#39;kw_surplus&#39;], pattern.nw+x[1][&#39;nw_surplus&#39;], pattern.expectedEdges + x[1][&#39;mu_w_surplus&#39;], min(pattern.minPOS,x[1][&#39;p0_surplus&#39;]) ),\
+            computeDescriptionLength( dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1][&#39;nw_surplus&#39;], kw=pattern.ECount+x[1][&#39;kw_surplus&#39;], q=self.q ) ) )
+        params[&#39;mu_w_new&#39;] = pattern.expectedEdges + params[&#39;mu_w_surplus&#39;]
+        params[&#39;p0_new&#39;] = min(pattern.minPOS, params[&#39;p0_surplus&#39;])
+        params[&#39;kw_new&#39;] = pattern.ECount + params[&#39;kw_surplus&#39;]
+        params[&#39;nw_new&#39;] = pattern.nw + params[&#39;nw_surplus&#39;]
+        ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+    dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params[&#39;nw_new&#39;], kw=params[&#39;kw_new&#39;], q=self.q)
+    I = computeInterestingness(ic, dl)
+
+    params[&#39;ic&#39;] = ic
+    params[&#39;dl&#39;] = dl
+    params[&#39;I&#39;] = I
+
+    return best_node, params</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.getSeeds"><code class="name flex">
+<span>def <span class="ident">getSeeds</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function to get seeds to run the hill climber</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>Exception 1</code></dt>
+<dd>if self.nKseed != mNumNodes:
+raise Exception("Number of seeds should be equal to number of nodes here.")</dd>
+<dt><code>Exception</code></dt>
+<dd>raise Exception('no valid seed mode given')</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>seed node's list</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getSeeds(self):
+    &#34;&#34;&#34;Function to get seeds to run the hill climber
+
+    Raises:
+        Exception 1: if self.nKseed != mNumNodes:
+            raise Exception(&#34;Number of seeds should be equal to number of nodes here.&#34;)
+        Exception: raise Exception(&#39;no valid seed mode given&#39;)
+
+    Returns:
+        list: seed node&#39;s list
+    &#34;&#34;&#34;
+    mNumNodes = self.G.number_of_nodes()
+    seedNodes = [None]*self.nKseed
+    if &#39;all&#39; in self.seedMode:
+        if self.nKseed != mNumNodes:
+            raise Exception(&#34;Number of seeds should be equal to number of nodes here.&#34;)
+
+        for r in range(self.nKseed):
+            seedNodes[r] = r
+
+    elif &#39;uniform&#39; in self.seedMode:
+        randoml = list(self.G.nodes())
+        np.random.shuffle(randoml)
+        for r in range(self.nKseed):
+            seedNodes[r] = randoml[r]
+
+    elif &#39;degree&#39; in self.seedMode:
+        degreeList = sorted(dict(self.G.degree()).items(), key=lambda kv: kv[1], reverse=True)
+        for r in range(self.nKseed):
+            seedNodes[r] = degreeList[r][0]
+
+    elif &#39;interest&#39; in self.seedMode:
+        ListNode = sorted(list(self.G.nodes()))
+        interestList = []
+        if self.gtype == &#39;U&#39;:
+            for LNit in ListNode:
+                print(LNit)
+                curlist = list(set(self.G.neighbors(LNit)).union(set([LNit])))
+                H = self.G.subgraph(curlist)
+                if len(curlist)&gt;1:
+                    ic = 0.0
+                    dl = 0.0
+                    if self.mode == 1:
+                        pw = computeSumOfEdgeProbablity(self.PD, gtype=self.gtype, NL=curlist, isSimple=self.isSimple)
+                        ic = IC_SSG(3, pw=pw, W=H)
+                    elif self.mode == 2:
+                        mu_w = computeSumOfExpectations(self.PD, gtype=self.gtype, NL=curlist, isSimple=self.isSimple)
+                        ic = AD(H.number_of_edges(), mu_w)
+                    elif self.mode == 3:
+                        mu_w, p0 = computePWparameters(self.PD, gtype=self.gtype, NL=curlist, isSimple=self.isSimple)
+                        ic = IC_DSIMP(H.number_of_edges(), NW(len(curlist)), mu_w, p0)
+                    dlmode = 1
+                    if self.incEdge:
+                        dlmode = 2
+                    dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=self.q)
+                    interestValue = computeInterestingness(ic, dl)
+                    interestList.append(tuple([LNit, interestValue]))
+        else:
+            for LNit in ListNode:
+                print(LNit)
+                curlistOut = list(set(self.G.predecessors(LNit)).union(set([LNit])))
+                curlistIn = list(set(self.G.successors(LNit)).union(set([LNit])))
+                H = getDirectedSubgraph(self.G, curlistIn, curlistOut, self.isSimple)
+                if len(curlistIn)&gt;1 and len(curlistOut)&gt;1:
+                    ic = 0.0
+                    dl = 0.0
+                    if self.mode == 1:
+                        pw = computeSumOfEdgeProbablity(self.PD, gtype=self.gtype, inNL=curlistIn, outNL=curlistOut, isSimple=self.isSimple)
+                        ic = IC_SSG(3, pw=pw, W=H)
+                    elif self.mode == 2:
+                        mu_w = computeSumOfExpectations(self.PD, gtype=self.gtype, inNL=curlistIn, outNL=curlistOut, isSimple=self.isSimple)
+                        ic = AD(H.number_of_edges(), mu_w)
+                    elif self.mode == 3:
+                        mu_w, p0 = computePWparameters(self.PD, gtype=self.gtype, inNL=curlistIn, outNL=curlistOut, isSimple=self.isSimple)
+                        ic = IC_DSIMP(H.number_of_edges(), NW_D(curlistIn, curlistOut), mu_w, p0)
+                    dlmode = 1
+                    if self.incEdge:
+                        dlmode = 2
+                    dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=self.q)
+                    interestValue = computeInterestingness(ic, dl)
+                    interestList.append(tuple([LNit, interestValue]))
+        interestList = sorted(interestList, key=lambda kv: kv[1], reverse=True)
+        mRange = min([self.nKseed, len(interestList)])
+        seedNodes = [0]*mRange
+        for r in range(mRange):
+            # print(r, interestList[r][0])
+            if interestList[r][0] is None:
+                print(r, interestList[r][0])
+            seedNodes[r] = interestList[r][0]
+
+    else:
+        raise Exception(&#39;no valid seed mode given&#39;)
+    return seedNodes</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.hillclimber"><code class="name flex">
+<span>def <span class="ident">hillclimber</span></span>(<span>self, minsize=0, mininterest=-100000.0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to most interesting subgraph pattern</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>minsize</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>minimum size of the pattern. Defaults to 0.</dd>
+<dt><strong><code>mininterest</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>minimum interestingness. Defaults to -100000.0.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Pattern</code></dt>
+<dd>most interesting subgraph pattern</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hillclimber(self, minsize=0, mininterest = -100000.0):
+    &#34;&#34;&#34;function to most interesting subgraph pattern
+
+    Args:
+        minsize (int, optional): minimum size of the pattern. Defaults to 0.
+        mininterest (float, optional): minimum interestingness. Defaults to -100000.0.
+
+    Returns:
+        Pattern: most interesting subgraph pattern
+    &#34;&#34;&#34;
+    print(&#39;Already present patterns: &#39;, len(self.PD.lprevUpdate.items()))
+
+    seedNodes = self.getSeeds()
+
+    # Do requested runs
+    bestPattern = Pattern(nx.Graph())
+
+    for k in range(len(seedNodes)):
+        cP = self.searchPattern(seedNodes[k])
+        if cP.I &gt; bestPattern.I and cP.NCount &gt; minsize and cP.I &gt; mininterest:
+            bestPattern = cP.copy()
+        self.allSeedCheck.append(cP)
+
+    return bestPattern</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.searchPattern"><code class="name flex">
+<span>def <span class="ident">searchPattern</span></span>(<span>self, seed)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to search for a pattern starting from a given seed subgraph</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>seed</code></strong> :&ensp;<code>int</code></dt>
+<dd>seed subgraph of one node</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Pattern</code></dt>
+<dd>found pattern for given seed</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def searchPattern(self, seed):
+    &#34;&#34;&#34;function to search for a pattern starting from a given seed subgraph
+
+    Args:
+        seed (int): seed subgraph of one node
+
+    Returns:
+        Pattern: found pattern for given seed
+    &#34;&#34;&#34;
+    pattern = None
+    if self.gtype == &#39;U&#39;:
+        candidates = dict()
+        if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
+            for u in list(self.G.neighbors(seed)):
+                candidates[u] = dict()
+                candidates[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                candidates[u][&#39;pw_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+        elif self.mode == 2: #we require again two parameters: number of edges and expectedEdge_surplus from node to pattern (subgraph)
+            for u in list(self.G.neighbors(seed)):
+                candidates[u] = dict()
+                candidates[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                candidates[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+        elif self.mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
+            for u in list(self.G.neighbors(seed)):
+                candidates[u] = dict()
+                candidates[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                candidates[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+                candidates[u][&#39;p0_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+        else:
+            raise Exception(&#39;Invalid mode provided&#39;)
+
+        term = False
+
+        pattern = Pattern(nx.Graph(self.G.subgraph(seed)))
+        pattern.setPatType(&#39;Found&#39;)
+        # while termination==false climb one step at a time
+        while not term:
+            pattern, candidates, operation = self.climbOneStep(pattern, candidates)
+            print(operation)
+            if &#39;none&#39; in operation:
+                term = True
+    else:
+        candidatesIn = dict()
+        candidatesOut = dict()
+        if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
+            for u in list(self.G.successors(seed)):
+                candidatesIn[u] = dict()
+                candidatesIn[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                candidatesIn[u][&#39;pw_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+                candidatesIn[u][&#39;nw_surplus&#39;] = 1
+        elif self.mode == 2: #we require again two parameters: number of edges and expectedEdge_surplus from node to pattern (subgraph)
+            for u in list(self.G.successors(seed)):
+                candidatesIn[u] = dict()
+                candidatesIn[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                candidatesIn[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+                candidatesIn[u][&#39;nw_surplus&#39;] = 1
+        elif self.mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
+            for u in list(self.G.successors(seed)):
+                candidatesIn[u] = dict()
+                candidatesIn[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(seed, u)
+                candidatesIn[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(seed, u, isSimple=self.isSimple)
+                candidatesIn[u][&#39;p0_surplus&#39;] = self.PD.getPOS(seed, u, isSimple=self.isSimple)
+                candidatesIn[u][&#39;nw_surplus&#39;] = 1
+
+        if self.mode == 1: #we require two parameters, which are, number of edges and pw_surplus from node to pattern (subgraph)
+            for u in list(self.G.predecessors(seed)):
+                candidatesOut[u] = dict()
+                candidatesOut[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(u, seed)
+                candidatesOut[u][&#39;pw_surplus&#39;] = self.PD.getPOS(u, seed, isSimple=self.isSimple)
+                candidatesOut[u][&#39;nw_surplus&#39;] = 1
+        elif self.mode == 2: #we require again two parameters: number of edges and expectedEdge_surplus from node to pattern (subgraph)
+            for u in list(self.G.predecessors(seed)):
+                candidatesOut[u] = dict()
+                candidatesOut[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(u, seed)
+                candidatesOut[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(u, seed, isSimple=self.isSimple)
+                candidatesOut[u][&#39;nw_surplus&#39;] = 1
+        elif self.mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
+            for u in list(self.G.predecessors(seed)):
+                candidatesOut[u] = dict()
+                candidatesOut[u][&#39;kw_surplus&#39;] = self.G.number_of_edges(u, seed)
+                candidatesOut[u][&#39;mu_w_surplus&#39;] = self.PD.getExpectation(u, seed, isSimple=self.isSimple)
+                candidatesOut[u][&#39;p0_surplus&#39;] = self.PD.getPOS(u, seed, isSimple=self.isSimple)
+                candidatesOut[u][&#39;nw_surplus&#39;] = 1
+
+        term = False
+        pattern = Pattern(nx.DiGraph(self.G.subgraph(seed)))
+        pattern.setPatType(&#39;Found&#39;)
+        # while termination==false climb one step at a time
+        while not term:
+            pattern, candidatesIn, candidatesOut, operation = self.climbOneStepD(pattern, candidatesIn, candidatesOut)
+            if &#39;none&#39; in operation:
+                term = True
+
+    #return pattern and other information
+    return pattern</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.setPD"><code class="name flex">
+<span>def <span class="ident">setPD</span></span>(<span>self, PD)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function to set background distribution</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution of input graph</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setPD(self, PD):
+    &#34;&#34;&#34;Function to set background distribution
+
+    Args:
+        PD (PDClass): Background distribution of input graph
+    &#34;&#34;&#34;
+    self.PD = PD
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternFinal"><code class="name flex">
+<span>def <span class="ident">shrinkPatternFinal</span></span>(<span>self, pattern, nodeToRemove, params)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to update the subgraph pattern while removing the node resulting in maximum increase of interestingness value</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>pattern</code></strong> :&ensp;<code>Pattern</code></dt>
+<dd>input subgraph pattern</dd>
+<dt><strong><code>nodeToAdd</code></strong> :&ensp;<code>int</code></dt>
+<dd>node id of the vertex to be removed</dd>
+<dt><strong><code>params</code></strong> :&ensp;<code>dict</code></dt>
+<dd>corresponding parameters of the node to be removed</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Pattern</code></dt>
+<dd>updated subgraph pattern</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def shrinkPatternFinal(self, pattern, nodeToRemove, params):
+    &#34;&#34;&#34;function to update the subgraph pattern while removing the node resulting in maximum increase of interestingness value
+
+    Args:
+        pattern (Pattern): input subgraph pattern
+        nodeToAdd (int): node id of the vertex to be removed
+        params (dict): corresponding parameters of the node to be removed
+
+    Returns:
+        Pattern: updated subgraph pattern
+    &#34;&#34;&#34;
+    pattern.removeNode(nodeToRemove)
+    if self.mode == 1:
+        pattern.setSumPOS(params[&#39;pw_new&#39;])
+        pattern.setIC_ssg(params[&#39;ic&#39;])
+    elif self.mode == 2:
+        pattern.setAD(params[&#39;ic&#39;])
+        pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+    elif self.mode == 3:
+        pattern.setIC_dsimp(params[&#39;ic&#39;])
+        pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        pattern.setMinPOS(params[&#39;p0_new&#39;])
+    pattern.setDL(params[&#39;dl&#39;])
+    pattern.setI(params[&#39;I&#39;])
+    return pattern</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternFinalD"><code class="name flex">
+<span>def <span class="ident">shrinkPatternFinalD</span></span>(<span>self, pattern, nodeToRemove, params, typeOfDeletion)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def shrinkPatternFinalD(self, pattern, nodeToRemove, params, typeOfDeletion):
+    if &#39;in&#39; in typeOfDeletion:
+        pattern.removeInNode(nodeToRemove)
+    else:
+        pattern.removeOutNode(nodeToRemove)
+    if self.mode == 1:
+        pattern.setSumPOS(params[&#39;pw_new&#39;])
+        pattern.setIC_ssg(params[&#39;ic&#39;])
+    elif self.mode == 2:
+        pattern.setAD(params[&#39;ic&#39;])
+        pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+    elif self.mode == 3:
+        pattern.setIC_dsimp(params[&#39;ic&#39;])
+        pattern.setExpectedEdges(params[&#39;mu_w_new&#39;])
+        pattern.setMinPOS(params[&#39;p0_new&#39;])
+    pattern.setDL(params[&#39;dl&#39;])
+    pattern.setI(params[&#39;I&#39;])
+    return pattern</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternUtil"><code class="name flex">
+<span>def <span class="ident">shrinkPatternUtil</span></span>(<span>self, pattern, nodeToCheck)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Util function to check for the best candidate node to remove</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>pattern</code></strong> :&ensp;<code>Pattern</code></dt>
+<dd>input subgraph pattern</dd>
+<dt><strong><code>nodeToCheck</code></strong> :&ensp;<code>int</code></dt>
+<dd>node id of the vertex to check for removal</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>dictionary of parameters cmputed for the input node</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def shrinkPatternUtil(self, pattern, nodeToCheck):
+    &#34;&#34;&#34;Util function to check for the best candidate node to remove
+
+    Args:
+        pattern (Pattern): input subgraph pattern
+        nodeToCheck (int): node id of the vertex to check for removal
+
+    Returns:
+        dict: dictionary of parameters cmputed for the input node
+    &#34;&#34;&#34;
+    kw_deficit  = 0
+    for p in pattern.NL:
+        kw_deficit  += self.G.number_of_edges(p, nodeToCheck)
+    curNL = pattern.NL
+
+    params = dict()
+    ic = 0.0
+    dl = 0.0
+    if self.mode == 1:
+        params[&#39;pw_deficit&#39;] = computeSumOfEdgeProbablityBetweenNodeAndList(self.PD, nodeToCheck, curNL, gtype=self.gtype, isSimple=self.isSimple)
+        params[&#39;pw_new&#39;] = pattern.sumPOS - params[&#39;pw_deficit&#39;]
+        params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+        params[&#39;nw_new&#39;] = NW(len(curNL)-1)
+        ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+    elif self.mode == 2:
+        params[&#39;mu_w_deficit&#39;] = computeSumOfExpectationsBetweenNodeAndList(self.PD, nodeToCheck, curNL, gtype=self.gtype, isSimple=self.isSimple)
+        params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+        params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+        ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+    else:
+        params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+        params[&#39;mu_w_deficit&#39;], params[&#39;p0_deficit&#39;] = computePWparametersBetweenNodeAndList(self.PD, nodeToCheck, curNL, gtype=self.gtype, isSimple=self.isSimple)
+        if pattern.minPOS == params[&#39;p0_deficit&#39;]:
+            curNL.remove(nodeToCheck)
+            params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;] = computePWparameters(self.PD, gtype=self.gtype, NL=curNL, isSimple=self.isSimple)
+        else:
+            params[&#39;p0_new&#39;] = pattern.minPOS
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+        ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+    dlmode = 1
+    if self.incEdge:
+        dlmode = 2
+    dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), W=len(curNL)-1, kw=params[&#39;kw_new&#39;], q=self.q)
+    I = computeInterestingness(ic, dl)
+    params[&#39;ic&#39;] = ic
+    params[&#39;dl&#39;] = dl
+    params[&#39;I&#39;] = I
+    return params</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternUtilD"><code class="name flex">
+<span>def <span class="ident">shrinkPatternUtilD</span></span>(<span>self, pattern, nodeToCheck, dir_mode)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def shrinkPatternUtilD(self, pattern, nodeToCheck, dir_mode):
+    # remove node at a time, compute final interestingness and return the updated pattern
+    # count edges from nodeToCheck to pattern
+
+    ########### Check in-node or out-node removal ############
+    kw_deficit  = 0
+    params = dict()
+    ic = 0.0
+    dl = 0.0
+    curInNL = pattern.inNL[:]
+    curOutNL = pattern.outNL[:]
+    curFunc = None
+    if dir_mode == 1:
+        for p in pattern.inNL:
+            if nodeToCheck!=p:
+                kw_deficit += int(self.G.number_of_edges(nodeToCheck, p))
+        curOutNL.remove(nodeToCheck)
+        curFunc = curInNL
+    else:
+        for p in pattern.outNL:
+            if nodeToCheck!=p:
+                kw_deficit += self.G.number_of_edges(p, nodeToCheck)
+        curInNL.remove(nodeToCheck)
+        curFunc = curOutNL
+
+    if self.mode == 1:
+        params[&#39;pw_deficit&#39;] = computeSumOfEdgeProbablityBetweenNodeAndList(self.PD, nodeToCheck, curFunc, dir_mode=dir_mode, gtype=self.gtype, isSimple=self.isSimple)
+        params[&#39;pw_new&#39;] = pattern.sumPOS - params[&#39;pw_deficit&#39;]
+        params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+        params[&#39;nw_new&#39;] = NW_D(curInNL, curOutNL)
+        ic = IC_SSG(1, pw=params[&#39;pw_new&#39;], kw=params[&#39;kw_new&#39;], nw=params[&#39;nw_new&#39;])
+    elif self.mode == 2:
+        params[&#39;mu_w_deficit&#39;] = computeSumOfExpectationsBetweenNodeAndList(self.PD, nodeToCheck, curFunc, dir_mode=dir_mode, gtype=self.gtype, isSimple=self.isSimple)
+        params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+        params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+        ic = AD(params[&#39;kw_new&#39;], params[&#39;mu_w_new&#39;])
+    else:
+        params[&#39;kw_new&#39;] = pattern.ECount - kw_deficit
+        params[&#39;nw_new&#39;] = NW_D(curInNL, curOutNL)
+        params[&#39;mu_w_deficit&#39;], params[&#39;p0_deficit&#39;] = computePWparametersBetweenNodeAndList(self.PD, nodeToCheck, curFunc, dir_mode=dir_mode, gtype=self.gtype, isSimple=self.isSimple)
+        if pattern.minPOS == params[&#39;p0_deficit&#39;]:
+            params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;] = computePWparameters(self.PD, gtype=self.gtype, inNL = curInNL, outNL = curOutNL, isSimple=self.isSimple)
+        else:
+            params[&#39;p0_new&#39;] = pattern.minPOS
+            params[&#39;mu_w_new&#39;] = pattern.expectedEdges - params[&#39;mu_w_deficit&#39;]
+        ic = IC_DSIMP(params[&#39;kw_new&#39;], params[&#39;nw_new&#39;], params[&#39;mu_w_new&#39;], params[&#39;p0_new&#39;])
+
+    dlmode = 1
+    if self.incEdge:
+        dlmode = 2
+    dl = computeDescriptionLength(dlmode=dlmode, V=self.G.number_of_nodes(), WI=curInNL, WO=curOutNL, kw=params[&#39;kw_new&#39;], q=self.q)
+    I = computeInterestingness(ic, dl)
+    params[&#39;ic&#39;] = ic
+    params[&#39;dl&#39;] = dl
+    params[&#39;I&#39;] = I
+    return params</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateAddition"><code class="name flex">
+<span>def <span class="ident">updateCandidateAddition</span></span>(<span>self, best_node, bestPattern, candidates)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateCandidateAddition(self, best_node, bestPattern, candidates):
+    neighborsA = list(self.G.neighbors(best_node))
+    if best_node in candidates:
+        del candidates[best_node]
+    else:
+        print(&#39;\t\tWarning:&#39;, best_node, &#39;is not in the candidate list&#39;)
+
+    #update parameters of previously present candidate list
+    if self.mode == 1:
+        for u in candidates.keys():
+            candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+            candidates[u][&#39;pw_surplus&#39;] += self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+    elif self.mode == 2:
+        for u in candidates.keys():
+            candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+            candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+    elif self.mode == 3:
+        for u in candidates.keys():
+            candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+            candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+            candidates[u][&#39;p0_surplus&#39;] = min(candidates[u][&#39;p0_surplus&#39;], self.PD.getPOS(best_node, u, isSimple=self.isSimple))
+
+    pot_add = set(neighborsA) - set(candidates.keys()).union(set(bestPattern.NL))
+    #update candidate list by adding new candidates
+    if self.mode == 1:
+        for u in pot_add:
+            candidates[u] = dict()
+            candidates[u][&#39;kw_surplus&#39;] = 0
+            candidates[u][&#39;pw_surplus&#39;] = 0.0
+            for v in bestPattern.NL:
+                candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                candidates[u][&#39;pw_surplus&#39;] += self.PD.getPOS(v, u, isSimple=self.isSimple)
+    elif self.mode == 2:
+        for u in pot_add:
+            candidates[u] = dict()
+            candidates[u][&#39;kw_surplus&#39;] = 0
+            candidates[u][&#39;mu_w_surplus&#39;] = 0.0
+            for v in bestPattern.NL:
+                candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+    elif self.mode == 3:
+        for u in pot_add:
+            candidates[u] = dict()
+            candidates[u][&#39;kw_surplus&#39;] = 0
+            candidates[u][&#39;mu_w_surplus&#39;] = 0.0
+            candidates[u][&#39;p0_surplus&#39;] = float(&#34;inf&#34;)
+            for v in bestPattern.NL:
+                candidates[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                candidates[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+                candidates[u][&#39;p0_surplus&#39;] = min(candidates[u][&#39;p0_surplus&#39;], self.PD.getPOS(v, u, isSimple=self.isSimple))
+
+    return candidates</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateAdditionD"><code class="name flex">
+<span>def <span class="ident">updateCandidateAdditionD</span></span>(<span>self, best_node, bestPattern, candidatesIn, candidatesOut, typeOfAddition)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateCandidateAdditionD(self, best_node, bestPattern, candidatesIn, candidatesOut, typeOfAddition):
+    if &#39;in&#39; in typeOfAddition:
+        del candidatesIn[best_node]
+        #update parameters of previously present candidateOut list as new in-node is added
+        if self.mode == 1:
+            for u in candidatesOut.keys():
+                if u != best_node:
+                    candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, best_node)
+                    candidatesOut[u][&#39;pw_surplus&#39;] += self.PD.getPOS(u, best_node, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] += 1
+        elif self.mode == 2:
+            for u in candidatesOut.keys():
+                if u != best_node:
+                    candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, best_node)
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] += 1
+        elif self.mode == 3:
+            for u in candidatesOut.keys():
+                if u != best_node:
+                    candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, best_node)
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;p0_surplus&#39;] = min(candidatesOut[u][&#39;p0_surplus&#39;], self.PD.getPOS(u, best_node, isSimple=self.isSimple))
+                    candidatesOut[u][&#39;nw_surplus&#39;] += 1
+        #### similarly new out candidates are now introduced and added in the list as in-node is added
+        pot_add = set(self.G.predecessors(best_node)) - set(candidatesOut.keys()).union(set(bestPattern.outNL))
+        if self.mode == 1:
+            for u in pot_add:
+                candidatesOut[u] = dict()
+                candidatesOut[u][&#39;kw_surplus&#39;] = 0
+                candidatesOut[u][&#39;nw_surplus&#39;] = 0
+                candidatesOut[u][&#39;pw_surplus&#39;] = 0.0
+                for v in bestPattern.inNL:
+                    if u != v:
+                        candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, v)
+                        candidatesOut[u][&#39;pw_surplus&#39;] += self.PD.getPOS(u, v, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] += 1
+        elif self.mode == 2:
+            for u in pot_add:
+                candidatesOut[u] = dict()
+                candidatesOut[u][&#39;kw_surplus&#39;] = 0
+                candidatesOut[u][&#39;nw_surplus&#39;] = 0
+                candidatesOut[u][&#39;mu_w_surplus&#39;] = 0.0
+                for v in bestPattern.inNL:
+                    if u != v:
+                        candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, v)
+                        candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, v, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;nw_surplus&#39;] += 1
+        elif self.mode == 3:
+            for u in pot_add:
+                candidatesOut[u] = dict()
+                candidatesOut[u][&#39;kw_surplus&#39;] = 0
+                candidatesOut[u][&#39;nw_surplus&#39;] = 0
+                candidatesOut[u][&#39;mu_w_surplus&#39;] = 0.0
+                candidatesOut[u][&#39;p0_surplus&#39;] = float(&#34;inf&#34;)
+                for v in bestPattern.inNL:
+                    if u != v:
+                        candidatesOut[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(u, v)
+                        candidatesOut[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(u, v, isSimple=self.isSimple)
+                        candidatesOut[u][&#39;p0_surplus&#39;] = min(candidatesOut[u][&#39;p0_surplus&#39;], self.PD.getPOS(u, v, isSimple=self.isSimple))
+                        candidatesOut[u][&#39;nw_surplus&#39;] += 1
+    else:
+        del candidatesOut[best_node]
+        #update parameters of previously present candidateIn list as new out-node is added
+        if self.mode == 1:
+            for u in candidatesIn.keys():
+                if u != best_node:
+                    candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                    candidatesIn[u][&#39;pw_surplus&#39;] += self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] += 1
+        elif self.mode == 2:
+            for u in candidatesIn.keys():
+                if u != best_node:
+                    candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] += 1
+        elif self.mode == 3:
+            for u in candidatesIn.keys():
+                if u != best_node:
+                    candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(best_node, u)
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;p0_surplus&#39;] = min(candidatesIn[u][&#39;p0_surplus&#39;], self.PD.getPOS(best_node, u, isSimple=self.isSimple))
+                    candidatesIn[u][&#39;nw_surplus&#39;] += 1
+        #### similarly new &#34;in&#34; candidates are now introduced and added in the list as out-node is added
+        pot_add = set(self.G.successors(best_node)) - set(candidatesIn.keys()).union(set(bestPattern.inNL))
+        if self.mode == 1:
+            for u in pot_add:
+                candidatesIn[u] = dict()
+                candidatesIn[u][&#39;kw_surplus&#39;] = 0
+                candidatesIn[u][&#39;nw_surplus&#39;] = 0
+                candidatesIn[u][&#39;pw_surplus&#39;] = 0.0
+                for v in bestPattern.outNL:
+                    if u != v:
+                        candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                        candidatesIn[u][&#39;pw_surplus&#39;] += self.PD.getPOS(v, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] += 1
+        elif self.mode == 2:
+            for u in pot_add:
+                candidatesIn[u] = dict()
+                candidatesIn[u][&#39;kw_surplus&#39;] = 0
+                candidatesIn[u][&#39;nw_surplus&#39;] = 0
+                candidatesIn[u][&#39;mu_w_surplus&#39;] = 0.0
+                for v in bestPattern.outNL:
+                    if u != v:
+                        candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                        candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;nw_surplus&#39;] += 1
+        elif self.mode == 3:
+            for u in pot_add:
+                candidatesIn[u] = dict()
+                candidatesIn[u][&#39;kw_surplus&#39;] = 0
+                candidatesIn[u][&#39;nw_surplus&#39;] = 0
+                candidatesIn[u][&#39;mu_w_surplus&#39;] = 0.0
+                candidatesIn[u][&#39;p0_surplus&#39;] = float(&#34;inf&#34;)
+                for v in bestPattern.outNL:
+                    if u != v:
+                        candidatesIn[u][&#39;kw_surplus&#39;] += self.G.number_of_edges(v, u)
+                        candidatesIn[u][&#39;mu_w_surplus&#39;] += self.PD.getExpectation(v, u, isSimple=self.isSimple)
+                        candidatesIn[u][&#39;p0_surplus&#39;] = min(candidatesIn[u][&#39;p0_surplus&#39;], self.PD.getPOS(v, u, isSimple=self.isSimple))
+                        candidatesIn[u][&#39;nw_surplus&#39;] += 1
+
+    return candidatesIn, candidatesOut</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateDeletion"><code class="name flex">
+<span>def <span class="ident">updateCandidateDeletion</span></span>(<span>self, best_node, bestPattern, candidates)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateCandidateDeletion(self, best_node, bestPattern, candidates):
+
+
+    # remove irrelevant keys in candidates
+    neighborsR = set(self.G.neighbors(best_node))
+    pNL = set(bestPattern.NL)
+    for nR in neighborsR:
+        if len(set(self.G.neighbors(nR)).intersection(pNL)) == 0:
+            if nR in candidates:
+                del candidates[nR]
+
+    # update rest of the keys in candidates
+    if self.mode == 1:
+        for u in candidates.keys():
+            candidates[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+            candidates[u][&#39;pw_surplus&#39;] -= self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+    elif self.mode == 2:
+        for u in candidates.keys():
+            candidates[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+            candidates[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+    elif self.mode == 3:
+        for u in candidates.keys():
+            candidates[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+            candidates[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+            cur_minPOS = self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+            if abs(cur_minPOS - candidates[u][&#39;p0_surplus&#39;]) &lt; 1e-9:
+                candidates[u][&#39;p0_surplus&#39;] = computeMinPOSBetweenNodeAndList(self.PD, u, list(pNL), gtype=self.gtype, isSimple=self.isSimple)
+
+    return candidates</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateDeletionD"><code class="name flex">
+<span>def <span class="ident">updateCandidateDeletionD</span></span>(<span>self, best_node, bestPattern, candidatesIn, candidatesOut, typeOfDeletion)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateCandidateDeletionD(self, best_node, bestPattern, candidatesIn, candidatesOut, typeOfDeletion):
+    if &#39;in&#39; in typeOfDeletion:
+        #since an IN node is removed thus OUT candidate list is updated
+
+        #First remove irrelevant key in OUT candidate list
+        outNeighbor = list(self.G.predecessors(best_node))
+        for oN in outNeighbor:
+            if len(set(self.G.successors(oN)).intersection(bestPattern.inNL)) == 0:
+                if oN in candidatesOut:
+                    del candidatesOut[oN]
+        #update rest of the keys
+        if self.mode == 1:
+            for u in candidatesOut.keys():
+                if u != best_node:
+                    candidatesOut[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(u, best_node)
+                    candidatesOut[u][&#39;pw_surplus&#39;] -= self.PD.getPOS(u, best_node, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] -= 1
+        elif self.mode == 2:
+            for u in candidatesOut.keys():
+                if u != best_node:
+                    candidatesOut[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(u, best_node)
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] -= 1
+        elif self.mode == 3:
+            for u in candidatesOut.keys():
+                if u != best_node:
+                    candidatesOut[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(u, best_node)
+                    candidatesOut[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(u, best_node, isSimple=self.isSimple)
+                    candidatesOut[u][&#39;nw_surplus&#39;] -= 1
+                    cur_minPOS = self.PD.getPOS(u, best_node, isSimple=self.isSimple)
+                    if abs(cur_minPOS - candidatesOut[u][&#39;p0_surplus&#39;]) &lt; 1e-9:
+                        candidatesOut[u][&#39;p0_surplus&#39;] = computeMinPOSBetweenNodeAndList(self.PD, u, bestPattern.inNL, dir_mode=1, gtype=self.gtype, isSimple=self.isSimple)
+    else:
+        #since an OUT node is removed thus IN candidate list is updated
+
+        #First remove irrelevant keys in IN candidate list
+        inNeighbor = list(self.G.successors(best_node))
+        for iN in inNeighbor:
+            if len(set(self.G.predecessors(iN)).intersection(bestPattern.outNL)) == 0:
+                if iN in candidatesIn:
+                    del candidatesIn[iN]
+        #update rest of the keys
+        if self.mode == 1:
+            for u in candidatesIn.keys():
+                if u != best_node:
+                    candidatesIn[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                    candidatesIn[u][&#39;pw_surplus&#39;] -= self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] -= 1
+        elif self.mode == 2:
+            for u in candidatesIn.keys():
+                if u != best_node:
+                    candidatesIn[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] -= 1
+        elif self.mode == 3:
+            for u in candidatesIn.keys():
+                if u != best_node:
+                    candidatesIn[u][&#39;kw_surplus&#39;] -= self.G.number_of_edges(best_node, u)
+                    candidatesIn[u][&#39;mu_w_surplus&#39;] -= self.PD.getExpectation(best_node, u, isSimple=self.isSimple)
+                    candidatesIn[u][&#39;nw_surplus&#39;] -= 1
+                    cur_minPOS = self.PD.getPOS(best_node, u, isSimple=self.isSimple)
+                    if abs(cur_minPOS - candidatesIn[u][&#39;p0_surplus&#39;]) &lt; 1e-9:
+                        candidatesIn[u][&#39;p0_surplus&#39;] = computeMinPOSBetweenNodeAndList(self.PD, u, bestPattern.outNL, dir_mode=2, gtype=self.gtype, isSimple=self.isSimple)
+
+    return candidatesIn, candidatesOut</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.HillClimbers" href="index.html">src.HillClimbers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.HillClimbers.HC_v2.HillClimber_v2" href="#src.HillClimbers.HC_v2.HillClimber_v2">HillClimber_v2</a></code></h4>
+<ul class="">
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.PD" href="#src.HillClimbers.HC_v2.HillClimber_v2.PD">PD</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.addNewPattern" href="#src.HillClimbers.HC_v2.HillClimber_v2.addNewPattern">addNewPattern</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.addNewPatternList" href="#src.HillClimbers.HC_v2.HillClimber_v2.addNewPatternList">addNewPatternList</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.climbOneStep" href="#src.HillClimbers.HC_v2.HillClimber_v2.climbOneStep">climbOneStep</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.climbOneStepD" href="#src.HillClimbers.HC_v2.HillClimber_v2.climbOneStepD">climbOneStepD</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.extendPatternFinal" href="#src.HillClimbers.HC_v2.HillClimber_v2.extendPatternFinal">extendPatternFinal</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.extendPatternFinalD" href="#src.HillClimbers.HC_v2.HillClimber_v2.extendPatternFinalD">extendPatternFinalD</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.extendPatternUtil" href="#src.HillClimbers.HC_v2.HillClimber_v2.extendPatternUtil">extendPatternUtil</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.extendPatternUtilD" href="#src.HillClimbers.HC_v2.HillClimber_v2.extendPatternUtilD">extendPatternUtilD</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.getSeeds" href="#src.HillClimbers.HC_v2.HillClimber_v2.getSeeds">getSeeds</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.hillclimber" href="#src.HillClimbers.HC_v2.HillClimber_v2.hillclimber">hillclimber</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.searchPattern" href="#src.HillClimbers.HC_v2.HillClimber_v2.searchPattern">searchPattern</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.setPD" href="#src.HillClimbers.HC_v2.HillClimber_v2.setPD">setPD</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternFinal" href="#src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternFinal">shrinkPatternFinal</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternFinalD" href="#src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternFinalD">shrinkPatternFinalD</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternUtil" href="#src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternUtil">shrinkPatternUtil</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternUtilD" href="#src.HillClimbers.HC_v2.HillClimber_v2.shrinkPatternUtilD">shrinkPatternUtilD</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateAddition" href="#src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateAddition">updateCandidateAddition</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateAdditionD" href="#src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateAdditionD">updateCandidateAdditionD</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateDeletion" href="#src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateDeletion">updateCandidateDeletion</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateDeletionD" href="#src.HillClimbers.HC_v2.HillClimber_v2.updateCandidateDeletionD">updateCandidateDeletionD</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1794 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>src.BackgroundDistributions.MaxEntMulti2 API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.BackgroundDistributions.MaxEntMulti2</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+import numpy as np
+import math
+import networkx as nx
+import os
+import sys
+path = os.getcwd().split(&#39;MiningSubjectiveSubgraphPatterns&#39;)[0]+&#39;MiningSubjectiveSubgraphPatterns/&#39;
+if path not in sys.path:
+        sys.path.append(path)
+from src.BackgroundDistributions.PDClass import PDClass
+###################################################################################################################################################################
+class MaxEntMulti2U(PDClass):
+        &#34;&#34;&#34;
+    Background distribution for multigraphs if type of prior belief is &#39;m&#39; and type of graph is &#39;undirected&#39;
+
+    Parameters
+    ----------
+    PDClass : src.BackgroundDistributions.PDClass
+        base class
+    &#34;&#34;&#34;
+        def __init__(self, G = None):
+                super().__init__()
+                self.la = None
+                self.mu = None
+                self.degreeNeighbor = None
+                self.degrees = None
+                self.Neighbors = None
+                self.jrows = None
+                self.errors = None
+                self.ps_la = None
+                self.ps_mu = None
+                self.gla = None
+                self.lprevUpdate = {}
+                if G is not None:
+                        self.findMaxEntDistribution()
+###################################################################################################################################################################
+        def findMaxEntDistribution(self):
+                self.degrees = np.array(list(dict(sorted(dict(self.G.degree()).items())).values()))
+                self.Neighbors = []
+                for i in range(self.G.number_of_nodes()):
+                        self.Neighbors.append(len(list(self.G.neighbors(i))))
+                self.Neighbors = np.array(self.Neighbors)
+                self.degreeNeighbor = []
+                for i in range(len(self.degrees)):
+                        self.degreeNeighbor.append(tuple([self.degrees[i], self.Neighbors[i]]))
+                self.degreeNeighbor = np.array(self.degreeNeighbor)
+                ##############################
+                prows = self.degreeNeighbor
+                prowsunique,irows,self.jrows,vrows = np.unique(prows, axis=0, return_index=True, return_inverse=True, return_counts=True)
+                nunique = len(prowsunique)
+                self.la = -np.ones(nunique)
+                self.mu = -np.ones(nunique)
+                h = np.zeros(nunique)
+                nit = 1000
+                tol = 1e-14
+                self.errors = np.empty(0)
+                ##############################
+                lb = -5
+                for k in range(nit):
+                        R = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.la/2)),np.outer(np.exp(self.la/2), np.ones(nunique).T))
+                        S = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.mu/2)),np.outer(np.exp(self.mu/2), np.ones(nunique).T))
+
+                        ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+                        ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+                        gla_la = np.multiply(-prowsunique[:,0]+np.dot(ps_la, vrows)-np.diag(ps_la), vrows)
+                        gla_mu = np.multiply(-prowsunique[:,1]+np.dot(ps_mu, vrows)-np.diag(ps_mu), vrows)
+
+                        self.gla = np.append(gla_la, gla_mu)
+                        self.errors = np.append(self.errors, np.linalg.norm(self.gla))
+
+                        H1_u1 = np.dot(np.dot(np.diag(vrows), np.divide(np.multiply(np.multiply(R,S), 1 - np.multiply(np.square(R), 1-S)), np.square(np.multiply(1-R, 1-np.multiply(R,1-S))))), np.diag(vrows)) 
+                        H1_u2 = np.diag(np.sum(H1_u1, 0)) - np.diag(np.divide(np.diag(H1_u1), vrows))
+                        H1 = H1_u1 + H1_u2
+
+                        H2_u1 = np.dot(np.dot(np.diag(vrows), np.divide(np.multiply(np.multiply(R,S), 1 - R), np.square(1-np.multiply(R,1-S)))), np.diag(vrows)) 
+                        H2_u2 = np.diag(np.sum(H2_u1, 0)) - np.diag(np.divide(np.diag(H2_u1), vrows))
+                        H2 = H2_u1 + H2_u2
+
+                        H3_u1 = np.dot(np.dot(np.diag(vrows), np.divide(np.multiply(R,S), np.square(1-np.multiply(R,1-S)))), np.diag(vrows)) 
+                        H3_u2 = np.diag(np.sum(H3_u1, 0)) - np.diag(np.divide(np.diag(H3_u1), vrows))
+                        H3 = H3_u1 + H3_u2
+
+                        H = 0.5 * np.append(np.append(H1, H3, 1), np.append(H3, H2, 1), 0)
+
+                        delta = np.linalg.lstsq(- H, self.gla, rcond=max(H.shape)*np.finfo(H.dtype).eps)[0]
+                        delta_la = delta[0:nunique]
+                        delta_mu = delta[nunique:nunique+nunique+1]
+
+                        fbest = 0;
+                        errorbest = self.errors[k];
+
+                        for f in np.logspace(lb,1,20):
+                                latry=self.la+f*delta_la
+                                mutry=self.mu+f*delta_mu
+
+                                Rtry = np.multiply(np.outer(np.ones(nunique).T, np.exp(latry/2)),np.outer(np.exp(latry/2), np.ones(nunique).T))
+                                Stry = np.multiply(np.outer(np.ones(nunique).T, np.exp(mutry/2)),np.outer(np.exp(mutry/2), np.ones(nunique).T))
+
+                                ps_latry = np.divide(np.multiply(Rtry,Stry), np.multiply(1-Rtry, 1-np.multiply(Rtry,1-Stry)))
+                                ps_mutry = np.divide(np.multiply(Rtry,Stry), 1-np.multiply(Rtry,1-Stry))
+
+                                gla_latry = np.multiply(-prowsunique[:,0]+np.dot(ps_latry, vrows)-np.diag(ps_latry), vrows)
+                                gla_mutry = np.multiply(-prowsunique[:,1]+np.dot(ps_mutry, vrows)-np.diag(ps_mutry), vrows)
+
+                                glatry = np.append(gla_latry, gla_mutry)
+                                errortry = np.linalg.norm(glatry)
+                                if errortry &lt; errorbest:
+                                        fbest = f
+                                        errorbest = errortry
+                        if fbest == 0:
+                                if lb&gt;-1000:
+                                        lb = lb*2
+                                else:
+                                        break
+
+                        self.la = self.la+fbest*delta_la
+                        self.mu = self.mu+fbest*delta_mu
+
+                        if self.errors[k] &lt; tol:
+                                break
+
+                R = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.la/2)),np.outer(np.exp(self.la/2), np.ones(nunique).T))
+                S = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.mu/2)),np.outer(np.exp(self.mu/2), np.ones(nunique).T))
+
+                self.ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+                self.ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+                gla_la = np.multiply(-prowsunique[:,0]+np.dot(self.ps_la, vrows)-np.diag(self.ps_la), vrows)
+                gla_mu = np.multiply(-prowsunique[:,1]+np.dot(self.ps_mu, vrows)-np.diag(self.ps_mu), vrows)
+
+                self.gla = np.append(gla_la, gla_mu)
+                self.errors = np.append(self.errors, np.linalg.norm(self.gla))
+###################################################################################################################################################################
+        def explambda(self, i, j): #This is indeed explambdaR
+                R = math.exp(self.la[self.jrows[i]]/2)*math.exp(self.la[self.jrows[j]]/2) 
+                return R
+###################################################################################################################################################################
+        def explambdaS(self, i, j):
+                S = math.exp(self.mu[self.jrows[i]]/2)*math.exp(self.mu[self.jrows[j]]/2)
+                return S
+###################################################################################################################################################################
+        def returnExpectation(self, R, S):
+                E = R*S/ ((1-R)*(1-R*(1-S)))
+                return E
+###################################################################################################################################################################
+        def getExpectation(self, i, j, **kwargs):
+                kwargs[&#39;isSimple&#39;] = False
+                R = self.getPOS(i, j, **kwargs)
+                S = self.explambdaS(i, j)
+                E = self.returnExpectation(R, S)
+                return E
+###################################################################################################################################################################
+        def updateDistribution(self, pat, idx): #lprevUpdate = list() Each item is a tuple (a, b); a = lambda; b = listofnodes()
+                numNodes = pat.number_of_nodes()
+                numEdges = pat.G.number_of_edges()
+                nodes = sorted(list(pat.G.nodes()))
+
+                mSmallestLambda = np.min(self.la)
+                mLargestLambda = np.max(self.la)
+
+                epsilon = 1e-7
+
+                if math.fabs(mSmallestLambda) &gt; math.fabs(mLargestLambda):
+                        a = epsilon
+                        b = 4*math.fabs(mSmallestLambda)
+                else:
+                        a = epsilon
+                        b = 4*math.fabs(mLargestLambda)
+
+                expLambdaR = [None]*numNodes
+                expLambdaS = [None]*numNodes
+                for i in range(numNodes):
+                        expLambdaR[i] = [0.0]*numNodes
+                        expLambdaS[i] = [0.0]*numNodes
+
+                for i in range(numNodes):
+                        for j in range(i+1, numNodes):
+                                expLambdaR[i][j] = self.explambdaIncLprev(nodes[i], nodes[j])
+                                expLambdaS[i][j] = self.explambdaS(nodes[i], nodes[j])
+                                if math.fabs(b) &gt; math.fabs(math.log(expLambdaR[i][j])):
+                                        b = math.fabs(math.log(expLambdaR[i][j]))
+
+                b = b - epsilon
+
+                while b-a &gt; 1e-11:
+                        f_a = 0.0
+                        f_b = 0.0
+                        f_c = 0.0
+                        c = (a+b)/2
+
+                        for i in range(numNodes):
+                                for j in range(i+1, numNodes):
+                                        try:
+                                                v_aR=expLambdaR[i][j]*math.exp(a)
+                                                v_bR=expLambdaR[i][j]*math.exp(b)
+                                                v_cR=expLambdaR[i][j]*math.exp(c)
+                                                f_a+=self.returnExpectation(v_aR, expLambdaS[i][j])
+                                                f_b+=self.returnExpectation(v_bR, expLambdaS[i][j])
+                                                f_c+=self.returnExpectation(v_cR, expLambdaS[i][j])
+                                        except OverflowError as error:
+                                                print(error,a,b)
+
+
+                        f_a=f_a-numEdges
+                        f_b=f_b-numEdges
+                        f_c=f_c-numEdges
+
+                        print(&#39;f_a:&#39;, f_a, &#39;\t at a:&#39;, a)
+                        print(&#39;f_c:&#39;, f_c, &#39;\t at c:&#39;, c)
+                        print(&#39;f_b:&#39;, f_b, &#39;\t at b:&#39;, b,&#39;\n&#39;)
+
+                        if f_c &lt; 0:
+                                a = c
+                        else:
+                                b = c
+
+                lambdac = round((a + b) / 2, 10)
+                self.lprevUpdate[idx] = tuple([lambdac, nodes])
+
+                f_c = 0.0
+                for i in range(numNodes):
+                        for j in range(i+1, numNodes):
+                                v_cR=expLambdaR[i][j]*math.exp(lambdac)
+                                f_c+=self.returnExpectation(v_cR, expLambdaS[i][j])
+
+                f_c = f_c-numEdges
+                # print(&#39;Final lamdba: &#39;,lambdac, f_c, numEdges)
+                return
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+
+
+class  MaxEntMulti2D(PDClass):
+        &#34;&#34;&#34;
+    Background distribution for multigraphs if type of prior belief is &#39;m&#39; and type of graph is &#39;directed&#39;
+
+    Parameters
+    ----------
+    PDClass : src.BackgroundDistributions.PDClass
+        base class
+    &#34;&#34;&#34;
+        def __init__(self, G = None):
+                super().__init__(G)
+                self.tp = &#39;D&#39;
+                self.la_r = None
+                self.la_c = None
+                self.mu_r = None
+                self.mu_c = None
+                self.jrows = None
+                self.jcols = None
+                self.errors = None
+                self.ps_la = None
+                self.ps_mu = None
+                self.gla = None
+                self.lprevUpdate = {}
+                self.indegrees = None
+                self.outdegrees = None
+                self.predcount = None
+                self.succount = None
+                self.inpred = None
+                self.outsucc = None
+                if G is not None:
+                        self.findMaxEntDistribution()
+###################################################################################################################################################################
+        def findMaxEntDistribution(self):
+                self.indegrees = np.array(list(dict(sorted(dict(self.G.in_degree()).items())).values()))
+                self.outdegrees = np.array(list(dict(sorted(dict(self.G.out_degree()).items())).values()))
+
+                fac = math.log(nx.density(self.G)/(1+nx.density(self.G)))
+
+                self.predcount = []
+                for i in range(self.G.number_of_nodes()):
+                        self.predcount.append(len(list(self.G.predecessors(i))))
+                self.predcount = np.array(self.predcount)
+
+                self.succount = []
+                for i in range(self.G.number_of_nodes()):
+                        self.succount.append(len(list(self.G.successors(i))))
+                self.succount = np.array(self.succount)
+
+                self.inpred = []
+                for i in range(len(self.indegrees)):
+                        self.inpred.append(tuple([self.indegrees[i], self.predcount[i]]))
+                self.inpred = np.array(self.inpred)
+
+                self.outsucc = []
+                for i in range(len(self.outdegrees)):
+                        self.outsucc.append(tuple([self.outdegrees[i], self.succount[i]]))
+                self.outsucc = np.array(self.outsucc)
+
+                n = len(self.indegrees)
+                m = len(self.outdegrees)
+
+                prows = self.outsucc
+                prowsunique, irows, self.jrows, vrows = np.unique(prows, axis=0, return_index=True, return_inverse=True, return_counts=True)
+                rownunique = len(prowsunique)
+                self.la_r = -math.fabs(fac)*np.ones(rownunique)
+                self.mu_r = np.zeros(rownunique)
+                rowh = np.zeros(rownunique)
+
+                pcols = self.inpred
+                pcolsunique, icols, self.jcols, vcols = np.unique(pcols, axis=0, return_index=True, return_inverse=True, return_counts=True)
+                colnunique = len(pcolsunique)
+                self.la_c = -math.fabs(fac)*np.ones(colnunique)
+                self.mu_c = np.zeros(colnunique)
+                colh = np.zeros(colnunique)
+
+                loops = np.outer(np.zeros(rownunique), np.zeros(colnunique).T)
+
+                for i in range(rownunique):
+                        for j in range(colnunique):
+                                loops[i][j] = len(set(np.where(self.jrows==i)[0]).intersection(set(np.where(self.jcols==j)[0])))
+
+                finalmat = np.outer(vrows, vcols) - loops
+
+                nit = 1000
+                tol = 1e-14
+                self.errors = np.empty(0)
+
+                lb = -5
+                for k in range(nit):
+                        R = np.multiply(np.outer(np.exp(self.la_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.la_c/2)))
+                        S = np.multiply(np.outer(np.exp(self.mu_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.mu_c/2)))
+
+                        self.ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+                        self.ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+                        gla_t_la = np.multiply(self.ps_la, finalmat)
+
+                        gla_r_la = np.sum(gla_t_la, 1) - np.multiply(prowsunique[:,0], vrows)
+                        gla_c_la = np.sum(gla_t_la, 0) - np.multiply(pcolsunique[:,0], vcols)
+
+                        gla_t_mu = np.multiply(self.ps_mu, finalmat)
+
+                        gla_r_mu = np.sum(gla_t_mu, 1) - np.multiply(prowsunique[:,1], vrows)
+                        gla_c_mu = np.sum(gla_t_mu, 0) - np.multiply(pcolsunique[:,1], vcols)
+
+                        self.gla = np.append(np.append(gla_r_la, gla_c_la), np.append(gla_r_mu, gla_c_mu))
+
+                        self.errors = np.append(self.errors, np.linalg.norm(self.gla))
+
+                        H1_u = np.divide(np.multiply(np.multiply(R,S), 1 - np.multiply(np.square(R), 1-S)), np.square(np.multiply(1-R, 1-np.multiply(R,1-S))))
+                        H2_u = np.divide(np.multiply(np.multiply(R,S), 1 - R), np.square(1-np.multiply(R,1-S)))
+                        H3_u = np.divide(np.multiply(R,S), np.square(1-np.multiply(R,1-S)))
+                        H1_t = np.multiply(H1_u, finalmat)
+                        H2_t = np.multiply(H2_u, finalmat)
+                        H3_t = np.multiply(H3_u, finalmat)
+
+                        H1 = np.diag(np.sum(H1_t, 1))
+                        H2 = np.diag(np.sum(H1_t, 0))
+                        H3 = np.diag(np.sum(H2_t, 1))
+                        H4 = np.diag(np.sum(H2_t, 0))
+
+                        H5 = H1_t
+                        H6 = np.diag(np.sum(H3_u, 1))
+                        H7 = H3_u
+                        H8 = H7.T
+                        H9 = np.diag(np.sum(H3_u, 0))
+                        H10 = H2_u
+
+                        R1 = np.append(np.append(H1, H5, 1), np.append(H6, H7, 1), 1) 
+                        R2 = np.append(np.append(H5.T, H2, 1), np.append(H8, H9, 1), 1)
+                        R3 = np.append(np.append(H6.T, H8.T, 1), np.append(H3, H10, 1), 1)
+                        R4 = np.append(np.append(H7.T, H9.T, 1), np.append(H10.T, H4, 1), 1)
+
+                        H = np.append(np.append(R1, R2, 0), np.append(R3, R4, 0), 0)
+
+                        delta = np.linalg.lstsq(- H, self.gla, rcond=max(H.shape)*np.finfo(H.dtype).eps)[0]
+                        deltala_r = delta[0:rownunique]
+                        deltala_c = delta[rownunique:rownunique+colnunique]
+                        deltamu_r = delta[rownunique+colnunique:2*rownunique+colnunique]
+                        deltamu_c = delta[2*rownunique+colnunique:2*rownunique+2*colnunique]
+
+
+                        fbest = 0;
+                        errorbest = self.errors[k];
+
+                        for f in np.logspace(lb,1,20):
+                                la_rtry=self.la_r+f*deltala_r
+                                la_ctry=self.la_c+f*deltala_c
+                                mu_rtry=self.mu_r+f*deltamu_r
+                                mu_ctry=self.mu_c+f*deltamu_c
+
+                                flag = True
+                                for ind1 in range(len(la_rtry)):
+                                        for ind2 in range(len(la_ctry)):
+                                                if la_rtry[ind1]+la_ctry[ind2]&gt;-1e-15 and finalmat[ind1][ind2]&gt;0.0001:
+                                                        flag = False
+
+                                if flag:
+                                        Rtry = np.multiply(np.outer(np.exp(la_rtry/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(la_ctry/2)))
+                                        Stry = np.multiply(np.outer(np.exp(mu_rtry/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(mu_ctry/2)))
+
+                                        ps_latry = np.divide(np.multiply(Rtry,Stry), np.multiply(1-Rtry, 1-np.multiply(Rtry,1-Stry)))
+                                        ps_mutry = np.divide(np.multiply(Rtry,Stry), 1-np.multiply(Rtry,1-Stry))
+
+                                        gla_t_latry = np.multiply(ps_latry, finalmat)
+
+                                        gla_r_latry = np.sum(gla_t_latry, 1) - np.multiply(prowsunique[:,0], vrows)
+                                        gla_c_latry = np.sum(gla_t_latry, 0) - np.multiply(pcolsunique[:,0], vcols)
+
+                                        gla_t_mutry = np.multiply(ps_mutry, finalmat)
+
+                                        gla_r_mutry = np.sum(gla_t_mutry, 1) - np.multiply(prowsunique[:,1], vrows)
+                                        gla_c_mutry = np.sum(gla_t_mutry, 0) - np.multiply(pcolsunique[:,1], vcols)
+
+                                        glatry = np.append(np.append(gla_r_latry, gla_c_latry), np.append(gla_r_mutry, gla_c_mutry))
+
+                                        errortry = np.linalg.norm(glatry)
+
+                                        if errortry &lt; errorbest:
+                                                fbest = f
+                                                errorbest = errortry
+                        if fbest == 0:
+                                if lb&gt;-1000:
+                                        lb = lb*2
+                                else:
+                                        break
+
+                        self.la_r = self.la_r+fbest*deltala_r;
+                        self.la_c = self.la_c+fbest*deltala_c;
+                        self.mu_r = self.mu_r+fbest*deltamu_r;
+                        self.mu_c = self.mu_c+fbest*deltamu_c;
+
+                        if self.errors[k]/n &lt; tol:
+                                break
+
+                R = np.multiply(np.outer(np.exp(self.la_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.la_c/2)))
+                S = np.multiply(np.outer(np.exp(self.mu_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.mu_c/2)))
+
+                self.ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+                self.ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+                gla_t_la = np.multiply(self.ps_la, finalmat)
+
+                gla_r_la = np.sum(gla_t_la, 1) - np.multiply(prowsunique[:,0], vrows)
+                gla_c_la = np.sum(gla_t_la, 0) - np.multiply(pcolsunique[:,0], vcols)
+
+                gla_t_mu = np.multiply(self.ps_mu, finalmat)
+
+                gla_r_mu = np.sum(gla_t_mu, 1) - np.multiply(prowsunique[:,1], vrows)
+                gla_c_mu = np.sum(gla_t_mu, 0) - np.multiply(pcolsunique[:,1], vcols)
+
+                self.gla = np.append(np.append(gla_r_la, gla_c_la), np.append(gla_r_mu, gla_c_mu))
+
+                self.errors = np.append(self.errors, np.linalg.norm(self.gla))
+###################################################################################################################################################################
+        def explambda(self, i, j): #This is indeed explambdaR
+                if i==j:
+                        return 0
+                R = math.exp(self.la_r[self.jrows[i]]/2)*math.exp(self.la_c[self.jcols[j]]/2)
+                return R
+###################################################################################################################################################################
+        def explambdaIncLprevS(self, i, j):
+                if i==j:
+                        return 0
+                S = math.exp(self.mu_r[self.jrows[i]]/2)*math.exp(self.mu_c[self.jcols[j]]/2)
+                return S
+###################################################################################################################################################################
+        def returnExpectation(self, R, S):
+                E = R*S/ ((1-R)*(1-R*(1-S)))
+                return E
+###################################################################################################################################################################
+        def getExpectation(self, i, j, **kwargs):
+                kwargs[&#39;isSimple&#39;] = False
+                R = self.getPOS(i, j, **kwargs)
+                S = self.explambdaS(i, j)
+                E = self.returnExpectation(R, S)
+                return E
+###################################################################################################################################################################
+        def updateBackground(self, pat, idx): #lprevUpdate = list() Each item is a tuple (a, b); a = lambda; b = listofnodes()
+                mSmallestLambda = np.min(np.array(list(set(self.la_r).union(set(self.la_c)))))
+                mLargestLambda = np.max(np.array(list(set(self.la_r).union(set(self.la_c)))))
+
+                epsilon = 1e-7
+
+                if math.fabs(mSmallestLambda) &gt; math.fabs(mLargestLambda):
+                        a = epsilon
+                        b = 4*math.fabs(mSmallestLambda)
+                else:
+                        a = epsilon
+                        b = 4*math.fabs(mLargestLambda)
+
+
+                inL = dict(pat.in_degree())
+                outL = dict(pat.out_degree())
+
+                inNL = []
+                outNL = []
+                for k,v in inL.items():
+                        if v!=0:
+                                inNL.append(k)
+                for k,v in outL.items():
+                        if v!=0:
+                                outNL.append(k)
+
+                numInNodes = len(inNL)
+                numOutNodes = len(outNL)
+                numEdges = pat.number_of_edges()
+
+                expLambdaR = [None]*numOutNodes
+                expLambdaS = [None]*numOutNodes
+                for i in range(numOutNodes):
+                        expLambdaR[i] = [0.0]*numInNodes
+                        expLambdaS[i] = [0.0]*numInNodes
+
+                for i in range(numOutNodes):
+                        for j in range(numInNodes):
+                                expLambdaS[i][j] = self.explambdaS(outNL[i], inNL[j])
+                                expLambdaR[i][j] = self.explambdaIncLprev(outNL[i], inNL[j])
+                                if outNL[i]!=inNL[j]:
+                                        if expLambdaR[i][j]&gt;0.0 and math.fabs(b) &gt; math.fabs(math.log(expLambdaR[i][j])):
+                                                b = math.fabs(math.log(expLambdaR[i][j]))
+                                else:
+                                        expLambdaR[i][j] = 0
+
+                b = b - epsilon
+
+                while b-a &gt; 1e-15:
+                        f_a = 0.0
+                        f_b = 0.0
+                        f_c = 0.0
+                        c = (a+b)/2
+
+                        for i in range(numOutNodes):
+                                for j in range(numInNodes):
+                                        try:
+                                                v_aR=expLambdaR[i][j]*math.exp(a)
+                                                v_bR=expLambdaR[i][j]*math.exp(b)
+                                                v_cR=expLambdaR[i][j]*math.exp(c)
+                                                f_a+=self.returnExpectation(v_aR, expLambdaS[i][j])
+                                                f_b+=self.returnExpectation(v_bR, expLambdaS[i][j])
+                                                f_c+=self.returnExpectation(v_cR, expLambdaS[i][j])
+                                        except OverflowError as error:
+                                                print(error,a,b)
+
+
+                        f_a=f_a-numEdges
+                        f_b=f_b-numEdges
+                        f_c=f_c-numEdges
+
+                        print(&#39;f_a:&#39;, f_a, &#39;\t at a:&#39;, a)
+                        print(&#39;f_c:&#39;, f_c, &#39;\t at c:&#39;, c)
+                        print(&#39;f_b:&#39;, f_b, &#39;\t at b:&#39;, b,&#39;\n&#39;)
+
+                        if f_c &lt; 0:
+                                a = c
+                        else:
+                                b = c
+
+                lambdac = round((a + b) / 2, 10)
+                self.lprevUpdate[idx] = tuple([lambdac, inNL, outNL])
+
+                f_c = 0.0
+                for i in range(numOutNodes):
+                        for j in range(numInNodes):
+                                v_cR=expLambdaR[i][j]*math.exp(lambdac)
+                                f_c+=self.returnExpectation(v_cR, expLambdaS[i][j])
+
+                f_c = f_c-numEdges
+                # print(&#39;Final lamdba: &#39;,lambdac, f_c, numEdges)
+                return
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D"><code class="flex name class">
+<span>class <span class="ident">MaxEntMulti2D</span></span>
+<span>(</span><span>G=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Background distribution for multigraphs if type of prior belief is 'm' and type of graph is 'directed'</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>PDClass</code></strong> :&ensp;<code><a title="src.BackgroundDistributions.PDClass" href="PDClass.html">src.BackgroundDistributions.PDClass</a></code></dt>
+<dd>base class</dd>
+</dl>
+<p>initialization function</p>
+<h2 id="parameters_1">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkx graph</code></dt>
+<dd>input graph</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class  MaxEntMulti2D(PDClass):
+        &#34;&#34;&#34;
+    Background distribution for multigraphs if type of prior belief is &#39;m&#39; and type of graph is &#39;directed&#39;
+
+    Parameters
+    ----------
+    PDClass : src.BackgroundDistributions.PDClass
+        base class
+    &#34;&#34;&#34;
+        def __init__(self, G = None):
+                super().__init__(G)
+                self.tp = &#39;D&#39;
+                self.la_r = None
+                self.la_c = None
+                self.mu_r = None
+                self.mu_c = None
+                self.jrows = None
+                self.jcols = None
+                self.errors = None
+                self.ps_la = None
+                self.ps_mu = None
+                self.gla = None
+                self.lprevUpdate = {}
+                self.indegrees = None
+                self.outdegrees = None
+                self.predcount = None
+                self.succount = None
+                self.inpred = None
+                self.outsucc = None
+                if G is not None:
+                        self.findMaxEntDistribution()
+###################################################################################################################################################################
+        def findMaxEntDistribution(self):
+                self.indegrees = np.array(list(dict(sorted(dict(self.G.in_degree()).items())).values()))
+                self.outdegrees = np.array(list(dict(sorted(dict(self.G.out_degree()).items())).values()))
+
+                fac = math.log(nx.density(self.G)/(1+nx.density(self.G)))
+
+                self.predcount = []
+                for i in range(self.G.number_of_nodes()):
+                        self.predcount.append(len(list(self.G.predecessors(i))))
+                self.predcount = np.array(self.predcount)
+
+                self.succount = []
+                for i in range(self.G.number_of_nodes()):
+                        self.succount.append(len(list(self.G.successors(i))))
+                self.succount = np.array(self.succount)
+
+                self.inpred = []
+                for i in range(len(self.indegrees)):
+                        self.inpred.append(tuple([self.indegrees[i], self.predcount[i]]))
+                self.inpred = np.array(self.inpred)
+
+                self.outsucc = []
+                for i in range(len(self.outdegrees)):
+                        self.outsucc.append(tuple([self.outdegrees[i], self.succount[i]]))
+                self.outsucc = np.array(self.outsucc)
+
+                n = len(self.indegrees)
+                m = len(self.outdegrees)
+
+                prows = self.outsucc
+                prowsunique, irows, self.jrows, vrows = np.unique(prows, axis=0, return_index=True, return_inverse=True, return_counts=True)
+                rownunique = len(prowsunique)
+                self.la_r = -math.fabs(fac)*np.ones(rownunique)
+                self.mu_r = np.zeros(rownunique)
+                rowh = np.zeros(rownunique)
+
+                pcols = self.inpred
+                pcolsunique, icols, self.jcols, vcols = np.unique(pcols, axis=0, return_index=True, return_inverse=True, return_counts=True)
+                colnunique = len(pcolsunique)
+                self.la_c = -math.fabs(fac)*np.ones(colnunique)
+                self.mu_c = np.zeros(colnunique)
+                colh = np.zeros(colnunique)
+
+                loops = np.outer(np.zeros(rownunique), np.zeros(colnunique).T)
+
+                for i in range(rownunique):
+                        for j in range(colnunique):
+                                loops[i][j] = len(set(np.where(self.jrows==i)[0]).intersection(set(np.where(self.jcols==j)[0])))
+
+                finalmat = np.outer(vrows, vcols) - loops
+
+                nit = 1000
+                tol = 1e-14
+                self.errors = np.empty(0)
+
+                lb = -5
+                for k in range(nit):
+                        R = np.multiply(np.outer(np.exp(self.la_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.la_c/2)))
+                        S = np.multiply(np.outer(np.exp(self.mu_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.mu_c/2)))
+
+                        self.ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+                        self.ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+                        gla_t_la = np.multiply(self.ps_la, finalmat)
+
+                        gla_r_la = np.sum(gla_t_la, 1) - np.multiply(prowsunique[:,0], vrows)
+                        gla_c_la = np.sum(gla_t_la, 0) - np.multiply(pcolsunique[:,0], vcols)
+
+                        gla_t_mu = np.multiply(self.ps_mu, finalmat)
+
+                        gla_r_mu = np.sum(gla_t_mu, 1) - np.multiply(prowsunique[:,1], vrows)
+                        gla_c_mu = np.sum(gla_t_mu, 0) - np.multiply(pcolsunique[:,1], vcols)
+
+                        self.gla = np.append(np.append(gla_r_la, gla_c_la), np.append(gla_r_mu, gla_c_mu))
+
+                        self.errors = np.append(self.errors, np.linalg.norm(self.gla))
+
+                        H1_u = np.divide(np.multiply(np.multiply(R,S), 1 - np.multiply(np.square(R), 1-S)), np.square(np.multiply(1-R, 1-np.multiply(R,1-S))))
+                        H2_u = np.divide(np.multiply(np.multiply(R,S), 1 - R), np.square(1-np.multiply(R,1-S)))
+                        H3_u = np.divide(np.multiply(R,S), np.square(1-np.multiply(R,1-S)))
+                        H1_t = np.multiply(H1_u, finalmat)
+                        H2_t = np.multiply(H2_u, finalmat)
+                        H3_t = np.multiply(H3_u, finalmat)
+
+                        H1 = np.diag(np.sum(H1_t, 1))
+                        H2 = np.diag(np.sum(H1_t, 0))
+                        H3 = np.diag(np.sum(H2_t, 1))
+                        H4 = np.diag(np.sum(H2_t, 0))
+
+                        H5 = H1_t
+                        H6 = np.diag(np.sum(H3_u, 1))
+                        H7 = H3_u
+                        H8 = H7.T
+                        H9 = np.diag(np.sum(H3_u, 0))
+                        H10 = H2_u
+
+                        R1 = np.append(np.append(H1, H5, 1), np.append(H6, H7, 1), 1) 
+                        R2 = np.append(np.append(H5.T, H2, 1), np.append(H8, H9, 1), 1)
+                        R3 = np.append(np.append(H6.T, H8.T, 1), np.append(H3, H10, 1), 1)
+                        R4 = np.append(np.append(H7.T, H9.T, 1), np.append(H10.T, H4, 1), 1)
+
+                        H = np.append(np.append(R1, R2, 0), np.append(R3, R4, 0), 0)
+
+                        delta = np.linalg.lstsq(- H, self.gla, rcond=max(H.shape)*np.finfo(H.dtype).eps)[0]
+                        deltala_r = delta[0:rownunique]
+                        deltala_c = delta[rownunique:rownunique+colnunique]
+                        deltamu_r = delta[rownunique+colnunique:2*rownunique+colnunique]
+                        deltamu_c = delta[2*rownunique+colnunique:2*rownunique+2*colnunique]
+
+
+                        fbest = 0;
+                        errorbest = self.errors[k];
+
+                        for f in np.logspace(lb,1,20):
+                                la_rtry=self.la_r+f*deltala_r
+                                la_ctry=self.la_c+f*deltala_c
+                                mu_rtry=self.mu_r+f*deltamu_r
+                                mu_ctry=self.mu_c+f*deltamu_c
+
+                                flag = True
+                                for ind1 in range(len(la_rtry)):
+                                        for ind2 in range(len(la_ctry)):
+                                                if la_rtry[ind1]+la_ctry[ind2]&gt;-1e-15 and finalmat[ind1][ind2]&gt;0.0001:
+                                                        flag = False
+
+                                if flag:
+                                        Rtry = np.multiply(np.outer(np.exp(la_rtry/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(la_ctry/2)))
+                                        Stry = np.multiply(np.outer(np.exp(mu_rtry/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(mu_ctry/2)))
+
+                                        ps_latry = np.divide(np.multiply(Rtry,Stry), np.multiply(1-Rtry, 1-np.multiply(Rtry,1-Stry)))
+                                        ps_mutry = np.divide(np.multiply(Rtry,Stry), 1-np.multiply(Rtry,1-Stry))
+
+                                        gla_t_latry = np.multiply(ps_latry, finalmat)
+
+                                        gla_r_latry = np.sum(gla_t_latry, 1) - np.multiply(prowsunique[:,0], vrows)
+                                        gla_c_latry = np.sum(gla_t_latry, 0) - np.multiply(pcolsunique[:,0], vcols)
+
+                                        gla_t_mutry = np.multiply(ps_mutry, finalmat)
+
+                                        gla_r_mutry = np.sum(gla_t_mutry, 1) - np.multiply(prowsunique[:,1], vrows)
+                                        gla_c_mutry = np.sum(gla_t_mutry, 0) - np.multiply(pcolsunique[:,1], vcols)
+
+                                        glatry = np.append(np.append(gla_r_latry, gla_c_latry), np.append(gla_r_mutry, gla_c_mutry))
+
+                                        errortry = np.linalg.norm(glatry)
+
+                                        if errortry &lt; errorbest:
+                                                fbest = f
+                                                errorbest = errortry
+                        if fbest == 0:
+                                if lb&gt;-1000:
+                                        lb = lb*2
+                                else:
+                                        break
+
+                        self.la_r = self.la_r+fbest*deltala_r;
+                        self.la_c = self.la_c+fbest*deltala_c;
+                        self.mu_r = self.mu_r+fbest*deltamu_r;
+                        self.mu_c = self.mu_c+fbest*deltamu_c;
+
+                        if self.errors[k]/n &lt; tol:
+                                break
+
+                R = np.multiply(np.outer(np.exp(self.la_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.la_c/2)))
+                S = np.multiply(np.outer(np.exp(self.mu_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.mu_c/2)))
+
+                self.ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+                self.ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+                gla_t_la = np.multiply(self.ps_la, finalmat)
+
+                gla_r_la = np.sum(gla_t_la, 1) - np.multiply(prowsunique[:,0], vrows)
+                gla_c_la = np.sum(gla_t_la, 0) - np.multiply(pcolsunique[:,0], vcols)
+
+                gla_t_mu = np.multiply(self.ps_mu, finalmat)
+
+                gla_r_mu = np.sum(gla_t_mu, 1) - np.multiply(prowsunique[:,1], vrows)
+                gla_c_mu = np.sum(gla_t_mu, 0) - np.multiply(pcolsunique[:,1], vcols)
+
+                self.gla = np.append(np.append(gla_r_la, gla_c_la), np.append(gla_r_mu, gla_c_mu))
+
+                self.errors = np.append(self.errors, np.linalg.norm(self.gla))
+###################################################################################################################################################################
+        def explambda(self, i, j): #This is indeed explambdaR
+                if i==j:
+                        return 0
+                R = math.exp(self.la_r[self.jrows[i]]/2)*math.exp(self.la_c[self.jcols[j]]/2)
+                return R
+###################################################################################################################################################################
+        def explambdaIncLprevS(self, i, j):
+                if i==j:
+                        return 0
+                S = math.exp(self.mu_r[self.jrows[i]]/2)*math.exp(self.mu_c[self.jcols[j]]/2)
+                return S
+###################################################################################################################################################################
+        def returnExpectation(self, R, S):
+                E = R*S/ ((1-R)*(1-R*(1-S)))
+                return E
+###################################################################################################################################################################
+        def getExpectation(self, i, j, **kwargs):
+                kwargs[&#39;isSimple&#39;] = False
+                R = self.getPOS(i, j, **kwargs)
+                S = self.explambdaS(i, j)
+                E = self.returnExpectation(R, S)
+                return E
+###################################################################################################################################################################
+        def updateBackground(self, pat, idx): #lprevUpdate = list() Each item is a tuple (a, b); a = lambda; b = listofnodes()
+                mSmallestLambda = np.min(np.array(list(set(self.la_r).union(set(self.la_c)))))
+                mLargestLambda = np.max(np.array(list(set(self.la_r).union(set(self.la_c)))))
+
+                epsilon = 1e-7
+
+                if math.fabs(mSmallestLambda) &gt; math.fabs(mLargestLambda):
+                        a = epsilon
+                        b = 4*math.fabs(mSmallestLambda)
+                else:
+                        a = epsilon
+                        b = 4*math.fabs(mLargestLambda)
+
+
+                inL = dict(pat.in_degree())
+                outL = dict(pat.out_degree())
+
+                inNL = []
+                outNL = []
+                for k,v in inL.items():
+                        if v!=0:
+                                inNL.append(k)
+                for k,v in outL.items():
+                        if v!=0:
+                                outNL.append(k)
+
+                numInNodes = len(inNL)
+                numOutNodes = len(outNL)
+                numEdges = pat.number_of_edges()
+
+                expLambdaR = [None]*numOutNodes
+                expLambdaS = [None]*numOutNodes
+                for i in range(numOutNodes):
+                        expLambdaR[i] = [0.0]*numInNodes
+                        expLambdaS[i] = [0.0]*numInNodes
+
+                for i in range(numOutNodes):
+                        for j in range(numInNodes):
+                                expLambdaS[i][j] = self.explambdaS(outNL[i], inNL[j])
+                                expLambdaR[i][j] = self.explambdaIncLprev(outNL[i], inNL[j])
+                                if outNL[i]!=inNL[j]:
+                                        if expLambdaR[i][j]&gt;0.0 and math.fabs(b) &gt; math.fabs(math.log(expLambdaR[i][j])):
+                                                b = math.fabs(math.log(expLambdaR[i][j]))
+                                else:
+                                        expLambdaR[i][j] = 0
+
+                b = b - epsilon
+
+                while b-a &gt; 1e-15:
+                        f_a = 0.0
+                        f_b = 0.0
+                        f_c = 0.0
+                        c = (a+b)/2
+
+                        for i in range(numOutNodes):
+                                for j in range(numInNodes):
+                                        try:
+                                                v_aR=expLambdaR[i][j]*math.exp(a)
+                                                v_bR=expLambdaR[i][j]*math.exp(b)
+                                                v_cR=expLambdaR[i][j]*math.exp(c)
+                                                f_a+=self.returnExpectation(v_aR, expLambdaS[i][j])
+                                                f_b+=self.returnExpectation(v_bR, expLambdaS[i][j])
+                                                f_c+=self.returnExpectation(v_cR, expLambdaS[i][j])
+                                        except OverflowError as error:
+                                                print(error,a,b)
+
+
+                        f_a=f_a-numEdges
+                        f_b=f_b-numEdges
+                        f_c=f_c-numEdges
+
+                        print(&#39;f_a:&#39;, f_a, &#39;\t at a:&#39;, a)
+                        print(&#39;f_c:&#39;, f_c, &#39;\t at c:&#39;, c)
+                        print(&#39;f_b:&#39;, f_b, &#39;\t at b:&#39;, b,&#39;\n&#39;)
+
+                        if f_c &lt; 0:
+                                a = c
+                        else:
+                                b = c
+
+                lambdac = round((a + b) / 2, 10)
+                self.lprevUpdate[idx] = tuple([lambdac, inNL, outNL])
+
+                f_c = 0.0
+                for i in range(numOutNodes):
+                        for j in range(numInNodes):
+                                v_cR=expLambdaR[i][j]*math.exp(lambdac)
+                                f_c+=self.returnExpectation(v_cR, expLambdaS[i][j])
+
+                f_c = f_c-numEdges
+                # print(&#39;Final lamdba: &#39;,lambdac, f_c, numEdges)
+                return</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.BackgroundDistributions.PDClass.PDClass" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass">PDClass</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.explambdaIncLprevS"><code class="name flex">
+<span>def <span class="ident">explambdaIncLprevS</span></span>(<span>self, i, j)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def explambdaIncLprevS(self, i, j):
+        if i==j:
+                return 0
+        S = math.exp(self.mu_r[self.jrows[i]]/2)*math.exp(self.mu_c[self.jcols[j]]/2)
+        return S</code></pre>
+</details>
+</dd>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.findMaxEntDistribution"><code class="name flex">
+<span>def <span class="ident">findMaxEntDistribution</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def findMaxEntDistribution(self):
+        self.indegrees = np.array(list(dict(sorted(dict(self.G.in_degree()).items())).values()))
+        self.outdegrees = np.array(list(dict(sorted(dict(self.G.out_degree()).items())).values()))
+
+        fac = math.log(nx.density(self.G)/(1+nx.density(self.G)))
+
+        self.predcount = []
+        for i in range(self.G.number_of_nodes()):
+                self.predcount.append(len(list(self.G.predecessors(i))))
+        self.predcount = np.array(self.predcount)
+
+        self.succount = []
+        for i in range(self.G.number_of_nodes()):
+                self.succount.append(len(list(self.G.successors(i))))
+        self.succount = np.array(self.succount)
+
+        self.inpred = []
+        for i in range(len(self.indegrees)):
+                self.inpred.append(tuple([self.indegrees[i], self.predcount[i]]))
+        self.inpred = np.array(self.inpred)
+
+        self.outsucc = []
+        for i in range(len(self.outdegrees)):
+                self.outsucc.append(tuple([self.outdegrees[i], self.succount[i]]))
+        self.outsucc = np.array(self.outsucc)
+
+        n = len(self.indegrees)
+        m = len(self.outdegrees)
+
+        prows = self.outsucc
+        prowsunique, irows, self.jrows, vrows = np.unique(prows, axis=0, return_index=True, return_inverse=True, return_counts=True)
+        rownunique = len(prowsunique)
+        self.la_r = -math.fabs(fac)*np.ones(rownunique)
+        self.mu_r = np.zeros(rownunique)
+        rowh = np.zeros(rownunique)
+
+        pcols = self.inpred
+        pcolsunique, icols, self.jcols, vcols = np.unique(pcols, axis=0, return_index=True, return_inverse=True, return_counts=True)
+        colnunique = len(pcolsunique)
+        self.la_c = -math.fabs(fac)*np.ones(colnunique)
+        self.mu_c = np.zeros(colnunique)
+        colh = np.zeros(colnunique)
+
+        loops = np.outer(np.zeros(rownunique), np.zeros(colnunique).T)
+
+        for i in range(rownunique):
+                for j in range(colnunique):
+                        loops[i][j] = len(set(np.where(self.jrows==i)[0]).intersection(set(np.where(self.jcols==j)[0])))
+
+        finalmat = np.outer(vrows, vcols) - loops
+
+        nit = 1000
+        tol = 1e-14
+        self.errors = np.empty(0)
+
+        lb = -5
+        for k in range(nit):
+                R = np.multiply(np.outer(np.exp(self.la_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.la_c/2)))
+                S = np.multiply(np.outer(np.exp(self.mu_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.mu_c/2)))
+
+                self.ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+                self.ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+                gla_t_la = np.multiply(self.ps_la, finalmat)
+
+                gla_r_la = np.sum(gla_t_la, 1) - np.multiply(prowsunique[:,0], vrows)
+                gla_c_la = np.sum(gla_t_la, 0) - np.multiply(pcolsunique[:,0], vcols)
+
+                gla_t_mu = np.multiply(self.ps_mu, finalmat)
+
+                gla_r_mu = np.sum(gla_t_mu, 1) - np.multiply(prowsunique[:,1], vrows)
+                gla_c_mu = np.sum(gla_t_mu, 0) - np.multiply(pcolsunique[:,1], vcols)
+
+                self.gla = np.append(np.append(gla_r_la, gla_c_la), np.append(gla_r_mu, gla_c_mu))
+
+                self.errors = np.append(self.errors, np.linalg.norm(self.gla))
+
+                H1_u = np.divide(np.multiply(np.multiply(R,S), 1 - np.multiply(np.square(R), 1-S)), np.square(np.multiply(1-R, 1-np.multiply(R,1-S))))
+                H2_u = np.divide(np.multiply(np.multiply(R,S), 1 - R), np.square(1-np.multiply(R,1-S)))
+                H3_u = np.divide(np.multiply(R,S), np.square(1-np.multiply(R,1-S)))
+                H1_t = np.multiply(H1_u, finalmat)
+                H2_t = np.multiply(H2_u, finalmat)
+                H3_t = np.multiply(H3_u, finalmat)
+
+                H1 = np.diag(np.sum(H1_t, 1))
+                H2 = np.diag(np.sum(H1_t, 0))
+                H3 = np.diag(np.sum(H2_t, 1))
+                H4 = np.diag(np.sum(H2_t, 0))
+
+                H5 = H1_t
+                H6 = np.diag(np.sum(H3_u, 1))
+                H7 = H3_u
+                H8 = H7.T
+                H9 = np.diag(np.sum(H3_u, 0))
+                H10 = H2_u
+
+                R1 = np.append(np.append(H1, H5, 1), np.append(H6, H7, 1), 1) 
+                R2 = np.append(np.append(H5.T, H2, 1), np.append(H8, H9, 1), 1)
+                R3 = np.append(np.append(H6.T, H8.T, 1), np.append(H3, H10, 1), 1)
+                R4 = np.append(np.append(H7.T, H9.T, 1), np.append(H10.T, H4, 1), 1)
+
+                H = np.append(np.append(R1, R2, 0), np.append(R3, R4, 0), 0)
+
+                delta = np.linalg.lstsq(- H, self.gla, rcond=max(H.shape)*np.finfo(H.dtype).eps)[0]
+                deltala_r = delta[0:rownunique]
+                deltala_c = delta[rownunique:rownunique+colnunique]
+                deltamu_r = delta[rownunique+colnunique:2*rownunique+colnunique]
+                deltamu_c = delta[2*rownunique+colnunique:2*rownunique+2*colnunique]
+
+
+                fbest = 0;
+                errorbest = self.errors[k];
+
+                for f in np.logspace(lb,1,20):
+                        la_rtry=self.la_r+f*deltala_r
+                        la_ctry=self.la_c+f*deltala_c
+                        mu_rtry=self.mu_r+f*deltamu_r
+                        mu_ctry=self.mu_c+f*deltamu_c
+
+                        flag = True
+                        for ind1 in range(len(la_rtry)):
+                                for ind2 in range(len(la_ctry)):
+                                        if la_rtry[ind1]+la_ctry[ind2]&gt;-1e-15 and finalmat[ind1][ind2]&gt;0.0001:
+                                                flag = False
+
+                        if flag:
+                                Rtry = np.multiply(np.outer(np.exp(la_rtry/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(la_ctry/2)))
+                                Stry = np.multiply(np.outer(np.exp(mu_rtry/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(mu_ctry/2)))
+
+                                ps_latry = np.divide(np.multiply(Rtry,Stry), np.multiply(1-Rtry, 1-np.multiply(Rtry,1-Stry)))
+                                ps_mutry = np.divide(np.multiply(Rtry,Stry), 1-np.multiply(Rtry,1-Stry))
+
+                                gla_t_latry = np.multiply(ps_latry, finalmat)
+
+                                gla_r_latry = np.sum(gla_t_latry, 1) - np.multiply(prowsunique[:,0], vrows)
+                                gla_c_latry = np.sum(gla_t_latry, 0) - np.multiply(pcolsunique[:,0], vcols)
+
+                                gla_t_mutry = np.multiply(ps_mutry, finalmat)
+
+                                gla_r_mutry = np.sum(gla_t_mutry, 1) - np.multiply(prowsunique[:,1], vrows)
+                                gla_c_mutry = np.sum(gla_t_mutry, 0) - np.multiply(pcolsunique[:,1], vcols)
+
+                                glatry = np.append(np.append(gla_r_latry, gla_c_latry), np.append(gla_r_mutry, gla_c_mutry))
+
+                                errortry = np.linalg.norm(glatry)
+
+                                if errortry &lt; errorbest:
+                                        fbest = f
+                                        errorbest = errortry
+                if fbest == 0:
+                        if lb&gt;-1000:
+                                lb = lb*2
+                        else:
+                                break
+
+                self.la_r = self.la_r+fbest*deltala_r;
+                self.la_c = self.la_c+fbest*deltala_c;
+                self.mu_r = self.mu_r+fbest*deltamu_r;
+                self.mu_c = self.mu_c+fbest*deltamu_c;
+
+                if self.errors[k]/n &lt; tol:
+                        break
+
+        R = np.multiply(np.outer(np.exp(self.la_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.la_c/2)))
+        S = np.multiply(np.outer(np.exp(self.mu_r/2), np.ones(colnunique).T),np.outer(np.ones(rownunique).T, np.exp(self.mu_c/2)))
+
+        self.ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+        self.ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+        gla_t_la = np.multiply(self.ps_la, finalmat)
+
+        gla_r_la = np.sum(gla_t_la, 1) - np.multiply(prowsunique[:,0], vrows)
+        gla_c_la = np.sum(gla_t_la, 0) - np.multiply(pcolsunique[:,0], vcols)
+
+        gla_t_mu = np.multiply(self.ps_mu, finalmat)
+
+        gla_r_mu = np.sum(gla_t_mu, 1) - np.multiply(prowsunique[:,1], vrows)
+        gla_c_mu = np.sum(gla_t_mu, 0) - np.multiply(pcolsunique[:,1], vcols)
+
+        self.gla = np.append(np.append(gla_r_la, gla_c_la), np.append(gla_r_mu, gla_c_mu))
+
+        self.errors = np.append(self.errors, np.linalg.norm(self.gla))</code></pre>
+</details>
+</dd>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.getExpectation"><code class="name flex">
+<span>def <span class="ident">getExpectation</span></span>(<span>self, i, j, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getExpectation(self, i, j, **kwargs):
+        kwargs[&#39;isSimple&#39;] = False
+        R = self.getPOS(i, j, **kwargs)
+        S = self.explambdaS(i, j)
+        E = self.returnExpectation(R, S)
+        return E</code></pre>
+</details>
+</dd>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.returnExpectation"><code class="name flex">
+<span>def <span class="ident">returnExpectation</span></span>(<span>self, R, S)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def returnExpectation(self, R, S):
+        E = R*S/ ((1-R)*(1-R*(1-S)))
+        return E</code></pre>
+</details>
+</dd>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.updateBackground"><code class="name flex">
+<span>def <span class="ident">updateBackground</span></span>(<span>self, pat, idx)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateBackground(self, pat, idx): #lprevUpdate = list() Each item is a tuple (a, b); a = lambda; b = listofnodes()
+        mSmallestLambda = np.min(np.array(list(set(self.la_r).union(set(self.la_c)))))
+        mLargestLambda = np.max(np.array(list(set(self.la_r).union(set(self.la_c)))))
+
+        epsilon = 1e-7
+
+        if math.fabs(mSmallestLambda) &gt; math.fabs(mLargestLambda):
+                a = epsilon
+                b = 4*math.fabs(mSmallestLambda)
+        else:
+                a = epsilon
+                b = 4*math.fabs(mLargestLambda)
+
+
+        inL = dict(pat.in_degree())
+        outL = dict(pat.out_degree())
+
+        inNL = []
+        outNL = []
+        for k,v in inL.items():
+                if v!=0:
+                        inNL.append(k)
+        for k,v in outL.items():
+                if v!=0:
+                        outNL.append(k)
+
+        numInNodes = len(inNL)
+        numOutNodes = len(outNL)
+        numEdges = pat.number_of_edges()
+
+        expLambdaR = [None]*numOutNodes
+        expLambdaS = [None]*numOutNodes
+        for i in range(numOutNodes):
+                expLambdaR[i] = [0.0]*numInNodes
+                expLambdaS[i] = [0.0]*numInNodes
+
+        for i in range(numOutNodes):
+                for j in range(numInNodes):
+                        expLambdaS[i][j] = self.explambdaS(outNL[i], inNL[j])
+                        expLambdaR[i][j] = self.explambdaIncLprev(outNL[i], inNL[j])
+                        if outNL[i]!=inNL[j]:
+                                if expLambdaR[i][j]&gt;0.0 and math.fabs(b) &gt; math.fabs(math.log(expLambdaR[i][j])):
+                                        b = math.fabs(math.log(expLambdaR[i][j]))
+                        else:
+                                expLambdaR[i][j] = 0
+
+        b = b - epsilon
+
+        while b-a &gt; 1e-15:
+                f_a = 0.0
+                f_b = 0.0
+                f_c = 0.0
+                c = (a+b)/2
+
+                for i in range(numOutNodes):
+                        for j in range(numInNodes):
+                                try:
+                                        v_aR=expLambdaR[i][j]*math.exp(a)
+                                        v_bR=expLambdaR[i][j]*math.exp(b)
+                                        v_cR=expLambdaR[i][j]*math.exp(c)
+                                        f_a+=self.returnExpectation(v_aR, expLambdaS[i][j])
+                                        f_b+=self.returnExpectation(v_bR, expLambdaS[i][j])
+                                        f_c+=self.returnExpectation(v_cR, expLambdaS[i][j])
+                                except OverflowError as error:
+                                        print(error,a,b)
+
+
+                f_a=f_a-numEdges
+                f_b=f_b-numEdges
+                f_c=f_c-numEdges
+
+                print(&#39;f_a:&#39;, f_a, &#39;\t at a:&#39;, a)
+                print(&#39;f_c:&#39;, f_c, &#39;\t at c:&#39;, c)
+                print(&#39;f_b:&#39;, f_b, &#39;\t at b:&#39;, b,&#39;\n&#39;)
+
+                if f_c &lt; 0:
+                        a = c
+                else:
+                        b = c
+
+        lambdac = round((a + b) / 2, 10)
+        self.lprevUpdate[idx] = tuple([lambdac, inNL, outNL])
+
+        f_c = 0.0
+        for i in range(numOutNodes):
+                for j in range(numInNodes):
+                        v_cR=expLambdaR[i][j]*math.exp(lambdac)
+                        f_c+=self.returnExpectation(v_cR, expLambdaS[i][j])
+
+        f_c = f_c-numEdges
+        # print(&#39;Final lamdba: &#39;,lambdac, f_c, numEdges)
+        return</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.BackgroundDistributions.PDClass.PDClass" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass">PDClass</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.explambda" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.explambda">explambda</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.explambdaIncLprev" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.explambdaIncLprev">explambdaIncLprev</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.explambdaIncLprevButDropSomeLas" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.explambdaIncLprevButDropSomeLas">explambdaIncLprevButDropSomeLas</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.explambdaMultiplier" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.explambdaMultiplier">explambdaMultiplier</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.findDistribution" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.findDistribution">findDistribution</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.getAB" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.getAB">getAB</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.getExpectationFromExpLambda" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.getExpectationFromExpLambda">getExpectationFromExpLambda</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.getExpectationFromPOS" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.getExpectationFromPOS">getExpectationFromPOS</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.getPOS" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.getPOS">getPOS</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.updateDistribution" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.updateDistribution">updateDistribution</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U"><code class="flex name class">
+<span>class <span class="ident">MaxEntMulti2U</span></span>
+<span>(</span><span>G=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Background distribution for multigraphs if type of prior belief is 'm' and type of graph is 'undirected'</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>PDClass</code></strong> :&ensp;<code><a title="src.BackgroundDistributions.PDClass" href="PDClass.html">src.BackgroundDistributions.PDClass</a></code></dt>
+<dd>base class</dd>
+</dl>
+<p>initialization function</p>
+<h2 id="parameters_1">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkx graph</code></dt>
+<dd>input graph</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MaxEntMulti2U(PDClass):
+        &#34;&#34;&#34;
+    Background distribution for multigraphs if type of prior belief is &#39;m&#39; and type of graph is &#39;undirected&#39;
+
+    Parameters
+    ----------
+    PDClass : src.BackgroundDistributions.PDClass
+        base class
+    &#34;&#34;&#34;
+        def __init__(self, G = None):
+                super().__init__()
+                self.la = None
+                self.mu = None
+                self.degreeNeighbor = None
+                self.degrees = None
+                self.Neighbors = None
+                self.jrows = None
+                self.errors = None
+                self.ps_la = None
+                self.ps_mu = None
+                self.gla = None
+                self.lprevUpdate = {}
+                if G is not None:
+                        self.findMaxEntDistribution()
+###################################################################################################################################################################
+        def findMaxEntDistribution(self):
+                self.degrees = np.array(list(dict(sorted(dict(self.G.degree()).items())).values()))
+                self.Neighbors = []
+                for i in range(self.G.number_of_nodes()):
+                        self.Neighbors.append(len(list(self.G.neighbors(i))))
+                self.Neighbors = np.array(self.Neighbors)
+                self.degreeNeighbor = []
+                for i in range(len(self.degrees)):
+                        self.degreeNeighbor.append(tuple([self.degrees[i], self.Neighbors[i]]))
+                self.degreeNeighbor = np.array(self.degreeNeighbor)
+                ##############################
+                prows = self.degreeNeighbor
+                prowsunique,irows,self.jrows,vrows = np.unique(prows, axis=0, return_index=True, return_inverse=True, return_counts=True)
+                nunique = len(prowsunique)
+                self.la = -np.ones(nunique)
+                self.mu = -np.ones(nunique)
+                h = np.zeros(nunique)
+                nit = 1000
+                tol = 1e-14
+                self.errors = np.empty(0)
+                ##############################
+                lb = -5
+                for k in range(nit):
+                        R = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.la/2)),np.outer(np.exp(self.la/2), np.ones(nunique).T))
+                        S = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.mu/2)),np.outer(np.exp(self.mu/2), np.ones(nunique).T))
+
+                        ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+                        ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+                        gla_la = np.multiply(-prowsunique[:,0]+np.dot(ps_la, vrows)-np.diag(ps_la), vrows)
+                        gla_mu = np.multiply(-prowsunique[:,1]+np.dot(ps_mu, vrows)-np.diag(ps_mu), vrows)
+
+                        self.gla = np.append(gla_la, gla_mu)
+                        self.errors = np.append(self.errors, np.linalg.norm(self.gla))
+
+                        H1_u1 = np.dot(np.dot(np.diag(vrows), np.divide(np.multiply(np.multiply(R,S), 1 - np.multiply(np.square(R), 1-S)), np.square(np.multiply(1-R, 1-np.multiply(R,1-S))))), np.diag(vrows)) 
+                        H1_u2 = np.diag(np.sum(H1_u1, 0)) - np.diag(np.divide(np.diag(H1_u1), vrows))
+                        H1 = H1_u1 + H1_u2
+
+                        H2_u1 = np.dot(np.dot(np.diag(vrows), np.divide(np.multiply(np.multiply(R,S), 1 - R), np.square(1-np.multiply(R,1-S)))), np.diag(vrows)) 
+                        H2_u2 = np.diag(np.sum(H2_u1, 0)) - np.diag(np.divide(np.diag(H2_u1), vrows))
+                        H2 = H2_u1 + H2_u2
+
+                        H3_u1 = np.dot(np.dot(np.diag(vrows), np.divide(np.multiply(R,S), np.square(1-np.multiply(R,1-S)))), np.diag(vrows)) 
+                        H3_u2 = np.diag(np.sum(H3_u1, 0)) - np.diag(np.divide(np.diag(H3_u1), vrows))
+                        H3 = H3_u1 + H3_u2
+
+                        H = 0.5 * np.append(np.append(H1, H3, 1), np.append(H3, H2, 1), 0)
+
+                        delta = np.linalg.lstsq(- H, self.gla, rcond=max(H.shape)*np.finfo(H.dtype).eps)[0]
+                        delta_la = delta[0:nunique]
+                        delta_mu = delta[nunique:nunique+nunique+1]
+
+                        fbest = 0;
+                        errorbest = self.errors[k];
+
+                        for f in np.logspace(lb,1,20):
+                                latry=self.la+f*delta_la
+                                mutry=self.mu+f*delta_mu
+
+                                Rtry = np.multiply(np.outer(np.ones(nunique).T, np.exp(latry/2)),np.outer(np.exp(latry/2), np.ones(nunique).T))
+                                Stry = np.multiply(np.outer(np.ones(nunique).T, np.exp(mutry/2)),np.outer(np.exp(mutry/2), np.ones(nunique).T))
+
+                                ps_latry = np.divide(np.multiply(Rtry,Stry), np.multiply(1-Rtry, 1-np.multiply(Rtry,1-Stry)))
+                                ps_mutry = np.divide(np.multiply(Rtry,Stry), 1-np.multiply(Rtry,1-Stry))
+
+                                gla_latry = np.multiply(-prowsunique[:,0]+np.dot(ps_latry, vrows)-np.diag(ps_latry), vrows)
+                                gla_mutry = np.multiply(-prowsunique[:,1]+np.dot(ps_mutry, vrows)-np.diag(ps_mutry), vrows)
+
+                                glatry = np.append(gla_latry, gla_mutry)
+                                errortry = np.linalg.norm(glatry)
+                                if errortry &lt; errorbest:
+                                        fbest = f
+                                        errorbest = errortry
+                        if fbest == 0:
+                                if lb&gt;-1000:
+                                        lb = lb*2
+                                else:
+                                        break
+
+                        self.la = self.la+fbest*delta_la
+                        self.mu = self.mu+fbest*delta_mu
+
+                        if self.errors[k] &lt; tol:
+                                break
+
+                R = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.la/2)),np.outer(np.exp(self.la/2), np.ones(nunique).T))
+                S = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.mu/2)),np.outer(np.exp(self.mu/2), np.ones(nunique).T))
+
+                self.ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+                self.ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+                gla_la = np.multiply(-prowsunique[:,0]+np.dot(self.ps_la, vrows)-np.diag(self.ps_la), vrows)
+                gla_mu = np.multiply(-prowsunique[:,1]+np.dot(self.ps_mu, vrows)-np.diag(self.ps_mu), vrows)
+
+                self.gla = np.append(gla_la, gla_mu)
+                self.errors = np.append(self.errors, np.linalg.norm(self.gla))
+###################################################################################################################################################################
+        def explambda(self, i, j): #This is indeed explambdaR
+                R = math.exp(self.la[self.jrows[i]]/2)*math.exp(self.la[self.jrows[j]]/2) 
+                return R
+###################################################################################################################################################################
+        def explambdaS(self, i, j):
+                S = math.exp(self.mu[self.jrows[i]]/2)*math.exp(self.mu[self.jrows[j]]/2)
+                return S
+###################################################################################################################################################################
+        def returnExpectation(self, R, S):
+                E = R*S/ ((1-R)*(1-R*(1-S)))
+                return E
+###################################################################################################################################################################
+        def getExpectation(self, i, j, **kwargs):
+                kwargs[&#39;isSimple&#39;] = False
+                R = self.getPOS(i, j, **kwargs)
+                S = self.explambdaS(i, j)
+                E = self.returnExpectation(R, S)
+                return E
+###################################################################################################################################################################
+        def updateDistribution(self, pat, idx): #lprevUpdate = list() Each item is a tuple (a, b); a = lambda; b = listofnodes()
+                numNodes = pat.number_of_nodes()
+                numEdges = pat.G.number_of_edges()
+                nodes = sorted(list(pat.G.nodes()))
+
+                mSmallestLambda = np.min(self.la)
+                mLargestLambda = np.max(self.la)
+
+                epsilon = 1e-7
+
+                if math.fabs(mSmallestLambda) &gt; math.fabs(mLargestLambda):
+                        a = epsilon
+                        b = 4*math.fabs(mSmallestLambda)
+                else:
+                        a = epsilon
+                        b = 4*math.fabs(mLargestLambda)
+
+                expLambdaR = [None]*numNodes
+                expLambdaS = [None]*numNodes
+                for i in range(numNodes):
+                        expLambdaR[i] = [0.0]*numNodes
+                        expLambdaS[i] = [0.0]*numNodes
+
+                for i in range(numNodes):
+                        for j in range(i+1, numNodes):
+                                expLambdaR[i][j] = self.explambdaIncLprev(nodes[i], nodes[j])
+                                expLambdaS[i][j] = self.explambdaS(nodes[i], nodes[j])
+                                if math.fabs(b) &gt; math.fabs(math.log(expLambdaR[i][j])):
+                                        b = math.fabs(math.log(expLambdaR[i][j]))
+
+                b = b - epsilon
+
+                while b-a &gt; 1e-11:
+                        f_a = 0.0
+                        f_b = 0.0
+                        f_c = 0.0
+                        c = (a+b)/2
+
+                        for i in range(numNodes):
+                                for j in range(i+1, numNodes):
+                                        try:
+                                                v_aR=expLambdaR[i][j]*math.exp(a)
+                                                v_bR=expLambdaR[i][j]*math.exp(b)
+                                                v_cR=expLambdaR[i][j]*math.exp(c)
+                                                f_a+=self.returnExpectation(v_aR, expLambdaS[i][j])
+                                                f_b+=self.returnExpectation(v_bR, expLambdaS[i][j])
+                                                f_c+=self.returnExpectation(v_cR, expLambdaS[i][j])
+                                        except OverflowError as error:
+                                                print(error,a,b)
+
+
+                        f_a=f_a-numEdges
+                        f_b=f_b-numEdges
+                        f_c=f_c-numEdges
+
+                        print(&#39;f_a:&#39;, f_a, &#39;\t at a:&#39;, a)
+                        print(&#39;f_c:&#39;, f_c, &#39;\t at c:&#39;, c)
+                        print(&#39;f_b:&#39;, f_b, &#39;\t at b:&#39;, b,&#39;\n&#39;)
+
+                        if f_c &lt; 0:
+                                a = c
+                        else:
+                                b = c
+
+                lambdac = round((a + b) / 2, 10)
+                self.lprevUpdate[idx] = tuple([lambdac, nodes])
+
+                f_c = 0.0
+                for i in range(numNodes):
+                        for j in range(i+1, numNodes):
+                                v_cR=expLambdaR[i][j]*math.exp(lambdac)
+                                f_c+=self.returnExpectation(v_cR, expLambdaS[i][j])
+
+                f_c = f_c-numEdges
+                # print(&#39;Final lamdba: &#39;,lambdac, f_c, numEdges)
+                return</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.BackgroundDistributions.PDClass.PDClass" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass">PDClass</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.explambdaS"><code class="name flex">
+<span>def <span class="ident">explambdaS</span></span>(<span>self, i, j)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def explambdaS(self, i, j):
+        S = math.exp(self.mu[self.jrows[i]]/2)*math.exp(self.mu[self.jrows[j]]/2)
+        return S</code></pre>
+</details>
+</dd>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.findMaxEntDistribution"><code class="name flex">
+<span>def <span class="ident">findMaxEntDistribution</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def findMaxEntDistribution(self):
+        self.degrees = np.array(list(dict(sorted(dict(self.G.degree()).items())).values()))
+        self.Neighbors = []
+        for i in range(self.G.number_of_nodes()):
+                self.Neighbors.append(len(list(self.G.neighbors(i))))
+        self.Neighbors = np.array(self.Neighbors)
+        self.degreeNeighbor = []
+        for i in range(len(self.degrees)):
+                self.degreeNeighbor.append(tuple([self.degrees[i], self.Neighbors[i]]))
+        self.degreeNeighbor = np.array(self.degreeNeighbor)
+        ##############################
+        prows = self.degreeNeighbor
+        prowsunique,irows,self.jrows,vrows = np.unique(prows, axis=0, return_index=True, return_inverse=True, return_counts=True)
+        nunique = len(prowsunique)
+        self.la = -np.ones(nunique)
+        self.mu = -np.ones(nunique)
+        h = np.zeros(nunique)
+        nit = 1000
+        tol = 1e-14
+        self.errors = np.empty(0)
+        ##############################
+        lb = -5
+        for k in range(nit):
+                R = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.la/2)),np.outer(np.exp(self.la/2), np.ones(nunique).T))
+                S = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.mu/2)),np.outer(np.exp(self.mu/2), np.ones(nunique).T))
+
+                ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+                ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+                gla_la = np.multiply(-prowsunique[:,0]+np.dot(ps_la, vrows)-np.diag(ps_la), vrows)
+                gla_mu = np.multiply(-prowsunique[:,1]+np.dot(ps_mu, vrows)-np.diag(ps_mu), vrows)
+
+                self.gla = np.append(gla_la, gla_mu)
+                self.errors = np.append(self.errors, np.linalg.norm(self.gla))
+
+                H1_u1 = np.dot(np.dot(np.diag(vrows), np.divide(np.multiply(np.multiply(R,S), 1 - np.multiply(np.square(R), 1-S)), np.square(np.multiply(1-R, 1-np.multiply(R,1-S))))), np.diag(vrows)) 
+                H1_u2 = np.diag(np.sum(H1_u1, 0)) - np.diag(np.divide(np.diag(H1_u1), vrows))
+                H1 = H1_u1 + H1_u2
+
+                H2_u1 = np.dot(np.dot(np.diag(vrows), np.divide(np.multiply(np.multiply(R,S), 1 - R), np.square(1-np.multiply(R,1-S)))), np.diag(vrows)) 
+                H2_u2 = np.diag(np.sum(H2_u1, 0)) - np.diag(np.divide(np.diag(H2_u1), vrows))
+                H2 = H2_u1 + H2_u2
+
+                H3_u1 = np.dot(np.dot(np.diag(vrows), np.divide(np.multiply(R,S), np.square(1-np.multiply(R,1-S)))), np.diag(vrows)) 
+                H3_u2 = np.diag(np.sum(H3_u1, 0)) - np.diag(np.divide(np.diag(H3_u1), vrows))
+                H3 = H3_u1 + H3_u2
+
+                H = 0.5 * np.append(np.append(H1, H3, 1), np.append(H3, H2, 1), 0)
+
+                delta = np.linalg.lstsq(- H, self.gla, rcond=max(H.shape)*np.finfo(H.dtype).eps)[0]
+                delta_la = delta[0:nunique]
+                delta_mu = delta[nunique:nunique+nunique+1]
+
+                fbest = 0;
+                errorbest = self.errors[k];
+
+                for f in np.logspace(lb,1,20):
+                        latry=self.la+f*delta_la
+                        mutry=self.mu+f*delta_mu
+
+                        Rtry = np.multiply(np.outer(np.ones(nunique).T, np.exp(latry/2)),np.outer(np.exp(latry/2), np.ones(nunique).T))
+                        Stry = np.multiply(np.outer(np.ones(nunique).T, np.exp(mutry/2)),np.outer(np.exp(mutry/2), np.ones(nunique).T))
+
+                        ps_latry = np.divide(np.multiply(Rtry,Stry), np.multiply(1-Rtry, 1-np.multiply(Rtry,1-Stry)))
+                        ps_mutry = np.divide(np.multiply(Rtry,Stry), 1-np.multiply(Rtry,1-Stry))
+
+                        gla_latry = np.multiply(-prowsunique[:,0]+np.dot(ps_latry, vrows)-np.diag(ps_latry), vrows)
+                        gla_mutry = np.multiply(-prowsunique[:,1]+np.dot(ps_mutry, vrows)-np.diag(ps_mutry), vrows)
+
+                        glatry = np.append(gla_latry, gla_mutry)
+                        errortry = np.linalg.norm(glatry)
+                        if errortry &lt; errorbest:
+                                fbest = f
+                                errorbest = errortry
+                if fbest == 0:
+                        if lb&gt;-1000:
+                                lb = lb*2
+                        else:
+                                break
+
+                self.la = self.la+fbest*delta_la
+                self.mu = self.mu+fbest*delta_mu
+
+                if self.errors[k] &lt; tol:
+                        break
+
+        R = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.la/2)),np.outer(np.exp(self.la/2), np.ones(nunique).T))
+        S = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.mu/2)),np.outer(np.exp(self.mu/2), np.ones(nunique).T))
+
+        self.ps_la = np.divide(np.multiply(R,S), np.multiply(1-R, 1-np.multiply(R,1-S)))
+        self.ps_mu = np.divide(np.multiply(R,S), 1-np.multiply(R,1-S))
+
+        gla_la = np.multiply(-prowsunique[:,0]+np.dot(self.ps_la, vrows)-np.diag(self.ps_la), vrows)
+        gla_mu = np.multiply(-prowsunique[:,1]+np.dot(self.ps_mu, vrows)-np.diag(self.ps_mu), vrows)
+
+        self.gla = np.append(gla_la, gla_mu)
+        self.errors = np.append(self.errors, np.linalg.norm(self.gla))</code></pre>
+</details>
+</dd>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.getExpectation"><code class="name flex">
+<span>def <span class="ident">getExpectation</span></span>(<span>self, i, j, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getExpectation(self, i, j, **kwargs):
+        kwargs[&#39;isSimple&#39;] = False
+        R = self.getPOS(i, j, **kwargs)
+        S = self.explambdaS(i, j)
+        E = self.returnExpectation(R, S)
+        return E</code></pre>
+</details>
+</dd>
+<dt id="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.returnExpectation"><code class="name flex">
+<span>def <span class="ident">returnExpectation</span></span>(<span>self, R, S)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def returnExpectation(self, R, S):
+        E = R*S/ ((1-R)*(1-R*(1-S)))
+        return E</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.BackgroundDistributions.PDClass.PDClass" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass">PDClass</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.explambda" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.explambda">explambda</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.explambdaIncLprev" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.explambdaIncLprev">explambdaIncLprev</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.explambdaIncLprevButDropSomeLas" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.explambdaIncLprevButDropSomeLas">explambdaIncLprevButDropSomeLas</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.explambdaMultiplier" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.explambdaMultiplier">explambdaMultiplier</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.findDistribution" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.findDistribution">findDistribution</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.getAB" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.getAB">getAB</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.getExpectationFromExpLambda" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.getExpectationFromExpLambda">getExpectationFromExpLambda</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.getExpectationFromPOS" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.getExpectationFromPOS">getExpectationFromPOS</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.getPOS" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.getPOS">getPOS</a></code></li>
+<li><code><a title="src.BackgroundDistributions.PDClass.PDClass.updateDistribution" href="PDClass.html#src.BackgroundDistributions.PDClass.PDClass.updateDistribution">updateDistribution</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.BackgroundDistributions" href="index.html">src.BackgroundDistributions</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D">MaxEntMulti2D</a></code></h4>
+<ul class="">
+<li><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.explambdaIncLprevS" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.explambdaIncLprevS">explambdaIncLprevS</a></code></li>
+<li><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.findMaxEntDistribution" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.findMaxEntDistribution">findMaxEntDistribution</a></code></li>
+<li><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.getExpectation" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.getExpectation">getExpectation</a></code></li>
+<li><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.returnExpectation" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.returnExpectation">returnExpectation</a></code></li>
+<li><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.updateBackground" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2D.updateBackground">updateBackground</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U">MaxEntMulti2U</a></code></h4>
+<ul class="">
+<li><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.explambdaS" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.explambdaS">explambdaS</a></code></li>
+<li><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.findMaxEntDistribution" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.findMaxEntDistribution">findMaxEntDistribution</a></code></li>
+<li><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.getExpectation" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.getExpectation">getExpectation</a></code></li>
+<li><code><a title="src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.returnExpectation" href="#src.BackgroundDistributions.MaxEntMulti2.MaxEntMulti2U.returnExpectation">returnExpectation</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

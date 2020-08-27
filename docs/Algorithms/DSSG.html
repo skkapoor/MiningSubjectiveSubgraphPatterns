@@ -1,0 +1,2031 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>src.Algorithms.DSSG API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.Algorithms.DSSG</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+import os
+import sys
+
+import pandas as pd
+path = os.getcwd().split(&#39;MiningSubjectiveSubgraphPatterns&#39;)[0]+&#39;MiningSubjectiveSubgraphPatterns/&#39;
+if path not in sys.path:
+        sys.path.append(path)
+import networkx as nx
+import time
+import argparse
+import configparser
+import ast
+import ray
+
+from src.BackgroundDistributions.MaxEntSimple import MaxEntSimpleU as PDMESU
+from src.BackgroundDistributions.MaxEntSimple import MaxEntSimpleD as PDMESD
+from src.BackgroundDistributions.UniDistSimple import UniDistSimple as PDUDS
+
+from src.Actions.update import EvaluateUpdate as EU
+from src.Actions.split import EvaluateSplit as ESP
+from src.Actions.merge import EvaluateMerge as EM
+from src.Actions.shrink import EvaluateShrink as ESH
+from src.Actions.remove import EvaluateRemove as ER
+from src.Actions.add import EvaluateAdd as EA
+###################################################################################################################################################################
+def parseStr(x):
+    &#34;&#34;&#34;
+    function to parse a string
+
+    Parameters
+    ----------
+    x : str
+        input string
+
+    Returns
+    -------
+    int or float or str
+        parsed string
+    &#34;&#34;&#34;
+    try:
+        return int(x)
+    except ValueError:
+        try:
+            return float(x)
+        except ValueError:
+            return x
+###################################################################################################################################################################
+def readConfFile(fname):
+    &#34;&#34;&#34;
+    function to read the config file to run the experiment
+
+    Parameters
+    ----------
+    fname : str
+        input configuration file name
+
+    Returns
+    -------
+    list, dict
+        list of datasets and dictionary of required parameters
+
+    Raises
+    ------
+    Exception
+        if configuration file is not found
+    &#34;&#34;&#34;
+    config = configparser.ConfigParser()
+    if os.path.exists(path+&#39;Confs/&#39;+fname):
+        config.read(path+&#39;Confs/&#39;+fname)
+        DS = ast.literal_eval(config[&#39;Datasets&#39;][&#39;DS&#39;])
+        Params = dict()
+        for i in config[&#39;DSSG Params&#39;].items():
+            Params[i[0]] = parseStr(i[1])
+        return DS, Params
+    else:
+        raise Exception(&#39;Configuration file does not exists:&#39;, path+&#39;Confs/&#39;+fname)
+###################################################################################################################################################################
+def getAllStates(d):
+    &#34;&#34;&#34;
+    function to read the file names of all available states from the given dataset directory in sorted manner
+
+    Parameters
+    ----------
+    d : str
+        dataset name
+
+    Returns
+    -------
+    list
+        sorted list of files names corresponding to each state of the graph
+
+    Raises
+    ------
+    Exception
+        if no compatible file is found
+    &#34;&#34;&#34;
+    files = None
+    states = None
+    if os.path.exists(path+&#39;Data/DSSG/&#39;+d):
+        files = os.listdir(path+&#39;Data/DSSG/&#39;+d)
+    Ffiles = dict()
+    for f in files:
+        if &#39;.gml&#39; in f:
+            if &#39;.gml&#39; not in Ffiles:
+                Ffiles[&#39;.gml&#39;] = [f]
+            else:
+                Ffiles[&#39;.gml&#39;].append(f)
+        elif &#39;.gpickle&#39; in f:
+            if &#39;.gpickle&#39; not in Ffiles:
+                Ffiles[&#39;.gpickle&#39;] = [f]
+            else:
+                Ffiles[&#39;.gpickle&#39;].append(f)
+    print(Ffiles[&#39;.gml&#39;])
+    if (&#39;.gml&#39; in Ffiles or &#39;.gpickle&#39; in Ffiles) and not (&#39;.gml&#39; in Ffiles and &#39;.gpickle&#39; in Ffiles):
+        if &#39;.gml&#39; in Ffiles:
+            states = sorted(Ffiles[&#39;.gml&#39;])
+        elif &#39;.gpickle&#39; in Ffiles:
+            states = sorted(Ffiles[&#39;.gpickle&#39;])
+    else:
+        raise Exception(&#39;The folder shall contain either gml or gpickle files of different graph snapshots with name in a lexiographical order&#39;)
+    print(&#39;states:&#39;,states)
+    return states
+###################################################################################################################################################################
+def getInitGraphAndBD(gname, Params):
+    &#34;&#34;&#34;
+    function to read the initial graph state and corresponding background distribution of the given type of prior belief
+
+    Parameters
+    ----------
+    gname : str
+        input filename of the current graph state
+    Params : dict
+        input parameters to run the experiment
+
+    Returns
+    -------
+    networkx graph, PDClass, str
+        Corresponding networkx graph, background distribution and graph type (undirected &#39;U&#39; or directed &#39;D&#39;) respectively
+
+    Raises
+    ------
+    Exception
+        if a mutigraph is encountered
+    Exception
+        if a specific type of prior belief given as input which is not implemented yet
+    &#34;&#34;&#34;
+    G = None
+    gtype = &#39;U&#39;
+    if &#39;.gpickle&#39; in gname:
+        G = nx.read_gpickle(gname)
+    else:
+        G = nx.read_gml(gname, destringizer=nx.readwrite.gml.literal_destringizer)
+    if G.is_directed():
+        gtype = &#39;D&#39;
+    if G.is_multigraph():
+        raise Exception(&#39;********Encountered a multigraph********** Gname: {}&#39;.format(gname))
+    if Params[&#39;priorbelief&#39;] is &#39;c&#39;:
+        PD = PDUDS(G)
+    elif Params[&#39;priorbelief&#39;] is &#39;i&#39;:
+        if G.is_directed():
+            PD = PDMESD(G)
+        else:
+            PD = PDMESU(G)
+    else:
+        raise Exception(&#39;Specified type of Belief is not yet implemented&#39;)
+    return G, PD, gtype
+###################################################################################################################################################################
+def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype=&#39;U&#39;, isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType=&#39;interest&#39;, seedRuns=10, q=0.01, incEdges=True):
+    &#34;&#34;&#34;
+    This function is to only process the first state of the graph dataset. In this, only one action is performed that is &#39;add&#39;
+
+    Parameters
+    ----------
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    state_id : int
+        current state id
+    pat_ids : int
+        pattern identifier for new patterns
+    df_patterns : pandas dataframe
+        dataframe to save new patterns
+    gtype : str, optional
+        gyaph type (Undirected &#39;U&#39; or Directed &#39;D&#39;), by default &#39;U&#39;
+    isSimple : bool, optional
+        true if input graph is a simple graph else false if multigraph, by default True
+    l : int, optional
+        number of actions that can be performed, by default 6
+    ic_mode : int, optional
+        mode to run the hillclimber ro find patterns (ic_ssg: 1, AD: 2, ic_dsimp: 3), by default 1
+    imode : int, optional
+        mode to compute IG (1: IC/DL, 2: IC-DL), by default 2
+    minsize : int, optional
+        minimum size of pattern, by default 2
+    seedType : str, optional
+        mode of the seed select (options: &#39;uniform&#39;, &#39;degree&#39;, &#39;interest&#39;, &#39;all&#39;), by default &#39;interest&#39;
+    seedRuns : int, optional
+        number of independent seed runs, by default 10
+    q : float, optional
+        parameter for expected size of patterns, by default 0.01
+    incEdges : bool, optional
+        to describe a pattern if edges to be described or not, by default True
+
+    Returns
+    -------
+    dict, PDClass, int, df_patterns
+        Summary (dictionary of actions), Final Background distribution, final pat_id and dataframe of patterns respectively
+    &#34;&#34;&#34;
+    EA_o = EA(gtype, isSimple, l, ic_mode, imode, minsize, seedType, seedRuns, q, incEdges)
+    flag = True
+    Summary = dict()
+    action_id = 0
+    while flag:
+        EA_o.evaluateNew(G_cur, PD)
+        EA_params = EA_o.getBestOption(G_cur, PD)
+        # for k, v in EA_params.items():
+        #     print(&#39;\t best Cand Add: {} ----- {}&#39;.format(k,v))
+        if EA_params is not None and EA_params[&#39;Pat&#39;].I&gt;0.0:
+            print(&#39;\n\t**Action id: {}**&#39;.format(action_id))
+            EA_params[&#39;Pat&#39;].setCurOrder(pat_ids)
+            EA_params[&#39;Pat&#39;].setStateInfo(state_id)
+            pat_ids += 1
+            Summary[action_id] = EA_params #? is this valid? Check
+            action_id += 1
+            EA_o.updateDistribution(PD, EA_params)
+            if df_patterns is not None:
+                df_patterns = writePattern(df_patterns, EA_params[&#39;Pat&#39;])
+            for k, v in EA_params.items():
+                print(&#39;\t{} --- {}&#39;.format(k, v))
+        else:
+            flag = False
+    return Summary, PD, pat_ids, df_patterns
+###################################################################################################################################################################
+def initializeActionObjects(gtype=&#39;U&#39;, isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType=&#39;interest&#39;, seedRuns=10, q=0.01, incEdges=True):
+    &#34;&#34;&#34;
+    Function to initialize the different action class objects
+
+    Parameters
+    ----------
+    gtype : str, optional
+        gyaph type (Undirected &#39;U&#39; or Directed &#39;D&#39;), by default &#39;U&#39;
+    isSimple : bool, optional
+        true if input graph is a simple graph else false if multigraph, by default True
+    l : int, optional
+        number of actions that can be performed, by default 6
+    ic_mode : int, optional
+        mode to run the hillclimber ro find patterns (ic_ssg: 1, AD: 2, ic_dsimp: 3), by default 1
+    imode : int, optional
+        mode to compute IG (1: IC/DL, 2: IC-DL), by default 2
+    minsize : int, optional
+        minimum size of pattern, by default 2
+    seedType : str, optional
+        mode of the seed select (options: &#39;uniform&#39;, &#39;degree&#39;, &#39;interest&#39;, &#39;all&#39;), by default &#39;interest&#39;
+    seedRuns : int, optional
+        number of independent seed runs, by default 10
+    q : float, optional
+        parameter for expected size of patterns, by default 0.01
+    incEdges : bool, optional
+        to describe a pattern if edges to be described or not, by default True
+
+    Returns
+    -------
+    six objects
+        for each action type
+    &#34;&#34;&#34;
+    EA_o = EA(gtype, isSimple, l, ic_mode, imode, minsize, seedType, seedRuns, q, incEdges)
+    ER_o = ER(gtype, isSimple, l, imode)
+    EU_o = EU(gtype, isSimple, l, imode)
+    EM_o = EM(gtype, isSimple, l, imode)
+    ESH_o = ESH(gtype, isSimple, l, imode, minsize)
+    ESP_o = ESP(gtype, isSimple, l, imode, minsize)
+    return EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o
+###################################################################################################################################################################
+def preProcessActionObjects(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
+    &#34;&#34;&#34;
+    function to generate initial candidates for each action type given the graph state and background distribution
+
+    Parameters
+    ----------
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    EA_o : src.Actions.add
+        add action object
+    ER_o : src.Actions.remove
+        remove action object
+    EU_o : src.Actions.update
+        update action object
+    EM_o : src.Actions.merge
+        merge action object
+    ESH_o : src.Actions.shrink
+        shrink action object
+    ESP_o : src.Actions.split
+        split action object
+    &#34;&#34;&#34;
+    EA_o.evaluateNew(G_cur, PD)
+    ER_o.evaluateAllConstraints(G_cur, PD)
+    EU_o.evaluateAllConstraints(G_cur, PD)
+    EM_o.evaluateAllConstraintPairs(G_cur, PD)
+    ESH_o.evaluateAllConstraints(G_cur, PD)
+    ESP_o.evaluateAllConstraints(G_cur, PD)
+    return
+###################################################################################################################################################################
+def getBestAction(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
+    &#34;&#34;&#34;
+    function to return best action with maximum information gain
+
+    Parameters
+    ----------
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    EA_o : src.Actions.add
+        add action object
+    ER_o : src.Actions.remove
+        remove action object
+    EU_o : src.Actions.update
+        update action object
+    EM_o : src.Actions.merge
+        merge action object
+    ESH_o : src.Actions.shrink
+        shrink action object
+    ESP_o : src.Actions.split
+        split action object
+
+    Returns
+    -------
+    dict
+        dictionary of parameters of best action
+    &#34;&#34;&#34;
+    EA_params = EA_o.getBestOption(G_cur, PD)
+    ER_params = ER_o.getBestOption()
+    EU_params = EU_o.getBestOption()
+    EM_params = EM_o.getBestOption()
+    ESH_params = ESH_o.getBestOption()
+    ESP_params = ESP_o.getBestOption()
+    bestAction = None
+    bestI = 0.0
+    if EA_params is not None and EA_params[&#39;Pat&#39;].I &gt; bestI:
+        bestI = EA_params[&#39;Pat&#39;].I
+        bestAction = EA_params
+    if ER_params is not None and ER_params[&#39;Pat&#39;].I &gt; bestI:
+        bestI = ER_params[&#39;Pat&#39;].I
+        bestAction = ER_params
+    if EM_params is not None and EM_params[&#39;Pat&#39;].I &gt; bestI:
+        bestI = EM_params[&#39;Pat&#39;].I
+        bestAction = EM_params
+    if EU_params is not None and EU_params[&#39;Pat&#39;].I &gt; bestI:
+        bestI = EU_params[&#39;Pat&#39;].I
+        bestAction = EU_params
+    if ESH_params is not None and ESH_params[&#39;SPat&#39;].I &gt; bestI:
+        bestI = ESH_params[&#39;SPat&#39;].I
+        bestAction = ESH_params
+    if ESP_params is not None and ESP_params[&#39;Pat&#39;].I &gt; bestI:
+        bestI = ESP_params[&#39;Pat&#39;].I
+        bestAction = ESP_params
+    return bestAction
+###################################################################################################################################################################
+def setNewDetails(bestParams, state_id, pat_ids):
+    &#34;&#34;&#34;
+    function to update paramteres of the best action
+
+    Parameters
+    ----------
+    bestParams : dict
+        dictionary of parameters of best action
+    state_id : int
+        current state id
+    pat_ids : int
+        pattern identifier for new patterns
+
+    Returns
+    -------
+    int, dict
+        updated pat_ids and bestParams object
+    &#34;&#34;&#34;
+    if bestParams[&#39;Pat&#39;].pat_type in [&#39;add&#39;, &#39;merge&#39;, &#39;shrink&#39;, &#39;update&#39;]:
+        bestParams[&#39;Pat&#39;].setCurOrder(pat_ids)
+        bestParams[&#39;Pat&#39;].setStateInfo(state_id)
+        pat_ids += 1
+        if bestParams[&#39;Pat&#39;].pat_type is &#39;shrink&#39;:
+            bestParams[&#39;SPat&#39;].setCurOrder(bestParams[&#39;Pat&#39;].prev_order)
+            bestParams[&#39;SPat&#39;].setStateInfo(state_id)
+    elif bestParams[&#39;Pat&#39;].pat_type in [&#39;remove&#39;]:
+        bestParams[&#39;Pat&#39;].setCurOrder(bestParams[&#39;Pat&#39;].prev_order)
+        bestParams[&#39;Pat&#39;].setStateInfo(state_id)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;split&#39;:
+        bestParams[&#39;Pat&#39;].setStateInfo(state_id)
+        lt = []
+        for k,v in bestParams[&#39;compos&#39;].items():
+            v.setCurOrder(pat_ids)
+            lt.append(pat_ids)
+            v.setStateInfo(state_id)
+            pat_ids += 1
+        bestParams[&#39;Pat&#39;].setCurOrder(lt)
+    return pat_ids, bestParams
+###################################################################################################################################################################
+def postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
+    &#34;&#34;&#34;
+    function to update the corresponding candidate list of each of the action and update background distribution
+
+    Parameters
+    ----------
+    bestParams : dict
+        dictionary of parameters of best action
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    EA_o : src.Actions.add
+        add action object
+    ER_o : src.Actions.remove
+        remove action object
+    EU_o : src.Actions.update
+        update action object
+    EM_o : src.Actions.merge
+        merge action object
+    ESH_o : src.Actions.shrink
+        shrink action object
+    ESP_o : src.Actions.split
+        split action object
+    &#34;&#34;&#34;
+    # Update Background Distribution
+    # print(&#34;In postProcess prev lambda keys:&#34;, PD.lprevUpdate.keys())
+    if bestParams[&#39;Pat&#39;].pat_type is &#39;add&#39;:
+        EA_o.updateDistribution(PD, bestParams)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;remove&#39;:
+        ER_o.updateDistribution(PD, bestParams)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;update&#39;:
+        EU_o.updateDistribution(PD, bestParams)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;merge&#39;:
+        EM_o.updateDistribution(PD, bestParams)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;shrink&#39;:
+        ESH_o.updateDistribution(PD, bestParams)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;split&#39;:
+        ESP_o.updateDistribution(PD, bestParams)
+    # Update candidate list of all actions
+    # print(&#39;bestParam.cur_id and prev-id&#39;, bestParams[&#39;Pat&#39;].pat_type, bestParams[&#39;Pat&#39;].cur_order, bestParams[&#39;Pat&#39;].prev_order)
+    # print(&#34;In postProcess prev lambda keys:&#34;, PD.lprevUpdate.keys())
+    EA_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    ER_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    EU_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    EM_o.removeCandidates(bestParams[&#39;Pat&#39;])
+    EM_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    if &#39;split&#39; is bestParams[&#39;Pat&#39;].pat_type:
+        EM_o.doProcessWithNewConstraint(G_cur, PD, list(bestParams[&#39;compos&#39;].values()))
+    elif &#39;shrink&#39; is bestParams[&#39;Pat&#39;].pat_type:
+        EM_o.doProcessWithNewConstraint(G_cur, PD, bestParams[&#39;SPat&#39;])
+    else:
+        EM_o.doProcessWithNewConstraint(G_cur, PD, bestParams[&#39;Pat&#39;])
+    ESH_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    ESP_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    return
+###################################################################################################################################################################
+def RunDSSGUtil(gname, PD, state_id, pat_ids, Params, df_patterns):
+    &#34;&#34;&#34;
+    function to run DSSG for one state of graph graph
+
+    Parameters
+    ----------
+    gname : str
+        current graph state filename
+    PD : PDClass
+        input background distribution
+    state_id : int
+        current state id
+    pat_ids : int
+        pattern identifier for new patterns
+    Params : dict
+        required parameters from config file to run the experiment
+    df_patterns : pandas dataframe
+        dataframe for found patterns
+
+    Returns
+    -------
+    dict, int, dataframe
+        summary of actions, pat_ids, and updated patterns dataframe respectively
+
+    Raises
+    ------
+    Exception
+        Invalid File Type current graph state file type
+    Exception
+        Mismatch graph type
+    Exception
+        Multigraph encountered
+    &#34;&#34;&#34;
+    print(&#39;State: {}&#39;.format(state_id))
+    flag = True
+    Summary = dict()
+    action_id = 0
+    G_cur = None
+    if &#39;.gpickle&#39; in gname:
+        G_cur = nx.read_gpickle(gname)
+    elif &#39;.gml&#39; in gname:
+        G_cur = nx.read_gml(gname, destringizer=nx.readwrite.gml.literal_destringizer)
+    else:
+        raise Exception(&#34;Invalid File Type, filetype shall either GML or gpickle&#34;)
+
+    if (G_cur.is_directed() and Params[&#39;gtype&#39;] is &#39;U&#39;) or (not G_cur.is_directed() and Params[&#39;gtype&#39;] is &#39;D&#39;):
+        raise Exception(&#39;************Mismatch graph type************ All states shall be either directed or undirected ******&#39;)
+    if G_cur.is_multigraph():
+        raise Exception(&#39;********Encountered a multigraph********** Gname: {}&#39;.format(gname))
+
+    EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o = initializeActionObjects(gtype=Params[&#39;gtype&#39;], isSimple=True, l=Params[&#39;l&#39;], ic_mode=Params[&#39;icmode&#39;], imode=Params[&#39;interesttype&#39;], minsize=Params[&#39;minsize&#39;], seedType=Params[&#39;seedmode&#39;], seedRuns=Params[&#39;seedruns&#39;], q=Params[&#39;q&#39;], incEdges=Params[&#39;incedges&#39;])
+
+    #PreProcessing as the state at this point is changed
+    preProcessActionObjects(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
+
+    print(&#39;\t After PreProcessing the #candidates in each case are:&#39;)
+    print(&#39;\t EA_o: {}&#39;.format(len(EA_o.Data)))
+    print(&#39;\t ER_o: {}&#39;.format(len(ER_o.Data)))
+    print(&#39;\t EU_o: {}&#39;.format(len(EU_o.Data)))
+    print(&#39;\t EM_o: {}&#39;.format(len(EM_o.Data)))
+    print(&#39;\t ESH_o: {}&#39;.format(len(ESH_o.Data)))
+    print(&#39;\t ESP_o: {}&#39;.format(len(ESP_o.Data)))
+
+    while flag:
+        bestParams = getBestAction(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
+        if bestParams is not None:
+            print(&#39;\n\t**Action id: {}**&#39;.format(action_id))
+            pat_ids, bestParams = setNewDetails(bestParams, state_id, pat_ids)
+            Summary[action_id] = bestParams #? is this valid? Check
+            action_id += 1
+            postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
+            if df_patterns is not None:
+                df_patterns = writePatternsToDF(df_patterns, bestParams)
+            for k, v in bestParams.items():
+                if k is &#39;compos&#39;:
+                    print(&#34;\tCompos:&#34;)
+                    for k1, v1 in v:
+                        print(&#39;\t\t{} --- {}&#39;.fomat(k1, v1))
+                else:
+                    print(&#39;\t{} --- {}&#39;.format(k, v))
+        else:
+            flag = False
+
+    return Summary, pat_ids, df_patterns
+###################################################################################################################################################################
+def writePattern(df, pat):
+    &#34;&#34;&#34;
+    utility function to append a pattern in a dataframe
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        input dataframe to be updated
+    pat : src.Patterns.pattern
+        pattern to be added
+
+    Returns
+    -------
+    pandas dataframe
+        updated dataframe
+    &#34;&#34;&#34;
+    df = df.append(pat.getDictForm(), ignore_index=True)
+    return df
+###################################################################################################################################################################
+def writePatternsToDF(df, Params):
+    &#34;&#34;&#34;
+    utility function to write a pattern to a dataframe from a given action
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        input dataframe to be updated
+    Params : dict
+        parameters of an action
+
+    Returns
+    -------
+    pandas dataframe
+        updated dataframe
+    &#34;&#34;&#34;
+    if Params[&#39;Pat&#39;].pat_type in [&#39;add&#39;, &#39;merge&#39;, &#39;update&#39;]:
+        df = writePattern(df, Params[&#39;Pat&#39;])
+    elif Params[&#39;Pat&#39;].pat_type in [&#39;shrink&#39;]:
+        df = writePattern(df, Params[&#39;SPat&#39;])
+    elif Params[&#39;Pat&#39;].pat_type in [&#39;split&#39;]:
+        for k, v in Params[&#39;compos&#39;]:
+            df = writePattern(df, v)
+    return df
+###################################################################################################################################################################
+def makeWritePath(ds):
+    &#34;&#34;&#34;
+    utility function to make proper path to write the results
+
+    Parameters
+    ----------
+    ds : str
+        current dataset name
+
+    Returns
+    -------
+    str
+        path of the folder in which the results to be written
+    &#34;&#34;&#34;
+    if not os.path.exists(path+&#39;Results/&#39;):
+        os.mkdir(path+&#39;Results/&#39;)
+    if not os.path.exists(path+&#39;Results/DSSG/&#39;):
+        os.mkdir(path+&#39;Results/DSSG/&#39;)
+    if not os.path.exists(path+&#39;Results/DSSG/&#39;+ds+&#39;/&#39;):
+        os.mkdir(path+&#39;Results/DSSG/&#39;+ds+&#39;/&#39;)
+    wpath = path+&#39;Results/DSSG/&#39;+ds+&#39;/&#39;+&#39;run_&#39;+str(int(time.time()))
+    os.mkdir(wpath)
+    if not os.path.exists(wpath+&#39;/constr/&#39;):
+        os.mkdir(wpath+&#39;/constr/&#39;)
+    return wpath+&#39;/&#39;
+###################################################################################################################################################################
+def writeToCSV(df, dfname, wpath):
+    &#34;&#34;&#34;
+    utility function of write a dataframe at the specified location and stored by the given name
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        input dataframe to be written
+    dfname : str
+        name of the dataframe to be given in the final file
+    wpath : str
+        path to directory
+    &#34;&#34;&#34;
+    df.to_csv(wpath+dfname+&#39;.csv&#39;, index=False, sep=&#39;;&#39;)
+    return
+###################################################################################################################################################################
+def writeConstraints(PD, cols, dfname, wpath):
+    &#34;&#34;&#34;
+    function to write the active constraints of the background distribution at the end of each state
+
+    Parameters
+    ----------
+    PD : PDClass
+        input background distribution
+    cols : list
+        parameters to be saved of each constraint
+    dfname : str
+        constraint would be storea as a dataframe under the given name
+    wpath : str
+        path to directory
+    &#34;&#34;&#34;
+    df = pd.DataFrame(columns=cols)
+    for k, v in PD.lprevUpdate.items():
+        dt = dict()
+        dt[&#39;order&#39;] = k
+        if PD.tp is &#39;U&#39;:
+            dt[&#39;NL&#39;] = v[1]
+            dt[&#39;kw&#39;] = v[2]
+        else:
+            dt[&#39;inNL&#39;] = v[1]
+            dt[&#39;outNL&#39;] = v[2]
+            dt[&#39;kw&#39;] = v[3]
+        dt[&#39;la&#39;] = v[0]
+        df = df.append(dt, ignore_index=True)
+    writeToCSV(df, dfname, wpath+&#39;/constr/&#39;)
+    return
+###################################################################################################################################################################
+def writeActions(OSummary, wpath):
+    &#34;&#34;&#34;
+    utility function to write the details of actions performed in an ordered manner
+
+    Parameters
+    ----------
+    OSummary : dict
+        overall summary of all states
+    wpath : str
+        path to directory
+    &#34;&#34;&#34;
+    df = pd.DataFrame(columns=[&#39;state_id&#39;, &#39;action_id&#39;, &#39;action&#39;, &#39;initial_pats&#39;, &#39;final_pats&#39;, &#39;CL_i&#39;, &#39;CL_f&#39;])
+    for k,v in OSummary.items():
+        for k1, u in v.items():
+            dt = dict()
+            dt[&#39;state_id&#39;] = k
+            dt[&#39;action_id&#39;] = k1
+            dt[&#39;action&#39;] = u[&#39;Pat&#39;].pat_type
+            if isinstance(u[&#39;Pat&#39;].prev_order, (int, float)):
+                dt[&#39;initial_pats&#39;] = list([u[&#39;Pat&#39;].prev_order])
+            elif u[&#39;Pat&#39;].prev_order is not None:
+                dt[&#39;initial_pats&#39;] = list(u[&#39;Pat&#39;].prev_order)
+            else:
+                dt[&#39;initial_pats&#39;] = list()
+            if isinstance(u[&#39;Pat&#39;].cur_order, (int, float)):
+                dt[&#39;final_pats&#39;] = list([u[&#39;Pat&#39;].cur_order])
+            elif u[&#39;Pat&#39;].cur_order is not None:
+                dt[&#39;final_pats&#39;] = list(u[&#39;Pat&#39;].cur_order)
+            else:
+                dt[&#39;final_pats&#39;] = list()
+            dt[&#39;CL_i&#39;] = u[&#39;codeLengthC&#39;]
+            dt[&#39;CL_f&#39;] = u[&#39;codeLengthCprime&#39;]
+            df = df.append(dt, ignore_index=True)
+    writeToCSV(df, &#39;actions&#39;, wpath)
+    return
+###################################################################################################################################################################
+def DSSGMain(fname):
+    &#34;&#34;&#34;
+    Function to run DSSG
+
+    Parameters
+    ----------
+    fname : str
+        filename of the configuration file found in &#34;Confs&#34; directory
+    &#34;&#34;&#34;
+    if not ray.is_initialized():
+        ray.init()
+    DS, Params = readConfFile(fname)
+    print(Params)
+    for d in DS:
+        OSummary = dict()
+        pat_ids = 0
+        allStates = getAllStates(d)
+        stime = time.time()
+        G_cur, PD, gtype = getInitGraphAndBD(path+&#39;Data/DSSG/&#39;+d+&#39;/&#39;+allStates[0], Params)
+        Params[&#39;gtype&#39;] = gtype
+        p_cols = None
+        c_cols = None
+        if gtype is &#39;U&#39;:
+            p_cols = [&#39;state_info&#39;, &#39;pat_type&#39;, &#39;prev_order&#39;, &#39;cur_order&#39;, &#39;NCount&#39;, &#39;ECount&#39;, &#39;Density&#39;,\
+                &#39;I&#39;, &#39;DL&#39;, &#39;IC_ssg&#39;, &#39;AD&#39;, &#39;IC_dssg&#39;, &#39;IC_dsimp&#39;, &#39;la&#39;, &#39;sumPOS&#39;, &#39;expectedEdges&#39;, &#39;NL&#39;,\
+                &#39;kws&#39;, &#39;nw&#39;, &#39;minPOS&#39;]
+            c_cols = [&#39;order&#39;, &#39;NL&#39;, &#39;kw&#39;, &#39;la&#39;]
+        else:
+            p_cols = [&#39;state_info&#39;, &#39;pat_type&#39;, &#39;prev_order&#39;, &#39;cur_order&#39;, &#39;InNCount&#39;, &#39;OutNCount&#39;, &#39;ECount&#39;, &#39;Density&#39;,\
+                &#39;I&#39;, &#39;DL&#39;, &#39;IC_ssg&#39;, &#39;AD&#39;, &#39;IC_dssg&#39;, &#39;IC_dsimp&#39;, &#39;la&#39;, &#39;sumPOS&#39;, &#39;expectedEdges&#39;, &#39;inNL&#39;,\
+                &#39;outNL&#39;, &#39;kws&#39;, &#39;nw&#39;, &#39;minPOS&#39;]
+            c_cols = [&#39;order&#39;, &#39;inNL&#39;, &#39;outNL&#39;, &#39;kw&#39;, &#39;la&#39;]
+        wpath = makeWritePath(d)
+        df_patterns = pd.DataFrame(columns = p_cols)
+
+        OSummary[0], PD, pat_ids, df_patterns = processInitialState(G_cur, PD, 0, pat_ids, df_patterns=df_patterns, gtype=gtype, isSimple=True, l=Params[&#39;l&#39;], ic_mode=Params[&#39;icmode&#39;], imode=Params[&#39;interesttype&#39;], minsize=Params[&#39;minsize&#39;], seedType=Params[&#39;seedmode&#39;], seedRuns=Params[&#39;seedruns&#39;], q=Params[&#39;q&#39;], incEdges=Params[&#39;incedges&#39;])
+        writeConstraints(PD, c_cols, &#39;S&#39;+str(0)+&#39;_constr&#39;, wpath)
+        for state_id in range(1, len(allStates)):
+            OSummary[state_id], pat_ids, df_patterns = RunDSSGUtil(path+&#39;Data/DSSG/&#39;+d+&#39;/&#39;+allStates[state_id], PD, state_id, pat_ids, Params, df_patterns)
+            writeConstraints(PD, c_cols, &#39;S&#39;+str(state_id)+&#39;_constr&#39;, wpath)
+        ftime = time.time()
+        writeActions(OSummary, wpath)
+        writeToCSV(df_patterns, &#39;patterns&#39;, wpath)
+        print(&#39;\n\nTotal Time Taken: {:.4f} seconds&#39;.format(ftime-stime))
+    return
+###################################################################################################################################################################
+if __name__==&#34;__main__&#34;:
+    parser = argparse.ArgumentParser(description=&#39;Running DSSG&#39;)
+    parser.add_argument(dest =&#39;filename&#39;, metavar =&#39;filename&#39;, type=str, help=&#39;configuration filename to run DSSG.py&#39;)
+    args = parser.parse_args()
+    DSSGMain(args.filename)
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="src.Algorithms.DSSG.DSSGMain"><code class="name flex">
+<span>def <span class="ident">DSSGMain</span></span>(<span>fname)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function to run DSSG</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fname</code></strong> :&ensp;<code>str</code></dt>
+<dd>filename of the configuration file found in "Confs" directory</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DSSGMain(fname):
+    &#34;&#34;&#34;
+    Function to run DSSG
+
+    Parameters
+    ----------
+    fname : str
+        filename of the configuration file found in &#34;Confs&#34; directory
+    &#34;&#34;&#34;
+    if not ray.is_initialized():
+        ray.init()
+    DS, Params = readConfFile(fname)
+    print(Params)
+    for d in DS:
+        OSummary = dict()
+        pat_ids = 0
+        allStates = getAllStates(d)
+        stime = time.time()
+        G_cur, PD, gtype = getInitGraphAndBD(path+&#39;Data/DSSG/&#39;+d+&#39;/&#39;+allStates[0], Params)
+        Params[&#39;gtype&#39;] = gtype
+        p_cols = None
+        c_cols = None
+        if gtype is &#39;U&#39;:
+            p_cols = [&#39;state_info&#39;, &#39;pat_type&#39;, &#39;prev_order&#39;, &#39;cur_order&#39;, &#39;NCount&#39;, &#39;ECount&#39;, &#39;Density&#39;,\
+                &#39;I&#39;, &#39;DL&#39;, &#39;IC_ssg&#39;, &#39;AD&#39;, &#39;IC_dssg&#39;, &#39;IC_dsimp&#39;, &#39;la&#39;, &#39;sumPOS&#39;, &#39;expectedEdges&#39;, &#39;NL&#39;,\
+                &#39;kws&#39;, &#39;nw&#39;, &#39;minPOS&#39;]
+            c_cols = [&#39;order&#39;, &#39;NL&#39;, &#39;kw&#39;, &#39;la&#39;]
+        else:
+            p_cols = [&#39;state_info&#39;, &#39;pat_type&#39;, &#39;prev_order&#39;, &#39;cur_order&#39;, &#39;InNCount&#39;, &#39;OutNCount&#39;, &#39;ECount&#39;, &#39;Density&#39;,\
+                &#39;I&#39;, &#39;DL&#39;, &#39;IC_ssg&#39;, &#39;AD&#39;, &#39;IC_dssg&#39;, &#39;IC_dsimp&#39;, &#39;la&#39;, &#39;sumPOS&#39;, &#39;expectedEdges&#39;, &#39;inNL&#39;,\
+                &#39;outNL&#39;, &#39;kws&#39;, &#39;nw&#39;, &#39;minPOS&#39;]
+            c_cols = [&#39;order&#39;, &#39;inNL&#39;, &#39;outNL&#39;, &#39;kw&#39;, &#39;la&#39;]
+        wpath = makeWritePath(d)
+        df_patterns = pd.DataFrame(columns = p_cols)
+
+        OSummary[0], PD, pat_ids, df_patterns = processInitialState(G_cur, PD, 0, pat_ids, df_patterns=df_patterns, gtype=gtype, isSimple=True, l=Params[&#39;l&#39;], ic_mode=Params[&#39;icmode&#39;], imode=Params[&#39;interesttype&#39;], minsize=Params[&#39;minsize&#39;], seedType=Params[&#39;seedmode&#39;], seedRuns=Params[&#39;seedruns&#39;], q=Params[&#39;q&#39;], incEdges=Params[&#39;incedges&#39;])
+        writeConstraints(PD, c_cols, &#39;S&#39;+str(0)+&#39;_constr&#39;, wpath)
+        for state_id in range(1, len(allStates)):
+            OSummary[state_id], pat_ids, df_patterns = RunDSSGUtil(path+&#39;Data/DSSG/&#39;+d+&#39;/&#39;+allStates[state_id], PD, state_id, pat_ids, Params, df_patterns)
+            writeConstraints(PD, c_cols, &#39;S&#39;+str(state_id)+&#39;_constr&#39;, wpath)
+        ftime = time.time()
+        writeActions(OSummary, wpath)
+        writeToCSV(df_patterns, &#39;patterns&#39;, wpath)
+        print(&#39;\n\nTotal Time Taken: {:.4f} seconds&#39;.format(ftime-stime))
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.RunDSSGUtil"><code class="name flex">
+<span>def <span class="ident">RunDSSGUtil</span></span>(<span>gname, PD, state_id, pat_ids, Params, df_patterns)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to run DSSG for one state of graph graph</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>gname</code></strong> :&ensp;<code>str</code></dt>
+<dd>current graph state filename</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>input background distribution</dd>
+<dt><strong><code>state_id</code></strong> :&ensp;<code>int</code></dt>
+<dd>current state id</dd>
+<dt><strong><code>pat_ids</code></strong> :&ensp;<code>int</code></dt>
+<dd>pattern identifier for new patterns</dd>
+<dt><strong><code>Params</code></strong> :&ensp;<code>dict</code></dt>
+<dd>required parameters from config file to run the experiment</dd>
+<dt><strong><code>df_patterns</code></strong> :&ensp;<code>pandas dataframe</code></dt>
+<dd>dataframe for found patterns</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict, int, dataframe</code></dt>
+<dd>summary of actions, pat_ids, and updated patterns dataframe respectively</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>Exception</code></dt>
+<dd>Invalid File Type current graph state file type</dd>
+<dt><code>Exception</code></dt>
+<dd>Mismatch graph type</dd>
+<dt><code>Exception</code></dt>
+<dd>Multigraph encountered</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def RunDSSGUtil(gname, PD, state_id, pat_ids, Params, df_patterns):
+    &#34;&#34;&#34;
+    function to run DSSG for one state of graph graph
+
+    Parameters
+    ----------
+    gname : str
+        current graph state filename
+    PD : PDClass
+        input background distribution
+    state_id : int
+        current state id
+    pat_ids : int
+        pattern identifier for new patterns
+    Params : dict
+        required parameters from config file to run the experiment
+    df_patterns : pandas dataframe
+        dataframe for found patterns
+
+    Returns
+    -------
+    dict, int, dataframe
+        summary of actions, pat_ids, and updated patterns dataframe respectively
+
+    Raises
+    ------
+    Exception
+        Invalid File Type current graph state file type
+    Exception
+        Mismatch graph type
+    Exception
+        Multigraph encountered
+    &#34;&#34;&#34;
+    print(&#39;State: {}&#39;.format(state_id))
+    flag = True
+    Summary = dict()
+    action_id = 0
+    G_cur = None
+    if &#39;.gpickle&#39; in gname:
+        G_cur = nx.read_gpickle(gname)
+    elif &#39;.gml&#39; in gname:
+        G_cur = nx.read_gml(gname, destringizer=nx.readwrite.gml.literal_destringizer)
+    else:
+        raise Exception(&#34;Invalid File Type, filetype shall either GML or gpickle&#34;)
+
+    if (G_cur.is_directed() and Params[&#39;gtype&#39;] is &#39;U&#39;) or (not G_cur.is_directed() and Params[&#39;gtype&#39;] is &#39;D&#39;):
+        raise Exception(&#39;************Mismatch graph type************ All states shall be either directed or undirected ******&#39;)
+    if G_cur.is_multigraph():
+        raise Exception(&#39;********Encountered a multigraph********** Gname: {}&#39;.format(gname))
+
+    EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o = initializeActionObjects(gtype=Params[&#39;gtype&#39;], isSimple=True, l=Params[&#39;l&#39;], ic_mode=Params[&#39;icmode&#39;], imode=Params[&#39;interesttype&#39;], minsize=Params[&#39;minsize&#39;], seedType=Params[&#39;seedmode&#39;], seedRuns=Params[&#39;seedruns&#39;], q=Params[&#39;q&#39;], incEdges=Params[&#39;incedges&#39;])
+
+    #PreProcessing as the state at this point is changed
+    preProcessActionObjects(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
+
+    print(&#39;\t After PreProcessing the #candidates in each case are:&#39;)
+    print(&#39;\t EA_o: {}&#39;.format(len(EA_o.Data)))
+    print(&#39;\t ER_o: {}&#39;.format(len(ER_o.Data)))
+    print(&#39;\t EU_o: {}&#39;.format(len(EU_o.Data)))
+    print(&#39;\t EM_o: {}&#39;.format(len(EM_o.Data)))
+    print(&#39;\t ESH_o: {}&#39;.format(len(ESH_o.Data)))
+    print(&#39;\t ESP_o: {}&#39;.format(len(ESP_o.Data)))
+
+    while flag:
+        bestParams = getBestAction(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
+        if bestParams is not None:
+            print(&#39;\n\t**Action id: {}**&#39;.format(action_id))
+            pat_ids, bestParams = setNewDetails(bestParams, state_id, pat_ids)
+            Summary[action_id] = bestParams #? is this valid? Check
+            action_id += 1
+            postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
+            if df_patterns is not None:
+                df_patterns = writePatternsToDF(df_patterns, bestParams)
+            for k, v in bestParams.items():
+                if k is &#39;compos&#39;:
+                    print(&#34;\tCompos:&#34;)
+                    for k1, v1 in v:
+                        print(&#39;\t\t{} --- {}&#39;.fomat(k1, v1))
+                else:
+                    print(&#39;\t{} --- {}&#39;.format(k, v))
+        else:
+            flag = False
+
+    return Summary, pat_ids, df_patterns</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.getAllStates"><code class="name flex">
+<span>def <span class="ident">getAllStates</span></span>(<span>d)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to read the file names of all available states from the given dataset directory in sorted manner</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>d</code></strong> :&ensp;<code>str</code></dt>
+<dd>dataset name</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>sorted list of files names corresponding to each state of the graph</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>Exception</code></dt>
+<dd>if no compatible file is found</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getAllStates(d):
+    &#34;&#34;&#34;
+    function to read the file names of all available states from the given dataset directory in sorted manner
+
+    Parameters
+    ----------
+    d : str
+        dataset name
+
+    Returns
+    -------
+    list
+        sorted list of files names corresponding to each state of the graph
+
+    Raises
+    ------
+    Exception
+        if no compatible file is found
+    &#34;&#34;&#34;
+    files = None
+    states = None
+    if os.path.exists(path+&#39;Data/DSSG/&#39;+d):
+        files = os.listdir(path+&#39;Data/DSSG/&#39;+d)
+    Ffiles = dict()
+    for f in files:
+        if &#39;.gml&#39; in f:
+            if &#39;.gml&#39; not in Ffiles:
+                Ffiles[&#39;.gml&#39;] = [f]
+            else:
+                Ffiles[&#39;.gml&#39;].append(f)
+        elif &#39;.gpickle&#39; in f:
+            if &#39;.gpickle&#39; not in Ffiles:
+                Ffiles[&#39;.gpickle&#39;] = [f]
+            else:
+                Ffiles[&#39;.gpickle&#39;].append(f)
+    print(Ffiles[&#39;.gml&#39;])
+    if (&#39;.gml&#39; in Ffiles or &#39;.gpickle&#39; in Ffiles) and not (&#39;.gml&#39; in Ffiles and &#39;.gpickle&#39; in Ffiles):
+        if &#39;.gml&#39; in Ffiles:
+            states = sorted(Ffiles[&#39;.gml&#39;])
+        elif &#39;.gpickle&#39; in Ffiles:
+            states = sorted(Ffiles[&#39;.gpickle&#39;])
+    else:
+        raise Exception(&#39;The folder shall contain either gml or gpickle files of different graph snapshots with name in a lexiographical order&#39;)
+    print(&#39;states:&#39;,states)
+    return states</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.getBestAction"><code class="name flex">
+<span>def <span class="ident">getBestAction</span></span>(<span>G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to return best action with maximum information gain</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G_cur</code></strong> :&ensp;<code>networkx graph</code></dt>
+<dd>input graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>input background distribution</dd>
+<dt><strong><code>EA_o</code></strong> :&ensp;<code><a title="src.Actions.add" href="../Actions/add.html">src.Actions.add</a></code></dt>
+<dd>add action object</dd>
+<dt><strong><code>ER_o</code></strong> :&ensp;<code><a title="src.Actions.remove" href="../Actions/remove.html">src.Actions.remove</a></code></dt>
+<dd>remove action object</dd>
+<dt><strong><code>EU_o</code></strong> :&ensp;<code><a title="src.Actions.update" href="../Actions/update.html">src.Actions.update</a></code></dt>
+<dd>update action object</dd>
+<dt><strong><code>EM_o</code></strong> :&ensp;<code><a title="src.Actions.merge" href="../Actions/merge.html">src.Actions.merge</a></code></dt>
+<dd>merge action object</dd>
+<dt><strong><code>ESH_o</code></strong> :&ensp;<code><a title="src.Actions.shrink" href="../Actions/shrink.html">src.Actions.shrink</a></code></dt>
+<dd>shrink action object</dd>
+<dt><strong><code>ESP_o</code></strong> :&ensp;<code><a title="src.Actions.split" href="../Actions/split.html">src.Actions.split</a></code></dt>
+<dd>split action object</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>dictionary of parameters of best action</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getBestAction(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
+    &#34;&#34;&#34;
+    function to return best action with maximum information gain
+
+    Parameters
+    ----------
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    EA_o : src.Actions.add
+        add action object
+    ER_o : src.Actions.remove
+        remove action object
+    EU_o : src.Actions.update
+        update action object
+    EM_o : src.Actions.merge
+        merge action object
+    ESH_o : src.Actions.shrink
+        shrink action object
+    ESP_o : src.Actions.split
+        split action object
+
+    Returns
+    -------
+    dict
+        dictionary of parameters of best action
+    &#34;&#34;&#34;
+    EA_params = EA_o.getBestOption(G_cur, PD)
+    ER_params = ER_o.getBestOption()
+    EU_params = EU_o.getBestOption()
+    EM_params = EM_o.getBestOption()
+    ESH_params = ESH_o.getBestOption()
+    ESP_params = ESP_o.getBestOption()
+    bestAction = None
+    bestI = 0.0
+    if EA_params is not None and EA_params[&#39;Pat&#39;].I &gt; bestI:
+        bestI = EA_params[&#39;Pat&#39;].I
+        bestAction = EA_params
+    if ER_params is not None and ER_params[&#39;Pat&#39;].I &gt; bestI:
+        bestI = ER_params[&#39;Pat&#39;].I
+        bestAction = ER_params
+    if EM_params is not None and EM_params[&#39;Pat&#39;].I &gt; bestI:
+        bestI = EM_params[&#39;Pat&#39;].I
+        bestAction = EM_params
+    if EU_params is not None and EU_params[&#39;Pat&#39;].I &gt; bestI:
+        bestI = EU_params[&#39;Pat&#39;].I
+        bestAction = EU_params
+    if ESH_params is not None and ESH_params[&#39;SPat&#39;].I &gt; bestI:
+        bestI = ESH_params[&#39;SPat&#39;].I
+        bestAction = ESH_params
+    if ESP_params is not None and ESP_params[&#39;Pat&#39;].I &gt; bestI:
+        bestI = ESP_params[&#39;Pat&#39;].I
+        bestAction = ESP_params
+    return bestAction</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.getInitGraphAndBD"><code class="name flex">
+<span>def <span class="ident">getInitGraphAndBD</span></span>(<span>gname, Params)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to read the initial graph state and corresponding background distribution of the given type of prior belief</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>gname</code></strong> :&ensp;<code>str</code></dt>
+<dd>input filename of the current graph state</dd>
+<dt><strong><code>Params</code></strong> :&ensp;<code>dict</code></dt>
+<dd>input parameters to run the experiment</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>networkx graph, PDClass, str</code></dt>
+<dd>Corresponding networkx graph, background distribution and graph type (undirected 'U' or directed 'D') respectively</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>Exception</code></dt>
+<dd>if a mutigraph is encountered</dd>
+<dt><code>Exception</code></dt>
+<dd>if a specific type of prior belief given as input which is not implemented yet</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getInitGraphAndBD(gname, Params):
+    &#34;&#34;&#34;
+    function to read the initial graph state and corresponding background distribution of the given type of prior belief
+
+    Parameters
+    ----------
+    gname : str
+        input filename of the current graph state
+    Params : dict
+        input parameters to run the experiment
+
+    Returns
+    -------
+    networkx graph, PDClass, str
+        Corresponding networkx graph, background distribution and graph type (undirected &#39;U&#39; or directed &#39;D&#39;) respectively
+
+    Raises
+    ------
+    Exception
+        if a mutigraph is encountered
+    Exception
+        if a specific type of prior belief given as input which is not implemented yet
+    &#34;&#34;&#34;
+    G = None
+    gtype = &#39;U&#39;
+    if &#39;.gpickle&#39; in gname:
+        G = nx.read_gpickle(gname)
+    else:
+        G = nx.read_gml(gname, destringizer=nx.readwrite.gml.literal_destringizer)
+    if G.is_directed():
+        gtype = &#39;D&#39;
+    if G.is_multigraph():
+        raise Exception(&#39;********Encountered a multigraph********** Gname: {}&#39;.format(gname))
+    if Params[&#39;priorbelief&#39;] is &#39;c&#39;:
+        PD = PDUDS(G)
+    elif Params[&#39;priorbelief&#39;] is &#39;i&#39;:
+        if G.is_directed():
+            PD = PDMESD(G)
+        else:
+            PD = PDMESU(G)
+    else:
+        raise Exception(&#39;Specified type of Belief is not yet implemented&#39;)
+    return G, PD, gtype</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.initializeActionObjects"><code class="name flex">
+<span>def <span class="ident">initializeActionObjects</span></span>(<span>gtype='U', isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType='interest', seedRuns=10, q=0.01, incEdges=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function to initialize the different action class objects</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>gtype</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>gyaph type (Undirected 'U' or Directed 'D'), by default 'U'</dd>
+<dt><strong><code>isSimple</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>true if input graph is a simple graph else false if multigraph, by default True</dd>
+<dt><strong><code>l</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>number of actions that can be performed, by default 6</dd>
+<dt><strong><code>ic_mode</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>mode to run the hillclimber ro find patterns (ic_ssg: 1, AD: 2, ic_dsimp: 3), by default 1</dd>
+<dt><strong><code>imode</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>mode to compute IG (1: IC/DL, 2: IC-DL), by default 2</dd>
+<dt><strong><code>minsize</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>minimum size of pattern, by default 2</dd>
+<dt><strong><code>seedType</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>mode of the seed select (options: 'uniform', 'degree', 'interest', 'all'), by default 'interest'</dd>
+<dt><strong><code>seedRuns</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>number of independent seed runs, by default 10</dd>
+<dt><strong><code>q</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>parameter for expected size of patterns, by default 0.01</dd>
+<dt><strong><code>incEdges</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>to describe a pattern if edges to be described or not, by default True</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>six objects</code></dt>
+<dd>for each action type</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def initializeActionObjects(gtype=&#39;U&#39;, isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType=&#39;interest&#39;, seedRuns=10, q=0.01, incEdges=True):
+    &#34;&#34;&#34;
+    Function to initialize the different action class objects
+
+    Parameters
+    ----------
+    gtype : str, optional
+        gyaph type (Undirected &#39;U&#39; or Directed &#39;D&#39;), by default &#39;U&#39;
+    isSimple : bool, optional
+        true if input graph is a simple graph else false if multigraph, by default True
+    l : int, optional
+        number of actions that can be performed, by default 6
+    ic_mode : int, optional
+        mode to run the hillclimber ro find patterns (ic_ssg: 1, AD: 2, ic_dsimp: 3), by default 1
+    imode : int, optional
+        mode to compute IG (1: IC/DL, 2: IC-DL), by default 2
+    minsize : int, optional
+        minimum size of pattern, by default 2
+    seedType : str, optional
+        mode of the seed select (options: &#39;uniform&#39;, &#39;degree&#39;, &#39;interest&#39;, &#39;all&#39;), by default &#39;interest&#39;
+    seedRuns : int, optional
+        number of independent seed runs, by default 10
+    q : float, optional
+        parameter for expected size of patterns, by default 0.01
+    incEdges : bool, optional
+        to describe a pattern if edges to be described or not, by default True
+
+    Returns
+    -------
+    six objects
+        for each action type
+    &#34;&#34;&#34;
+    EA_o = EA(gtype, isSimple, l, ic_mode, imode, minsize, seedType, seedRuns, q, incEdges)
+    ER_o = ER(gtype, isSimple, l, imode)
+    EU_o = EU(gtype, isSimple, l, imode)
+    EM_o = EM(gtype, isSimple, l, imode)
+    ESH_o = ESH(gtype, isSimple, l, imode, minsize)
+    ESP_o = ESP(gtype, isSimple, l, imode, minsize)
+    return EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.makeWritePath"><code class="name flex">
+<span>def <span class="ident">makeWritePath</span></span>(<span>ds)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>utility function to make proper path to write the results</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ds</code></strong> :&ensp;<code>str</code></dt>
+<dd>current dataset name</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>path of the folder in which the results to be written</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def makeWritePath(ds):
+    &#34;&#34;&#34;
+    utility function to make proper path to write the results
+
+    Parameters
+    ----------
+    ds : str
+        current dataset name
+
+    Returns
+    -------
+    str
+        path of the folder in which the results to be written
+    &#34;&#34;&#34;
+    if not os.path.exists(path+&#39;Results/&#39;):
+        os.mkdir(path+&#39;Results/&#39;)
+    if not os.path.exists(path+&#39;Results/DSSG/&#39;):
+        os.mkdir(path+&#39;Results/DSSG/&#39;)
+    if not os.path.exists(path+&#39;Results/DSSG/&#39;+ds+&#39;/&#39;):
+        os.mkdir(path+&#39;Results/DSSG/&#39;+ds+&#39;/&#39;)
+    wpath = path+&#39;Results/DSSG/&#39;+ds+&#39;/&#39;+&#39;run_&#39;+str(int(time.time()))
+    os.mkdir(wpath)
+    if not os.path.exists(wpath+&#39;/constr/&#39;):
+        os.mkdir(wpath+&#39;/constr/&#39;)
+    return wpath+&#39;/&#39;</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.parseStr"><code class="name flex">
+<span>def <span class="ident">parseStr</span></span>(<span>x)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to parse a string</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>str</code></dt>
+<dd>input string</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int</code> or <code>float</code> or <code>str</code></dt>
+<dd>parsed string</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parseStr(x):
+    &#34;&#34;&#34;
+    function to parse a string
+
+    Parameters
+    ----------
+    x : str
+        input string
+
+    Returns
+    -------
+    int or float or str
+        parsed string
+    &#34;&#34;&#34;
+    try:
+        return int(x)
+    except ValueError:
+        try:
+            return float(x)
+        except ValueError:
+            return x</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.postProssessActionObjects"><code class="name flex">
+<span>def <span class="ident">postProssessActionObjects</span></span>(<span>bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to update the corresponding candidate list of each of the action and update background distribution</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>bestParams</code></strong> :&ensp;<code>dict</code></dt>
+<dd>dictionary of parameters of best action</dd>
+<dt><strong><code>G_cur</code></strong> :&ensp;<code>networkx graph</code></dt>
+<dd>input graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>input background distribution</dd>
+<dt><strong><code>EA_o</code></strong> :&ensp;<code><a title="src.Actions.add" href="../Actions/add.html">src.Actions.add</a></code></dt>
+<dd>add action object</dd>
+<dt><strong><code>ER_o</code></strong> :&ensp;<code><a title="src.Actions.remove" href="../Actions/remove.html">src.Actions.remove</a></code></dt>
+<dd>remove action object</dd>
+<dt><strong><code>EU_o</code></strong> :&ensp;<code><a title="src.Actions.update" href="../Actions/update.html">src.Actions.update</a></code></dt>
+<dd>update action object</dd>
+<dt><strong><code>EM_o</code></strong> :&ensp;<code><a title="src.Actions.merge" href="../Actions/merge.html">src.Actions.merge</a></code></dt>
+<dd>merge action object</dd>
+<dt><strong><code>ESH_o</code></strong> :&ensp;<code><a title="src.Actions.shrink" href="../Actions/shrink.html">src.Actions.shrink</a></code></dt>
+<dd>shrink action object</dd>
+<dt><strong><code>ESP_o</code></strong> :&ensp;<code><a title="src.Actions.split" href="../Actions/split.html">src.Actions.split</a></code></dt>
+<dd>split action object</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
+    &#34;&#34;&#34;
+    function to update the corresponding candidate list of each of the action and update background distribution
+
+    Parameters
+    ----------
+    bestParams : dict
+        dictionary of parameters of best action
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    EA_o : src.Actions.add
+        add action object
+    ER_o : src.Actions.remove
+        remove action object
+    EU_o : src.Actions.update
+        update action object
+    EM_o : src.Actions.merge
+        merge action object
+    ESH_o : src.Actions.shrink
+        shrink action object
+    ESP_o : src.Actions.split
+        split action object
+    &#34;&#34;&#34;
+    # Update Background Distribution
+    # print(&#34;In postProcess prev lambda keys:&#34;, PD.lprevUpdate.keys())
+    if bestParams[&#39;Pat&#39;].pat_type is &#39;add&#39;:
+        EA_o.updateDistribution(PD, bestParams)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;remove&#39;:
+        ER_o.updateDistribution(PD, bestParams)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;update&#39;:
+        EU_o.updateDistribution(PD, bestParams)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;merge&#39;:
+        EM_o.updateDistribution(PD, bestParams)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;shrink&#39;:
+        ESH_o.updateDistribution(PD, bestParams)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;split&#39;:
+        ESP_o.updateDistribution(PD, bestParams)
+    # Update candidate list of all actions
+    # print(&#39;bestParam.cur_id and prev-id&#39;, bestParams[&#39;Pat&#39;].pat_type, bestParams[&#39;Pat&#39;].cur_order, bestParams[&#39;Pat&#39;].prev_order)
+    # print(&#34;In postProcess prev lambda keys:&#34;, PD.lprevUpdate.keys())
+    EA_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    ER_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    EU_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    EM_o.removeCandidates(bestParams[&#39;Pat&#39;])
+    EM_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    if &#39;split&#39; is bestParams[&#39;Pat&#39;].pat_type:
+        EM_o.doProcessWithNewConstraint(G_cur, PD, list(bestParams[&#39;compos&#39;].values()))
+    elif &#39;shrink&#39; is bestParams[&#39;Pat&#39;].pat_type:
+        EM_o.doProcessWithNewConstraint(G_cur, PD, bestParams[&#39;SPat&#39;])
+    else:
+        EM_o.doProcessWithNewConstraint(G_cur, PD, bestParams[&#39;Pat&#39;])
+    ESH_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    ESP_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams[&#39;Pat&#39;])
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.preProcessActionObjects"><code class="name flex">
+<span>def <span class="ident">preProcessActionObjects</span></span>(<span>G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to generate initial candidates for each action type given the graph state and background distribution</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G_cur</code></strong> :&ensp;<code>networkx graph</code></dt>
+<dd>input graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>input background distribution</dd>
+<dt><strong><code>EA_o</code></strong> :&ensp;<code><a title="src.Actions.add" href="../Actions/add.html">src.Actions.add</a></code></dt>
+<dd>add action object</dd>
+<dt><strong><code>ER_o</code></strong> :&ensp;<code><a title="src.Actions.remove" href="../Actions/remove.html">src.Actions.remove</a></code></dt>
+<dd>remove action object</dd>
+<dt><strong><code>EU_o</code></strong> :&ensp;<code><a title="src.Actions.update" href="../Actions/update.html">src.Actions.update</a></code></dt>
+<dd>update action object</dd>
+<dt><strong><code>EM_o</code></strong> :&ensp;<code><a title="src.Actions.merge" href="../Actions/merge.html">src.Actions.merge</a></code></dt>
+<dd>merge action object</dd>
+<dt><strong><code>ESH_o</code></strong> :&ensp;<code><a title="src.Actions.shrink" href="../Actions/shrink.html">src.Actions.shrink</a></code></dt>
+<dd>shrink action object</dd>
+<dt><strong><code>ESP_o</code></strong> :&ensp;<code><a title="src.Actions.split" href="../Actions/split.html">src.Actions.split</a></code></dt>
+<dd>split action object</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def preProcessActionObjects(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
+    &#34;&#34;&#34;
+    function to generate initial candidates for each action type given the graph state and background distribution
+
+    Parameters
+    ----------
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    EA_o : src.Actions.add
+        add action object
+    ER_o : src.Actions.remove
+        remove action object
+    EU_o : src.Actions.update
+        update action object
+    EM_o : src.Actions.merge
+        merge action object
+    ESH_o : src.Actions.shrink
+        shrink action object
+    ESP_o : src.Actions.split
+        split action object
+    &#34;&#34;&#34;
+    EA_o.evaluateNew(G_cur, PD)
+    ER_o.evaluateAllConstraints(G_cur, PD)
+    EU_o.evaluateAllConstraints(G_cur, PD)
+    EM_o.evaluateAllConstraintPairs(G_cur, PD)
+    ESH_o.evaluateAllConstraints(G_cur, PD)
+    ESP_o.evaluateAllConstraints(G_cur, PD)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.processInitialState"><code class="name flex">
+<span>def <span class="ident">processInitialState</span></span>(<span>G_cur, PD, state_id, pat_ids, df_patterns, gtype='U', isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType='interest', seedRuns=10, q=0.01, incEdges=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function is to only process the first state of the graph dataset. In this, only one action is performed that is 'add'</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G_cur</code></strong> :&ensp;<code>networkx graph</code></dt>
+<dd>input graph</dd>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>input background distribution</dd>
+<dt><strong><code>state_id</code></strong> :&ensp;<code>int</code></dt>
+<dd>current state id</dd>
+<dt><strong><code>pat_ids</code></strong> :&ensp;<code>int</code></dt>
+<dd>pattern identifier for new patterns</dd>
+<dt><strong><code>df_patterns</code></strong> :&ensp;<code>pandas dataframe</code></dt>
+<dd>dataframe to save new patterns</dd>
+<dt><strong><code>gtype</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>gyaph type (Undirected 'U' or Directed 'D'), by default 'U'</dd>
+<dt><strong><code>isSimple</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>true if input graph is a simple graph else false if multigraph, by default True</dd>
+<dt><strong><code>l</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>number of actions that can be performed, by default 6</dd>
+<dt><strong><code>ic_mode</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>mode to run the hillclimber ro find patterns (ic_ssg: 1, AD: 2, ic_dsimp: 3), by default 1</dd>
+<dt><strong><code>imode</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>mode to compute IG (1: IC/DL, 2: IC-DL), by default 2</dd>
+<dt><strong><code>minsize</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>minimum size of pattern, by default 2</dd>
+<dt><strong><code>seedType</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>mode of the seed select (options: 'uniform', 'degree', 'interest', 'all'), by default 'interest'</dd>
+<dt><strong><code>seedRuns</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>number of independent seed runs, by default 10</dd>
+<dt><strong><code>q</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>parameter for expected size of patterns, by default 0.01</dd>
+<dt><strong><code>incEdges</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>to describe a pattern if edges to be described or not, by default True</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict, PDClass, int, df_patterns</code></dt>
+<dd>Summary (dictionary of actions), Final Background distribution, final pat_id and dataframe of patterns respectively</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype=&#39;U&#39;, isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType=&#39;interest&#39;, seedRuns=10, q=0.01, incEdges=True):
+    &#34;&#34;&#34;
+    This function is to only process the first state of the graph dataset. In this, only one action is performed that is &#39;add&#39;
+
+    Parameters
+    ----------
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    state_id : int
+        current state id
+    pat_ids : int
+        pattern identifier for new patterns
+    df_patterns : pandas dataframe
+        dataframe to save new patterns
+    gtype : str, optional
+        gyaph type (Undirected &#39;U&#39; or Directed &#39;D&#39;), by default &#39;U&#39;
+    isSimple : bool, optional
+        true if input graph is a simple graph else false if multigraph, by default True
+    l : int, optional
+        number of actions that can be performed, by default 6
+    ic_mode : int, optional
+        mode to run the hillclimber ro find patterns (ic_ssg: 1, AD: 2, ic_dsimp: 3), by default 1
+    imode : int, optional
+        mode to compute IG (1: IC/DL, 2: IC-DL), by default 2
+    minsize : int, optional
+        minimum size of pattern, by default 2
+    seedType : str, optional
+        mode of the seed select (options: &#39;uniform&#39;, &#39;degree&#39;, &#39;interest&#39;, &#39;all&#39;), by default &#39;interest&#39;
+    seedRuns : int, optional
+        number of independent seed runs, by default 10
+    q : float, optional
+        parameter for expected size of patterns, by default 0.01
+    incEdges : bool, optional
+        to describe a pattern if edges to be described or not, by default True
+
+    Returns
+    -------
+    dict, PDClass, int, df_patterns
+        Summary (dictionary of actions), Final Background distribution, final pat_id and dataframe of patterns respectively
+    &#34;&#34;&#34;
+    EA_o = EA(gtype, isSimple, l, ic_mode, imode, minsize, seedType, seedRuns, q, incEdges)
+    flag = True
+    Summary = dict()
+    action_id = 0
+    while flag:
+        EA_o.evaluateNew(G_cur, PD)
+        EA_params = EA_o.getBestOption(G_cur, PD)
+        # for k, v in EA_params.items():
+        #     print(&#39;\t best Cand Add: {} ----- {}&#39;.format(k,v))
+        if EA_params is not None and EA_params[&#39;Pat&#39;].I&gt;0.0:
+            print(&#39;\n\t**Action id: {}**&#39;.format(action_id))
+            EA_params[&#39;Pat&#39;].setCurOrder(pat_ids)
+            EA_params[&#39;Pat&#39;].setStateInfo(state_id)
+            pat_ids += 1
+            Summary[action_id] = EA_params #? is this valid? Check
+            action_id += 1
+            EA_o.updateDistribution(PD, EA_params)
+            if df_patterns is not None:
+                df_patterns = writePattern(df_patterns, EA_params[&#39;Pat&#39;])
+            for k, v in EA_params.items():
+                print(&#39;\t{} --- {}&#39;.format(k, v))
+        else:
+            flag = False
+    return Summary, PD, pat_ids, df_patterns</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.readConfFile"><code class="name flex">
+<span>def <span class="ident">readConfFile</span></span>(<span>fname)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to read the config file to run the experiment</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fname</code></strong> :&ensp;<code>str</code></dt>
+<dd>input configuration file name</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list, dict</code></dt>
+<dd>list of datasets and dictionary of required parameters</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>Exception</code></dt>
+<dd>if configuration file is not found</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def readConfFile(fname):
+    &#34;&#34;&#34;
+    function to read the config file to run the experiment
+
+    Parameters
+    ----------
+    fname : str
+        input configuration file name
+
+    Returns
+    -------
+    list, dict
+        list of datasets and dictionary of required parameters
+
+    Raises
+    ------
+    Exception
+        if configuration file is not found
+    &#34;&#34;&#34;
+    config = configparser.ConfigParser()
+    if os.path.exists(path+&#39;Confs/&#39;+fname):
+        config.read(path+&#39;Confs/&#39;+fname)
+        DS = ast.literal_eval(config[&#39;Datasets&#39;][&#39;DS&#39;])
+        Params = dict()
+        for i in config[&#39;DSSG Params&#39;].items():
+            Params[i[0]] = parseStr(i[1])
+        return DS, Params
+    else:
+        raise Exception(&#39;Configuration file does not exists:&#39;, path+&#39;Confs/&#39;+fname)</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.setNewDetails"><code class="name flex">
+<span>def <span class="ident">setNewDetails</span></span>(<span>bestParams, state_id, pat_ids)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to update paramteres of the best action</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>bestParams</code></strong> :&ensp;<code>dict</code></dt>
+<dd>dictionary of parameters of best action</dd>
+<dt><strong><code>state_id</code></strong> :&ensp;<code>int</code></dt>
+<dd>current state id</dd>
+<dt><strong><code>pat_ids</code></strong> :&ensp;<code>int</code></dt>
+<dd>pattern identifier for new patterns</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int, dict</code></dt>
+<dd>updated pat_ids and bestParams object</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setNewDetails(bestParams, state_id, pat_ids):
+    &#34;&#34;&#34;
+    function to update paramteres of the best action
+
+    Parameters
+    ----------
+    bestParams : dict
+        dictionary of parameters of best action
+    state_id : int
+        current state id
+    pat_ids : int
+        pattern identifier for new patterns
+
+    Returns
+    -------
+    int, dict
+        updated pat_ids and bestParams object
+    &#34;&#34;&#34;
+    if bestParams[&#39;Pat&#39;].pat_type in [&#39;add&#39;, &#39;merge&#39;, &#39;shrink&#39;, &#39;update&#39;]:
+        bestParams[&#39;Pat&#39;].setCurOrder(pat_ids)
+        bestParams[&#39;Pat&#39;].setStateInfo(state_id)
+        pat_ids += 1
+        if bestParams[&#39;Pat&#39;].pat_type is &#39;shrink&#39;:
+            bestParams[&#39;SPat&#39;].setCurOrder(bestParams[&#39;Pat&#39;].prev_order)
+            bestParams[&#39;SPat&#39;].setStateInfo(state_id)
+    elif bestParams[&#39;Pat&#39;].pat_type in [&#39;remove&#39;]:
+        bestParams[&#39;Pat&#39;].setCurOrder(bestParams[&#39;Pat&#39;].prev_order)
+        bestParams[&#39;Pat&#39;].setStateInfo(state_id)
+    elif bestParams[&#39;Pat&#39;].pat_type is &#39;split&#39;:
+        bestParams[&#39;Pat&#39;].setStateInfo(state_id)
+        lt = []
+        for k,v in bestParams[&#39;compos&#39;].items():
+            v.setCurOrder(pat_ids)
+            lt.append(pat_ids)
+            v.setStateInfo(state_id)
+            pat_ids += 1
+        bestParams[&#39;Pat&#39;].setCurOrder(lt)
+    return pat_ids, bestParams</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.writeActions"><code class="name flex">
+<span>def <span class="ident">writeActions</span></span>(<span>OSummary, wpath)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>utility function to write the details of actions performed in an ordered manner</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>OSummary</code></strong> :&ensp;<code>dict</code></dt>
+<dd>overall summary of all states</dd>
+<dt><strong><code>wpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to directory</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def writeActions(OSummary, wpath):
+    &#34;&#34;&#34;
+    utility function to write the details of actions performed in an ordered manner
+
+    Parameters
+    ----------
+    OSummary : dict
+        overall summary of all states
+    wpath : str
+        path to directory
+    &#34;&#34;&#34;
+    df = pd.DataFrame(columns=[&#39;state_id&#39;, &#39;action_id&#39;, &#39;action&#39;, &#39;initial_pats&#39;, &#39;final_pats&#39;, &#39;CL_i&#39;, &#39;CL_f&#39;])
+    for k,v in OSummary.items():
+        for k1, u in v.items():
+            dt = dict()
+            dt[&#39;state_id&#39;] = k
+            dt[&#39;action_id&#39;] = k1
+            dt[&#39;action&#39;] = u[&#39;Pat&#39;].pat_type
+            if isinstance(u[&#39;Pat&#39;].prev_order, (int, float)):
+                dt[&#39;initial_pats&#39;] = list([u[&#39;Pat&#39;].prev_order])
+            elif u[&#39;Pat&#39;].prev_order is not None:
+                dt[&#39;initial_pats&#39;] = list(u[&#39;Pat&#39;].prev_order)
+            else:
+                dt[&#39;initial_pats&#39;] = list()
+            if isinstance(u[&#39;Pat&#39;].cur_order, (int, float)):
+                dt[&#39;final_pats&#39;] = list([u[&#39;Pat&#39;].cur_order])
+            elif u[&#39;Pat&#39;].cur_order is not None:
+                dt[&#39;final_pats&#39;] = list(u[&#39;Pat&#39;].cur_order)
+            else:
+                dt[&#39;final_pats&#39;] = list()
+            dt[&#39;CL_i&#39;] = u[&#39;codeLengthC&#39;]
+            dt[&#39;CL_f&#39;] = u[&#39;codeLengthCprime&#39;]
+            df = df.append(dt, ignore_index=True)
+    writeToCSV(df, &#39;actions&#39;, wpath)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.writeConstraints"><code class="name flex">
+<span>def <span class="ident">writeConstraints</span></span>(<span>PD, cols, dfname, wpath)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to write the active constraints of the background distribution at the end of each state</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>input background distribution</dd>
+<dt><strong><code>cols</code></strong> :&ensp;<code>list</code></dt>
+<dd>parameters to be saved of each constraint</dd>
+<dt><strong><code>dfname</code></strong> :&ensp;<code>str</code></dt>
+<dd>constraint would be storea as a dataframe under the given name</dd>
+<dt><strong><code>wpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to directory</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def writeConstraints(PD, cols, dfname, wpath):
+    &#34;&#34;&#34;
+    function to write the active constraints of the background distribution at the end of each state
+
+    Parameters
+    ----------
+    PD : PDClass
+        input background distribution
+    cols : list
+        parameters to be saved of each constraint
+    dfname : str
+        constraint would be storea as a dataframe under the given name
+    wpath : str
+        path to directory
+    &#34;&#34;&#34;
+    df = pd.DataFrame(columns=cols)
+    for k, v in PD.lprevUpdate.items():
+        dt = dict()
+        dt[&#39;order&#39;] = k
+        if PD.tp is &#39;U&#39;:
+            dt[&#39;NL&#39;] = v[1]
+            dt[&#39;kw&#39;] = v[2]
+        else:
+            dt[&#39;inNL&#39;] = v[1]
+            dt[&#39;outNL&#39;] = v[2]
+            dt[&#39;kw&#39;] = v[3]
+        dt[&#39;la&#39;] = v[0]
+        df = df.append(dt, ignore_index=True)
+    writeToCSV(df, dfname, wpath+&#39;/constr/&#39;)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.writePattern"><code class="name flex">
+<span>def <span class="ident">writePattern</span></span>(<span>df, pat)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>utility function to append a pattern in a dataframe</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pandas dataframe</code></dt>
+<dd>input dataframe to be updated</dd>
+<dt><strong><code>pat</code></strong> :&ensp;<code>src.Patterns.pattern</code></dt>
+<dd>pattern to be added</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>pandas dataframe</code></dt>
+<dd>updated dataframe</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def writePattern(df, pat):
+    &#34;&#34;&#34;
+    utility function to append a pattern in a dataframe
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        input dataframe to be updated
+    pat : src.Patterns.pattern
+        pattern to be added
+
+    Returns
+    -------
+    pandas dataframe
+        updated dataframe
+    &#34;&#34;&#34;
+    df = df.append(pat.getDictForm(), ignore_index=True)
+    return df</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.writePatternsToDF"><code class="name flex">
+<span>def <span class="ident">writePatternsToDF</span></span>(<span>df, Params)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>utility function to write a pattern to a dataframe from a given action</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pandas dataframe</code></dt>
+<dd>input dataframe to be updated</dd>
+<dt><strong><code>Params</code></strong> :&ensp;<code>dict</code></dt>
+<dd>parameters of an action</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>pandas dataframe</code></dt>
+<dd>updated dataframe</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def writePatternsToDF(df, Params):
+    &#34;&#34;&#34;
+    utility function to write a pattern to a dataframe from a given action
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        input dataframe to be updated
+    Params : dict
+        parameters of an action
+
+    Returns
+    -------
+    pandas dataframe
+        updated dataframe
+    &#34;&#34;&#34;
+    if Params[&#39;Pat&#39;].pat_type in [&#39;add&#39;, &#39;merge&#39;, &#39;update&#39;]:
+        df = writePattern(df, Params[&#39;Pat&#39;])
+    elif Params[&#39;Pat&#39;].pat_type in [&#39;shrink&#39;]:
+        df = writePattern(df, Params[&#39;SPat&#39;])
+    elif Params[&#39;Pat&#39;].pat_type in [&#39;split&#39;]:
+        for k, v in Params[&#39;compos&#39;]:
+            df = writePattern(df, v)
+    return df</code></pre>
+</details>
+</dd>
+<dt id="src.Algorithms.DSSG.writeToCSV"><code class="name flex">
+<span>def <span class="ident">writeToCSV</span></span>(<span>df, dfname, wpath)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>utility function of write a dataframe at the specified location and stored by the given name</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pandas dataframe</code></dt>
+<dd>input dataframe to be written</dd>
+<dt><strong><code>dfname</code></strong> :&ensp;<code>str</code></dt>
+<dd>name of the dataframe to be given in the final file</dd>
+<dt><strong><code>wpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to directory</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def writeToCSV(df, dfname, wpath):
+    &#34;&#34;&#34;
+    utility function of write a dataframe at the specified location and stored by the given name
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        input dataframe to be written
+    dfname : str
+        name of the dataframe to be given in the final file
+    wpath : str
+        path to directory
+    &#34;&#34;&#34;
+    df.to_csv(wpath+dfname+&#39;.csv&#39;, index=False, sep=&#39;;&#39;)
+    return</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.Algorithms" href="index.html">src.Algorithms</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="src.Algorithms.DSSG.DSSGMain" href="#src.Algorithms.DSSG.DSSGMain">DSSGMain</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.RunDSSGUtil" href="#src.Algorithms.DSSG.RunDSSGUtil">RunDSSGUtil</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.getAllStates" href="#src.Algorithms.DSSG.getAllStates">getAllStates</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.getBestAction" href="#src.Algorithms.DSSG.getBestAction">getBestAction</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.getInitGraphAndBD" href="#src.Algorithms.DSSG.getInitGraphAndBD">getInitGraphAndBD</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.initializeActionObjects" href="#src.Algorithms.DSSG.initializeActionObjects">initializeActionObjects</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.makeWritePath" href="#src.Algorithms.DSSG.makeWritePath">makeWritePath</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.parseStr" href="#src.Algorithms.DSSG.parseStr">parseStr</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.postProssessActionObjects" href="#src.Algorithms.DSSG.postProssessActionObjects">postProssessActionObjects</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.preProcessActionObjects" href="#src.Algorithms.DSSG.preProcessActionObjects">preProcessActionObjects</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.processInitialState" href="#src.Algorithms.DSSG.processInitialState">processInitialState</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.readConfFile" href="#src.Algorithms.DSSG.readConfFile">readConfFile</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.setNewDetails" href="#src.Algorithms.DSSG.setNewDetails">setNewDetails</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.writeActions" href="#src.Algorithms.DSSG.writeActions">writeActions</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.writeConstraints" href="#src.Algorithms.DSSG.writeConstraints">writeConstraints</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.writePattern" href="#src.Algorithms.DSSG.writePattern">writePattern</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.writePatternsToDF" href="#src.Algorithms.DSSG.writePatternsToDF">writePatternsToDF</a></code></li>
+<li><code><a title="src.Algorithms.DSSG.writeToCSV" href="#src.Algorithms.DSSG.writeToCSV">writeToCSV</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

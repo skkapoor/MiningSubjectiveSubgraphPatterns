@@ -1,0 +1,2830 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>src.Utils.Measures API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.Utils.Measures</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+import numpy as numpy
+import networkx as nx
+import math
+import ray
+##################################################################################################################################################################
+def KL(q, p):
+    &#34;&#34;&#34;function to compute KL-divergence between two Bernoulli Distributions
+
+    Args:
+        q (float): probability of success of posterior distribution
+        p ([type]): probability of success of prior distribution
+
+    Returns:
+        float: KL-divergence value
+    &#34;&#34;&#34;
+    t1 = 0.0
+    t2 = 0.0
+    if p &lt; 1e-10:
+        p = 1e-10
+    if p &gt; 1 - 1e-10:
+        p = 1-1e-10
+    try:
+        t1 = 0.0 if q == 0.0 else q * math.log(q / p)
+        t2 = 0.0 if q == 1.0 else (1 - q) * math.log((1 - q) / (1 - p))
+    except:
+        print(&#39;Math Domain Error&#39;, p, q)
+    return t1 + t2
+
+def KL_g(q, p):
+    &#34;&#34;&#34;function to compute KL-divergence between two Bernoulli Distributions
+
+    Args:
+        q (float): probability of success of posterior distribution
+        p ([type]): probability of success of prior distribution
+
+    Returns:
+        float: KL-divergence value
+    &#34;&#34;&#34;
+    t1 = 0.0
+    t2 = 0.0
+    if p &lt; 1e-10:
+        p = 1e-10
+    if p &gt; 1 - 1e-10:
+        p = 1-1e-10
+    try:
+        t1 = 0.0 if q == 0.0 else q * math.log(q / p)
+        t2 = 0.0 if q == 1.0 else (1 - q)/q * math.log((1 - q) / (1 - p))
+    except:
+        print(&#39;Math Domain Error&#39;, p, q)
+    return t1 + t2
+##################################################################################################################################################################
+def ncr(n, r):
+    r1 = min(r, n-r)
+    c = 1
+    for i in range(n, n-r1, -1):
+        c *= i
+    for i in range(r1, 1, -1):
+        c //= i
+    return c
+##################################################################################################################################################################
+def NW(N, tp=&#39;U&#39;):
+    &#34;&#34;&#34;function to compute number of edges or number of feasible vertex-pair
+
+    Args:
+        N (int): number of nodes
+        tp (str, optional): Can be either &#39;U&#39; for undirected and &#39;D&#39; for directed graphs. Defaults to &#39;U&#39;.
+
+    Returns:
+        int: number of edges or number of feasible vertex-pair between N nodes
+    &#34;&#34;&#34;
+    assert tp==&#39;U&#39; or tp==&#39;D&#39;, &#34;Invalid type in NW, it shall be either &#39;S&#39; or &#39;D&#39;&#34;
+    if tp==&#39;U&#39;:
+        return N*(N-1)//2
+    else:
+        return N*(N-1)
+##################################################################################################################################################################
+def NW_D(inNL, outNL):
+    &#34;&#34;&#34;function to compute number of edges or number of feasible vertex-pair in a directed graph
+
+    Args:
+        inNL (list): list of nodes for a directed graph having non-zero indegree
+        outNL (list): list of nodes for a directed graph having non-zero outdegree
+
+    Returns:
+        count (int): number of possible edges or combination of feasible vertex-pair
+    &#34;&#34;&#34;
+    assert isinstance(inNL, list) and isinstance(outNL, list), &#34;inNL and outNL shall be a list in NW_D&#34;
+    intersection = set(inNL).intersection(set(outNL))
+    count = len(outNL)*len(inNL) - len(intersection)
+    return count
+##################################################################################################################################################################
+def LN(n):
+    &#34;&#34;&#34;function to compute universal code for integer as given by Rissanen (1983)
+
+    Args:
+        n (int): input integer
+
+    Returns:
+        float: complexity or number of bits required to universally encode an integer
+    &#34;&#34;&#34;
+    f = math.log2(2.865064)
+    a = n
+    if a&gt;=1:
+        f += math.log2(a)
+        a = math.log2(a)
+    return f
+##################################################################################################################################################################
+def IC_SSG(mode, **kwargs):
+    &#34;&#34;&#34;function to compute the information content of a simple graph pattern as proposed in SSG
+
+    Args:
+        mode (int): 1 if pw, kw, nw is provided
+                    2 if supergraph G is provided along with a linst of nodes in subgraph WL
+                    3 if a subgraph pattern W is provided as a networkx graph
+
+    kwargs:
+        gtype (str): &#39;U&#39; for undirected and &#39;D&#39; for directed, default is &#39;U&#39;
+        kw (int): Required if mode is 1, number of edges in a graph pattern
+        nw (int): Required if mode is 1, number of feasible vertex-pair combination in a graph pattern
+        pw (float): sum of probability of success (having an edge) between all feasible vertex-pair
+        G (networkx graph): required if mode is 2, supergraph
+        WL (list): required if mode is 2 and gtype is &#39;U&#39;, list of nodes in a pattern
+        PD (list): required if mode is 2 and PD is not provided
+        isSimple (boolean): True, if a pattern is a simple graph else false.
+        W (networkx graph): Required if mode is 4, pattern as a networkx graph object
+
+
+    Returns:
+        ic (float): The information content (as per definition in SSG) of a (simple) graph pattern
+    &#34;&#34;&#34;
+    gtype = &#39;U&#39;
+    isSimple = True
+    if &#39;gtype&#39; in kwargs:
+        gtype = kwargs[&#39;gtype&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    ic = 0.0
+    if mode == 1:
+        assert &#39;kw&#39; in kwargs and &#39;nw&#39; in kwargs and &#39;pw&#39; in kwargs, &#34;kw, nw and pw are required if mode is 1&#34;
+        ic = kwargs[&#39;nw&#39;] * KL( kwargs[&#39;kw&#39;]/kwargs[&#39;nw&#39;], kwargs[&#39;pw&#39;]/kwargs[&#39;nw&#39;] )
+    elif mode == 2:
+        if gtype == &#39;U&#39;:
+            assert &#39;G&#39; in kwargs and &#39;WL&#39; in kwargs, &#34;&#39;G&#39; (supergraph) and &#39;WL&#39; (list of nodes in pattern W) are required if mode is 2&#34;
+            H = kwargs[&#39;G&#39;].subgraph(kwargs[&#39;WL&#39;])
+            nw = NW(H.number_of_nodes())
+            kw = H.number_of_edges()
+            pw = 0.0
+            assert &#39;PD&#39; in kwargs or &#39;pw&#39; in kwargs, &#34;if mode is 2, either PD or pw shall be provided&#34;
+            if &#39;pw&#39; in kwargs:
+                pw = kwargs[&#39;pw&#39;]
+            else:
+                pw = computeSumOfEdgeProbablity(kwargs[&#39;PD&#39;], gtype=gtype, NL=kwargs[&#39;WL&#39;], isSimple=isSimple)
+            ic = nw * KL(kw/nw, pw/nw)
+    elif mode == 3:
+        if gtype == &#39;U&#39;:
+            assert &#39;W&#39; in kwargs, &#34;&#39;G&#39; (subgraph pattern) as networkx graph is required if mode is 3&#34;
+            nw = NW(kwargs[&#39;W&#39;].number_of_nodes())
+            kw = kwargs[&#39;W&#39;].number_of_edges()
+            pw = 0.0
+            assert &#39;PD&#39; in kwargs or &#39;pw&#39; in kwargs, &#34;if mode is 3, either PD or pw shall be provided&#34;
+            if &#39;pw&#39; in kwargs:
+                pw = kwargs[&#39;pw&#39;]
+            else:
+                pw = computeSumOfEdgeProbablity(kwargs[&#39;PD&#39;], gtype=gtype, NL=kwargs[&#39;WL&#39;], isSimple=isSimple)
+            ic = nw * KL(kw/nw, pw/nw)
+    else:
+        assert mode&lt;4, &#34;Invalid mode&#34;
+    return ic
+##################################################################################################################################################################
+def IC_DSIMP(kw, nw, mu, p_):
+    &#34;&#34;&#34;function to compute the information content of a multigraph graph pattern as proposed in DSIMP
+
+    Args:
+        kw (int): number of edges found in multigraph pattern
+        nw (int): total number of feasible vertex-pair
+        mu (float): expected number of edges in a multigraph pattern, i.e., sum of expected edges between all feasible vertex-pair
+        p_ (float): minimum prabability of success among all geometric distribution between all feasible vertex pairs
+
+    Returns:
+        float: The information content (as per definition in DSIMP) of a multigraph pattern
+    &#34;&#34;&#34;
+    ic = p_ * ( kw - mu ) + p_ * ( mu + nw ) * math.log ((mu + nw) / (kw + nw))
+    # eps = kw/nw
+    # ps = 1.0/(eps+1.0)
+    # ic = KL_g(ps, p_)
+    return ic
+##################################################################################################################################################################
+def IC_DSSG(CL_I, CL_F):
+    &#34;&#34;&#34;function to compute the information content of a pattern as proposed in DSSG, i.e., the gain in codelength of a model
+
+    Args:
+        CL_I (float): prior codelength or the number of bits required to encode the graph given the background distribution
+        CL_F (float): posterior codelength or the number of bits required to encode the graph given the background distribution
+
+    Returns:
+        float: gain in codelength or information content
+    &#34;&#34;&#34;
+    return CL_I - CL_F
+##################################################################################################################################################################
+def AD(kw, mu):
+    &#34;&#34;&#34;function to compute aggregate deviation of multigraph pattern as given in SIMP paper
+
+    Args:
+        kw (int): number of edges in a multigraph pattern
+        mu (float): expected number of edges in a pattern as per the prior distribution
+
+    Returns:
+        float: the aggregate deviation
+    &#34;&#34;&#34;
+    return kw - mu
+##################################################################################################################################################################
+def DL_Nodes(V, W, q):
+    &#34;&#34;&#34;function to compute the shannon-optimal code to describe the vertices in a graph pattern
+
+    Args:
+        V (int): number of nodes in a supergraph of original dataset
+        W (int): number of nodes in a graph pattern
+        q (float): expected size of a pattern, i.e., ratio of original dataset size, in range 0.0 to 1.0
+
+    Returns:
+        float: shannon-optimal code to describe W vertices
+    &#34;&#34;&#34;
+    incCost = math.log((1.0 - q) / q)
+    excCost = V * math.log(1.0 / (1.0 - q))
+    dl = W * incCost + excCost
+    return dl
+##################################################################################################################################################################
+def DL_Edges(nw, kw, isSimple=True, kws=None, delta=2):
+    &#34;&#34;&#34;
+    function to encode the number of edges in a subgraph
+
+    Parameters
+    ----------
+    nw : int
+        Maximum possible edges in a simple graph or maximum number of feasible vertex-pair in simple or multigraph\\
+    kw : int
+        Number of edges in simple graph pattern or multigraph pattern\\
+    isSimple : bool, optional
+        True if Graph is a simple graph else false for multigraph, by default True\\
+    kws : int, optional
+        number of vertex-pair in a multigraph connected with each other by atleast one edge, by default None\\
+    delta : int, optional
+        accuracy to delta decimal points, by default 2
+
+    Returns
+    -------
+    float
+        number of bits required to communicate this information to the user
+    &#34;&#34;&#34;
+    dl = 0
+    if isSimple:
+        remE = nw - kw
+        dl = LN(remE)
+    else:
+        remE = nw - kws
+        kappa = round(kw/kws, delta)
+        dl += LN(remE)
+        dl += math.log2(kappa+1)
+        dl += math.log2(math.pow(10, delta))
+    return dl
+##################################################################################################################################################################
+def computeSumOfEdgeProbablity(PD, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of POS (Probability of success) of all possible random variables, i.e., all feasible vertex-pairs
+    this fuction is mainly used in case of Bernoulli&#39;s distribution, i.e., simple graphs
+
+    Args:
+        PD (PDClass): Background distribution of the dataset, in this case it shall be a product of Bernoulli&#39;s distribution
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected\\
+        NL (list): list of nodes, required if graph is orginally undirected\\
+        inNL (list): list of inNodes, required if graph is originally directed\\
+        outNL (list): list of outNodes, required if graph is originally directed\\
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2\\
+        dropLidx (int or list): index of lambda if required to be dropped, default is None\\
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0\\
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is True
+
+    Returns:
+        float: sum of POS of all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    pw = 0.0
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+        assert &#39;NL&#39; in kwargs, &#34;NL shall be provided if gtype is &#39;U&#39;&#34;
+        NL = kwargs[&#39;NL&#39;]
+        for i in range(len(NL)-1):
+            for j in range(i+1, len(NL)):
+                pw += PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    else:
+        assert &#39;inNL&#39; in kwargs, &#34;inNL shall be provided if gtype is &#39;D&#39;&#34;
+        assert &#39;outNL&#39; in kwargs, &#34;outNL shall be provided if gtype is &#39;D&#39;&#34;
+        inNL = kwargs[&#39;inNL&#39;]
+        outNL = kwargs[&#39;outNL&#39;]
+        for i in outNL:
+            for j in inNL:
+                if i != j:
+                    pw += PD.getPOS(i, j, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    return pw
+##################################################################################################################################################################
+def computeSumOfExpectations(PD, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of Expectations of all possible random variables, i.e., all feasible vertex-pairs
+    this fuction is mainly used in case of Geometric&#39;s distribution, i.e., multigraphs. Note that, it can be used for
+    simple graphs also, i.e, Bernoulli&#39;s Distribution
+
+    Args:
+        PD (PDClass): Background distribution of the dataset, in this case itcan be a product of Geometric&#39;s distribution
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        NL (list): list of nodes, required if graph is orginally undirected
+        inNL (list): list of inNodes, required if graph is originally directed
+        outNL (list): list of outNodes, required if graph is originally directed
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False
+
+    Returns:
+        float: sum of Expectations of all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    SumExpect = 0.0
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = False
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+        assert &#39;NL&#39; in kwargs, &#34;NL shall be provided if gtype is &#39;U&#39;&#34;
+        NL = kwargs[&#39;NL&#39;]
+        for i in range(len(NL)-1):
+            for j in range(i+1, len(NL)):
+                p = PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                SumExpect += PD.getExpectation(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    else:
+        assert &#39;inNL&#39; in kwargs, &#34;inNL shall be provided if gtype is &#39;D&#39;&#34;
+        assert &#39;outNL&#39; in kwargs, &#34;outNL shall be provided if gtype is &#39;D&#39;&#34;
+        inNL = kwargs[&#39;inNL&#39;]
+        outNL = kwargs[&#39;outNL&#39;]
+        for i in outNL:
+            for j in inNL:
+                if i != j:
+                    SumExpect += PD.getExpectation(i, j, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    return SumExpect
+##################################################################################################################################################################
+def computeMinPOS(PD, **kwargs):
+    &#34;&#34;&#34;function to compute the minimum POS (Probability of success) among all possible random variables, i.e., all feasible vertex-pairs
+    this fuction is mainly used in case of Geometric distribution, i.e., multigraphs
+
+    Args:
+        PD (PDClass): Background distribution of the dataset, in this case it shall be a product of Geometric distribution
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        NL (list): list of nodes, required if graph is orginally undirected
+        inNL (list): list of inNodes, required if graph is originally directed
+        outNL (list): list of outNodes, required if graph is originally directed
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is True
+
+    Returns:
+        float: minimum POS among all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    minp = float(&#34;inf&#34;)
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+        assert &#39;NL&#39; in kwargs, &#34;NL shall be provided if gtype is &#39;U&#39;&#34;
+        NL = kwargs[&#39;NL&#39;]
+        for i in range(len(NL)-1):
+            for j in range(i+1, len(NL)):
+                minp = min(minp, PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple))
+    else:
+        assert &#39;inNL&#39; in kwargs, &#34;inNL shall be provided if gtype is &#39;D&#39;&#34;
+        assert &#39;outNL&#39; in kwargs, &#34;outNL shall be provided if gtype is &#39;D&#39;&#34;
+        inNL = kwargs[&#39;inNL&#39;]
+        outNL = kwargs[&#39;outNL&#39;]
+        for i in outNL:
+            for j in inNL:
+                if i != j:
+                    minp = min(minp, PD.getPOS(i, j, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple))
+    return minp
+##################################################################################################################################################################
+def computePWparameters(PD, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of Expectations and minPOS of all possible random variables, i.e., all feasible vertex-pairs
+    this fuction is mainly used in case of Geometric&#39;s distribution, i.e., multigraphs. Note that, it can be used for
+    simple graphs also, i.e, Bernoulli&#39;s Distribution
+
+    Args:
+        PD (PDClass): Background distribution of the dataset, in this case itcan be a product of Geometric&#39;s distribution
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        NL (list): list of nodes, required if graph is orginally undirected
+        inNL (list): list of inNodes, required if graph is originally directed
+        outNL (list): list of outNodes, required if graph is originally directed
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False
+
+    Returns:
+        float, float: sum of Expectations and minPOS of all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    SumExpect = 0.0
+    minp = float(&#34;inf&#34;)
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = False
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+        assert &#39;NL&#39; in kwargs, &#34;NL shall be provided if gtype is &#39;U&#39;&#34;
+        NL = kwargs[&#39;NL&#39;]
+        for i in range(len(NL)-1):
+            for j in range(i+1, len(NL)):
+                p = PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                minp = min(minp, p)
+                SumExpect += PD.getExpectationFromPOS(p)
+    else:
+        assert &#39;inNL&#39; in kwargs, &#34;inNL shall be provided if gtype is &#39;D&#39;&#34;
+        assert &#39;outNL&#39; in kwargs, &#34;outNL shall be provided if gtype is &#39;D&#39;&#34;
+        inNL = kwargs[&#39;inNL&#39;]
+        outNL = kwargs[&#39;outNL&#39;]
+        for i in outNL:
+            for j in inNL:
+                if i != j:
+                    p = PD.getPOS(i, j, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                    minp = min(minp, p)
+                    SumExpect += PD.getExpectationFromPOS(p)
+    return SumExpect, minp
+##################################################################################################################################################################
+def computeDescriptionLength(**kwargs):
+    &#34;&#34;&#34;function to compute description length of a pattern or an action
+    --------------------
+    Args:
+        None
+    --------------------
+    kwargs:
+        dlmode (int): 1 for encoding only nodes (used in SSG and SIMP), 2 for encoding nodes with #edges,
+                    3 for encoding nodes, edges and action type (for add action),
+                    4 for encoding lambda/pattern/constraint id and action type (for remove action),
+                    5 for encoding action type, lambda/pattern/constraint id and #edges (for update action),
+                    6 for encoding action type, lambda/pattern/constraint id, #nodes removed, nodes and updated edges (for shrink action)
+                    7 for encoding action type, lambda/pattern/constraint id, #resulting patterns,
+                        #nodes in each pattern, nodes in each pattern and #edges in each pattern (for split action)
+                    8 for encoding action type, two lambda/pattern/constraint id, #edges in the resulting pattern (for merge action),
+                    default is 1
+        excActionType (boolean): if information to exclude action type in DL, only valid if dlmode is 3-8, default is true
+        l (int): number of actions defined, required if dlmode is 3-8.
+        gtype (str): &#39;U&#39; for undirected and &#39;D&#39; for directed. Default is &#39;U&#39;.
+        q (float): parameter of shannon-optimal code which is expected size of a pattern, i.e., ratio of original dataset size, in range 0.0 to 1.0. Required if dlmode is 1,2 or 3
+        V (int): number of nodes in a dataset. Required if dlmode is 1,2 or 3
+        W (int): number of nodes in a pattern. Required if gtype is &#39;U&#39; and dlmode is 1-8 except 4 and 7
+        WI (int or list): number of inNodes or list of inNodes in a pattern. Required if gtype is &#39;D&#39; and dlmode is 1-8 except 4 and 7
+        WO (int or list): number of outNodes or list of outNodes in a pattern. Required if gtype is &#39;D&#39; and dlmode is 1-8 except 4 and 7
+        kw (int): number of edges in a pattern. Required if dlmode is 2-8 except 4 and 7
+        C (int): number of constraints, required if dlmode is 3-8
+        WS (int): number of nodes initially present in a pattern before shrink (dlmode: 6) and split (dlmode: 7), required if gtype is &#39;U&#39;
+        WIS (int): number of inNodes initially present in a pattern before shrink (dlmode: 6) and split (dlmode: 7), required if gtype is &#39;D&#39;
+        WOS(int): number of outNodes initially present in a pattern before shrink (dlmode: 6) and split (dlmode: 7), required if gtype is &#39;D&#39;
+        compos (dict): dictiornary of connected components after split. Required if dlmode is 7. If gtype is &#39;U&#39; compos should be a dictionary with keys as component identifier (int) and value as a connected component (networkx graph)
+                        If gtype is &#39;D&#39; it should be a dictionary with key (int) and value a 3 length tuple where first shall be networkx DiGraph, and rest shall be two list of IN and OUT Nodes
+        isSimple (bool): True if the graph is a simple graph, false if multigraph, default is True
+        kws (int): Number of edges in a simple graph equivalent of a multigraph, required if isSimple is False
+    --------------------
+    Returns:
+        float: the required descroption length
+    &#34;&#34;&#34;
+    dlmode = 1
+    if &#39;dlmode&#39; in kwargs:
+        dlmode = kwargs[&#39;dlmode&#39;]
+
+    gtype = &#39;U&#39;
+    if &#39;gtype&#39; in kwargs:
+        gtype = kwargs[&#39;gtype&#39;]
+
+    excActionType = True
+    if &#39;excActionType&#39; in kwargs:
+        assert &#39;l&#39; in kwargs, &#34;&#39;l&#39; (number of action types) is required&#34;
+        excActionType = kwargs[&#39;excActionType&#39;]
+    isSimple = True
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+        if not isSimple:
+            assert &#39;kws&#39; in kwargs, &#34;&#39;kws&#39; is required to encode edges if isSimple is False&#34;
+
+    if dlmode == 1:
+        DL = 0.0
+        if gtype == &#39;U&#39;:
+            assert &#39;V&#39; in kwargs and &#39;W&#39; in kwargs and &#39;q&#39; in kwargs, &#34;&#39;V&#39;, &#39;W&#39; and &#39;q&#39; shall be provide if dlmode is 1 and gtype is &#39;U&#39;&#34;
+            DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;W&#39;], kwargs[&#39;q&#39;]) ## encoding nodes in pattern
+        else:
+            assert &#39;V&#39; in kwargs and &#39;WI&#39; in kwargs and &#39;WO&#39; in kwargs and &#39;q&#39; in kwargs, &#34;&#39;V&#39;, &#39;WI&#39;, &#39;WO&#39; and &#39;q&#39; shall be provide if dlmode is 1 and gtype is &#39;D&#39;&#34;
+            DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;WI&#39;], kwargs[&#39;q&#39;]) ## encoding inNodes in pattern
+            DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;WO&#39;], kwargs[&#39;q&#39;]) ## encoding outNodes in pattern
+        return DL
+    elif dlmode == 2 or dlmode == 3: #add action
+        DL = 0.0
+        nw = 0
+        assert &#39;kw&#39; in kwargs, &#34;kw is not provided&#34;
+        if gtype == &#39;U&#39;:
+            assert &#39;V&#39; in kwargs and &#39;W&#39; in kwargs and &#39;q&#39; in kwargs, &#34;&#39;V&#39;, &#39;W&#39; and &#39;q&#39; shall be provide if dlmode is 2 or 3 and gtype is &#39;U&#39;&#34;
+            DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;W&#39;], kwargs[&#39;q&#39;]) ## encoding nodes in pattern
+            nw = NW(kwargs[&#39;W&#39;])
+        else:
+            assert &#39;V&#39; in kwargs and &#39;WI&#39; in kwargs and &#39;WO&#39; in kwargs and &#39;q&#39; in kwargs, &#34;&#39;V&#39;, &#39;WI&#39;, &#39;WO&#39; and &#39;q&#39; shall be provide if dlmode is 2 or 3 and gtype is &#39;D&#39;&#34;
+            if isinstance(kwargs[&#39;WI&#39;], list) and isinstance(kwargs[&#39;WO&#39;], list):
+                DL += DL_Nodes(kwargs[&#39;V&#39;], len(kwargs[&#39;WI&#39;]), kwargs[&#39;q&#39;]) ## encoding inNodes in pattern
+                DL += DL_Nodes(kwargs[&#39;V&#39;], len(kwargs[&#39;WO&#39;]), kwargs[&#39;q&#39;]) ## encoding outNodes in pattern
+                nw = NW_D(kwargs[&#39;WI&#39;], kwargs[&#39;WO&#39;])
+            else:
+                DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;WI&#39;], kwargs[&#39;q&#39;]) ## encoding inNodes in pattern
+                DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;WO&#39;], kwargs[&#39;q&#39;]) ## encoding outNodes in pattern
+                assert &#39;nw&#39; in kwargs, &#34;nw is required if WI and WO are length and not list&#34;
+                nw = kwargs[&#39;nw&#39;]
+        if isSimple:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;]) ## encoding number of edges in a pattern
+        else:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;], isSimple, kwargs[&#39;kws&#39;], 2)
+        if dlmode == 3 and not excActionType:
+            assert &#39;l&#39; in kwargs,&#34;&#39;l&#39; not provided&#34;
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    elif dlmode == 4: #remove action
+        DL = 0.0
+        assert &#39;C&#39; in kwargs, &#34;number of constraints &#39;C&#39; is required&#34;
+        DL += math.log2(kwargs[&#39;C&#39;]) ## encoding constraint id
+        if not excActionType:
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    elif dlmode == 5: #update action
+        DL = 0.0
+        assert &#39;C&#39; in kwargs, &#34;number of constraints &#39;C&#39; is required&#34;
+        DL += math.log2(kwargs[&#39;C&#39;]) ## encoding constraint id
+        nw = 0
+        if gtype == &#39;U&#39;:
+            assert &#39;W&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;W&#39; and &#39;kw&#39; are required if dlmode is 5 and gtype is &#39;U&#39;&#34;
+            nw = NW(kwargs[&#39;W&#39;])
+        else:
+            assert &#39;WI&#39; in kwargs and &#39;WO&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;WI&#39;, &#39;WO&#39; and &#39;kw&#39; are required if dlmode is 5 and gtype is &#39;D&#39;&#34;
+            nw = NW_D(kwargs[&#39;WI&#39;], kwargs[&#39;WO&#39;])
+        if isSimple:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;]) ## encoding number of edges in a pattern
+        else:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;], isSimple, kwargs[&#39;kws&#39;], 2)
+        if not excActionType:
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    elif dlmode == 6: #shrink action
+        DL = 0.0
+        assert &#39;C&#39; in kwargs, &#34;number of constraints &#39;C&#39; is required&#34;
+        DL += math.log2(kwargs[&#39;C&#39;]) ## encoding constraint id
+        nw = 0
+        if gtype == &#39;U&#39;:
+            assert &#39;W&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;W&#39; and &#39;kw&#39; are required if dlmode is 6 and gtype is &#39;U&#39;&#34;
+            nw = NW(kwargs[&#39;W&#39;])
+        else:
+            assert &#39;WI&#39; in kwargs and &#39;WO&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;WI&#39;, &#39;WO&#39; and &#39;kw&#39; are required if dlmode is 6 and gtype is &#39;D&#39;&#34;
+            nw = NW_D(kwargs[&#39;WI&#39;], kwargs[&#39;WO&#39;])
+        if isSimple:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;]) ## encoding number of edges in a pattern
+        else:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;], isSimple, kwargs[&#39;kws&#39;], 2)
+        if gtype == &#39;U&#39;:
+            assert &#39;WS&#39; in kwargs, &#34;&#39;WS&#39; (initial #nodes is required if dlmode is 6 gtype is &#39;U&#39;&#34;
+            DL += LN(kwargs[&#39;WS&#39;] - kwargs[&#39;W&#39;]) ## encoding number of nodes removed in a pattern
+            DL += math.log2(ncr(kwargs[&#39;WS&#39;], kwargs[&#39;WS&#39;] - kwargs[&#39;W&#39;])) ## encoding nodes removed in a pattern
+        else:
+            assert &#39;WIS&#39; in kwargs and &#39;WOS&#39; in kwargs, &#34;&#39;WIS&#39; (initial #inNodes) and &#39;WOS&#39; (initial #outNodes) are required if dlmode is 6 gtype is &#39;D&#39;&#34;
+            DL += LN(kwargs[&#39;WIS&#39;] - len(kwargs[&#39;WI&#39;])) ## encoding number of inNodes removed in a pattern
+            DL += LN(kwargs[&#39;WOS&#39;] - len(kwargs[&#39;WO&#39;])) ## encoding number of outNodes removed in a pattern
+            DL += math.log2(ncr(kwargs[&#39;WIS&#39;], kwargs[&#39;WIS&#39;] - len(kwargs[&#39;WI&#39;]))) ## encoding inNodes removed in a pattern
+            DL += math.log2(ncr(kwargs[&#39;WOS&#39;], kwargs[&#39;WOS&#39;] - len(kwargs[&#39;WO&#39;]))) ## encoding outNodes removed in a pattern
+        if not excActionType:
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    elif dlmode == 7: #split action
+        DL = 0.0
+        # Todo check this code
+        assert &#39;C&#39; in kwargs, &#34;number of constraints &#39;C&#39; is required&#34;
+        DL += math.log2(kwargs[&#39;C&#39;]) ## encoding constraint id
+        assert &#39;compos&#39; in kwargs, &#34;connected components (&#39;comps&#39;) of a pattern is required&#34;
+        if gtype == &#39;U&#39;:
+            assert isinstance(kwargs[&#39;compos&#39;], dict) and isinstance(kwargs[&#39;compos&#39;][0], nx.Graph), &#34;&#39;comps&#39; shall be a dictionary with key (int) and value (networkx graph)&#34;
+            DL += LN(len(kwargs[&#39;compos&#39;])) ### encoding number of components
+            WST = 0 # to count sum of nodes in each component
+            for k,v in kwargs[&#39;compos&#39;].items():
+                DL += LN(v.NCount) ## encoding number of nodes in each component
+                if isSimple:
+                    DL += DL_Edges(NW(v.NCount), v.ECount) ## encoding number of edges in a pattern
+                else:
+                    DL += DL_Edges(NW(v.NCount), v.ECount, isSimple, v.kws, 2)## encoding number of edges in each component
+                WST += v.NCount
+            assert &#39;WS&#39; in kwargs, &#34;&#39;WS&#39; (initial #nodes) is required if dlmode is 7 and gtype is &#39;U&#39;&#34;
+            DL += math.log2(ncr(kwargs[&#39;WS&#39;], WST)) ## encoding nodes in each component
+        else:
+            assert isinstance(kwargs[&#39;compos&#39;], dict) and len(kwargs[&#39;compos&#39;][0]) == 3 and isinstance(kwargs[&#39;compos&#39;][0][0], nx.Graph) and isinstance(kwargs[&#39;compos&#39;][0][1], list) and isinstance(kwargs[&#39;compos&#39;][0][2], list), &#34;&#39;comps&#39; shall be a dictionary with key (int) and value a 3 length tuple where first shall be networkx DiGraph, and rest shall be two list of IN and OUT Nodes&#34;
+            DL += LN(len(kwargs[&#39;compos&#39;])) ### encoding number of components
+            WST_i = 0 # to count sum of inNodes in each component
+            WST_o = 0 # to count sum of outNodes in each component
+            for k,v in kwargs[&#39;compos&#39;].items():
+                DL += LN(v.InNCount) ## encoding number of inNodes in each component
+                DL += LN(v.OutNCount) ## encoding number of outNodes in each component
+                if isSimple:
+                    DL += DL_Edges(NW_D(v.inNL, v.outNL), v.ECount) ## encoding number of edges in a pattern
+                else:
+                    DL += DL_Edges(NW_D(v.inNL, v.outNL), v.ECount, isSimple, v.kws, 2) ## encoding number of edges in each component
+                WST_i += LN(v.InNCount)
+                WST_o += LN(v.OutNCount)
+            assert &#39;WIS&#39; in kwargs and &#39;WOS&#39; in kwargs, &#34;&#39;WIS&#39; (initial #inNodes) and &#39;WOS&#39; (initial #outNodes) are required if dlmode is 7 gtype is &#39;D&#39;&#34;
+            DL += math.log2(ncr(kwargs[&#39;WIS&#39;], WST_i)) ## encoding inNodes in each component
+            DL += math.log2(ncr(kwargs[&#39;WOS&#39;], WST_o)) ## encoding outNodes in each component
+        if not excActionType:
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    elif dlmode == 8: #merge action
+        DL = 0.0
+        assert &#39;C&#39; in kwargs, &#34;number of constraints &#39;C&#39; is required&#34;
+        DL += math.log2(ncr(kwargs[&#39;C&#39;], 2)) ## encoding two constraint ids
+        nw = 0
+        if gtype == &#39;U&#39;:
+            assert &#39;W&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;W&#39; and &#39;kw&#39; are required if dlmode is 8 and gtype is &#39;U&#39;&#34;
+            nw = NW(kwargs[&#39;W&#39;])
+        else:
+            assert &#39;WI&#39; in kwargs and &#39;WO&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;WI&#39;, &#39;WO&#39; and &#39;kw&#39; are required if dlmode is 8 and gtype is &#39;D&#39;&#34;
+            nw = NW_D(kwargs[&#39;WI&#39;], kwargs[&#39;WO&#39;])
+        if isSimple:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;]) ## encoding number of edges in a pattern
+        else:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;], isSimple, kwargs[&#39;kws&#39;], 2)
+        if not excActionType:
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    return
+##################################################################################################################################################################
+def computeInterestingness(IC, DL, **kwargs):
+    &#34;&#34;&#34;function to compute interestingness of a pattern
+
+    Args:
+        IC (float): Information Content
+        DL (float): Description Length
+
+    kwargs:
+        mode (int): 1 if I = IC/DL, 2 if I = IC - DL, default is 1
+
+    Returns:
+        float: Interestingness score
+    &#34;&#34;&#34;
+    mode = 1
+    if &#39;mode&#39; in kwargs:
+        mode = kwargs[&#39;mode&#39;]
+    I = 0.0
+    if mode == 1:
+        I = IC / DL
+    elif mode == 2:
+        I = IC - DL
+    else:
+        assert mode &lt; 3, &#34;Incorrect mode&#34;
+    return I
+##################################################################################################################################################################
+def computeSumOfEdgeProbablityBetweenNodeAndList(PD, node, NL, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of POS (Probability of success) of all possible random variables,
+        i.e., all feasible vertex-pairs with one vertex as provide node and second from a list of nodes (NL).
+
+    Args:
+        PD (PDClass): Background distribution
+        node (int): node id
+        NL (list): list of nodes
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list and 2 from list to node
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is True
+
+
+    Returns:
+        float: required sum of POS
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    pw = 0.0
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    dir_mode = None
+
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    if kwargs[&#39;gtype&#39;] == &#39;D&#39;:
+        assert &#39;dir_mode&#39; in kwargs, &#39;dir_mode is required if gtype is \&#39;D\&#39;, it can be either 1 or 2&#39;
+        dir_mode = kwargs[&#39;dir_mode&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39; or (kwargs[&#39;gtype&#39;] == &#39;D&#39; and dir_mode == 1):
+        for i in NL:
+            pw += PD.getPOS(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    else:
+        for i in NL:
+            pw += PD.getPOS(i, node, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    return pw
+##################################################################################################################################################################
+def computeSumOfExpectationsBetweenNodeAndList(PD, node, NL, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of Expectation of all possible random variables,
+        i.e., all feasible vertex-pairs with one vertex as provide node and other from a list of nodes (NL).
+
+    Args:
+        PD (PDClass): Background distribution of the dataset
+        node (int): node id
+        NL (list): list of nodes
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list and 2 from list to node
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False
+
+    Returns:
+        float: required sum of Expectations
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    SumExpect = 0.0
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    dir_mode = None
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    if kwargs[&#39;gtype&#39;] == &#39;D&#39;:
+        assert &#39;dir_mode&#39; in kwargs, &#39;dir_mode is required if gtype is \&#39;D\&#39;, it can be either 1 or 2&#39;
+        dir_mode = kwargs[&#39;dir_mode&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39; or (kwargs[&#39;gtype&#39;] == &#39;D&#39; and dir_mode == 1):
+        for i in NL:
+            SumExpect += PD.getExpectation(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    else:
+        for i in NL:
+            SumExpect += PD.getExpectation(i, node, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    return SumExpect
+##################################################################################################################################################################
+def computeMinPOSBetweenNodeAndList(PD, node, NL, **kwargs):
+    &#34;&#34;&#34;function to compute the minPOS of all possible random variables,
+        i.e., all feasible vertex-pairs with one vertex as provide node and other from a list of nodes (NL).
+
+    Args:
+        PD (PDClass): Background distribution of the dataset
+        node (int): node id
+        NL (list): list of nodes
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list and 2 from list to node; default is 1
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False
+
+    Returns:
+        float: required sum of Expectations
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    minp = float(&#34;inf&#34;)
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    dir_mode = None
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    if kwargs[&#39;gtype&#39;] == &#39;D&#39;:
+        assert &#39;dir_mode&#39; in kwargs, &#39;dir_mode is required if gtype is \&#39;D\&#39;, it can be either 1 or 2&#39;
+        dir_mode = kwargs[&#39;dir_mode&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39; or (kwargs[&#39;gtype&#39;] == &#39;D&#39; and dir_mode == 1):
+        for i in NL:
+            minp = min(minp, PD.getPOS(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple))
+    else:
+        for i in NL:
+            minp = min(minp, PD.getPOS(i, node, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple))
+    return minp
+##################################################################################################################################################################
+def computePWparametersBetweenNodeAndList(PD, node, NL, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of Expectations and minPOS of all possible random variables, 
+    i.e., all feasible vertex-pairs with one vertex as provide node and other from a list of nodes (NL).
+
+    Args:
+        PD (PDClass): Background distribution of the dataset
+        node (int): node id
+        NL (list): list of nodes
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list and 2 from list to node
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False
+
+    Returns:
+        float, float: required sum of Expectations and minPOS
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    SumExpect = 0.0
+    minp = float(&#34;inf&#34;)
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    dir_mode = None
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    if kwargs[&#39;gtype&#39;] == &#39;D&#39;:
+        assert &#39;dir_mode&#39; in kwargs, &#39;dir_mode is required if gtype is \&#39;D\&#39;, it can be either 1 or 2&#39;
+        dir_mode = kwargs[&#39;dir_mode&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39; or (kwargs[&#39;gtype&#39;] == &#39;D&#39; and dir_mode == 1):
+        for i in NL:
+            if i != node:
+                p = PD.getPOS(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                minp = min(minp, p)
+                SumExpect += PD.getExpectationFromPOS(p)
+    else:
+        for i in NL:
+            if i != node:
+                p = PD.getPOS(i, node, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                minp = min(minp, p)
+                SumExpect += PD.getExpectationFromPOS(p)
+    return SumExpect, minp
+##################################################################################################################################################################
+def getDirectedSubgraph(G, WI, WO, isSimple):
+    &#34;&#34;&#34;function to compose a subgraph from given list of in-nodes and out-nodes
+
+    Args:
+        G (DiGraph or MultiDiGraph): SuperGraph
+        WI (list): In-Nodes
+        WO (list): Out-Nodes
+        isSimple (bool): True if G is DiGraph, False if G is MultiDiGraph
+
+    Returns:
+        DiGraph or MultiDiGraph: resultant subgraph
+    &#34;&#34;&#34;
+    H = None
+    if isSimple:
+        H = nx.DiGraph()
+        for u in WO:
+            for v in WI:
+                if u != v and G.has_edges(u, v):
+                    H.add_edge(u,v)
+    else:
+        H = nx.MultiDiGraph()
+        for u in WO:
+            for v in WI:
+                if u !=v and G.has_edge(u, v):
+                    H.add_edges_from([tuple([u, v])]*G.number_of_edges(u, v))
+    return H
+##################################################################################################################################################################
+def getCodeLength(G, PD, **kwargs):
+    assert &#39;gtype&#39; in kwargs, &#34;gtype is must to compute codelength&#34;
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    codelength = 0.0
+    if isSimple == True:
+        if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+            assert &#39;NL&#39; in kwargs, &#34;NL is required if gtype is &#39;U&#39;&#34;
+            NL = kwargs[&#39;NL&#39;]
+            for i in range(len(NL)-1):
+                    for j in range(i+1, len(NL)):
+                        pos = PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                        numE = G.number_of_edges(NL[i], NL[j])
+                        codelength += math.log2(math.pow(1.0-pos, 1.0-numE)*math.pow(pos, numE))
+        else:
+            assert &#39;inNL&#39; in kwargs and &#39;outNL&#39; in kwargs, &#34;inNL and outNL are required if gtype is &#39;D&#39;&#34;
+            inNL = kwargs[&#39;inNL&#39;]
+            outNL = kwargs[&#39;outNL&#39;]
+            for v in inNL:
+                for u in outNL:
+                    if u != v:
+                        pos = PD.getPOS(u, v, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                        numE = G.number_of_edges(u, v)
+                        codelength += math.log2(math.pow(1.0-pos, 1.0-numE)*math.pow(pos, numE))
+    else:
+        if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+            assert &#39;NL&#39; in kwargs, &#34;NL is required if gtype is &#39;U&#39;&#34;
+            NL = kwargs[&#39;NL&#39;]
+            for i in range(len(NL)-1):
+                    for j in range(i+1, len(NL)):
+                        pos = PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                        numE = G.number_of_edges(NL[i], NL[j])
+                        codelength += math.log2(math.pow(1.0-pos, numE)*pos)
+        else:
+            assert &#39;inNL&#39; in kwargs and &#39;outNL&#39; in kwargs, &#34;inNL and outNL are required if gtype is &#39;D&#39;&#34;
+            inNL = kwargs[&#39;inNL&#39;]
+            outNL = kwargs[&#39;outNL&#39;]
+            for v in inNL:
+                for u in outNL:
+                    if u != v:
+                        pos = PD.getPOS(u, v, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                        numE = G.number_of_edges(u, v)
+                        codelength += math.log2(math.pow(1.0-pos, numE)*pos)
+    return -codelength
+##################################################################################################################################################################
+def getCodeLengthParallel(G, PD, **kwargs):
+    assert &#39;gtype&#39; in kwargs, &#34;gtype is must to compute codelength&#34;
+    if &#39;case&#39; in kwargs:
+        if kwargs[&#39;case&#39;]&gt;3:
+            assert &#39;dropLidx&#39; in kwargs and isinstance(kwargs[&#39;dropLidx&#39;], list), &#34;for case types 4-5, dropLidx (list) shall be provided&#34;
+        if kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1:
+            assert &#39;nlambda&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    codelength = 0.0
+    Gid = ray.put(G)
+    PDid = ray.put(PD)
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+        assert &#39;NL&#39; in kwargs, &#34;NL is required if gtype is &#39;U&#39;&#34;
+        NL = kwargs[&#39;NL&#39;]
+        codelength = sum(ray.get([getCodeLengthUtil.remote(Gid, PDid, NL[i], NL[i+1:], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple) for i in range(len(NL)-1)]))
+    else:
+        assert &#39;inNL&#39; in kwargs and &#39;outNL&#39; in kwargs, &#34;inNL and outNL are required if gtype is &#39;D&#39;&#34;
+        inNL = kwargs[&#39;inNL&#39;]
+        outNL = kwargs[&#39;outNL&#39;]
+        codelength = sum(ray.get([getCodeLengthUtil.remote(Gid, PDid, u, inNL, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple) for u in outNL]))
+    return -codelength
+
+@ray.remote
+def getCodeLengthUtil(G, PD, node, lst, **kwargs):
+    codelength = 0.0
+    if kwargs[&#39;isSimple&#39;]:
+        for v in lst:
+            if node != v:
+                pos = PD.getPOS(node, v, case=kwargs[&#39;case&#39;], dropLidx=kwargs[&#39;dropLidx&#39;], nlambda=kwargs[&#39;nlambda&#39;], isSimple=kwargs[&#39;isSimple&#39;])
+                numE = G.number_of_edges(node, v)
+                codelength += math.log2(math.pow(1.0-pos, 1.0-numE)*math.pow(pos, numE))
+    else:
+        for v in lst:
+            if node != v:
+                pos = PD.getPOS(node, v, case=kwargs[&#39;case&#39;], dropLidx=kwargs[&#39;dropLidx&#39;], nlambda=kwargs[&#39;nlambda&#39;], isSimple=kwargs[&#39;isSimple&#39;])
+                numE = G.number_of_edges(node, v)
+                codelength += math.log2(math.pow(1.0-pos, numE)*pos)
+    return codelength
+###################################################################################################################################################################
+#*#################################################################################################################################################################
+#?#################################################################################################################################################################
+#*#################################################################################################################################################################</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="src.Utils.Measures.AD"><code class="name flex">
+<span>def <span class="ident">AD</span></span>(<span>kw, mu)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute aggregate deviation of multigraph pattern as given in SIMP paper</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>kw</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of edges in a multigraph pattern</dd>
+<dt><strong><code>mu</code></strong> :&ensp;<code>float</code></dt>
+<dd>expected number of edges in a pattern as per the prior distribution</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>the aggregate deviation</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def AD(kw, mu):
+    &#34;&#34;&#34;function to compute aggregate deviation of multigraph pattern as given in SIMP paper
+
+    Args:
+        kw (int): number of edges in a multigraph pattern
+        mu (float): expected number of edges in a pattern as per the prior distribution
+
+    Returns:
+        float: the aggregate deviation
+    &#34;&#34;&#34;
+    return kw - mu</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.DL_Edges"><code class="name flex">
+<span>def <span class="ident">DL_Edges</span></span>(<span>nw, kw, isSimple=True, kws=None, delta=2)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to encode the number of edges in a subgraph</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>nw</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum possible edges in a simple graph or maximum number of feasible vertex-pair in simple or multigraph\</dd>
+<dt><strong><code>kw</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of edges in simple graph pattern or multigraph pattern\</dd>
+<dt><strong><code>isSimple</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>True if Graph is a simple graph else false for multigraph, by default True\</dd>
+<dt><strong><code>kws</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>number of vertex-pair in a multigraph connected with each other by atleast one edge, by default None\</dd>
+<dt><strong><code>delta</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>accuracy to delta decimal points, by default 2</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>number of bits required to communicate this information to the user</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DL_Edges(nw, kw, isSimple=True, kws=None, delta=2):
+    &#34;&#34;&#34;
+    function to encode the number of edges in a subgraph
+
+    Parameters
+    ----------
+    nw : int
+        Maximum possible edges in a simple graph or maximum number of feasible vertex-pair in simple or multigraph\\
+    kw : int
+        Number of edges in simple graph pattern or multigraph pattern\\
+    isSimple : bool, optional
+        True if Graph is a simple graph else false for multigraph, by default True\\
+    kws : int, optional
+        number of vertex-pair in a multigraph connected with each other by atleast one edge, by default None\\
+    delta : int, optional
+        accuracy to delta decimal points, by default 2
+
+    Returns
+    -------
+    float
+        number of bits required to communicate this information to the user
+    &#34;&#34;&#34;
+    dl = 0
+    if isSimple:
+        remE = nw - kw
+        dl = LN(remE)
+    else:
+        remE = nw - kws
+        kappa = round(kw/kws, delta)
+        dl += LN(remE)
+        dl += math.log2(kappa+1)
+        dl += math.log2(math.pow(10, delta))
+    return dl</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.DL_Nodes"><code class="name flex">
+<span>def <span class="ident">DL_Nodes</span></span>(<span>V, W, q)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the shannon-optimal code to describe the vertices in a graph pattern</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>V</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of nodes in a supergraph of original dataset</dd>
+<dt><strong><code>W</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of nodes in a graph pattern</dd>
+<dt><strong><code>q</code></strong> :&ensp;<code>float</code></dt>
+<dd>expected size of a pattern, i.e., ratio of original dataset size, in range 0.0 to 1.0</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>shannon-optimal code to describe W vertices</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DL_Nodes(V, W, q):
+    &#34;&#34;&#34;function to compute the shannon-optimal code to describe the vertices in a graph pattern
+
+    Args:
+        V (int): number of nodes in a supergraph of original dataset
+        W (int): number of nodes in a graph pattern
+        q (float): expected size of a pattern, i.e., ratio of original dataset size, in range 0.0 to 1.0
+
+    Returns:
+        float: shannon-optimal code to describe W vertices
+    &#34;&#34;&#34;
+    incCost = math.log((1.0 - q) / q)
+    excCost = V * math.log(1.0 / (1.0 - q))
+    dl = W * incCost + excCost
+    return dl</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.IC_DSIMP"><code class="name flex">
+<span>def <span class="ident">IC_DSIMP</span></span>(<span>kw, nw, mu, p_)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the information content of a multigraph graph pattern as proposed in DSIMP</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>kw</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of edges found in multigraph pattern</dd>
+<dt><strong><code>nw</code></strong> :&ensp;<code>int</code></dt>
+<dd>total number of feasible vertex-pair</dd>
+<dt><strong><code>mu</code></strong> :&ensp;<code>float</code></dt>
+<dd>expected number of edges in a multigraph pattern, i.e., sum of expected edges between all feasible vertex-pair</dd>
+<dt><strong><code>p_</code></strong> :&ensp;<code>float</code></dt>
+<dd>minimum prabability of success among all geometric distribution between all feasible vertex pairs</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>The information content (as per definition in DSIMP) of a multigraph pattern</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def IC_DSIMP(kw, nw, mu, p_):
+    &#34;&#34;&#34;function to compute the information content of a multigraph graph pattern as proposed in DSIMP
+
+    Args:
+        kw (int): number of edges found in multigraph pattern
+        nw (int): total number of feasible vertex-pair
+        mu (float): expected number of edges in a multigraph pattern, i.e., sum of expected edges between all feasible vertex-pair
+        p_ (float): minimum prabability of success among all geometric distribution between all feasible vertex pairs
+
+    Returns:
+        float: The information content (as per definition in DSIMP) of a multigraph pattern
+    &#34;&#34;&#34;
+    ic = p_ * ( kw - mu ) + p_ * ( mu + nw ) * math.log ((mu + nw) / (kw + nw))
+    # eps = kw/nw
+    # ps = 1.0/(eps+1.0)
+    # ic = KL_g(ps, p_)
+    return ic</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.IC_DSSG"><code class="name flex">
+<span>def <span class="ident">IC_DSSG</span></span>(<span>CL_I, CL_F)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the information content of a pattern as proposed in DSSG, i.e., the gain in codelength of a model</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>CL_I</code></strong> :&ensp;<code>float</code></dt>
+<dd>prior codelength or the number of bits required to encode the graph given the background distribution</dd>
+<dt><strong><code>CL_F</code></strong> :&ensp;<code>float</code></dt>
+<dd>posterior codelength or the number of bits required to encode the graph given the background distribution</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>gain in codelength or information content</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def IC_DSSG(CL_I, CL_F):
+    &#34;&#34;&#34;function to compute the information content of a pattern as proposed in DSSG, i.e., the gain in codelength of a model
+
+    Args:
+        CL_I (float): prior codelength or the number of bits required to encode the graph given the background distribution
+        CL_F (float): posterior codelength or the number of bits required to encode the graph given the background distribution
+
+    Returns:
+        float: gain in codelength or information content
+    &#34;&#34;&#34;
+    return CL_I - CL_F</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.IC_SSG"><code class="name flex">
+<span>def <span class="ident">IC_SSG</span></span>(<span>mode, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the information content of a simple graph pattern as proposed in SSG</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>mode</code></strong> :&ensp;<code>int</code></dt>
+<dd>1 if pw, kw, nw is provided
+2 if supergraph G is provided along with a linst of nodes in subgraph WL
+3 if a subgraph pattern W is provided as a networkx graph</dd>
+</dl>
+<p>kwargs:
+gtype (str): 'U' for undirected and 'D' for directed, default is 'U'
+kw (int): Required if mode is 1, number of edges in a graph pattern
+nw (int): Required if mode is 1, number of feasible vertex-pair combination in a graph pattern
+pw (float): sum of probability of success (having an edge) between all feasible vertex-pair
+G (networkx graph): required if mode is 2, supergraph
+WL (list): required if mode is 2 and gtype is 'U', list of nodes in a pattern
+PD (list): required if mode is 2 and PD is not provided
+isSimple (boolean): True, if a pattern is a simple graph else false.
+W (networkx graph): Required if mode is 4, pattern as a networkx graph object</p>
+<h2 id="returns">Returns</h2>
+<p>ic (float): The information content (as per definition in SSG) of a (simple) graph pattern</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def IC_SSG(mode, **kwargs):
+    &#34;&#34;&#34;function to compute the information content of a simple graph pattern as proposed in SSG
+
+    Args:
+        mode (int): 1 if pw, kw, nw is provided
+                    2 if supergraph G is provided along with a linst of nodes in subgraph WL
+                    3 if a subgraph pattern W is provided as a networkx graph
+
+    kwargs:
+        gtype (str): &#39;U&#39; for undirected and &#39;D&#39; for directed, default is &#39;U&#39;
+        kw (int): Required if mode is 1, number of edges in a graph pattern
+        nw (int): Required if mode is 1, number of feasible vertex-pair combination in a graph pattern
+        pw (float): sum of probability of success (having an edge) between all feasible vertex-pair
+        G (networkx graph): required if mode is 2, supergraph
+        WL (list): required if mode is 2 and gtype is &#39;U&#39;, list of nodes in a pattern
+        PD (list): required if mode is 2 and PD is not provided
+        isSimple (boolean): True, if a pattern is a simple graph else false.
+        W (networkx graph): Required if mode is 4, pattern as a networkx graph object
+
+
+    Returns:
+        ic (float): The information content (as per definition in SSG) of a (simple) graph pattern
+    &#34;&#34;&#34;
+    gtype = &#39;U&#39;
+    isSimple = True
+    if &#39;gtype&#39; in kwargs:
+        gtype = kwargs[&#39;gtype&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    ic = 0.0
+    if mode == 1:
+        assert &#39;kw&#39; in kwargs and &#39;nw&#39; in kwargs and &#39;pw&#39; in kwargs, &#34;kw, nw and pw are required if mode is 1&#34;
+        ic = kwargs[&#39;nw&#39;] * KL( kwargs[&#39;kw&#39;]/kwargs[&#39;nw&#39;], kwargs[&#39;pw&#39;]/kwargs[&#39;nw&#39;] )
+    elif mode == 2:
+        if gtype == &#39;U&#39;:
+            assert &#39;G&#39; in kwargs and &#39;WL&#39; in kwargs, &#34;&#39;G&#39; (supergraph) and &#39;WL&#39; (list of nodes in pattern W) are required if mode is 2&#34;
+            H = kwargs[&#39;G&#39;].subgraph(kwargs[&#39;WL&#39;])
+            nw = NW(H.number_of_nodes())
+            kw = H.number_of_edges()
+            pw = 0.0
+            assert &#39;PD&#39; in kwargs or &#39;pw&#39; in kwargs, &#34;if mode is 2, either PD or pw shall be provided&#34;
+            if &#39;pw&#39; in kwargs:
+                pw = kwargs[&#39;pw&#39;]
+            else:
+                pw = computeSumOfEdgeProbablity(kwargs[&#39;PD&#39;], gtype=gtype, NL=kwargs[&#39;WL&#39;], isSimple=isSimple)
+            ic = nw * KL(kw/nw, pw/nw)
+    elif mode == 3:
+        if gtype == &#39;U&#39;:
+            assert &#39;W&#39; in kwargs, &#34;&#39;G&#39; (subgraph pattern) as networkx graph is required if mode is 3&#34;
+            nw = NW(kwargs[&#39;W&#39;].number_of_nodes())
+            kw = kwargs[&#39;W&#39;].number_of_edges()
+            pw = 0.0
+            assert &#39;PD&#39; in kwargs or &#39;pw&#39; in kwargs, &#34;if mode is 3, either PD or pw shall be provided&#34;
+            if &#39;pw&#39; in kwargs:
+                pw = kwargs[&#39;pw&#39;]
+            else:
+                pw = computeSumOfEdgeProbablity(kwargs[&#39;PD&#39;], gtype=gtype, NL=kwargs[&#39;WL&#39;], isSimple=isSimple)
+            ic = nw * KL(kw/nw, pw/nw)
+    else:
+        assert mode&lt;4, &#34;Invalid mode&#34;
+    return ic</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.KL"><code class="name flex">
+<span>def <span class="ident">KL</span></span>(<span>q, p)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute KL-divergence between two Bernoulli Distributions</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>q</code></strong> :&ensp;<code>float</code></dt>
+<dd>probability of success of posterior distribution</dd>
+<dt><strong><code>p</code></strong> :&ensp;<code>[type]</code></dt>
+<dd>probability of success of prior distribution</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>KL-divergence value</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def KL(q, p):
+    &#34;&#34;&#34;function to compute KL-divergence between two Bernoulli Distributions
+
+    Args:
+        q (float): probability of success of posterior distribution
+        p ([type]): probability of success of prior distribution
+
+    Returns:
+        float: KL-divergence value
+    &#34;&#34;&#34;
+    t1 = 0.0
+    t2 = 0.0
+    if p &lt; 1e-10:
+        p = 1e-10
+    if p &gt; 1 - 1e-10:
+        p = 1-1e-10
+    try:
+        t1 = 0.0 if q == 0.0 else q * math.log(q / p)
+        t2 = 0.0 if q == 1.0 else (1 - q) * math.log((1 - q) / (1 - p))
+    except:
+        print(&#39;Math Domain Error&#39;, p, q)
+    return t1 + t2</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.KL_g"><code class="name flex">
+<span>def <span class="ident">KL_g</span></span>(<span>q, p)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute KL-divergence between two Bernoulli Distributions</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>q</code></strong> :&ensp;<code>float</code></dt>
+<dd>probability of success of posterior distribution</dd>
+<dt><strong><code>p</code></strong> :&ensp;<code>[type]</code></dt>
+<dd>probability of success of prior distribution</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>KL-divergence value</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def KL_g(q, p):
+    &#34;&#34;&#34;function to compute KL-divergence between two Bernoulli Distributions
+
+    Args:
+        q (float): probability of success of posterior distribution
+        p ([type]): probability of success of prior distribution
+
+    Returns:
+        float: KL-divergence value
+    &#34;&#34;&#34;
+    t1 = 0.0
+    t2 = 0.0
+    if p &lt; 1e-10:
+        p = 1e-10
+    if p &gt; 1 - 1e-10:
+        p = 1-1e-10
+    try:
+        t1 = 0.0 if q == 0.0 else q * math.log(q / p)
+        t2 = 0.0 if q == 1.0 else (1 - q)/q * math.log((1 - q) / (1 - p))
+    except:
+        print(&#39;Math Domain Error&#39;, p, q)
+    return t1 + t2</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.LN"><code class="name flex">
+<span>def <span class="ident">LN</span></span>(<span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute universal code for integer as given by Rissanen (1983)</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>input integer</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>complexity or number of bits required to universally encode an integer</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def LN(n):
+    &#34;&#34;&#34;function to compute universal code for integer as given by Rissanen (1983)
+
+    Args:
+        n (int): input integer
+
+    Returns:
+        float: complexity or number of bits required to universally encode an integer
+    &#34;&#34;&#34;
+    f = math.log2(2.865064)
+    a = n
+    if a&gt;=1:
+        f += math.log2(a)
+        a = math.log2(a)
+    return f</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.NW"><code class="name flex">
+<span>def <span class="ident">NW</span></span>(<span>N, tp='U')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute number of edges or number of feasible vertex-pair</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>N</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of nodes</dd>
+<dt><strong><code>tp</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Can be either 'U' for undirected and 'D' for directed graphs. Defaults to 'U'.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int</code></dt>
+<dd>number of edges or number of feasible vertex-pair between N nodes</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def NW(N, tp=&#39;U&#39;):
+    &#34;&#34;&#34;function to compute number of edges or number of feasible vertex-pair
+
+    Args:
+        N (int): number of nodes
+        tp (str, optional): Can be either &#39;U&#39; for undirected and &#39;D&#39; for directed graphs. Defaults to &#39;U&#39;.
+
+    Returns:
+        int: number of edges or number of feasible vertex-pair between N nodes
+    &#34;&#34;&#34;
+    assert tp==&#39;U&#39; or tp==&#39;D&#39;, &#34;Invalid type in NW, it shall be either &#39;S&#39; or &#39;D&#39;&#34;
+    if tp==&#39;U&#39;:
+        return N*(N-1)//2
+    else:
+        return N*(N-1)</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.NW_D"><code class="name flex">
+<span>def <span class="ident">NW_D</span></span>(<span>inNL, outNL)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute number of edges or number of feasible vertex-pair in a directed graph</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>inNL</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of nodes for a directed graph having non-zero indegree</dd>
+<dt><strong><code>outNL</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of nodes for a directed graph having non-zero outdegree</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>count (int): number of possible edges or combination of feasible vertex-pair</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def NW_D(inNL, outNL):
+    &#34;&#34;&#34;function to compute number of edges or number of feasible vertex-pair in a directed graph
+
+    Args:
+        inNL (list): list of nodes for a directed graph having non-zero indegree
+        outNL (list): list of nodes for a directed graph having non-zero outdegree
+
+    Returns:
+        count (int): number of possible edges or combination of feasible vertex-pair
+    &#34;&#34;&#34;
+    assert isinstance(inNL, list) and isinstance(outNL, list), &#34;inNL and outNL shall be a list in NW_D&#34;
+    intersection = set(inNL).intersection(set(outNL))
+    count = len(outNL)*len(inNL) - len(intersection)
+    return count</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.computeDescriptionLength"><code class="name flex">
+<span>def <span class="ident">computeDescriptionLength</span></span>(<span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="function-to-compute-description-length-of-a-pattern-or-an-action">Function To Compute Description Length Of A Pattern Or An Action</h2>
+<h2 id="args">Args</h2>
+<h2 id="none">None</h2>
+<p>kwargs:
+dlmode (int): 1 for encoding only nodes (used in SSG and SIMP), 2 for encoding nodes with #edges,
+3 for encoding nodes, edges and action type (for add action),
+4 for encoding lambda/pattern/constraint id and action type (for remove action),
+5 for encoding action type, lambda/pattern/constraint id and #edges (for update action),
+6 for encoding action type, lambda/pattern/constraint id, #nodes removed, nodes and updated edges (for shrink action)
+7 for encoding action type, lambda/pattern/constraint id, #resulting patterns,
+#nodes in each pattern, nodes in each pattern and #edges in each pattern (for split action)
+8 for encoding action type, two lambda/pattern/constraint id, #edges in the resulting pattern (for merge action),
+default is 1
+excActionType (boolean): if information to exclude action type in DL, only valid if dlmode is 3-8, default is true
+l (int): number of actions defined, required if dlmode is 3-8.
+gtype (str): 'U' for undirected and 'D' for directed. Default is 'U'.
+q (float): parameter of shannon-optimal code which is expected size of a pattern, i.e., ratio of original dataset size, in range 0.0 to 1.0. Required if dlmode is 1,2 or 3
+V (int): number of nodes in a dataset. Required if dlmode is 1,2 or 3
+W (int): number of nodes in a pattern. Required if gtype is 'U' and dlmode is 1-8 except 4 and 7
+WI (int or list): number of inNodes or list of inNodes in a pattern. Required if gtype is 'D' and dlmode is 1-8 except 4 and 7
+WO (int or list): number of outNodes or list of outNodes in a pattern. Required if gtype is 'D' and dlmode is 1-8 except 4 and 7
+kw (int): number of edges in a pattern. Required if dlmode is 2-8 except 4 and 7
+C (int): number of constraints, required if dlmode is 3-8
+WS (int): number of nodes initially present in a pattern before shrink (dlmode: 6) and split (dlmode: 7), required if gtype is 'U'
+WIS (int): number of inNodes initially present in a pattern before shrink (dlmode: 6) and split (dlmode: 7), required if gtype is 'D'
+WOS(int): number of outNodes initially present in a pattern before shrink (dlmode: 6) and split (dlmode: 7), required if gtype is 'D'
+compos (dict): dictiornary of connected components after split. Required if dlmode is 7. If gtype is 'U' compos should be a dictionary with keys as component identifier (int) and value as a connected component (networkx graph)
+If gtype is 'D' it should be a dictionary with key (int) and value a 3 length tuple where first shall be networkx DiGraph, and rest shall be two list of IN and OUT Nodes
+isSimple (bool): True if the graph is a simple graph, false if multigraph, default is True
+kws (int): Number of edges in a simple graph equivalent of a multigraph, required if isSimple is False</p>
+<hr>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>the required descroption length</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeDescriptionLength(**kwargs):
+    &#34;&#34;&#34;function to compute description length of a pattern or an action
+    --------------------
+    Args:
+        None
+    --------------------
+    kwargs:
+        dlmode (int): 1 for encoding only nodes (used in SSG and SIMP), 2 for encoding nodes with #edges,
+                    3 for encoding nodes, edges and action type (for add action),
+                    4 for encoding lambda/pattern/constraint id and action type (for remove action),
+                    5 for encoding action type, lambda/pattern/constraint id and #edges (for update action),
+                    6 for encoding action type, lambda/pattern/constraint id, #nodes removed, nodes and updated edges (for shrink action)
+                    7 for encoding action type, lambda/pattern/constraint id, #resulting patterns,
+                        #nodes in each pattern, nodes in each pattern and #edges in each pattern (for split action)
+                    8 for encoding action type, two lambda/pattern/constraint id, #edges in the resulting pattern (for merge action),
+                    default is 1
+        excActionType (boolean): if information to exclude action type in DL, only valid if dlmode is 3-8, default is true
+        l (int): number of actions defined, required if dlmode is 3-8.
+        gtype (str): &#39;U&#39; for undirected and &#39;D&#39; for directed. Default is &#39;U&#39;.
+        q (float): parameter of shannon-optimal code which is expected size of a pattern, i.e., ratio of original dataset size, in range 0.0 to 1.0. Required if dlmode is 1,2 or 3
+        V (int): number of nodes in a dataset. Required if dlmode is 1,2 or 3
+        W (int): number of nodes in a pattern. Required if gtype is &#39;U&#39; and dlmode is 1-8 except 4 and 7
+        WI (int or list): number of inNodes or list of inNodes in a pattern. Required if gtype is &#39;D&#39; and dlmode is 1-8 except 4 and 7
+        WO (int or list): number of outNodes or list of outNodes in a pattern. Required if gtype is &#39;D&#39; and dlmode is 1-8 except 4 and 7
+        kw (int): number of edges in a pattern. Required if dlmode is 2-8 except 4 and 7
+        C (int): number of constraints, required if dlmode is 3-8
+        WS (int): number of nodes initially present in a pattern before shrink (dlmode: 6) and split (dlmode: 7), required if gtype is &#39;U&#39;
+        WIS (int): number of inNodes initially present in a pattern before shrink (dlmode: 6) and split (dlmode: 7), required if gtype is &#39;D&#39;
+        WOS(int): number of outNodes initially present in a pattern before shrink (dlmode: 6) and split (dlmode: 7), required if gtype is &#39;D&#39;
+        compos (dict): dictiornary of connected components after split. Required if dlmode is 7. If gtype is &#39;U&#39; compos should be a dictionary with keys as component identifier (int) and value as a connected component (networkx graph)
+                        If gtype is &#39;D&#39; it should be a dictionary with key (int) and value a 3 length tuple where first shall be networkx DiGraph, and rest shall be two list of IN and OUT Nodes
+        isSimple (bool): True if the graph is a simple graph, false if multigraph, default is True
+        kws (int): Number of edges in a simple graph equivalent of a multigraph, required if isSimple is False
+    --------------------
+    Returns:
+        float: the required descroption length
+    &#34;&#34;&#34;
+    dlmode = 1
+    if &#39;dlmode&#39; in kwargs:
+        dlmode = kwargs[&#39;dlmode&#39;]
+
+    gtype = &#39;U&#39;
+    if &#39;gtype&#39; in kwargs:
+        gtype = kwargs[&#39;gtype&#39;]
+
+    excActionType = True
+    if &#39;excActionType&#39; in kwargs:
+        assert &#39;l&#39; in kwargs, &#34;&#39;l&#39; (number of action types) is required&#34;
+        excActionType = kwargs[&#39;excActionType&#39;]
+    isSimple = True
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+        if not isSimple:
+            assert &#39;kws&#39; in kwargs, &#34;&#39;kws&#39; is required to encode edges if isSimple is False&#34;
+
+    if dlmode == 1:
+        DL = 0.0
+        if gtype == &#39;U&#39;:
+            assert &#39;V&#39; in kwargs and &#39;W&#39; in kwargs and &#39;q&#39; in kwargs, &#34;&#39;V&#39;, &#39;W&#39; and &#39;q&#39; shall be provide if dlmode is 1 and gtype is &#39;U&#39;&#34;
+            DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;W&#39;], kwargs[&#39;q&#39;]) ## encoding nodes in pattern
+        else:
+            assert &#39;V&#39; in kwargs and &#39;WI&#39; in kwargs and &#39;WO&#39; in kwargs and &#39;q&#39; in kwargs, &#34;&#39;V&#39;, &#39;WI&#39;, &#39;WO&#39; and &#39;q&#39; shall be provide if dlmode is 1 and gtype is &#39;D&#39;&#34;
+            DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;WI&#39;], kwargs[&#39;q&#39;]) ## encoding inNodes in pattern
+            DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;WO&#39;], kwargs[&#39;q&#39;]) ## encoding outNodes in pattern
+        return DL
+    elif dlmode == 2 or dlmode == 3: #add action
+        DL = 0.0
+        nw = 0
+        assert &#39;kw&#39; in kwargs, &#34;kw is not provided&#34;
+        if gtype == &#39;U&#39;:
+            assert &#39;V&#39; in kwargs and &#39;W&#39; in kwargs and &#39;q&#39; in kwargs, &#34;&#39;V&#39;, &#39;W&#39; and &#39;q&#39; shall be provide if dlmode is 2 or 3 and gtype is &#39;U&#39;&#34;
+            DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;W&#39;], kwargs[&#39;q&#39;]) ## encoding nodes in pattern
+            nw = NW(kwargs[&#39;W&#39;])
+        else:
+            assert &#39;V&#39; in kwargs and &#39;WI&#39; in kwargs and &#39;WO&#39; in kwargs and &#39;q&#39; in kwargs, &#34;&#39;V&#39;, &#39;WI&#39;, &#39;WO&#39; and &#39;q&#39; shall be provide if dlmode is 2 or 3 and gtype is &#39;D&#39;&#34;
+            if isinstance(kwargs[&#39;WI&#39;], list) and isinstance(kwargs[&#39;WO&#39;], list):
+                DL += DL_Nodes(kwargs[&#39;V&#39;], len(kwargs[&#39;WI&#39;]), kwargs[&#39;q&#39;]) ## encoding inNodes in pattern
+                DL += DL_Nodes(kwargs[&#39;V&#39;], len(kwargs[&#39;WO&#39;]), kwargs[&#39;q&#39;]) ## encoding outNodes in pattern
+                nw = NW_D(kwargs[&#39;WI&#39;], kwargs[&#39;WO&#39;])
+            else:
+                DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;WI&#39;], kwargs[&#39;q&#39;]) ## encoding inNodes in pattern
+                DL += DL_Nodes(kwargs[&#39;V&#39;], kwargs[&#39;WO&#39;], kwargs[&#39;q&#39;]) ## encoding outNodes in pattern
+                assert &#39;nw&#39; in kwargs, &#34;nw is required if WI and WO are length and not list&#34;
+                nw = kwargs[&#39;nw&#39;]
+        if isSimple:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;]) ## encoding number of edges in a pattern
+        else:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;], isSimple, kwargs[&#39;kws&#39;], 2)
+        if dlmode == 3 and not excActionType:
+            assert &#39;l&#39; in kwargs,&#34;&#39;l&#39; not provided&#34;
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    elif dlmode == 4: #remove action
+        DL = 0.0
+        assert &#39;C&#39; in kwargs, &#34;number of constraints &#39;C&#39; is required&#34;
+        DL += math.log2(kwargs[&#39;C&#39;]) ## encoding constraint id
+        if not excActionType:
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    elif dlmode == 5: #update action
+        DL = 0.0
+        assert &#39;C&#39; in kwargs, &#34;number of constraints &#39;C&#39; is required&#34;
+        DL += math.log2(kwargs[&#39;C&#39;]) ## encoding constraint id
+        nw = 0
+        if gtype == &#39;U&#39;:
+            assert &#39;W&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;W&#39; and &#39;kw&#39; are required if dlmode is 5 and gtype is &#39;U&#39;&#34;
+            nw = NW(kwargs[&#39;W&#39;])
+        else:
+            assert &#39;WI&#39; in kwargs and &#39;WO&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;WI&#39;, &#39;WO&#39; and &#39;kw&#39; are required if dlmode is 5 and gtype is &#39;D&#39;&#34;
+            nw = NW_D(kwargs[&#39;WI&#39;], kwargs[&#39;WO&#39;])
+        if isSimple:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;]) ## encoding number of edges in a pattern
+        else:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;], isSimple, kwargs[&#39;kws&#39;], 2)
+        if not excActionType:
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    elif dlmode == 6: #shrink action
+        DL = 0.0
+        assert &#39;C&#39; in kwargs, &#34;number of constraints &#39;C&#39; is required&#34;
+        DL += math.log2(kwargs[&#39;C&#39;]) ## encoding constraint id
+        nw = 0
+        if gtype == &#39;U&#39;:
+            assert &#39;W&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;W&#39; and &#39;kw&#39; are required if dlmode is 6 and gtype is &#39;U&#39;&#34;
+            nw = NW(kwargs[&#39;W&#39;])
+        else:
+            assert &#39;WI&#39; in kwargs and &#39;WO&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;WI&#39;, &#39;WO&#39; and &#39;kw&#39; are required if dlmode is 6 and gtype is &#39;D&#39;&#34;
+            nw = NW_D(kwargs[&#39;WI&#39;], kwargs[&#39;WO&#39;])
+        if isSimple:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;]) ## encoding number of edges in a pattern
+        else:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;], isSimple, kwargs[&#39;kws&#39;], 2)
+        if gtype == &#39;U&#39;:
+            assert &#39;WS&#39; in kwargs, &#34;&#39;WS&#39; (initial #nodes is required if dlmode is 6 gtype is &#39;U&#39;&#34;
+            DL += LN(kwargs[&#39;WS&#39;] - kwargs[&#39;W&#39;]) ## encoding number of nodes removed in a pattern
+            DL += math.log2(ncr(kwargs[&#39;WS&#39;], kwargs[&#39;WS&#39;] - kwargs[&#39;W&#39;])) ## encoding nodes removed in a pattern
+        else:
+            assert &#39;WIS&#39; in kwargs and &#39;WOS&#39; in kwargs, &#34;&#39;WIS&#39; (initial #inNodes) and &#39;WOS&#39; (initial #outNodes) are required if dlmode is 6 gtype is &#39;D&#39;&#34;
+            DL += LN(kwargs[&#39;WIS&#39;] - len(kwargs[&#39;WI&#39;])) ## encoding number of inNodes removed in a pattern
+            DL += LN(kwargs[&#39;WOS&#39;] - len(kwargs[&#39;WO&#39;])) ## encoding number of outNodes removed in a pattern
+            DL += math.log2(ncr(kwargs[&#39;WIS&#39;], kwargs[&#39;WIS&#39;] - len(kwargs[&#39;WI&#39;]))) ## encoding inNodes removed in a pattern
+            DL += math.log2(ncr(kwargs[&#39;WOS&#39;], kwargs[&#39;WOS&#39;] - len(kwargs[&#39;WO&#39;]))) ## encoding outNodes removed in a pattern
+        if not excActionType:
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    elif dlmode == 7: #split action
+        DL = 0.0
+        # Todo check this code
+        assert &#39;C&#39; in kwargs, &#34;number of constraints &#39;C&#39; is required&#34;
+        DL += math.log2(kwargs[&#39;C&#39;]) ## encoding constraint id
+        assert &#39;compos&#39; in kwargs, &#34;connected components (&#39;comps&#39;) of a pattern is required&#34;
+        if gtype == &#39;U&#39;:
+            assert isinstance(kwargs[&#39;compos&#39;], dict) and isinstance(kwargs[&#39;compos&#39;][0], nx.Graph), &#34;&#39;comps&#39; shall be a dictionary with key (int) and value (networkx graph)&#34;
+            DL += LN(len(kwargs[&#39;compos&#39;])) ### encoding number of components
+            WST = 0 # to count sum of nodes in each component
+            for k,v in kwargs[&#39;compos&#39;].items():
+                DL += LN(v.NCount) ## encoding number of nodes in each component
+                if isSimple:
+                    DL += DL_Edges(NW(v.NCount), v.ECount) ## encoding number of edges in a pattern
+                else:
+                    DL += DL_Edges(NW(v.NCount), v.ECount, isSimple, v.kws, 2)## encoding number of edges in each component
+                WST += v.NCount
+            assert &#39;WS&#39; in kwargs, &#34;&#39;WS&#39; (initial #nodes) is required if dlmode is 7 and gtype is &#39;U&#39;&#34;
+            DL += math.log2(ncr(kwargs[&#39;WS&#39;], WST)) ## encoding nodes in each component
+        else:
+            assert isinstance(kwargs[&#39;compos&#39;], dict) and len(kwargs[&#39;compos&#39;][0]) == 3 and isinstance(kwargs[&#39;compos&#39;][0][0], nx.Graph) and isinstance(kwargs[&#39;compos&#39;][0][1], list) and isinstance(kwargs[&#39;compos&#39;][0][2], list), &#34;&#39;comps&#39; shall be a dictionary with key (int) and value a 3 length tuple where first shall be networkx DiGraph, and rest shall be two list of IN and OUT Nodes&#34;
+            DL += LN(len(kwargs[&#39;compos&#39;])) ### encoding number of components
+            WST_i = 0 # to count sum of inNodes in each component
+            WST_o = 0 # to count sum of outNodes in each component
+            for k,v in kwargs[&#39;compos&#39;].items():
+                DL += LN(v.InNCount) ## encoding number of inNodes in each component
+                DL += LN(v.OutNCount) ## encoding number of outNodes in each component
+                if isSimple:
+                    DL += DL_Edges(NW_D(v.inNL, v.outNL), v.ECount) ## encoding number of edges in a pattern
+                else:
+                    DL += DL_Edges(NW_D(v.inNL, v.outNL), v.ECount, isSimple, v.kws, 2) ## encoding number of edges in each component
+                WST_i += LN(v.InNCount)
+                WST_o += LN(v.OutNCount)
+            assert &#39;WIS&#39; in kwargs and &#39;WOS&#39; in kwargs, &#34;&#39;WIS&#39; (initial #inNodes) and &#39;WOS&#39; (initial #outNodes) are required if dlmode is 7 gtype is &#39;D&#39;&#34;
+            DL += math.log2(ncr(kwargs[&#39;WIS&#39;], WST_i)) ## encoding inNodes in each component
+            DL += math.log2(ncr(kwargs[&#39;WOS&#39;], WST_o)) ## encoding outNodes in each component
+        if not excActionType:
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    elif dlmode == 8: #merge action
+        DL = 0.0
+        assert &#39;C&#39; in kwargs, &#34;number of constraints &#39;C&#39; is required&#34;
+        DL += math.log2(ncr(kwargs[&#39;C&#39;], 2)) ## encoding two constraint ids
+        nw = 0
+        if gtype == &#39;U&#39;:
+            assert &#39;W&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;W&#39; and &#39;kw&#39; are required if dlmode is 8 and gtype is &#39;U&#39;&#34;
+            nw = NW(kwargs[&#39;W&#39;])
+        else:
+            assert &#39;WI&#39; in kwargs and &#39;WO&#39; in kwargs and &#39;kw&#39; in kwargs, &#34;&#39;WI&#39;, &#39;WO&#39; and &#39;kw&#39; are required if dlmode is 8 and gtype is &#39;D&#39;&#34;
+            nw = NW_D(kwargs[&#39;WI&#39;], kwargs[&#39;WO&#39;])
+        if isSimple:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;]) ## encoding number of edges in a pattern
+        else:
+            DL += DL_Edges(nw, kwargs[&#39;kw&#39;], isSimple, kwargs[&#39;kws&#39;], 2)
+        if not excActionType:
+            DL += math.log2(kwargs[&#39;l&#39;]) ## encoding action type
+        return DL
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.computeInterestingness"><code class="name flex">
+<span>def <span class="ident">computeInterestingness</span></span>(<span>IC, DL, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute interestingness of a pattern</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>IC</code></strong> :&ensp;<code>float</code></dt>
+<dd>Information Content</dd>
+<dt><strong><code>DL</code></strong> :&ensp;<code>float</code></dt>
+<dd>Description Length</dd>
+</dl>
+<p>kwargs:
+mode (int): 1 if I = IC/DL, 2 if I = IC - DL, default is 1</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>Interestingness score</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeInterestingness(IC, DL, **kwargs):
+    &#34;&#34;&#34;function to compute interestingness of a pattern
+
+    Args:
+        IC (float): Information Content
+        DL (float): Description Length
+
+    kwargs:
+        mode (int): 1 if I = IC/DL, 2 if I = IC - DL, default is 1
+
+    Returns:
+        float: Interestingness score
+    &#34;&#34;&#34;
+    mode = 1
+    if &#39;mode&#39; in kwargs:
+        mode = kwargs[&#39;mode&#39;]
+    I = 0.0
+    if mode == 1:
+        I = IC / DL
+    elif mode == 2:
+        I = IC - DL
+    else:
+        assert mode &lt; 3, &#34;Incorrect mode&#34;
+    return I</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.computeMinPOS"><code class="name flex">
+<span>def <span class="ident">computeMinPOS</span></span>(<span>PD, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the minimum POS (Probability of success) among all possible random variables, i.e., all feasible vertex-pairs
+this fuction is mainly used in case of Geometric distribution, i.e., multigraphs</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution of the dataset, in this case it shall be a product of Geometric distribution</dd>
+</dl>
+<p>kwargs:
+gtype (str): 'D'-directed, 'U'-undirected
+NL (list): list of nodes, required if graph is orginally undirected
+inNL (list): list of inNodes, required if graph is originally directed
+outNL (list): list of outNodes, required if graph is originally directed
+case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+dropLidx (int or list): index of lambda if required to be dropped, default is None
+nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is True</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>minimum POS among all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeMinPOS(PD, **kwargs):
+    &#34;&#34;&#34;function to compute the minimum POS (Probability of success) among all possible random variables, i.e., all feasible vertex-pairs
+    this fuction is mainly used in case of Geometric distribution, i.e., multigraphs
+
+    Args:
+        PD (PDClass): Background distribution of the dataset, in this case it shall be a product of Geometric distribution
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        NL (list): list of nodes, required if graph is orginally undirected
+        inNL (list): list of inNodes, required if graph is originally directed
+        outNL (list): list of outNodes, required if graph is originally directed
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is True
+
+    Returns:
+        float: minimum POS among all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    minp = float(&#34;inf&#34;)
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+        assert &#39;NL&#39; in kwargs, &#34;NL shall be provided if gtype is &#39;U&#39;&#34;
+        NL = kwargs[&#39;NL&#39;]
+        for i in range(len(NL)-1):
+            for j in range(i+1, len(NL)):
+                minp = min(minp, PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple))
+    else:
+        assert &#39;inNL&#39; in kwargs, &#34;inNL shall be provided if gtype is &#39;D&#39;&#34;
+        assert &#39;outNL&#39; in kwargs, &#34;outNL shall be provided if gtype is &#39;D&#39;&#34;
+        inNL = kwargs[&#39;inNL&#39;]
+        outNL = kwargs[&#39;outNL&#39;]
+        for i in outNL:
+            for j in inNL:
+                if i != j:
+                    minp = min(minp, PD.getPOS(i, j, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple))
+    return minp</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.computeMinPOSBetweenNodeAndList"><code class="name flex">
+<span>def <span class="ident">computeMinPOSBetweenNodeAndList</span></span>(<span>PD, node, NL, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the minPOS of all possible random variables,
+i.e., all feasible vertex-pairs with one vertex as provide node and other from a list of nodes (NL).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution of the dataset</dd>
+<dt><strong><code>node</code></strong> :&ensp;<code>int</code></dt>
+<dd>node id</dd>
+<dt><strong><code>NL</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of nodes</dd>
+</dl>
+<p>kwargs:
+gtype (str): 'D'-directed, 'U'-undirected
+dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node; default is 1
+case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+dropLidx (int or list): index of lambda if required to be dropped, default is None
+nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>required sum of Expectations</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeMinPOSBetweenNodeAndList(PD, node, NL, **kwargs):
+    &#34;&#34;&#34;function to compute the minPOS of all possible random variables,
+        i.e., all feasible vertex-pairs with one vertex as provide node and other from a list of nodes (NL).
+
+    Args:
+        PD (PDClass): Background distribution of the dataset
+        node (int): node id
+        NL (list): list of nodes
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list and 2 from list to node; default is 1
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False
+
+    Returns:
+        float: required sum of Expectations
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    minp = float(&#34;inf&#34;)
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    dir_mode = None
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    if kwargs[&#39;gtype&#39;] == &#39;D&#39;:
+        assert &#39;dir_mode&#39; in kwargs, &#39;dir_mode is required if gtype is \&#39;D\&#39;, it can be either 1 or 2&#39;
+        dir_mode = kwargs[&#39;dir_mode&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39; or (kwargs[&#39;gtype&#39;] == &#39;D&#39; and dir_mode == 1):
+        for i in NL:
+            minp = min(minp, PD.getPOS(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple))
+    else:
+        for i in NL:
+            minp = min(minp, PD.getPOS(i, node, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple))
+    return minp</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.computePWparameters"><code class="name flex">
+<span>def <span class="ident">computePWparameters</span></span>(<span>PD, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the sum of Expectations and minPOS of all possible random variables, i.e., all feasible vertex-pairs
+this fuction is mainly used in case of Geometric's distribution, i.e., multigraphs. Note that, it can be used for
+simple graphs also, i.e, Bernoulli's Distribution</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution of the dataset, in this case itcan be a product of Geometric's distribution</dd>
+</dl>
+<p>kwargs:
+gtype (str): 'D'-directed, 'U'-undirected
+NL (list): list of nodes, required if graph is orginally undirected
+inNL (list): list of inNodes, required if graph is originally directed
+outNL (list): list of outNodes, required if graph is originally directed
+case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+dropLidx (int or list): index of lambda if required to be dropped, default is None
+nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float, float</code></dt>
+<dd>sum of Expectations and minPOS of all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computePWparameters(PD, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of Expectations and minPOS of all possible random variables, i.e., all feasible vertex-pairs
+    this fuction is mainly used in case of Geometric&#39;s distribution, i.e., multigraphs. Note that, it can be used for
+    simple graphs also, i.e, Bernoulli&#39;s Distribution
+
+    Args:
+        PD (PDClass): Background distribution of the dataset, in this case itcan be a product of Geometric&#39;s distribution
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        NL (list): list of nodes, required if graph is orginally undirected
+        inNL (list): list of inNodes, required if graph is originally directed
+        outNL (list): list of outNodes, required if graph is originally directed
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False
+
+    Returns:
+        float, float: sum of Expectations and minPOS of all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    SumExpect = 0.0
+    minp = float(&#34;inf&#34;)
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = False
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+        assert &#39;NL&#39; in kwargs, &#34;NL shall be provided if gtype is &#39;U&#39;&#34;
+        NL = kwargs[&#39;NL&#39;]
+        for i in range(len(NL)-1):
+            for j in range(i+1, len(NL)):
+                p = PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                minp = min(minp, p)
+                SumExpect += PD.getExpectationFromPOS(p)
+    else:
+        assert &#39;inNL&#39; in kwargs, &#34;inNL shall be provided if gtype is &#39;D&#39;&#34;
+        assert &#39;outNL&#39; in kwargs, &#34;outNL shall be provided if gtype is &#39;D&#39;&#34;
+        inNL = kwargs[&#39;inNL&#39;]
+        outNL = kwargs[&#39;outNL&#39;]
+        for i in outNL:
+            for j in inNL:
+                if i != j:
+                    p = PD.getPOS(i, j, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                    minp = min(minp, p)
+                    SumExpect += PD.getExpectationFromPOS(p)
+    return SumExpect, minp</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.computePWparametersBetweenNodeAndList"><code class="name flex">
+<span>def <span class="ident">computePWparametersBetweenNodeAndList</span></span>(<span>PD, node, NL, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the sum of Expectations and minPOS of all possible random variables,
+i.e., all feasible vertex-pairs with one vertex as provide node and other from a list of nodes (NL).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution of the dataset</dd>
+<dt><strong><code>node</code></strong> :&ensp;<code>int</code></dt>
+<dd>node id</dd>
+<dt><strong><code>NL</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of nodes</dd>
+</dl>
+<p>kwargs:
+gtype (str): 'D'-directed, 'U'-undirected
+dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node
+case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+dropLidx (int or list): index of lambda if required to be dropped, default is None
+nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float, float</code></dt>
+<dd>required sum of Expectations and minPOS</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computePWparametersBetweenNodeAndList(PD, node, NL, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of Expectations and minPOS of all possible random variables, 
+    i.e., all feasible vertex-pairs with one vertex as provide node and other from a list of nodes (NL).
+
+    Args:
+        PD (PDClass): Background distribution of the dataset
+        node (int): node id
+        NL (list): list of nodes
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list and 2 from list to node
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False
+
+    Returns:
+        float, float: required sum of Expectations and minPOS
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    SumExpect = 0.0
+    minp = float(&#34;inf&#34;)
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    dir_mode = None
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    if kwargs[&#39;gtype&#39;] == &#39;D&#39;:
+        assert &#39;dir_mode&#39; in kwargs, &#39;dir_mode is required if gtype is \&#39;D\&#39;, it can be either 1 or 2&#39;
+        dir_mode = kwargs[&#39;dir_mode&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39; or (kwargs[&#39;gtype&#39;] == &#39;D&#39; and dir_mode == 1):
+        for i in NL:
+            if i != node:
+                p = PD.getPOS(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                minp = min(minp, p)
+                SumExpect += PD.getExpectationFromPOS(p)
+    else:
+        for i in NL:
+            if i != node:
+                p = PD.getPOS(i, node, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                minp = min(minp, p)
+                SumExpect += PD.getExpectationFromPOS(p)
+    return SumExpect, minp</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.computeSumOfEdgeProbablity"><code class="name flex">
+<span>def <span class="ident">computeSumOfEdgeProbablity</span></span>(<span>PD, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the sum of POS (Probability of success) of all possible random variables, i.e., all feasible vertex-pairs
+this fuction is mainly used in case of Bernoulli's distribution, i.e., simple graphs</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution of the dataset, in this case it shall be a product of Bernoulli's distribution</dd>
+</dl>
+<p>kwargs:
+gtype (str): 'D'-directed, 'U'-undirected\
+NL (list): list of nodes, required if graph is orginally undirected\
+inNL (list): list of inNodes, required if graph is originally directed\
+outNL (list): list of outNodes, required if graph is originally directed\
+case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2\
+dropLidx (int or list): index of lambda if required to be dropped, default is None\
+nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0\
+isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is True</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>sum of POS of all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeSumOfEdgeProbablity(PD, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of POS (Probability of success) of all possible random variables, i.e., all feasible vertex-pairs
+    this fuction is mainly used in case of Bernoulli&#39;s distribution, i.e., simple graphs
+
+    Args:
+        PD (PDClass): Background distribution of the dataset, in this case it shall be a product of Bernoulli&#39;s distribution
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected\\
+        NL (list): list of nodes, required if graph is orginally undirected\\
+        inNL (list): list of inNodes, required if graph is originally directed\\
+        outNL (list): list of outNodes, required if graph is originally directed\\
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2\\
+        dropLidx (int or list): index of lambda if required to be dropped, default is None\\
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0\\
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is True
+
+    Returns:
+        float: sum of POS of all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    pw = 0.0
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+        assert &#39;NL&#39; in kwargs, &#34;NL shall be provided if gtype is &#39;U&#39;&#34;
+        NL = kwargs[&#39;NL&#39;]
+        for i in range(len(NL)-1):
+            for j in range(i+1, len(NL)):
+                pw += PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    else:
+        assert &#39;inNL&#39; in kwargs, &#34;inNL shall be provided if gtype is &#39;D&#39;&#34;
+        assert &#39;outNL&#39; in kwargs, &#34;outNL shall be provided if gtype is &#39;D&#39;&#34;
+        inNL = kwargs[&#39;inNL&#39;]
+        outNL = kwargs[&#39;outNL&#39;]
+        for i in outNL:
+            for j in inNL:
+                if i != j:
+                    pw += PD.getPOS(i, j, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    return pw</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.computeSumOfEdgeProbablityBetweenNodeAndList"><code class="name flex">
+<span>def <span class="ident">computeSumOfEdgeProbablityBetweenNodeAndList</span></span>(<span>PD, node, NL, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the sum of POS (Probability of success) of all possible random variables,
+i.e., all feasible vertex-pairs with one vertex as provide node and second from a list of nodes (NL).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution</dd>
+<dt><strong><code>node</code></strong> :&ensp;<code>int</code></dt>
+<dd>node id</dd>
+<dt><strong><code>NL</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of nodes</dd>
+</dl>
+<p>kwargs:
+gtype (str): 'D'-directed, 'U'-undirected
+dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node
+case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+dropLidx (int or list): index of lambda if required to be dropped, default is None
+nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is True</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>required sum of POS</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeSumOfEdgeProbablityBetweenNodeAndList(PD, node, NL, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of POS (Probability of success) of all possible random variables,
+        i.e., all feasible vertex-pairs with one vertex as provide node and second from a list of nodes (NL).
+
+    Args:
+        PD (PDClass): Background distribution
+        node (int): node id
+        NL (list): list of nodes
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list and 2 from list to node
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is True
+
+
+    Returns:
+        float: required sum of POS
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    pw = 0.0
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    dir_mode = None
+
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    if kwargs[&#39;gtype&#39;] == &#39;D&#39;:
+        assert &#39;dir_mode&#39; in kwargs, &#39;dir_mode is required if gtype is \&#39;D\&#39;, it can be either 1 or 2&#39;
+        dir_mode = kwargs[&#39;dir_mode&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39; or (kwargs[&#39;gtype&#39;] == &#39;D&#39; and dir_mode == 1):
+        for i in NL:
+            pw += PD.getPOS(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    else:
+        for i in NL:
+            pw += PD.getPOS(i, node, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    return pw</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.computeSumOfExpectations"><code class="name flex">
+<span>def <span class="ident">computeSumOfExpectations</span></span>(<span>PD, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the sum of Expectations of all possible random variables, i.e., all feasible vertex-pairs
+this fuction is mainly used in case of Geometric's distribution, i.e., multigraphs. Note that, it can be used for
+simple graphs also, i.e, Bernoulli's Distribution</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution of the dataset, in this case itcan be a product of Geometric's distribution</dd>
+</dl>
+<p>kwargs:
+gtype (str): 'D'-directed, 'U'-undirected
+NL (list): list of nodes, required if graph is orginally undirected
+inNL (list): list of inNodes, required if graph is originally directed
+outNL (list): list of outNodes, required if graph is originally directed
+case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+dropLidx (int or list): index of lambda if required to be dropped, default is None
+nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>sum of Expectations of all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeSumOfExpectations(PD, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of Expectations of all possible random variables, i.e., all feasible vertex-pairs
+    this fuction is mainly used in case of Geometric&#39;s distribution, i.e., multigraphs. Note that, it can be used for
+    simple graphs also, i.e, Bernoulli&#39;s Distribution
+
+    Args:
+        PD (PDClass): Background distribution of the dataset, in this case itcan be a product of Geometric&#39;s distribution
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        NL (list): list of nodes, required if graph is orginally undirected
+        inNL (list): list of inNodes, required if graph is originally directed
+        outNL (list): list of outNodes, required if graph is originally directed
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False
+
+    Returns:
+        float: sum of Expectations of all distribution defined by different random variables, each representing a unique feasible vertex-pair defined by set of nodes NL(s)
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    SumExpect = 0.0
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = False
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+        assert &#39;NL&#39; in kwargs, &#34;NL shall be provided if gtype is &#39;U&#39;&#34;
+        NL = kwargs[&#39;NL&#39;]
+        for i in range(len(NL)-1):
+            for j in range(i+1, len(NL)):
+                p = PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                SumExpect += PD.getExpectation(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    else:
+        assert &#39;inNL&#39; in kwargs, &#34;inNL shall be provided if gtype is &#39;D&#39;&#34;
+        assert &#39;outNL&#39; in kwargs, &#34;outNL shall be provided if gtype is &#39;D&#39;&#34;
+        inNL = kwargs[&#39;inNL&#39;]
+        outNL = kwargs[&#39;outNL&#39;]
+        for i in outNL:
+            for j in inNL:
+                if i != j:
+                    SumExpect += PD.getExpectation(i, j, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    return SumExpect</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.computeSumOfExpectationsBetweenNodeAndList"><code class="name flex">
+<span>def <span class="ident">computeSumOfExpectationsBetweenNodeAndList</span></span>(<span>PD, node, NL, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compute the sum of Expectation of all possible random variables,
+i.e., all feasible vertex-pairs with one vertex as provide node and other from a list of nodes (NL).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>PD</code></strong> :&ensp;<code>PDClass</code></dt>
+<dd>Background distribution of the dataset</dd>
+<dt><strong><code>node</code></strong> :&ensp;<code>int</code></dt>
+<dd>node id</dd>
+<dt><strong><code>NL</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of nodes</dd>
+</dl>
+<p>kwargs:
+gtype (str): 'D'-directed, 'U'-undirected
+dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node
+case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+dropLidx (int or list): index of lambda if required to be dropped, default is None
+nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>required sum of Expectations</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeSumOfExpectationsBetweenNodeAndList(PD, node, NL, **kwargs):
+    &#34;&#34;&#34;function to compute the sum of Expectation of all possible random variables,
+        i.e., all feasible vertex-pairs with one vertex as provide node and other from a list of nodes (NL).
+
+    Args:
+        PD (PDClass): Background distribution of the dataset
+        node (int): node id
+        NL (list): list of nodes
+
+    kwargs:
+        gtype (str): &#39;D&#39;-directed, &#39;U&#39;-undirected
+        dir_mode (int): required id gtype is &#39;D&#34;; 1 - from node to list and 2 from list to node
+        case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
+        dropLidx (int or list): index of lambda if required to be dropped, default is None
+        nlambda (float): value of new lambda which shall be now included to compute POS, default is 0.0
+        isSimple (Boolean): True, if graph is orginally a simple graph or False if it is a multigraph, default is False
+
+    Returns:
+        float: required sum of Expectations
+    &#34;&#34;&#34;
+    assert &#39;gtype&#39; in kwargs and (kwargs[&#39;gtype&#39;]==&#39;U&#39; or kwargs[&#39;gtype&#39;]==&#39;D&#39;), &#34;gtype must be provided and it shall be either &#39;D&#39;(Directed) or &#39;U&#39; undirected&#34;
+    SumExpect = 0.0
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    dir_mode = None
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    if kwargs[&#39;gtype&#39;] == &#39;D&#39;:
+        assert &#39;dir_mode&#39; in kwargs, &#39;dir_mode is required if gtype is \&#39;D\&#39;, it can be either 1 or 2&#39;
+        dir_mode = kwargs[&#39;dir_mode&#39;]
+
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39; or (kwargs[&#39;gtype&#39;] == &#39;D&#39; and dir_mode == 1):
+        for i in NL:
+            SumExpect += PD.getExpectation(node, i, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    else:
+        for i in NL:
+            SumExpect += PD.getExpectation(i, node, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+    return SumExpect</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.getCodeLength"><code class="name flex">
+<span>def <span class="ident">getCodeLength</span></span>(<span>G, PD, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCodeLength(G, PD, **kwargs):
+    assert &#39;gtype&#39; in kwargs, &#34;gtype is must to compute codelength&#34;
+    if &#39;case&#39; in kwargs:
+        assert kwargs[&#39;case&#39;]&gt;1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 2-5, dropLidx shall be provided&#34;
+        assert kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1 and &#39;dropLidx&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    codelength = 0.0
+    if isSimple == True:
+        if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+            assert &#39;NL&#39; in kwargs, &#34;NL is required if gtype is &#39;U&#39;&#34;
+            NL = kwargs[&#39;NL&#39;]
+            for i in range(len(NL)-1):
+                    for j in range(i+1, len(NL)):
+                        pos = PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                        numE = G.number_of_edges(NL[i], NL[j])
+                        codelength += math.log2(math.pow(1.0-pos, 1.0-numE)*math.pow(pos, numE))
+        else:
+            assert &#39;inNL&#39; in kwargs and &#39;outNL&#39; in kwargs, &#34;inNL and outNL are required if gtype is &#39;D&#39;&#34;
+            inNL = kwargs[&#39;inNL&#39;]
+            outNL = kwargs[&#39;outNL&#39;]
+            for v in inNL:
+                for u in outNL:
+                    if u != v:
+                        pos = PD.getPOS(u, v, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                        numE = G.number_of_edges(u, v)
+                        codelength += math.log2(math.pow(1.0-pos, 1.0-numE)*math.pow(pos, numE))
+    else:
+        if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+            assert &#39;NL&#39; in kwargs, &#34;NL is required if gtype is &#39;U&#39;&#34;
+            NL = kwargs[&#39;NL&#39;]
+            for i in range(len(NL)-1):
+                    for j in range(i+1, len(NL)):
+                        pos = PD.getPOS(NL[i], NL[j], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                        numE = G.number_of_edges(NL[i], NL[j])
+                        codelength += math.log2(math.pow(1.0-pos, numE)*pos)
+        else:
+            assert &#39;inNL&#39; in kwargs and &#39;outNL&#39; in kwargs, &#34;inNL and outNL are required if gtype is &#39;D&#39;&#34;
+            inNL = kwargs[&#39;inNL&#39;]
+            outNL = kwargs[&#39;outNL&#39;]
+            for v in inNL:
+                for u in outNL:
+                    if u != v:
+                        pos = PD.getPOS(u, v, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple)
+                        numE = G.number_of_edges(u, v)
+                        codelength += math.log2(math.pow(1.0-pos, numE)*pos)
+    return -codelength</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.getCodeLengthParallel"><code class="name flex">
+<span>def <span class="ident">getCodeLengthParallel</span></span>(<span>G, PD, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCodeLengthParallel(G, PD, **kwargs):
+    assert &#39;gtype&#39; in kwargs, &#34;gtype is must to compute codelength&#34;
+    if &#39;case&#39; in kwargs:
+        if kwargs[&#39;case&#39;]&gt;3:
+            assert &#39;dropLidx&#39; in kwargs and isinstance(kwargs[&#39;dropLidx&#39;], list), &#34;for case types 4-5, dropLidx (list) shall be provided&#34;
+        if kwargs[&#39;case&#39;]&gt;1 and kwargs[&#39;case&#39;]%2==1:
+            assert &#39;nlambda&#39; in kwargs, &#34;for case types 3 and 5, nlambda shall be provided&#34;
+    case = 2
+    dropLidx = None
+    nlambda = 0.0
+    isSimple = True
+    if &#39;case&#39; in kwargs:
+        case = kwargs[&#39;case&#39;]
+    if &#39;dropLidx&#39; in kwargs:
+        dropLidx = kwargs[&#39;dropLidx&#39;]
+    if &#39;nlambda&#39; in kwargs:
+        nlambda = kwargs[&#39;nlambda&#39;]
+    if &#39;isSimple&#39; in kwargs:
+        isSimple = kwargs[&#39;isSimple&#39;]
+    codelength = 0.0
+    Gid = ray.put(G)
+    PDid = ray.put(PD)
+    if kwargs[&#39;gtype&#39;] == &#39;U&#39;:
+        assert &#39;NL&#39; in kwargs, &#34;NL is required if gtype is &#39;U&#39;&#34;
+        NL = kwargs[&#39;NL&#39;]
+        codelength = sum(ray.get([getCodeLengthUtil.remote(Gid, PDid, NL[i], NL[i+1:], case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple) for i in range(len(NL)-1)]))
+    else:
+        assert &#39;inNL&#39; in kwargs and &#39;outNL&#39; in kwargs, &#34;inNL and outNL are required if gtype is &#39;D&#39;&#34;
+        inNL = kwargs[&#39;inNL&#39;]
+        outNL = kwargs[&#39;outNL&#39;]
+        codelength = sum(ray.get([getCodeLengthUtil.remote(Gid, PDid, u, inNL, case=case, dropLidx=dropLidx, nlambda=nlambda, isSimple=isSimple) for u in outNL]))
+    return -codelength</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.getDirectedSubgraph"><code class="name flex">
+<span>def <span class="ident">getDirectedSubgraph</span></span>(<span>G, WI, WO, isSimple)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>function to compose a subgraph from given list of in-nodes and out-nodes</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>DiGraph</code> or <code>MultiDiGraph</code></dt>
+<dd>SuperGraph</dd>
+<dt><strong><code>WI</code></strong> :&ensp;<code>list</code></dt>
+<dd>In-Nodes</dd>
+<dt><strong><code>WO</code></strong> :&ensp;<code>list</code></dt>
+<dd>Out-Nodes</dd>
+<dt><strong><code>isSimple</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True if G is DiGraph, False if G is MultiDiGraph</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>DiGraph</code> or <code>MultiDiGraph</code></dt>
+<dd>resultant subgraph</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getDirectedSubgraph(G, WI, WO, isSimple):
+    &#34;&#34;&#34;function to compose a subgraph from given list of in-nodes and out-nodes
+
+    Args:
+        G (DiGraph or MultiDiGraph): SuperGraph
+        WI (list): In-Nodes
+        WO (list): Out-Nodes
+        isSimple (bool): True if G is DiGraph, False if G is MultiDiGraph
+
+    Returns:
+        DiGraph or MultiDiGraph: resultant subgraph
+    &#34;&#34;&#34;
+    H = None
+    if isSimple:
+        H = nx.DiGraph()
+        for u in WO:
+            for v in WI:
+                if u != v and G.has_edges(u, v):
+                    H.add_edge(u,v)
+    else:
+        H = nx.MultiDiGraph()
+        for u in WO:
+            for v in WI:
+                if u !=v and G.has_edge(u, v):
+                    H.add_edges_from([tuple([u, v])]*G.number_of_edges(u, v))
+    return H</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.Measures.ncr"><code class="name flex">
+<span>def <span class="ident">ncr</span></span>(<span>n, r)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ncr(n, r):
+    r1 = min(r, n-r)
+    c = 1
+    for i in range(n, n-r1, -1):
+        c *= i
+    for i in range(r1, 1, -1):
+        c //= i
+    return c</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.Utils" href="index.html">src.Utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="src.Utils.Measures.AD" href="#src.Utils.Measures.AD">AD</a></code></li>
+<li><code><a title="src.Utils.Measures.DL_Edges" href="#src.Utils.Measures.DL_Edges">DL_Edges</a></code></li>
+<li><code><a title="src.Utils.Measures.DL_Nodes" href="#src.Utils.Measures.DL_Nodes">DL_Nodes</a></code></li>
+<li><code><a title="src.Utils.Measures.IC_DSIMP" href="#src.Utils.Measures.IC_DSIMP">IC_DSIMP</a></code></li>
+<li><code><a title="src.Utils.Measures.IC_DSSG" href="#src.Utils.Measures.IC_DSSG">IC_DSSG</a></code></li>
+<li><code><a title="src.Utils.Measures.IC_SSG" href="#src.Utils.Measures.IC_SSG">IC_SSG</a></code></li>
+<li><code><a title="src.Utils.Measures.KL" href="#src.Utils.Measures.KL">KL</a></code></li>
+<li><code><a title="src.Utils.Measures.KL_g" href="#src.Utils.Measures.KL_g">KL_g</a></code></li>
+<li><code><a title="src.Utils.Measures.LN" href="#src.Utils.Measures.LN">LN</a></code></li>
+<li><code><a title="src.Utils.Measures.NW" href="#src.Utils.Measures.NW">NW</a></code></li>
+<li><code><a title="src.Utils.Measures.NW_D" href="#src.Utils.Measures.NW_D">NW_D</a></code></li>
+<li><code><a title="src.Utils.Measures.computeDescriptionLength" href="#src.Utils.Measures.computeDescriptionLength">computeDescriptionLength</a></code></li>
+<li><code><a title="src.Utils.Measures.computeInterestingness" href="#src.Utils.Measures.computeInterestingness">computeInterestingness</a></code></li>
+<li><code><a title="src.Utils.Measures.computeMinPOS" href="#src.Utils.Measures.computeMinPOS">computeMinPOS</a></code></li>
+<li><code><a title="src.Utils.Measures.computeMinPOSBetweenNodeAndList" href="#src.Utils.Measures.computeMinPOSBetweenNodeAndList">computeMinPOSBetweenNodeAndList</a></code></li>
+<li><code><a title="src.Utils.Measures.computePWparameters" href="#src.Utils.Measures.computePWparameters">computePWparameters</a></code></li>
+<li><code><a title="src.Utils.Measures.computePWparametersBetweenNodeAndList" href="#src.Utils.Measures.computePWparametersBetweenNodeAndList">computePWparametersBetweenNodeAndList</a></code></li>
+<li><code><a title="src.Utils.Measures.computeSumOfEdgeProbablity" href="#src.Utils.Measures.computeSumOfEdgeProbablity">computeSumOfEdgeProbablity</a></code></li>
+<li><code><a title="src.Utils.Measures.computeSumOfEdgeProbablityBetweenNodeAndList" href="#src.Utils.Measures.computeSumOfEdgeProbablityBetweenNodeAndList">computeSumOfEdgeProbablityBetweenNodeAndList</a></code></li>
+<li><code><a title="src.Utils.Measures.computeSumOfExpectations" href="#src.Utils.Measures.computeSumOfExpectations">computeSumOfExpectations</a></code></li>
+<li><code><a title="src.Utils.Measures.computeSumOfExpectationsBetweenNodeAndList" href="#src.Utils.Measures.computeSumOfExpectationsBetweenNodeAndList">computeSumOfExpectationsBetweenNodeAndList</a></code></li>
+<li><code><a title="src.Utils.Measures.getCodeLength" href="#src.Utils.Measures.getCodeLength">getCodeLength</a></code></li>
+<li><code><a title="src.Utils.Measures.getCodeLengthParallel" href="#src.Utils.Measures.getCodeLengthParallel">getCodeLengthParallel</a></code></li>
+<li><code><a title="src.Utils.Measures.getDirectedSubgraph" href="#src.Utils.Measures.getDirectedSubgraph">getDirectedSubgraph</a></code></li>
+<li><code><a title="src.Utils.Measures.ncr" href="#src.Utils.Measures.ncr">ncr</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

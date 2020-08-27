@@ -117,7 +117,7 @@ def IC_SSG(mode, **kwargs):
                     2 if supergraph G is provided along with a linst of nodes in subgraph WL
                     3 if a subgraph pattern W is provided as a networkx graph
 
-    **kwargs:
+    kwargs:
         gtype (str): 'U' for undirected and 'D' for directed, default is 'U'
         kw (int): Required if mode is 1, number of edges in a graph pattern
         nw (int): Required if mode is 1, number of feasible vertex-pair combination in a graph pattern
@@ -270,7 +270,7 @@ def computeSumOfEdgeProbablity(PD, **kwargs):
     Args:
         PD (PDClass): Background distribution of the dataset, in this case it shall be a product of Bernoulli's distribution
 
-    **kwargs:
+    kwargs:
         gtype (str): 'D'-directed, 'U'-undirected\\
         NL (list): list of nodes, required if graph is orginally undirected\\
         inNL (list): list of inNodes, required if graph is originally directed\\
@@ -326,7 +326,7 @@ def computeSumOfExpectations(PD, **kwargs):
     Args:
         PD (PDClass): Background distribution of the dataset, in this case itcan be a product of Geometric's distribution
 
-    **kwargs:
+    kwargs:
         gtype (str): 'D'-directed, 'U'-undirected
         NL (list): list of nodes, required if graph is orginally undirected
         inNL (list): list of inNodes, required if graph is originally directed
@@ -382,7 +382,7 @@ def computeMinPOS(PD, **kwargs):
     Args:
         PD (PDClass): Background distribution of the dataset, in this case it shall be a product of Geometric distribution
 
-    **kwargs:
+    kwargs:
         gtype (str): 'D'-directed, 'U'-undirected
         NL (list): list of nodes, required if graph is orginally undirected
         inNL (list): list of inNodes, required if graph is originally directed
@@ -438,7 +438,7 @@ def computePWparameters(PD, **kwargs):
     Args:
         PD (PDClass): Background distribution of the dataset, in this case itcan be a product of Geometric's distribution
 
-    **kwargs:
+    kwargs:
         gtype (str): 'D'-directed, 'U'-undirected
         NL (list): list of nodes, required if graph is orginally undirected
         inNL (list): list of inNodes, required if graph is originally directed
@@ -497,7 +497,7 @@ def computeDescriptionLength(**kwargs):
     Args:
         None
     --------------------
-    **kwargs:
+    kwargs:
         dlmode (int): 1 for encoding only nodes (used in SSG and SIMP), 2 for encoding nodes with #edges,
                     3 for encoding nodes, edges and action type (for add action),
                     4 for encoding lambda/pattern/constraint id and action type (for remove action),
@@ -702,7 +702,7 @@ def computeInterestingness(IC, DL, **kwargs):
         IC (float): Information Content
         DL (float): Description Length
 
-    **kwargs:
+    kwargs:
         mode (int): 1 if I = IC/DL, 2 if I = IC - DL, default is 1
 
     Returns:
@@ -729,7 +729,7 @@ def computeSumOfEdgeProbablityBetweenNodeAndList(PD, node, NL, **kwargs):
         node (int): node id
         NL (list): list of nodes
 
-    **kwargs:
+    kwargs:
         gtype (str): 'D'-directed, 'U'-undirected
         dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node
         case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
@@ -781,7 +781,7 @@ def computeSumOfExpectationsBetweenNodeAndList(PD, node, NL, **kwargs):
         node (int): node id
         NL (list): list of nodes
 
-    **kwargs:
+    kwargs:
         gtype (str): 'D'-directed, 'U'-undirected
         dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node
         case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
@@ -831,7 +831,7 @@ def computeMinPOSBetweenNodeAndList(PD, node, NL, **kwargs):
         node (int): node id
         NL (list): list of nodes
 
-    **kwargs:
+    kwargs:
         gtype (str): 'D'-directed, 'U'-undirected
         dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node; default is 1
         case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
@@ -881,7 +881,7 @@ def computePWparametersBetweenNodeAndList(PD, node, NL, **kwargs):
         node (int): node id
         NL (list): list of nodes
 
-    **kwargs:
+    kwargs:
         gtype (str): 'D'-directed, 'U'-undirected
         dir_mode (int): required id gtype is 'D"; 1 - from node to list and 2 from list to node
         case (int): Between 1-5 depending on the inclusion of Lagrangian multipliers to be counted while computing POS, default is 2
