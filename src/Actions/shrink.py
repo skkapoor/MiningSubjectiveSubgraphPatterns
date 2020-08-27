@@ -7,14 +7,13 @@ import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
 if path not in sys.path:
     sys.path.append(path)
-import numpy as np
 import math
 import networkx as nx
 
 from src.Utils.Measures import getCodeLength, getCodeLengthParallel, getDirectedSubgraph
 from src.Utils.Measures import computeDescriptionLength, computeInterestingness
 from src.Patterns.Pattern import Pattern
-
+###################################################################################################################################################################
 class EvaluateShrink:
     """
     This data structure shall contain all the possible shrinks
@@ -44,7 +43,7 @@ class EvaluateShrink:
         self.minsize = minsize
         self.imode = imode
         print('initialized EvaluateShrink')
-
+###################################################################################################################################################################
     def evaluateAllConstraints(self, G, PD):
         """
         function to evaluate all constraints and make a list of candidate constraints which are feasible to shrink
@@ -60,7 +59,7 @@ class EvaluateShrink:
         for i in PD.lprevUpdate.keys():
             self.evaluateConstraint(G, PD, i)
         return
-
+###################################################################################################################################################################
     def evaluateConstraint(self, G, PD, id):
         """
         function to evaluate if a constraint is a feasible candidate for shrink
@@ -79,7 +78,7 @@ class EvaluateShrink:
         elif self.gtype == 'D':
             self.processAsD(G, PD, id)
         return
-
+###################################################################################################################################################################
     def processAsU(self, G, PD, id):
         """
         Utility function for shrink action when the input graph is undirected.
@@ -136,7 +135,7 @@ class EvaluateShrink:
                 FinalParams['SPat'].setPatType('shrink')
                 self.Data[id] = FinalParams
         return
-
+###################################################################################################################################################################
     def getReducedSubgraphU(self, G, PD, baseParams, bestParams, Lid):
         """
         Utility function used when the input graph is undirected to remove nodes from subgrapht of the candidate sphrink
@@ -186,7 +185,7 @@ class EvaluateShrink:
             FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, W=FinalParams['Pat'].NCount, kw=FinalParams['Pat'].ECount, excActionType=False, l=self.l, isSimple=self.isSimple, kws=FinalParams['Pat'].kws ) )
             FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=self.imode ) )
         return FinalParams
-
+###################################################################################################################################################################
     def computeCLgainRemoveNodeU(self, G, PD, nodes, node, dropLidx):
         """
         Utility function to compute the gain/change in codelength by removing a node from a pattern.
@@ -223,7 +222,7 @@ class EvaluateShrink:
                 CL_I += math.log2(math.pow(1.0-pos_I, numE)*pos_I)
                 CL_F += math.log2(math.pow(1.0-pos_F, numE)*pos_F)
         return -CL_I - (-CL_F)
-
+###################################################################################################################################################################
     def processAsD(self, G, PD, id):
         """
         Utility function for shrink action when the input graph is directed.
@@ -283,7 +282,7 @@ class EvaluateShrink:
                 FinalParams['SPat'].setPatType('shrink')
                 self.Data[id] = FinalParams
         return
-
+###################################################################################################################################################################
     def getReducedSubgraphD(self, G, PD, baseParams, bestParams, Lid):
         """
         Utility function used when the input graph is directed to remove nodes from subgraph of the candidate shrink
@@ -343,7 +342,7 @@ class EvaluateShrink:
             FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=6, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=baseParams['Pat'].InNCount, WOS=baseParams['Pat'].OutNCount, WI=FinalParams['Pat'].InNL, WO=FinalParams['Pat'].OutNL, kw=FinalParams['Pat'].ECount, excActionType=False, l=self.l, isSimple=self.isSimple, kws=FinalParams['Pat'].kws ) )
             FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=self.imode ) )
         return FinalParams
-
+###################################################################################################################################################################
     def computeCLgainRemoveNodeD(self, G, PD, nodes, node, dropLidx, dir):
         """
         Utility function to compute the gain/change in codelength by removing a node from a pattern.
@@ -395,7 +394,7 @@ class EvaluateShrink:
                     CL_I += math.log2( math.pow( 1.0-pos_I, numE )*pos_I )
                     CL_F += math.log2( math.pow( 1.0-pos_F, numE )*pos_F )
         return -CL_I - (-CL_F)
-
+###################################################################################################################################################################
     def computeCodeLengthShrinkU(self, G, PD, condition, baseParams, curParams=None, Lidx=None, nlambda=None):
         """
         function to compute codelength, if input graph is undirected
@@ -440,7 +439,7 @@ class EvaluateShrink:
             codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, NL=nodesDropped, dropLidx=[Lidx] )
             codelength += getCodeLengthParallel( G, PD, gtype='D', case=4, isSimple=self.isSimple, inNL=curParams['Pat'].NL, outNL=nodesDropped, dropLidx=[Lidx] )
         return codelength
-
+###################################################################################################################################################################
     def computeCodeLengthShrinkD(self, G, PD, condition, baseParams, curParams=None, Lidx=None, nlambda=None):
         """
         function to compute codelength, if input graph is directed
@@ -489,7 +488,7 @@ class EvaluateShrink:
             codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=curParams['Pat'].inNL, outNL=outNodesDropped, dropLidx=[Lidx] )
             codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=inNodesDropped, outNL=curParams['Pat'].outNL, dropLidx=[Lidx] )
         return codelength
-
+###################################################################################################################################################################
     def updateConstraintEvaluation(self, G, PD, id, condition=1):
         """
         function to now evaluate and update a possible candidate
@@ -525,7 +524,7 @@ class EvaluateShrink:
         elif condition == 2:
             self.evaluateConstraint(G, PD, id)
         return
-
+###################################################################################################################################################################
     def checkAndUpdateAllPossibilities(self, G, PD, prevPat):
         """
         function to update the parameters associated to each possible candidates
@@ -564,7 +563,7 @@ class EvaluateShrink:
                 else:
                     self.updateConstraintEvaluation(G, PD, k, 1)
         return
-
+###################################################################################################################################################################
     def getBestOption(self):
         """
         function to return the best candidate to shrink
@@ -579,7 +578,7 @@ class EvaluateShrink:
         else:
             bestR = max(self.Data.items(), key=lambda x: x[1]['SPat'].I)
             return bestR[1]
-
+###################################################################################################################################################################
     def updateDistribution(self, PD, bestSh):
         """
         function to update background distribution.
@@ -590,8 +589,8 @@ class EvaluateShrink:
         ----------
         PD : PDClass
             Background distribution
-        bestSh : Pattern
-            last shrinked pattern
+        bestSh : dict
+            last shrink action details
         """
         #* Here bestSh is a dictionary as saved in self.Data
         del self.Data[bestSh['Pat'].prev_order]
@@ -602,15 +601,7 @@ class EvaluateShrink:
             la = PD.updateDistribution( bestSh['SPat'].G, idx=bestSh['SPat'].cur_order, val_return='save', case=2 )
             bestSh['SPat'].setLambda(la)
         return
-
-
-
-        # Todo:
-            #// 1: Write code for compute code length
-            #// 2: Write code to compute new lambda
-            #// 3: Write code for split
-            #* 4: Debug
-            #// 5: Finalize Measure file (a) write encode edge for multigraphs, (b) check description length code for split action
-            #* 6: Experiments for airline case study
-            #* 7: In all Actions get best option code needs to written
-            #* 8: When to update possibilities in each action needs to be coded
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################

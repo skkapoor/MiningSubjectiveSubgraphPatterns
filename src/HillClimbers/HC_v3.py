@@ -1,4 +1,7 @@
-###### This file contains the implementation of hill climber which is parallalised using Ray framework #########
+###### This file contains the implementation of hill climber which is parallalised using Ray framework ############################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
 import os
 import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'

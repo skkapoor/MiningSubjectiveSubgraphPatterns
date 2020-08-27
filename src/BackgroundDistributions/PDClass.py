@@ -1,9 +1,24 @@
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
 import numpy as np
 import networkx as nx
 import math
 ##################################################################################################################################################################
 class PDClass:
+    """
+    This is the abstract class for background distribution
+    """
     def __init__(self, G):
+        """
+        initialization function
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        """
         self.G = G.copy()
         self.density = nx.density(self.G)
         self.la = None
@@ -13,24 +28,43 @@ class PDClass:
         self.tp = 'U'
 ##################################################################################################################################################################
     def findDistribution(self):
+        """
+        abstract function to compute the background distribution
+        """
         return
 ##################################################################################################################################################################
     def getExpectationFromPOS(self, a):
+        """
+        abstract function to compute expectation from probability of success. This function shall be override depending on the requirement.
+
+        Parameters
+        ----------
+        a : float
+            probability of success
+
+        Returns
+        -------
+        float
+            computed expectation
+        """
         return a/(1+a)
 ##################################################################################################################################################################
     def getAB(self):
+        """
+        abstract function to compute A and B parameters required to update the distribution.
+        """
         return
 ##################################################################################################################################################################
     def updateDistribution(self, pat, idx=None, val_return='save', case=2, dropLidx=None):
         """
-        [summary]
+        function to update the background distribution
 
         Parameters
         ----------
         pat : nx.Graph, nx.DiGraph, nx.MultiGraph, nx.MultiDiGraph
             an input networkx graph pattern
         idx : int, optional
-            identifier to be used
+            identifier to be used for the new constraint/pattern
         case : int, optional
             case==1 if original lambda are used and new lambdas for new pattern are not used
             case==2, if all lambdas are used
@@ -39,9 +73,12 @@ class PDClass:
             use 'save' to update the BD and save the new lambda, else use 'return' to return the new lambda with saving, by default 'save'
         dropLidx : list, optional
             list of lambdas' identifier to be dropped
+
+        Returns
+        -------
+        double
+            corresponding Lagrangian multiplier
         """
-        #here pat shall be a networkx graph
-        #idx is the identifier for the pattern
         a,b = self.getAB()
 
         numNodes = None
@@ -121,12 +158,12 @@ class PDClass:
                     for j in range(i+1, numNodes):
                         expLambda[i][j] = self.explambdaIncLprevButDropSomeLas(nodes[i], nodes[j], dropLidx)
 
-        if isinstance(pat, nx.MultiDiGraph):
+        if pat.is_multigraph() and pat.is_directed():
             for i in range(numOutNodes):
                 for j in range(numInNodes):
                     if expLambda[i][j]!=0 and math.fabs(b) > math.fabs(math.log(expLambda[i][j])):
                         b = math.fabs(math.log(expLambda[i][j]))
-        elif isinstance(pat, nx.MultiGraph):
+        elif pat.is_multigraph():
             for i in range(numNodes):
                 for j in range(i+1, numNodes):
                     if math.fabs(b) > math.fabs(math.log(expLambda[i][j])):
@@ -175,17 +212,42 @@ class PDClass:
 
         lambdac = round((a + b) / 2, 10)
         if 'save' in val_return:
-            if isinstance(pat, nx.DiGraph):
+            if pat.is_directed():
                 self.lprevUpdate[idx] = tuple([lambdac, inNL, outNL, numEdges])
-            elif isinstance(pat, nx.Graph):
+            else:
                 self.lprevUpdate[idx] = tuple([lambdac, nodes, numEdges])
 
         return lambdac
 ##################################################################################################################################################################
     def explambda(self, i, j):
+        """
+        abstract function to compute exponent to the power to some quatity.
+
+        Parameters
+        ----------
+        i : float
+            input parameter 1
+        j : float
+            input parameter 2
+        """
         return
 ##################################################################################################################################################################
     def explambdaMultiplier(self, i, j):
+        """
+        function to compute extra multipliers if the background has been updated a number of times.
+
+        Parameters
+        ----------
+        i : float
+            input parameter 1
+        j : float
+            input parameter 2
+
+        Returns
+        -------
+        float
+            computed multiplier
+        """
         if self.tp == 'U':
             r = 1.0
             for k,v in self.lprevUpdate.items():
@@ -202,11 +264,43 @@ class PDClass:
         return r
 ##################################################################################################################################################################
     def explambdaIncLprev(self, i, j):
+        """
+        function to compute exponent to the power to some quatity included all the multipliers which are result of updation of BD.
+
+        Parameters
+        ----------
+        i : float
+            input parameter 1
+        j : float
+            input parameter 2
+
+        Returns
+        -------
+        float
+            value
+        """
         expL = self.explambda(i, j)
         expL *= self.explambdaMultiplier(i, j)
         return expL
 ##################################################################################################################################################################
     def explambdaIncLprevButDropSomeLas(self, i, j, dropLidx):
+        """
+        function to compute exponent to the power to some quatity included all the multipliers which are result of updation of BD but dropping some of the Lagrangian multipliers.
+
+        Parameters
+        ----------
+        i : float
+            input parameter 1
+        j : float
+            input parameter 2
+        dropLidx : list
+            identifiers of Lagrangian multipliers to be dropped
+
+        Returns
+        -------
+        float
+            value
+        """
         expL = self.explambda(i, j)
         r = self.explambdaMultiplier(i, j)
         if self.tp == 'U':
@@ -226,6 +320,23 @@ class PDClass:
         return expL
 ###################################################################################################################################################################
     def getPOS(self, i, j, **kwargs):
+        """
+        function to compute probability of success.
+
+        Parameters
+        ----------
+        i : float
+            input parameter 1
+        j : float
+            input parameter 2
+        dropLidx : list
+            identifiers of Lagrangian multipliers to be dropped
+
+        Returns
+        -------
+        float
+            value
+        """
         if i==j:
             return 0.0
         case=2
@@ -261,9 +372,35 @@ class PDClass:
         return pos
 ###################################################################################################################################################################
     def getExpectationFromExpLambda(self, a):
+        """
+        abstract function to compute expectation from exponent to the power of some quantity.
+
+        Parameters
+        ----------
+        a : float
+            input value
+
+        Returns
+        -------
+        float
+            value
+        """
         return a/(1+a)
 ###################################################################################################################################################################
     def getExpectationFromPOS(self, a):
+        """
+        abstract function to compute expectation from probability of success.
+
+        Parameters
+        ----------
+        a : float
+            input value
+
+        Returns
+        -------
+        float
+            value
+        """
         return a
 ###################################################################################################################################################################
 ###################################################################################################################################################################

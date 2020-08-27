@@ -1,3 +1,7 @@
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
 import numpy as np
 import networkx as nx
 import math
@@ -9,6 +13,14 @@ if path not in sys.path:
 from src.BackgroundDistributions.PDClass import PDClass
 ###################################################################################################################################################################
 class MaxEntMulti1U(PDClass):
+    """
+    Background distribution for multigraphs if type of prior belief is 'i' and type of graph is 'undirected'
+
+    Parameters
+    ----------
+    PDClass : src.BackgroundDistributions.PDClass
+        base class
+    """
     def __init__(self, G = None):
         super().__init__(G)
         self.la = None
@@ -124,6 +136,14 @@ class MaxEntMulti1U(PDClass):
 
 
 class MaxEntMulti1D(PDClass):
+    """
+    Background distribution for multigraphs if type of prior belief is 'i' and type of graph is 'directed'
+
+    Parameters
+    ----------
+    PDClass : src.BackgroundDistributions.PDClass
+        base class
+    """
     def __init__(self, G = None):
         super().__init__(G)
         self.tp = 'D'

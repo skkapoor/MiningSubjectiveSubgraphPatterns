@@ -222,7 +222,7 @@ class Pattern:
         else:
             self.kws = self.ECount
         return
-
+###################################################################################################################################################################
     def __repr__(self):
         st = "\t\tpat_type: {}\n".format(self.pat_type)
         st += "\t\tstate_info: {}\n".format(self.state_info)
@@ -246,7 +246,7 @@ class Pattern:
         else:
             st += "\t\tNL: "+", ".join(map(str, self.NL))+"\n"
         return st
-
+###################################################################################################################################################################
     def getDictForm(self):
         dt = dict()
         members = [attr for attr in dir(self) if not callable(getattr(self, attr)) and not attr.startswith("__")]
@@ -265,9 +265,6 @@ class Pattern:
                 dt[k] = self.__dict__[k]
         dt['Density'] = nx.density(self.G)
         return dt
-
-    # def __str__():
-    #     return
 ###################################################################################################################################################################
     def copy(self):
         PC = Pattern(self.G)

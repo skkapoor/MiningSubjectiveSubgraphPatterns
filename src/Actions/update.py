@@ -7,14 +7,12 @@ import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
 if path not in sys.path:
     sys.path.append(path)
-import numpy as np
-import math
 import networkx as nx
 
 from src.Utils.Measures import getCodeLength, getCodeLengthParallel, getDirectedSubgraph
 from src.Utils.Measures import computeDescriptionLength, computeInterestingness
 from src.Patterns.Pattern import Pattern
-
+###################################################################################################################################################################
 class EvaluateUpdate:
     """
     This data structure shall contain all the possible updates
@@ -41,7 +39,7 @@ class EvaluateUpdate:
         self.l = l # possible types (give number) of action, default is 6
         self.imode = imode
         print('initialized EvaluateUpdate')
-
+###################################################################################################################################################################
     def evaluateAllConstraints(self, G, PD):
         """
         function to evaluate all constraints and make a list of candidate constraints which are feasible to update
@@ -57,7 +55,7 @@ class EvaluateUpdate:
         for i in PD.lprevUpdate.keys():
             self.evaluateConstraint(G, PD, i)
         return
-
+###################################################################################################################################################################
     def evaluateConstraint(self, G, PD, id):
         """
         function to evaluate if a constraint is a feasible candidate for update
@@ -112,7 +110,7 @@ class EvaluateUpdate:
                     Params['Pat'].setLambda(nlambda)
                     self.Data[id] = Params
         return
-
+###################################################################################################################################################################
     def updateConstraintEvaluation(self, G, PD, id, condition=1):
         """
         function to now evaluate and update a possible candidate
@@ -142,7 +140,7 @@ class EvaluateUpdate:
         elif condition == 2:
             self.evaluateConstraint(G, PD, id)
         return
-
+###################################################################################################################################################################
     def checkAndUpdateAllPossibilities(self, G, PD, prevPat):
         """
         function to update the parameters associated to each possible candidates
@@ -181,7 +179,7 @@ class EvaluateUpdate:
                 else:
                     self.updateConstraintEvaluation(G, PD, k, 1)
         return
-
+###################################################################################################################################################################
     def getBestOption(self):
         """
         function to return the best candidate to update
@@ -196,7 +194,7 @@ class EvaluateUpdate:
         else:
             bestR = max(self.Data.items(), key=lambda x: x[1]['Pat'].I)
             return bestR[1]
-
+###################################################################################################################################################################
     def updateDistribution(self, PD, bestU):
         """
         function to update background distribution.
@@ -207,8 +205,8 @@ class EvaluateUpdate:
         ----------
         PD : PDClass
             Background distribution
-        bestM : Pattern
-            last update pattern
+        bestM : dcit
+            last update action details
         """
         del self.Data[bestU['Pat'].prev_order]
         out = PD.lprevUpdate.pop(bestU['Pat'].prev_order, None)
@@ -217,3 +215,7 @@ class EvaluateUpdate:
         else:
             PD.updateDistribution( bestU['Pat'].G, idx=bestU['Pat'].cur_order, val_return='save', case=2 )
         return
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################

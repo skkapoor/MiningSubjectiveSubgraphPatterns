@@ -1,7 +1,7 @@
-###### This file contains the implementation of hill climber which is parallalised using Ray framework #########
-##### Following points are running in parallel:
-##### 1. Seed selection
-##### 2. Seed Runs
+###### This file contains the implementation of hill climber which is parallalised using Ray framework ###########################################################
+##### Following points are running in parallel:###################################################################################################################
+##### 1. Seed selection###########################################################################################################################################
+##### 2. Seed Runs################################################################################################################################################
 import os
 import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
@@ -1087,15 +1087,3 @@ def runGivenSeeds(G, PD, q, seedNodes, mode = 1, gtype = 'U', isSimple=True, inc
 ##################################################################################################################################################################
 ##################################################################################################################################################################
 ##################################################################################################################################################################
-
-
-# def addNewPatternList(NL, count, Pattype):
-#     pattern = Pattern.Pattern(G.subgraph(NL).copy(), NL, 0, 0, PD.computeEdgeProbabilityListNodesIncLprev(NL), PD.computeInterestingnessListNodesIncLprev(NL), count)
-#     pattern.updateGraphProperties()
-#     PD.updateBackground(pattern, count)
-#     pattern.setPatType(Pattype)
-#     return pattern, PD.copy()
-
-# def addNewPattern(pattern, count):
-#     PD.updateBackground(pattern, count)
-#     return PD.copy()

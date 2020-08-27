@@ -7,7 +7,6 @@ import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
 if path not in sys.path:
     sys.path.append(path)
-import numpy as np
 import math
 import networkx as nx
 
@@ -15,7 +14,7 @@ from src.Utils.Measures import getCodeLength, getCodeLengthParallel, getDirected
 from src.Utils.Measures import computeDescriptionLength, computeInterestingness
 from src.Utils.Measures import LN, DL_Edges, ncr, NW, NW_D
 from src.Patterns.Pattern import Pattern
-
+###################################################################################################################################################################
 class EvaluateSplit:
     """
     This data structure shall contain all the possible splits
@@ -43,7 +42,7 @@ class EvaluateSplit:
         self.imode = imode
         self.minsize = minsize
         print('initialized EvaluateSplit')
-
+###################################################################################################################################################################
     def evaluateAllConstraints(self, G, PD):
         """
         function to evaluate all constraints and make a list of candidate constraints which are feasible to split
@@ -59,7 +58,7 @@ class EvaluateSplit:
         for i in PD.lprevUpdate.keys():
             self.evaluateConstraint(G, PD, i)
         return
-
+###################################################################################################################################################################
     def evaluateConstraint(self, G, PD, id):
         """
         function to evaluate if a constraint is a feasible candidate for split
@@ -78,7 +77,7 @@ class EvaluateSplit:
         elif self.gtype == 'D':
             self.processAsD(G, PD, id)
         return
-
+###################################################################################################################################################################
     def processAsU(self, G, PD, id):
         """
         Utility function for split action when the input graph is undirected.
@@ -126,7 +125,6 @@ class EvaluateSplit:
                 FinalParams = self.getReducedComponentU(G, PD, FinalParams, id, k)
 
             #compute new lambdas for each new pattern/component
-            #// Todo: write code
             for k,v in FinalParams['compos'].items():
                 v.setLambda( PD.updateDistribution( pat=v.G, idx=None, val_return='return', case=3, dropLidx=[id]) )
             FinalParams['codeLengthCprime'] = self.computeCodeLengthSplitU(G, PD, 3, FinalParams, id) #// Todo : write code for this part
@@ -134,7 +132,6 @@ class EvaluateSplit:
             FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams['Pat'].NCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
             FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=2 ) )
             # Now set these values to all component patterns
-            #// Todo: Write Code
             for k,v in FinalParams['compos'].items():
                 v.setIC_dssg( FinalParams['Pat'].IC_dssg )
                 v.setDL( FinalParams['Pat'].DL )
@@ -143,7 +140,7 @@ class EvaluateSplit:
                 v.setPatType('split')
             self.Data[id] = FinalParams
         return
-
+###################################################################################################################################################################
     def getReducedComponentU(self, G, PD, FinalParams, Lid, k):
         """
         Utility function used when the input graph is undirected to remove nodes from each component of the candidate split
@@ -194,7 +191,7 @@ class EvaluateSplit:
                 doshrink = True
 
         return FinalParams
-
+###################################################################################################################################################################
     def computeCLgainRemoveNodeU(self, G, PD, nodes, node, dropLidx):
         """
         Utility function to compute the gain/change in codelength by removing a node from a pattern.
@@ -231,7 +228,7 @@ class EvaluateSplit:
                 CL_I += math.log2(math.pow(1.0-pos_I, numE)*pos_I)
                 CL_F += math.log2(math.pow(1.0-pos_F, numE)*pos_F)
         return -CL_I - (-CL_F)
-
+###################################################################################################################################################################
     def getDescriptionLengthChangeU(self, Pat, node, WI, W):
         """
         Utility function which computes the change in description length on removing a node.
@@ -267,7 +264,7 @@ class EvaluateSplit:
         nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
         change += pDLEdge - nDLEdge
         return change
-
+###################################################################################################################################################################
     def computeCodeLengthSplitU(self, G, PD, condition, Params, Lidx=None):
         """
         function to compute codelength, if input graph is undirected
@@ -326,7 +323,7 @@ class EvaluateSplit:
                 for k,v in Params['compos'].items():
                     codelength += getCodeLengthParallel( G, PD, gtype='D', case=4, isSimple=self.isSimple, inNL=v.NL, outNL=Params['excludedNL'], dropLidx=[Lidx] )
         return codelength
-
+###################################################################################################################################################################
     def processAsD(self, G, PD, i):
         """
         Utility function for split action when the input graph is directed.
@@ -400,7 +397,7 @@ class EvaluateSplit:
                 v.setPatType('split')
             self.Data[i] = FinalParams
         return
-
+###################################################################################################################################################################
     def getReducedComponentD(self, G, PD, FinalParams, Lid, k):
         """
         Utility function used when the input graph is directed to remove nodes from each component of the candidate split
@@ -471,7 +468,7 @@ class EvaluateSplit:
                 doshrink = True
 
         return FinalParams
-
+###################################################################################################################################################################
     def computeCLgainRemoveNodeD(self, G, PD, nodes, node, dropLidx, dir):
         """
         Utility function to compute the gain/change in codelength by removing a node from a pattern.
@@ -523,7 +520,7 @@ class EvaluateSplit:
                     CL_I += math.log2( math.pow( 1.0-pos_I, numE )*pos_I )
                     CL_F += math.log2( math.pow( 1.0-pos_F, numE )*pos_F )
         return -CL_I - (-CL_F)
-
+###################################################################################################################################################################
     def getDescriptionLengthChangeD(self, Pat, node, WI, W, tp):
         """
         Utility function which computes the change in description length on removing a node.
@@ -576,7 +573,7 @@ class EvaluateSplit:
             nDLEdge = DL_Edges(nNW, nECount, self.isSimple, nkws)
             change += pDLEdge - nDLEdge
         return change
-
+###################################################################################################################################################################
     def computeCodeLengthSplitD(self, G, PD, condition, Params, Lidx=None):
         """
         function to compute codelength, if input graph is directed
@@ -645,7 +642,7 @@ class EvaluateSplit:
             if len(Params['excludedInNL']) > 0 and len(Params['excludedOutNL']) > 0:
                 codelength += getCodeLengthParallel( G, PD, gtype=self.gtype, case=4, isSimple=self.isSimple, inNL=Params['excludedInNL'], outNL=Params['excludedOutNL'], dropLidx=[Lidx] )
         return codelength
-
+###################################################################################################################################################################
     def updateConstraintEvaluation(self, G, PD, id, condition=1):
         """
         function to now evaluate and update a possible candidate
@@ -690,7 +687,7 @@ class EvaluateSplit:
             elif self.gtype == 'D':
                 self.processAsD(G, PD, id)
         return
-
+###################################################################################################################################################################
     def checkAndUpdateAllPossibilities(self, G, PD, prevPat):
         """
         function to update the parameters associated to each possible candidates
@@ -729,7 +726,7 @@ class EvaluateSplit:
                 else:
                     self.updateConstraintEvaluation(G, PD, k, 1)
         return
-
+###################################################################################################################################################################
     def getBestOption(self):
         """
         function to return the best candidate to split
@@ -744,7 +741,7 @@ class EvaluateSplit:
         else:
             bestR = max(self.Data.items(), key=lambda x: x[1]['Pat'].I)
             return bestR[1]
-
+###################################################################################################################################################################
     def updateDistribution(self, PD, bestSp):
         """
         function to update background distribution.
@@ -755,8 +752,8 @@ class EvaluateSplit:
         ----------
         PD : PDClass
             Background distribution
-        bestSp : Pattern
-            last split pattern
+        bestSp : dict
+            last split action details
         """
         #* Here bestSp is a dictionary as saved in self.Data
         del self.Data[bestSp['Pat'].prev_order]
@@ -768,3 +765,7 @@ class EvaluateSplit:
                 la = PD.updateDistribution( v.G, idx=v.cur_order, val_return='save', case=2 )
                 v.setLambda(la)
         return
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################

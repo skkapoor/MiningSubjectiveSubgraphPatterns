@@ -1,4 +1,7 @@
-################ This file contains a second version (better than first verson) of hill climber with again sequential implementation ################
+################ This file contains a second version (better than first verson) of hill climber with again sequential implementation ##############################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
 import os
 import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'

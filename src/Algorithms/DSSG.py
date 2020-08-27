@@ -1,5 +1,8 @@
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
 import os
-from os import write
 import sys
 
 import pandas as pd
@@ -23,8 +26,21 @@ from src.Actions.merge import EvaluateMerge as EM
 from src.Actions.shrink import EvaluateShrink as ESH
 from src.Actions.remove import EvaluateRemove as ER
 from src.Actions.add import EvaluateAdd as EA
-
+###################################################################################################################################################################
 def parseStr(x):
+    """
+    function to parse a string
+
+    Parameters
+    ----------
+    x : str
+        input string
+
+    Returns
+    -------
+    int or float or str
+        parsed string
+    """
     try:
         return int(x)
     except ValueError:
@@ -32,8 +48,26 @@ def parseStr(x):
             return float(x)
         except ValueError:
             return x
-
+###################################################################################################################################################################
 def readConfFile(fname):
+    """
+    function to read the config file to run the experiment
+
+    Parameters
+    ----------
+    fname : str
+        input configuration file name
+
+    Returns
+    -------
+    list, dict
+        list of datasets and dictionary of required parameters
+
+    Raises
+    ------
+    Exception
+        if configuration file is not found
+    """
     config = configparser.ConfigParser()
     if os.path.exists(path+'Confs/'+fname):
         config.read(path+'Confs/'+fname)
@@ -44,8 +78,26 @@ def readConfFile(fname):
         return DS, Params
     else:
         raise Exception('Configuration file does not exists:', path+'Confs/'+fname)
-
+###################################################################################################################################################################
 def getAllStates(d):
+    """
+    function to read the file names of all available states from the given dataset directory in sorted manner
+
+    Parameters
+    ----------
+    d : str
+        dataset name
+
+    Returns
+    -------
+    list
+        sorted list of files names corresponding to each state of the graph
+
+    Raises
+    ------
+    Exception
+        if no compatible file is found
+    """
     files = None
     states = None
     if os.path.exists(path+'Data/DSSG/'+d):
@@ -72,8 +124,30 @@ def getAllStates(d):
         raise Exception('The folder shall contain either gml or gpickle files of different graph snapshots with name in a lexiographical order')
     print('states:',states)
     return states
-
+###################################################################################################################################################################
 def getInitGraphAndBD(gname, Params):
+    """
+    function to read the initial graph state and corresponding background distribution of the given type of prior belief
+
+    Parameters
+    ----------
+    gname : str
+        input filename of the current graph state
+    Params : dict
+        input parameters to run the experiment
+
+    Returns
+    -------
+    networkx graph, PDClass, str
+        Corresponding networkx graph, background distribution and graph type (undirected 'U' or directed 'D') respectively
+
+    Raises
+    ------
+    Exception
+        if a mutigraph is encountered
+    Exception
+        if a specific type of prior belief given as input which is not implemented yet
+    """
     G = None
     gtype = 'U'
     if '.gpickle' in gname:
@@ -94,8 +168,49 @@ def getInitGraphAndBD(gname, Params):
     else:
         raise Exception('Specified type of Belief is not yet implemented')
     return G, PD, gtype
-
+###################################################################################################################################################################
 def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype='U', isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType='interest', seedRuns=10, q=0.01, incEdges=True):
+    """
+    This function is to only process the first state of the graph dataset. In this, only one action is performed that is 'add'
+
+    Parameters
+    ----------
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    state_id : int
+        current state id
+    pat_ids : int
+        pattern identifier for new patterns
+    df_patterns : pandas dataframe
+        dataframe to save new patterns
+    gtype : str, optional
+        gyaph type (Undirected 'U' or Directed 'D'), by default 'U'
+    isSimple : bool, optional
+        true if input graph is a simple graph else false if multigraph, by default True
+    l : int, optional
+        number of actions that can be performed, by default 6
+    ic_mode : int, optional
+        mode to run the hillclimber ro find patterns (ic_ssg: 1, AD: 2, ic_dsimp: 3), by default 1
+    imode : int, optional
+        mode to compute IG (1: IC/DL, 2: IC-DL), by default 2
+    minsize : int, optional
+        minimum size of pattern, by default 2
+    seedType : str, optional
+        mode of the seed select (options: 'uniform', 'degree', 'interest', 'all'), by default 'interest'
+    seedRuns : int, optional
+        number of independent seed runs, by default 10
+    q : float, optional
+        parameter for expected size of patterns, by default 0.01
+    incEdges : bool, optional
+        to describe a pattern if edges to be described or not, by default True
+
+    Returns
+    -------
+    dict, PDClass, int, df_patterns
+        Summary (dictionary of actions), Final Background distribution, final pat_id and dataframe of patterns respectively
+    """
     EA_o = EA(gtype, isSimple, l, ic_mode, imode, minsize, seedType, seedRuns, q, incEdges)
     flag = True
     Summary = dict()
@@ -120,8 +235,39 @@ def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype='U', is
         else:
             flag = False
     return Summary, PD, pat_ids, df_patterns
-
+###################################################################################################################################################################
 def initializeActionObjects(gtype='U', isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType='interest', seedRuns=10, q=0.01, incEdges=True):
+    """
+    Function to initialize the different action class objects
+
+    Parameters
+    ----------
+    gtype : str, optional
+        gyaph type (Undirected 'U' or Directed 'D'), by default 'U'
+    isSimple : bool, optional
+        true if input graph is a simple graph else false if multigraph, by default True
+    l : int, optional
+        number of actions that can be performed, by default 6
+    ic_mode : int, optional
+        mode to run the hillclimber ro find patterns (ic_ssg: 1, AD: 2, ic_dsimp: 3), by default 1
+    imode : int, optional
+        mode to compute IG (1: IC/DL, 2: IC-DL), by default 2
+    minsize : int, optional
+        minimum size of pattern, by default 2
+    seedType : str, optional
+        mode of the seed select (options: 'uniform', 'degree', 'interest', 'all'), by default 'interest'
+    seedRuns : int, optional
+        number of independent seed runs, by default 10
+    q : float, optional
+        parameter for expected size of patterns, by default 0.01
+    incEdges : bool, optional
+        to describe a pattern if edges to be described or not, by default True
+
+    Returns
+    -------
+    six objects
+        for each action type
+    """
     EA_o = EA(gtype, isSimple, l, ic_mode, imode, minsize, seedType, seedRuns, q, incEdges)
     ER_o = ER(gtype, isSimple, l, imode)
     EU_o = EU(gtype, isSimple, l, imode)
@@ -129,8 +275,30 @@ def initializeActionObjects(gtype='U', isSimple=True, l=6, ic_mode=1, imode=2, m
     ESH_o = ESH(gtype, isSimple, l, imode, minsize)
     ESP_o = ESP(gtype, isSimple, l, imode, minsize)
     return EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o
-
+###################################################################################################################################################################
 def preProcessActionObjects(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
+    """
+    function to generate initial candidates for each action type given the graph state and background distribution
+
+    Parameters
+    ----------
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    EA_o : src.Actions.add
+        add action object
+    ER_o : src.Actions.remove
+        remove action object
+    EU_o : src.Actions.update
+        update action object
+    EM_o : src.Actions.merge
+        merge action object
+    ESH_o : src.Actions.shrink
+        shrink action object
+    ESP_o : src.Actions.split
+        split action object
+    """
     EA_o.evaluateNew(G_cur, PD)
     ER_o.evaluateAllConstraints(G_cur, PD)
     EU_o.evaluateAllConstraints(G_cur, PD)
@@ -138,8 +306,35 @@ def preProcessActionObjects(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
     ESH_o.evaluateAllConstraints(G_cur, PD)
     ESP_o.evaluateAllConstraints(G_cur, PD)
     return
-
+###################################################################################################################################################################
 def getBestAction(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
+    """
+    function to return best action with maximum information gain
+
+    Parameters
+    ----------
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    EA_o : src.Actions.add
+        add action object
+    ER_o : src.Actions.remove
+        remove action object
+    EU_o : src.Actions.update
+        update action object
+    EM_o : src.Actions.merge
+        merge action object
+    ESH_o : src.Actions.shrink
+        shrink action object
+    ESP_o : src.Actions.split
+        split action object
+
+    Returns
+    -------
+    dict
+        dictionary of parameters of best action
+    """
     EA_params = EA_o.getBestOption(G_cur, PD)
     ER_params = ER_o.getBestOption()
     EU_params = EU_o.getBestOption()
@@ -167,8 +362,25 @@ def getBestAction(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
         bestI = ESP_params['Pat'].I
         bestAction = ESP_params
     return bestAction
-
+###################################################################################################################################################################
 def setNewDetails(bestParams, state_id, pat_ids):
+    """
+    function to update paramteres of the best action
+
+    Parameters
+    ----------
+    bestParams : dict
+        dictionary of parameters of best action
+    state_id : int
+        current state id
+    pat_ids : int
+        pattern identifier for new patterns
+
+    Returns
+    -------
+    int, dict
+        updated pat_ids and bestParams object
+    """
     if bestParams['Pat'].pat_type in ['add', 'merge', 'shrink', 'update']:
         bestParams['Pat'].setCurOrder(pat_ids)
         bestParams['Pat'].setStateInfo(state_id)
@@ -189,8 +401,32 @@ def setNewDetails(bestParams, state_id, pat_ids):
             pat_ids += 1
         bestParams['Pat'].setCurOrder(lt)
     return pat_ids, bestParams
-
+###################################################################################################################################################################
 def postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o):
+    """
+    function to update the corresponding candidate list of each of the action and update background distribution
+
+    Parameters
+    ----------
+    bestParams : dict
+        dictionary of parameters of best action
+    G_cur : networkx graph
+        input graph
+    PD : PDClass
+        input background distribution
+    EA_o : src.Actions.add
+        add action object
+    ER_o : src.Actions.remove
+        remove action object
+    EU_o : src.Actions.update
+        update action object
+    EM_o : src.Actions.merge
+        merge action object
+    ESH_o : src.Actions.shrink
+        shrink action object
+    ESP_o : src.Actions.split
+        split action object
+    """
     # Update Background Distribution
     # print("In postProcess prev lambda keys:", PD.lprevUpdate.keys())
     if bestParams['Pat'].pat_type is 'add':
@@ -222,8 +458,40 @@ def postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH
     ESH_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams['Pat'])
     ESP_o.checkAndUpdateAllPossibilities(G_cur, PD, bestParams['Pat'])
     return
-
+###################################################################################################################################################################
 def RunDSSGUtil(gname, PD, state_id, pat_ids, Params, df_patterns):
+    """
+    function to run DSSG for one state of graph graph
+
+    Parameters
+    ----------
+    gname : str
+        current graph state filename
+    PD : PDClass
+        input background distribution
+    state_id : int
+        current state id
+    pat_ids : int
+        pattern identifier for new patterns
+    Params : dict
+        required parameters from config file to run the experiment
+    df_patterns : pandas dataframe
+        dataframe for found patterns
+
+    Returns
+    -------
+    dict, int, dataframe
+        summary of actions, pat_ids, and updated patterns dataframe respectively
+
+    Raises
+    ------
+    Exception
+        Invalid File Type current graph state file type
+    Exception
+        Mismatch graph type
+    Exception
+        Multigraph encountered
+    """
     print('State: {}'.format(state_id))
     flag = True
     Summary = dict()
@@ -275,12 +543,42 @@ def RunDSSGUtil(gname, PD, state_id, pat_ids, Params, df_patterns):
             flag = False
 
     return Summary, pat_ids, df_patterns
-
+###################################################################################################################################################################
 def writePattern(df, pat):
+    """
+    utility function to append a pattern in a dataframe
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        input dataframe to be updated
+    pat : src.Patterns.pattern
+        pattern to be added
+
+    Returns
+    -------
+    pandas dataframe
+        updated dataframe
+    """
     df = df.append(pat.getDictForm(), ignore_index=True)
     return df
-
+###################################################################################################################################################################
 def writePatternsToDF(df, Params):
+    """
+    utility function to write a pattern to a dataframe from a given action
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        input dataframe to be updated
+    Params : dict
+        parameters of an action
+
+    Returns
+    -------
+    pandas dataframe
+        updated dataframe
+    """
     if Params['Pat'].pat_type in ['add', 'merge', 'update']:
         df = writePattern(df, Params['Pat'])
     elif Params['Pat'].pat_type in ['shrink']:
@@ -289,8 +587,21 @@ def writePatternsToDF(df, Params):
         for k, v in Params['compos']:
             df = writePattern(df, v)
     return df
-
+###################################################################################################################################################################
 def makeWritePath(ds):
+    """
+    utility function to make proper path to write the results
+
+    Parameters
+    ----------
+    ds : str
+        current dataset name
+
+    Returns
+    -------
+    str
+        path of the folder in which the results to be written
+    """
     if not os.path.exists(path+'Results/'):
         os.mkdir(path+'Results/')
     if not os.path.exists(path+'Results/DSSG/'):
@@ -302,12 +613,38 @@ def makeWritePath(ds):
     if not os.path.exists(wpath+'/constr/'):
         os.mkdir(wpath+'/constr/')
     return wpath+'/'
-
+###################################################################################################################################################################
 def writeToCSV(df, dfname, wpath):
+    """
+    utility function of write a dataframe at the specified location and stored by the given name
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        input dataframe to be written
+    dfname : str
+        name of the dataframe to be given in the final file
+    wpath : str
+        path to directory
+    """
     df.to_csv(wpath+dfname+'.csv', index=False, sep=';')
     return
-
+###################################################################################################################################################################
 def writeConstraints(PD, cols, dfname, wpath):
+    """
+    function to write the active constraints of the background distribution at the end of each state
+
+    Parameters
+    ----------
+    PD : PDClass
+        input background distribution
+    cols : list
+        parameters to be saved of each constraint
+    dfname : str
+        constraint would be storea as a dataframe under the given name
+    wpath : str
+        path to directory
+    """
     df = pd.DataFrame(columns=cols)
     for k, v in PD.lprevUpdate.items():
         dt = dict()
@@ -323,8 +660,18 @@ def writeConstraints(PD, cols, dfname, wpath):
         df = df.append(dt, ignore_index=True)
     writeToCSV(df, dfname, wpath+'/constr/')
     return
-
+###################################################################################################################################################################
 def writeActions(OSummary, wpath):
+    """
+    utility function to write the details of actions performed in an ordered manner
+
+    Parameters
+    ----------
+    OSummary : dict
+        overall summary of all states
+    wpath : str
+        path to directory
+    """
     df = pd.DataFrame(columns=['state_id', 'action_id', 'action', 'initial_pats', 'final_pats', 'CL_i', 'CL_f'])
     for k,v in OSummary.items():
         for k1, u in v.items():
@@ -349,11 +696,16 @@ def writeActions(OSummary, wpath):
             df = df.append(dt, ignore_index=True)
     writeToCSV(df, 'actions', wpath)
     return
-
-# def writeResults(OSummary, fname):
-#     return
-
+###################################################################################################################################################################
 def DSSGMain(fname):
+    """
+    Function to run DSSG
+
+    Parameters
+    ----------
+    fname : str
+        filename of the configuration file found in "Confs" directory
+    """
     if not ray.is_initialized():
         ray.init()
     DS, Params = readConfFile(fname)
@@ -362,6 +714,7 @@ def DSSGMain(fname):
         OSummary = dict()
         pat_ids = 0
         allStates = getAllStates(d)
+        stime = time.time()
         G_cur, PD, gtype = getInitGraphAndBD(path+'Data/DSSG/'+d+'/'+allStates[0], Params)
         Params['gtype'] = gtype
         p_cols = None
@@ -384,15 +737,18 @@ def DSSGMain(fname):
         for state_id in range(1, len(allStates)):
             OSummary[state_id], pat_ids, df_patterns = RunDSSGUtil(path+'Data/DSSG/'+d+'/'+allStates[state_id], PD, state_id, pat_ids, Params, df_patterns)
             writeConstraints(PD, c_cols, 'S'+str(state_id)+'_constr', wpath)
+        ftime = time.time()
         writeActions(OSummary, wpath)
         writeToCSV(df_patterns, 'patterns', wpath)
+        print('\n\nTotal Time Taken: {:.4f} seconds'.format(ftime-stime))
     return
-
+###################################################################################################################################################################
 if __name__=="__main__":
     parser = argparse.ArgumentParser(description='Running DSSG')
     parser.add_argument(dest ='filename', metavar ='filename', type=str, help='configuration filename to run DSSG.py')
     args = parser.parse_args()
-    stime = time.time()
     DSSGMain(args.filename)
-    ftime = time.time()
-    print('\n\nTotal Time Taken: {:.4f} seconds'.format(ftime-stime))
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################

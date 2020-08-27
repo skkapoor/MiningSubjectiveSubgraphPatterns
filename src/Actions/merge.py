@@ -7,14 +7,12 @@ import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
 if path not in sys.path:
     sys.path.append(path)
-import numpy as np
-import math
 import networkx as nx
 
 from src.Utils.Measures import getCodeLength, getCodeLengthParallel, getDirectedSubgraph
 from src.Utils.Measures import computeDescriptionLength, computeInterestingness
 from src.Patterns.Pattern import Pattern
-
+###################################################################################################################################################################
 class EvaluateMerge:
     """
     This data structure shall contain all the possible mergers
@@ -41,7 +39,7 @@ class EvaluateMerge:
         self.l = l # possible types (give number) of action, default is 6
         self.imode = imode
         print('initialized EvaluateMerge')
-
+###################################################################################################################################################################
     def evaluateAllConstraintPairs(self, G, PD):
         """
         function to evaluate all constraint pairs and make a list of candidate constraint pairs which are feasible to merge
@@ -58,7 +56,7 @@ class EvaluateMerge:
             for i2 in range(i1+1, len(keys)):
                 self.evaluateConstraintPair( G, PD, keys[i1], keys[i2] )
         return
-
+###################################################################################################################################################################
     def evaluateConstraintPair(self, G, PD, k1, k2):
         """
         function to evaluate if a constraint pair is a feasible candidate for merge
@@ -95,7 +93,7 @@ class EvaluateMerge:
                 P = Pattern(H)
                 self.computeParametersD( P, PD, min(k1, k2), max(k1, k2) )
         return
-
+###################################################################################################################################################################
     def computeParametersU(self, P, PD, k1, k2):
         """
         Utility function to compute paramters for a potential candidate constraint pair when Input graph is undirected
@@ -125,7 +123,7 @@ class EvaluateMerge:
             Params['Pat'].setLambda(nlambda)
             self.Data[(k1,k2)] = Params
         return
-
+###################################################################################################################################################################
     def computeParametersD(self, P, PD, k1, k2):
         """
         Utility function to compute paramters for a potential candidate constraint pair when Input graph is directed
@@ -155,7 +153,7 @@ class EvaluateMerge:
             Params['Pat'].setLambda(nlambda)
             self.Data[(k1,k2)] = Params
         return
-
+###################################################################################################################################################################
     def updateConstraintEvaluation(self, G, PD, id, condition=1):
         """
         function to now evaluate and update a possible candidate
@@ -185,7 +183,7 @@ class EvaluateMerge:
         elif condition == 2:
             self.evaluateConstraintPair( G, PD, id[0], id[1] )
         return
-
+###################################################################################################################################################################
     def checkAndUpdateAllPossibilities(self, G, PD, prevPat):
         """
         function to update the parameters associated to each possible candidates
@@ -219,7 +217,7 @@ class EvaluateMerge:
             del self.Data[k]
             self.updateConstraintEvaluation(G, PD, k, 2)
         return
-
+###################################################################################################################################################################
     def doProcessWithNewConstraint(self, G, PD, prevPat):
         """
         This function append into the list of candidate merges if a new candidate merge is feasible after performing an action
@@ -253,7 +251,7 @@ class EvaluateMerge:
                 for k in keys:
                     self.evaluateConstraintPair( G, PD, min(k, prevPat.cur_order), max(k, prevPat.cur_order) )
         return
-
+###################################################################################################################################################################
     def removeCandidates(self, prevPat):
         """
         This function remove the iineligible candidates after an action is performed.
@@ -277,7 +275,7 @@ class EvaluateMerge:
         for k in delkeys:
             del self.Data[k]
         return
-
+###################################################################################################################################################################
     def updateDistribution(self, PD, bestM):
         """
         function to update background distribution.
@@ -288,8 +286,8 @@ class EvaluateMerge:
         ----------
         PD : PDClass
             Background distribution
-        bestM : Pattern
-            last merge pattern
+        bestM : dict
+            last merge action details
         """
         del self.Data[bestM['Pat'].prev_order]
         out1 = PD.lprevUpdate.pop(bestM['Pat'].prev_order[0], None)
@@ -300,7 +298,7 @@ class EvaluateMerge:
             la = PD.updateDistribution( bestM['Pat'].G, idx=bestM['Pat'].cur_order, val_return='save', case=2 )
             bestM['Pat'].setLambda(la)
         return
-
+###################################################################################################################################################################
     def getBestOption(self):
         """
         function to return the best candidate to merge
@@ -315,4 +313,7 @@ class EvaluateMerge:
         else:
             bestM = max(self.Data.items(), key=lambda x: x[1]['Pat'].I)
             return bestM[1]
-
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################

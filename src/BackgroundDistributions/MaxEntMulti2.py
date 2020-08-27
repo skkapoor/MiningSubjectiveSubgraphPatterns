@@ -1,3 +1,7 @@
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
 import numpy as np
 import math
 import networkx as nx
@@ -9,6 +13,14 @@ if path not in sys.path:
 from src.BackgroundDistributions.PDClass import PDClass
 ###################################################################################################################################################################
 class MaxEntMulti2U(PDClass):
+	"""
+    Background distribution for multigraphs if type of prior belief is 'm' and type of graph is 'undirected'
+
+    Parameters
+    ----------
+    PDClass : src.BackgroundDistributions.PDClass
+        base class
+    """
 	def __init__(self, G = None):
 		super().__init__()
 		self.la = None
@@ -46,7 +58,7 @@ class MaxEntMulti2U(PDClass):
 		tol = 1e-14
 		self.errors = np.empty(0)
 		##############################
-		lb = -5 
+		lb = -5
 		for k in range(nit):
 			R = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.la/2)),np.outer(np.exp(self.la/2), np.ones(nunique).T))
 			S = np.multiply(np.outer(np.ones(nunique).T, np.exp(self.mu/2)),np.outer(np.exp(self.mu/2), np.ones(nunique).T))
@@ -225,6 +237,14 @@ class MaxEntMulti2U(PDClass):
 
 
 class  MaxEntMulti2D(PDClass):
+	"""
+    Background distribution for multigraphs if type of prior belief is 'm' and type of graph is 'directed'
+
+    Parameters
+    ----------
+    PDClass : src.BackgroundDistributions.PDClass
+        base class
+    """
 	def __init__(self, G = None):
 		super().__init__(G)
 		self.tp = 'D'

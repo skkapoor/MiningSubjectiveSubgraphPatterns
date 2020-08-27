@@ -1,3 +1,7 @@
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
 import os
 import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
@@ -9,6 +13,14 @@ import math
 from src.BackgroundDistributions.PDClass import PDClass
 ###################################################################################################################################################################
 class MaxEntSimpleU(PDClass):
+	"""
+    Background distribution for simple graphs if type of prior belief is 'i' and type of graph is 'undirected'
+
+    Parameters
+    ----------
+    PDClass : src.BackgroundDistributions.PDClass
+        base class
+    """
 	def __init__(self, G = None):
 		super().__init__(G)
 		self.la = None
@@ -105,6 +117,14 @@ class MaxEntSimpleU(PDClass):
 ###################################################################################################################################################################
 
 class MaxEntSimpleD(PDClass):
+	"""
+    Background distribution for simple graphs if type of prior belief is 'i' and type of graph is 'directed'
+
+    Parameters
+    ----------
+    PDClass : src.BackgroundDistributions.PDClass
+        base class
+    """
 	def __init__(self, G = None):
 		super().__init__(G)
 		self.la = None

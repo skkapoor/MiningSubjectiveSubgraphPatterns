@@ -7,9 +7,6 @@ import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
 if path not in sys.path:
 	sys.path.append(path)
-import numpy as np
-import math
-import networkx as nx
 
 from src.Utils.Measures import getCodeLength, getCodeLengthParallel, getDirectedSubgraph
 from src.Utils.Measures import computeDescriptionLength, computeInterestingness
@@ -130,7 +127,7 @@ class EvaluateRemove:
         elif condition == 2: #update codelength and description length
             self.evaluateConstraint(G, PD, id)
         return
-
+###################################################################################################################################################################
     def checkAndUpdateAllPossibilities(self, G, PD, prevPat):
         """
         function to update the parameters associated to each possible candidates
@@ -193,8 +190,8 @@ class EvaluateRemove:
         ----------
         PD : PDClass
             Background distribution
-        bestR : Pattern
-            last remove pattern
+        bestR : dict
+            last remove action details
         """
         del self.Data[bestR['Pat'].prev_order]
         out = PD.lprevUpdate.pop(bestR['Pat'].prev_order, None)

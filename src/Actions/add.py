@@ -7,15 +7,12 @@ import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
 if path not in sys.path:
 	sys.path.append(path)
-import numpy as np
-import math
-import networkx as nx
 
 from src.Utils.Measures import getCodeLength, getCodeLengthParallel, getDirectedSubgraph
 from src.Utils.Measures import computeDescriptionLength, computeInterestingness
 from src.Patterns.Pattern import Pattern
 from src.HillClimbers.HC_v4 import findBestPattern, runNKseeds, runGivenSeeds, getSeeds
-
+###################################################################################################################################################################
 class EvaluateAdd:
     """
     This data structure shall contain all the possible addition candidates
@@ -61,13 +58,35 @@ class EvaluateAdd:
         self.seedRuns = seedRuns
         self.incEdges = incEdges
         print('Initialized EvaluateAdd')
-
+###################################################################################################################################################################
     def evaluateNew(self, G, PD):
+        """
+        function to evaluate all independent seed runs
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        PD : PDClass
+            Input background distribution
+        """
         self.seeds = getSeeds(G, PD, self.q, self.seedMode, self.seedRuns, self.icmode, self.gtype, self.isSimple, self.incEdges)
         self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
         return
-
+###################################################################################################################################################################
     def checkAndUpdateAllPossibilities(self, G, PD, PrevPat):
+        """
+        function to update the candidate list
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        PD : PDClass
+            Input background distribution
+        PrevPat : src.Patterns.Pattern
+            resultant pattern of last performed action
+        """
         #First if the last action is add then we are required to find a new pattern again, that is, running a hill climber for top-k seeds fresh.
         if len(self.Data) < 1:
             self.evaluateNew(G, PD)
@@ -83,8 +102,23 @@ class EvaluateAdd:
                 if inInt > 1 and outInt > 1:
                     self.evaluateNew(G, PD)
         return
-
+###################################################################################################################################################################
     def getBestOption(self, G, PD):
+        """
+        function to return the best candidate to add
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        PD : PDClass
+            Input background distribution
+
+        Returns
+        -------
+        dict
+            dictionary containing a Pattern to add and correspoding prior and posterior codelengths
+        """
         if len(self.Data) > 0:
             bestPattern = max(self.Data, key=lambda x: x.I)
             codeLengthC = None
@@ -113,7 +147,7 @@ class EvaluateAdd:
             return Params
         else:
             return None
-
+###################################################################################################################################################################
     def updateDistribution(self, PD, bestA):
         """
         function to update background distribution.
@@ -123,18 +157,25 @@ class EvaluateAdd:
         ----------
         PD : PDClass
             Background distribution
-        bestA : Pattern
-            last added pattern
+        bestA : dict
+            last added action details
         """
         self.Data = []
         self.seeds = []
         la = PD.updateDistribution( bestA['Pat'].G, idx=bestA['Pat'].cur_order, val_return='save', case=2 )
         bestA['Pat'].setLambda(la)
         return
-
+###################################################################################################################################################################
     def printCands(self):
+        """
+        function to print all current candidates
+        """
         if len(self.Data):
             for k in range(len(self.Data)):
                 print('\t\t', k, self.Data[k])
                 print('\n')
         return
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
+###################################################################################################################################################################
