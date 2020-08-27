@@ -88,7 +88,7 @@ To run the code pre-requites are:
 <section>To run the code excute the corresponding Algorithm file in the directory 'src/Algorithms' with required configuration file name passed in the arguments. For example:
 
 <pre> 
-		```console
+		```sh
 		:~MiningSubjectiveSubgraphPatterns$ python src/Algorithms/SSG.py SSG.ini
 		```
 	</pre>
