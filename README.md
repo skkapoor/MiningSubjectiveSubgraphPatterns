@@ -69,26 +69,6 @@ This repository contains the combined code of SSG, SIMP, DSSG and DSIMP
 
 <section>
 
-## Sub-modules of **src**
-
-<dl>
-
-<dt>`[src.Actions](Actions/index.html "src.Actions")`</dt>
-
-<dt>`[src.Algorithms](Algorithms/index.html "src.Algorithms")`</dt>
-
-<dt>`[src.BackgroundDistributions](BackgroundDistributions/index.html "src.BackgroundDistributions")`</dt>
-
-<dt>`[src.HillClimbers](HillClimbers/index.html "src.HillClimbers")`</dt>
-
-<dt>`[src.Patterns](Patterns/index.html "src.Patterns")`</dt>
-
-<dt>`[src.Plots](Plots/index.html "src.Plots")`</dt>
-
-<dt>`[src.Utils](Utils/index.html "src.Utils")`</dt>
-
-</dl>
-
 </section>
 
 To run the code pre-requites are:
@@ -108,7 +88,9 @@ To run the code pre-requites are:
 <section>To run the code excute the corresponding Algorithm file in the directory 'src/Algorithms' with required configuration file name passed in the arguments. For example:
 
 <pre> 
-		`:~MiningSubjectiveSubgraphPatterns$ python src/Algorithms/SSG.py SSG.ini`
+		```console
+		:~MiningSubjectiveSubgraphPatterns$ python src/Algorithms/SSG.py SSG.ini
+		```
 	</pre>
 
 The file SSG.ini shall be found in directory 'Confs'.</section>
@@ -118,18 +100,6 @@ The file SSG.ini shall be found in directory 'Confs'.</section>
 </article>
 
 <nav id="sidebar">
-
-# Index
-
-*   ### [Sub-modules](#header-submodules)
-
-    *   `[src.Actions](Actions/index.html "src.Actions")`
-    *   `[src.Algorithms](Algorithms/index.html "src.Algorithms")`
-    *   `[src.BackgroundDistributions](BackgroundDistributions/index.html "src.BackgroundDistributions")`
-    *   `[src.HillClimbers](HillClimbers/index.html "src.HillClimbers")`
-    *   `[src.Patterns](Patterns/index.html "src.Patterns")`
-    *   `[src.Plots](Plots/index.html "src.Plots")`
-    *   `[src.Utils](Utils/index.html "src.Utils")`
 
 </nav>
 
