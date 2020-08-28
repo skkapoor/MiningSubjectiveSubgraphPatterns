@@ -65,7 +65,7 @@
 </section>
 
 
-To run the code pre-requites are:
+To run the code pre-requisites are:
  
 
 *  Python 3.6
