@@ -31,6 +31,7 @@
 ###################################################################################################################################################################
 ###################################################################################################################################################################
 import os
+import shutil
 import sys
 
 import pandas as pd
@@ -261,6 +262,16 @@ def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype=&#39;U&
             for k, v in EA_params.items():
                 print(&#39;\t{} --- {}&#39;.format(k, v))
         else:
+            if EA_params is None:
+                print(&#39;\tEA_Params is None, moving to next state&#39;)
+            else:
+                print(&#39;\tFor EA_params I was negative&#39;)
+                for k, v in EA_params.items():
+                    print(&#39;\t{} --- {}&#39;.format(k, v))
+
+                # print(&#39;Other Seeds: &#39;)
+                # for it in EA_o.seeds:
+                #     print(it)
             flag = False
     return Summary, PD, pat_ids, df_patterns
 ###################################################################################################################################################################
@@ -414,7 +425,7 @@ def setNewDetails(bestParams, state_id, pat_ids):
         bestParams[&#39;Pat&#39;].setStateInfo(state_id)
         pat_ids += 1
         if bestParams[&#39;Pat&#39;].pat_type is &#39;shrink&#39;:
-            bestParams[&#39;SPat&#39;].setCurOrder(bestParams[&#39;Pat&#39;].prev_order)
+            bestParams[&#39;SPat&#39;].setCurOrder(pat_ids-1)
             bestParams[&#39;SPat&#39;].setStateInfo(state_id)
     elif bestParams[&#39;Pat&#39;].pat_type in [&#39;remove&#39;]:
         bestParams[&#39;Pat&#39;].setCurOrder(bestParams[&#39;Pat&#39;].prev_order)
@@ -568,7 +579,16 @@ def RunDSSGUtil(gname, PD, state_id, pat_ids, Params, df_patterns):
                 else:
                     print(&#39;\t{} --- {}&#39;.format(k, v))
         else:
+            print(&#39;\tNo action with positive I was observed, hence moving to next state...!!!&#39;)
             flag = False
+            if bestParams is not None:
+                for k, v in bestParams.items():
+                    if k is &#39;compos&#39;:
+                        print(&#34;\tCompos:&#34;)
+                        for k1, v1 in v:
+                            print(&#39;\t\t{} --- {}&#39;.fomat(k1, v1))
+                    else:
+                        print(&#39;\t{} --- {}&#39;.format(k, v))
 
     return Summary, pat_ids, df_patterns
 ###################################################################################################################################################################
@@ -739,6 +759,9 @@ def DSSGMain(fname):
     DS, Params = readConfFile(fname)
     print(Params)
     for d in DS:
+        wpath = makeWritePath(d)
+        log = open(wpath+&#39;run.logs&#39;, &#39;a&#39;)
+        sys.stdout = log
         OSummary = dict()
         pat_ids = 0
         allStates = getAllStates(d)
@@ -757,7 +780,7 @@ def DSSGMain(fname):
                 &#39;I&#39;, &#39;DL&#39;, &#39;IC_ssg&#39;, &#39;AD&#39;, &#39;IC_dssg&#39;, &#39;IC_dsimp&#39;, &#39;la&#39;, &#39;sumPOS&#39;, &#39;expectedEdges&#39;, &#39;inNL&#39;,\
                 &#39;outNL&#39;, &#39;kws&#39;, &#39;nw&#39;, &#39;minPOS&#39;]
             c_cols = [&#39;order&#39;, &#39;inNL&#39;, &#39;outNL&#39;, &#39;kw&#39;, &#39;la&#39;]
-        wpath = makeWritePath(d)
+
         df_patterns = pd.DataFrame(columns = p_cols)
 
         OSummary[0], PD, pat_ids, df_patterns = processInitialState(G_cur, PD, 0, pat_ids, df_patterns=df_patterns, gtype=gtype, isSimple=True, l=Params[&#39;l&#39;], ic_mode=Params[&#39;icmode&#39;], imode=Params[&#39;interesttype&#39;], minsize=Params[&#39;minsize&#39;], seedType=Params[&#39;seedmode&#39;], seedRuns=Params[&#39;seedruns&#39;], q=Params[&#39;q&#39;], incEdges=Params[&#39;incedges&#39;])
@@ -768,7 +791,9 @@ def DSSGMain(fname):
         ftime = time.time()
         writeActions(OSummary, wpath)
         writeToCSV(df_patterns, &#39;patterns&#39;, wpath)
+        shutil.copy(path+&#39;Confs/&#39;+fname, wpath+&#39;conf.txt&#39;)
         print(&#39;\n\nTotal Time Taken: {:.4f} seconds&#39;.format(ftime-stime))
+        log.close()
     return
 ###################################################################################################################################################################
 if __name__==&#34;__main__&#34;:
@@ -817,6 +842,9 @@ if __name__==&#34;__main__&#34;:
     DS, Params = readConfFile(fname)
     print(Params)
     for d in DS:
+        wpath = makeWritePath(d)
+        log = open(wpath+&#39;run.logs&#39;, &#39;a&#39;)
+        sys.stdout = log
         OSummary = dict()
         pat_ids = 0
         allStates = getAllStates(d)
@@ -835,7 +863,7 @@ if __name__==&#34;__main__&#34;:
                 &#39;I&#39;, &#39;DL&#39;, &#39;IC_ssg&#39;, &#39;AD&#39;, &#39;IC_dssg&#39;, &#39;IC_dsimp&#39;, &#39;la&#39;, &#39;sumPOS&#39;, &#39;expectedEdges&#39;, &#39;inNL&#39;,\
                 &#39;outNL&#39;, &#39;kws&#39;, &#39;nw&#39;, &#39;minPOS&#39;]
             c_cols = [&#39;order&#39;, &#39;inNL&#39;, &#39;outNL&#39;, &#39;kw&#39;, &#39;la&#39;]
-        wpath = makeWritePath(d)
+
         df_patterns = pd.DataFrame(columns = p_cols)
 
         OSummary[0], PD, pat_ids, df_patterns = processInitialState(G_cur, PD, 0, pat_ids, df_patterns=df_patterns, gtype=gtype, isSimple=True, l=Params[&#39;l&#39;], ic_mode=Params[&#39;icmode&#39;], imode=Params[&#39;interesttype&#39;], minsize=Params[&#39;minsize&#39;], seedType=Params[&#39;seedmode&#39;], seedRuns=Params[&#39;seedruns&#39;], q=Params[&#39;q&#39;], incEdges=Params[&#39;incedges&#39;])
@@ -846,7 +874,9 @@ if __name__==&#34;__main__&#34;:
         ftime = time.time()
         writeActions(OSummary, wpath)
         writeToCSV(df_patterns, &#39;patterns&#39;, wpath)
+        shutil.copy(path+&#39;Confs/&#39;+fname, wpath+&#39;conf.txt&#39;)
         print(&#39;\n\nTotal Time Taken: {:.4f} seconds&#39;.format(ftime-stime))
+        log.close()
     return</code></pre>
 </details>
 </dd>
@@ -969,7 +999,16 @@ if __name__==&#34;__main__&#34;:
                 else:
                     print(&#39;\t{} --- {}&#39;.format(k, v))
         else:
+            print(&#39;\tNo action with positive I was observed, hence moving to next state...!!!&#39;)
             flag = False
+            if bestParams is not None:
+                for k, v in bestParams.items():
+                    if k is &#39;compos&#39;:
+                        print(&#34;\tCompos:&#34;)
+                        for k1, v1 in v:
+                            print(&#39;\t\t{} --- {}&#39;.fomat(k1, v1))
+                    else:
+                        print(&#39;\t{} --- {}&#39;.format(k, v))
 
     return Summary, pat_ids, df_patterns</code></pre>
 </details>
@@ -1633,6 +1672,16 @@ if __name__==&#34;__main__&#34;:
             for k, v in EA_params.items():
                 print(&#39;\t{} --- {}&#39;.format(k, v))
         else:
+            if EA_params is None:
+                print(&#39;\tEA_Params is None, moving to next state&#39;)
+            else:
+                print(&#39;\tFor EA_params I was negative&#39;)
+                for k, v in EA_params.items():
+                    print(&#39;\t{} --- {}&#39;.format(k, v))
+
+                # print(&#39;Other Seeds: &#39;)
+                # for it in EA_o.seeds:
+                #     print(it)
             flag = False
     return Summary, PD, pat_ids, df_patterns</code></pre>
 </details>
@@ -1738,7 +1787,7 @@ if __name__==&#34;__main__&#34;:
         bestParams[&#39;Pat&#39;].setStateInfo(state_id)
         pat_ids += 1
         if bestParams[&#39;Pat&#39;].pat_type is &#39;shrink&#39;:
-            bestParams[&#39;SPat&#39;].setCurOrder(bestParams[&#39;Pat&#39;].prev_order)
+            bestParams[&#39;SPat&#39;].setCurOrder(pat_ids-1)
             bestParams[&#39;SPat&#39;].setStateInfo(state_id)
     elif bestParams[&#39;Pat&#39;].pat_type in [&#39;remove&#39;]:
         bestParams[&#39;Pat&#39;].setCurOrder(bestParams[&#39;Pat&#39;].prev_order)

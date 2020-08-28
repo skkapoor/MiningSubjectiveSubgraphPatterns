@@ -71,6 +71,7 @@ class EvaluateAdd:
             Input background distribution
         """
         self.seeds = getSeeds(G, PD, self.q, self.seedMode, self.seedRuns, self.icmode, self.gtype, self.isSimple, self.incEdges)
+        print('IN EA seeds: ', self.seeds)
         self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
         return
 ###################################################################################################################################################################

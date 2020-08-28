@@ -269,9 +269,12 @@ class Pattern:
         st += &#34;\t\tla: {}\n&#34;.format(self.la)
         st += &#34;\t\tsumPOS: {:.5f}\texpectedEdges: {:.5f}\n&#34;.format(self.sumPOS, self.expectedEdges)
         if self.G.is_directed():
+            self.inNL = sorted(self.inNL)
+            self.outNL = sorted(self.outNL)
             st += &#34;\t\tinNL: &#34;+&#34;, &#34;.join(map(str, self.inNL))+&#34;\n&#34;
             st += &#34;\t\toutNL: &#34;+&#34;, &#34;.join(map(str, self.outNL))+&#34;\n&#34;
         else:
+            self.NL = sorted(self.NL)
             st += &#34;\t\tNL: &#34;+&#34;, &#34;.join(map(str, self.NL))+&#34;\n&#34;
         return st
 ###################################################################################################################################################################
@@ -288,7 +291,7 @@ class Pattern:
         for k in members:
             if isinstance(self.__dict__[k], (list, tuple, set)):
                 # dt[k] = &#34;, &#34;.join(map(str, self.__dict__[k]))
-                dt[k] = list(self.__dict__[k])
+                dt[k] = sorted(list(self.__dict__[k]))
             else:
                 dt[k] = self.__dict__[k]
         dt[&#39;Density&#39;] = nx.density(self.G)
@@ -568,9 +571,12 @@ class Pattern:
         st += &#34;\t\tla: {}\n&#34;.format(self.la)
         st += &#34;\t\tsumPOS: {:.5f}\texpectedEdges: {:.5f}\n&#34;.format(self.sumPOS, self.expectedEdges)
         if self.G.is_directed():
+            self.inNL = sorted(self.inNL)
+            self.outNL = sorted(self.outNL)
             st += &#34;\t\tinNL: &#34;+&#34;, &#34;.join(map(str, self.inNL))+&#34;\n&#34;
             st += &#34;\t\toutNL: &#34;+&#34;, &#34;.join(map(str, self.outNL))+&#34;\n&#34;
         else:
+            self.NL = sorted(self.NL)
             st += &#34;\t\tNL: &#34;+&#34;, &#34;.join(map(str, self.NL))+&#34;\n&#34;
         return st
 ###################################################################################################################################################################
@@ -587,7 +593,7 @@ class Pattern:
         for k in members:
             if isinstance(self.__dict__[k], (list, tuple, set)):
                 # dt[k] = &#34;, &#34;.join(map(str, self.__dict__[k]))
-                dt[k] = list(self.__dict__[k])
+                dt[k] = sorted(list(self.__dict__[k]))
             else:
                 dt[k] = self.__dict__[k]
         dt[&#39;Density&#39;] = nx.density(self.G)
@@ -665,7 +671,7 @@ class Pattern:
     for k in members:
         if isinstance(self.__dict__[k], (list, tuple, set)):
             # dt[k] = &#34;, &#34;.join(map(str, self.__dict__[k]))
-            dt[k] = list(self.__dict__[k])
+            dt[k] = sorted(list(self.__dict__[k]))
         else:
             dt[k] = self.__dict__[k]
     dt[&#39;Density&#39;] = nx.density(self.G)

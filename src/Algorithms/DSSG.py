@@ -3,6 +3,7 @@
 ###################################################################################################################################################################
 ###################################################################################################################################################################
 import os
+import shutil
 import sys
 
 import pandas as pd
@@ -233,6 +234,16 @@ def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype='U', is
             for k, v in EA_params.items():
                 print('\t{} --- {}'.format(k, v))
         else:
+            if EA_params is None:
+                print('\tEA_Params is None, moving to next state')
+            else:
+                print('\tFor EA_params I was negative')
+                for k, v in EA_params.items():
+                    print('\t{} --- {}'.format(k, v))
+
+                # print('Other Seeds: ')
+                # for it in EA_o.seeds:
+                #     print(it)
             flag = False
     return Summary, PD, pat_ids, df_patterns
 ###################################################################################################################################################################
@@ -386,7 +397,7 @@ def setNewDetails(bestParams, state_id, pat_ids):
         bestParams['Pat'].setStateInfo(state_id)
         pat_ids += 1
         if bestParams['Pat'].pat_type is 'shrink':
-            bestParams['SPat'].setCurOrder(bestParams['Pat'].prev_order)
+            bestParams['SPat'].setCurOrder(pat_ids-1)
             bestParams['SPat'].setStateInfo(state_id)
     elif bestParams['Pat'].pat_type in ['remove']:
         bestParams['Pat'].setCurOrder(bestParams['Pat'].prev_order)
@@ -540,7 +551,16 @@ def RunDSSGUtil(gname, PD, state_id, pat_ids, Params, df_patterns):
                 else:
                     print('\t{} --- {}'.format(k, v))
         else:
+            print('\tNo action with positive I was observed, hence moving to next state...!!!')
             flag = False
+            if bestParams is not None:
+                for k, v in bestParams.items():
+                    if k is 'compos':
+                        print("\tCompos:")
+                        for k1, v1 in v:
+                            print('\t\t{} --- {}'.fomat(k1, v1))
+                    else:
+                        print('\t{} --- {}'.format(k, v))
 
     return Summary, pat_ids, df_patterns
 ###################################################################################################################################################################
@@ -711,6 +731,9 @@ def DSSGMain(fname):
     DS, Params = readConfFile(fname)
     print(Params)
     for d in DS:
+        wpath = makeWritePath(d)
+        log = open(wpath+'run.logs', 'a')
+        sys.stdout = log
         OSummary = dict()
         pat_ids = 0
         allStates = getAllStates(d)
@@ -729,7 +752,7 @@ def DSSGMain(fname):
                 'I', 'DL', 'IC_ssg', 'AD', 'IC_dssg', 'IC_dsimp', 'la', 'sumPOS', 'expectedEdges', 'inNL',\
                 'outNL', 'kws', 'nw', 'minPOS']
             c_cols = ['order', 'inNL', 'outNL', 'kw', 'la']
-        wpath = makeWritePath(d)
+
         df_patterns = pd.DataFrame(columns = p_cols)
 
         OSummary[0], PD, pat_ids, df_patterns = processInitialState(G_cur, PD, 0, pat_ids, df_patterns=df_patterns, gtype=gtype, isSimple=True, l=Params['l'], ic_mode=Params['icmode'], imode=Params['interesttype'], minsize=Params['minsize'], seedType=Params['seedmode'], seedRuns=Params['seedruns'], q=Params['q'], incEdges=Params['incedges'])
@@ -740,7 +763,9 @@ def DSSGMain(fname):
         ftime = time.time()
         writeActions(OSummary, wpath)
         writeToCSV(df_patterns, 'patterns', wpath)
+        shutil.copy(path+'Confs/'+fname, wpath+'conf.txt')
         print('\n\nTotal Time Taken: {:.4f} seconds'.format(ftime-stime))
+        log.close()
     return
 ###################################################################################################################################################################
 if __name__=="__main__":

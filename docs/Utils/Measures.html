@@ -100,7 +100,7 @@ def NW(N, tp=&#39;U&#39;):
     Returns:
         int: number of edges or number of feasible vertex-pair between N nodes
     &#34;&#34;&#34;
-    assert tp==&#39;U&#39; or tp==&#39;D&#39;, &#34;Invalid type in NW, it shall be either &#39;S&#39; or &#39;D&#39;&#34;
+    assert tp==&#39;U&#39; or tp==&#39;D&#39;, &#34;Invalid type in NW, it shall be either &#39;U&#39; or &#39;D&#39;&#34;
     if tp==&#39;U&#39;:
         return N*(N-1)//2
     else:
@@ -1566,7 +1566,7 @@ W (networkx graph): Required if mode is 4, pattern as a networkx graph object</p
     Returns:
         int: number of edges or number of feasible vertex-pair between N nodes
     &#34;&#34;&#34;
-    assert tp==&#39;U&#39; or tp==&#39;D&#39;, &#34;Invalid type in NW, it shall be either &#39;S&#39; or &#39;D&#39;&#34;
+    assert tp==&#39;U&#39; or tp==&#39;D&#39;, &#34;Invalid type in NW, it shall be either &#39;U&#39; or &#39;D&#39;&#34;
     if tp==&#39;U&#39;:
         return N*(N-1)//2
     else:

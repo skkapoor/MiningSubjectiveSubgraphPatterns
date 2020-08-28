@@ -72,7 +72,7 @@ def NW(N, tp='U'):
     Returns:
         int: number of edges or number of feasible vertex-pair between N nodes
     """
-    assert tp=='U' or tp=='D', "Invalid type in NW, it shall be either 'S' or 'D'"
+    assert tp=='U' or tp=='D', "Invalid type in NW, it shall be either 'U' or 'D'"
     if tp=='U':
         return N*(N-1)//2
     else:

@@ -29,7 +29,7 @@ def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
     # G = Gid
     # PD = ray.get(PDid)
     curlist = list(set(Gid.neighbors(LNit)).union(set([LNit])))
-    interestValue = -float('nan')
+    interestValue = 0.0
     H = Gid.subgraph(curlist)
     if len(curlist)>1:
         ic = 0.0
@@ -58,7 +58,7 @@ def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
 def computeInterestParallelD(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
     # G = Gid
     # PD = ray.get(PDid)
-    interestValue = None
+    interestValue = 0.0
     curlistOut = list(set(Gid.predecessors(LNit)).union(set([LNit])))
     curlistIn = list(set(Gid.successors(LNit)).union(set([LNit])))
     H = getDirectedSubgraph(Gid, curlistIn, curlistOut, isSimple)
@@ -120,7 +120,7 @@ def getSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
         ListNode = sorted(list(G.nodes()))
         Gid = ray.put(G)
         PDid = ray.put(PD)
-        nterestListids = None
+        interestListids = None
         if gtype == 'U':
             interestListids = [computeInterestParallel.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in ListNode]
         else:
@@ -133,9 +133,9 @@ def getSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
         mRange = min([nKseed, len(interestList)])
         seedNodes = [0]*mRange
         for r in range(mRange):
-            # print(r, interestList[r][0])
-            if interestList[r][0] is None:
-                print(r, interestList[r][0])
+            # print(r, interestList[r][0], interestList[r][1])
+            # if interestList[r][0] is None:
+            #     print(r, interestList[r][0])
             seedNodes[r] = interestList[r][0]
 
     else:
