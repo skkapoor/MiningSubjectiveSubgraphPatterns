@@ -68,14 +68,11 @@
 To run the code pre-requites are:
  
 
-*   Python 3.6
-
-*   [Networkx](https://networkx.github.io/)
-
-*   [Ray](https://github.com/ray-project/ray)
-
-*   Pandas
-
+	* Python 3.6
+	* [Networkx](https://networkx.github.io/)
+	* [Ray](https://github.com/ray-project/ray)
+	* Pandas
+	* Numpy
 
 <section>To run the code excute the corresponding Algorithm file in the directory 'src/Algorithms' with required configuration file name passed in the arguments. For example:
 
