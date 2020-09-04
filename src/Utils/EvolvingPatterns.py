@@ -1,9 +1,6 @@
 import pandas as pd
 from ast import literal_eval
 
-import os
-path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
-
 class Node:
     def __init__(self, pid, sid, aid, action, tid = 0):
         self.pat_id = pid
@@ -17,7 +14,7 @@ class Node:
 class EPTree:
     def __init__(self, hd):
         self.head = hd
-        self.otherh = list()
+        self.otherh = set()
         self.cur = None
         # self.pats = set(hd.pat_id)
 
@@ -69,9 +66,9 @@ def findAllEPTrees(adf):
             prosPat[n2].child.append(ND)
             prosPat[adf['final_pats'][i][0]] = ND
 
-            eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.append(eps[max(prosPat[n1].tid, prosPat[n2].tid)].head)
+            eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.add(eps[max(prosPat[n1].tid, prosPat[n2].tid)].head)
             for nd in eps[max(prosPat[n1].tid, prosPat[n2].tid)].otherh:
-                eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.append(nd)
+                eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.add(nd)
 
             # recursively change the tid of parents and all the branches of tree with max(prosPat[n1].tid, prosPat[n2].tid)
             obhnode = eps[max(prosPat[n1].tid, prosPat[n2].tid)].head
@@ -107,14 +104,12 @@ def findAllEPTrees(adf):
     print('Number of eps: {}, len of prosPat: {}'.format(len(eps), len(prosPat)))
     return eps
 
-def printUtil(node):
-    return
-
-def printEP(ep):
+def writeEP(ep, f):
     curpts = [None]*(len(ep.otherh)+1)
     curpts[0] = ep.head
+    epoh = list(ep.otherh)
     for i in range(len(ep.otherh)):
-        curpts[i+1] = ep.otherh[i]
+        curpts[i+1] = epoh[i]
     flag = True
     curst = curpts[0].state_id
     prosID = set()
@@ -122,23 +117,94 @@ def printEP(ep):
     while flag:
         npts = []
         # print(len(curpts))
-        printc = 0
+        printset = []
         for hit in curpts:
-            if hit.state_id == curst and (hit.state_id, hit.action_id) not in prosID:# :
-                printc += 1
-                print('State id: {}, Action id: {}, Pat id: {}, action: {}'.format(hit.state_id, hit.action_id, hit.pat_id, hit.action))
+            if hit.state_id == curst and (hit.state_id, hit.action_id, hit.pat_id) not in prosID:# :
+                parents = ''
+                if len(hit.parent) > 0:
+                    for p in hit.parent:
+                        parents = parents+str(p.pat_id)+', '
+                    parents = parents[:-2]
+                else:
+                    parents = 'NA'
+                printset.append((hit.state_id, hit.action_id, hit.pat_id, hit.action, parents))
                 for c in hit.child:
                     npts.append(c)
-                prosID.add((hit.state_id, hit.action_id))
+                prosID.add((hit.state_id, hit.action_id, hit.pat_id))
                 lp = False
-            elif (hit.state_id, hit.action_id) not in prosID:
+            elif (hit.state_id, hit.action_id, hit.pat_id) not in prosID:
                 npts.append(hit)
-        if printc == 0:
+        if len(printset) > 0:
+            printsetS = sorted(printset, key=lambda x:x[1])
+            for psS in printsetS:
+                f.write('State id: {}, Action id: {}, Pat id: {}, action: {}, Parent Pat ids: {}\n'.format(psS[0], psS[1], psS[2], psS[3], psS[4]))
+        else:
+            curst += 1
+            if not lp:
+                f.write('********\n')
+                lp = True
+        if len(npts) == 0:
+            flag = False
+        else:
+            curpts = npts
+    f.write('---X---X---X---X---X---X---X---X---\n\n\n')
+    return
+
+def writeEPS(eps, path):
+    f = open(path+'evolving_patterns.txt', 'a')
+    for k,v in eps.items():
+        f.write('E Pat {}: -------\n'.format(k))
+        writeEP(v, f)
+
+    f.write('---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---')
+    f.close()
+    return
+
+def findAndSaveEPs(df, path):
+    eps = findAllEPTrees(df)
+    writeEPS(eps, path)
+    return
+
+def printEP(ep):
+    curpts = [None]*(len(ep.otherh)+1)
+    curpts[0] = ep.head
+    epoh = list(ep.otherh)
+    for i in range(len(ep.otherh)):
+        curpts[i+1] = epoh[i]
+    flag = True
+    curst = curpts[0].state_id
+    prosID = set()
+    lp = False
+    while flag:
+        npts = []
+        # print(len(curpts))
+        printset = []
+        for hit in curpts:
+            if hit.state_id == curst and (hit.state_id, hit.action_id, hit.pat_id) not in prosID:# :
+                parents = ''
+                if len(hit.parent) > 0:
+                    for p in hit.parent:
+                        parents = parents+str(p.pat_id)+', '
+                    parents = parents[:-2]
+                else:
+                    parents = 'NA'
+                printset.append((hit.state_id, hit.action_id, hit.pat_id, hit.action, parents))
+                for c in hit.child:
+                    npts.append(c)
+                prosID.add((hit.state_id, hit.action_id, hit.pat_id))
+                lp = False
+            elif (hit.state_id, hit.action_id, hit.pat_id) not in prosID:
+                npts.append(hit)
+        if len(printset) > 0:
+            printsetS = sorted(printset, key=lambda x:x[1])
+            for psS in printsetS:
+                print('State id: {}, Action id: {}, Pat id: {}, action: {}, Parent Pat ids: {}'.format(psS[0], psS[1], psS[2], psS[3], psS[4]))
+        else:
             curst += 1
             if not lp:
                 print('********')
                 lp = True
-        if len(npts) == 0 or curst > 40:
+        if len(npts) == 0:
             flag = False
         else:
             curpts = npts
@@ -149,13 +215,4 @@ def readCSV(pt):
     df = pd.read_csv(pt, converters={"initial_pats": literal_eval, "final_pats": literal_eval}, sep=';')
     return df
 
-pt = 'Results/DSSG/HS/run_1597448258/actions.csv'
-df = readCSV(path+pt)
 
-eps = findAllEPTrees(df)
-
-for k,v in eps.items():
-    print('E Pat {}: ------- '.format(k))
-    printEP(v)
-
-print('---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---')

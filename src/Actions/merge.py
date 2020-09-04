@@ -239,7 +239,7 @@ class EvaluateMerge:
             pkeys = list()
             for p in prevPat:
                 pkeys.append(p.cur_order)
-            keys = list(set(PD.lprevUpdate.keys()) - set([pkeys]))
+            keys = list(set(PD.lprevUpdate.keys()) - set(pkeys))
             for pk in pkeys:
                 for k in keys:
                     self.evaluateConstraintPair( G, PD, min(k, pk), max(k, pk) )
@@ -292,7 +292,7 @@ class EvaluateMerge:
         del self.Data[bestM['Pat'].prev_order]
         out1 = PD.lprevUpdate.pop(bestM['Pat'].prev_order[0], None)
         out2 = PD.lprevUpdate.pop(bestM['Pat'].prev_order[1], None)
-        if out1 is None or out2 is None:
+        if not out1 or not out2:
             print('Something is fishy')
         else:
             la = PD.updateDistribution( bestM['Pat'].G, idx=bestM['Pat'].cur_order, val_return='save', case=2 )

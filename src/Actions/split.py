@@ -99,7 +99,10 @@ class EvaluateSplit:
         it = 0
         for comp in components:
             if comp.number_of_nodes() > self.minsize:
+                # print('Comp:{}\t #Nodes:{}'.format(it, comp.number_of_nodes()))
                 fcomponents[it] = comp
+                it += 1
+        # print(fcomponents)
         if len(fcomponents) > 1: #* If components are more than one then only we can split this pattern
             baseParams = dict()
             baseParams['Pat'] = Pattern(H)
@@ -118,7 +121,8 @@ class EvaluateSplit:
             baseParams['Pat'].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams['Pat'].NCount, compos=baseParams['compos'], isSimple=self.isSimple ) )
             baseParams['Pat'].setI( computeInterestingness( baseParams['Pat'].IC_dssg, baseParams['Pat'].DL, mode=2 ) )
             baseParams['Pat'].setPatType('split')
-
+            baseParams['Pat'].setPrevOrder(id)
+            # print(baseParams)
             #now try reducing each component
             FinalParams = baseParams
             for k in baseParams['compos'].keys():
@@ -131,6 +135,8 @@ class EvaluateSplit:
             FinalParams['Pat'].setIC_dssg( FinalParams['codeLengthC'] - FinalParams['codeLengthCprime'] )
             FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams['Pat'].NCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
             FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=2 ) )
+            FinalParams['Pat'].setPatType('split')
+            FinalParams['Pat'].setPrevOrder(id)
             # Now set these values to all component patterns
             for k,v in FinalParams['compos'].items():
                 v.setIC_dssg( FinalParams['Pat'].IC_dssg )
@@ -139,7 +145,7 @@ class EvaluateSplit:
                 v.setPrevOrder(id)
                 v.setPatType('split')
             self.Data[id] = FinalParams
-        return
+        return self.Data
 ###################################################################################################################################################################
     def getReducedComponentU(self, G, PD, FinalParams, Lid, k):
         """
@@ -168,7 +174,6 @@ class EvaluateSplit:
             doshrink = False
             bestRNode = None
             bestCLprime = None
-            bestDL = None
             bestI = FinalParams['Pat'].I
             for node in FinalParams['compos'][k].NL:
                 curCLprime = FinalParams['codeLengthCprime'] - self.computeCLgainRemoveNodeU(G, PD, list(set(FinalParams['compos'][k].NL)-set([node])), node, [Lid])
@@ -178,7 +183,6 @@ class EvaluateSplit:
                 if curI > bestI:
                     bestRNode = node
                     bestCLprime = curCLprime
-                    bestDL = curDL
                     bestI = curI
             if bestI > FinalParams['Pat'].I:
                 FinalParams['codeLengthCprime'] = bestCLprime
@@ -220,6 +224,14 @@ class EvaluateSplit:
         for i in nodes:
             pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
             pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+            if pos_I < 0.0000000001:
+                pos_I = 0.0000000001
+            elif pos_I > 1.0 - 0.0000000001:
+                pos_I = 1.0 - 0.0000000001
+            if pos_F < 0.0000000001:
+                pos_F = 0.0000000001
+            elif pos_F > 1.0 - 0.0000000001:
+                pos_F = 1.0 - 0.0000000001
             numE = G.number_of_edges(i, node)
             if self.isSimple:
                 CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -252,7 +264,7 @@ class EvaluateSplit:
         """
         change = 0.0
         change += LN(Pat.NCount) - LN(Pat.NCount - 1)
-        change += ncr(WI, W) - ncr(WI, W-1)
+        change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
         pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
         nECount = Pat.ECount
         nNW = Pat.nw
@@ -387,6 +399,8 @@ class EvaluateSplit:
             FinalParams['Pat'].setIC_dssg( FinalParams['codeLengthC'] - FinalParams['codeLengthCprime'] )
             FinalParams['Pat'].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams['Pat'].InNCount, WOS=FinalParams['Pat'].OutNCount, compos=FinalParams['compos'], excActionType=False, l=self.l, isSimple=self.isSimple ) )
             FinalParams['Pat'].setI( computeInterestingness( FinalParams['Pat'].IC_dssg, FinalParams['Pat'].DL, mode=2 ) )
+            FinalParams['Pat'].setPatType('split')
+            FinalParams['Pat'].setPrevOrder(id)
             # Now set these values to all component patterns
             #// Todo: Write Code
             for k,v in FinalParams['compos'].items():
@@ -426,7 +440,6 @@ class EvaluateSplit:
             doshrink = False
             bestRNode = None
             bestCLprime = None
-            bestDL = None
             bestI = FinalParams['Pat'].I
             bestType = None
             for node in FinalParams['compos'][k].inNL:
@@ -437,7 +450,6 @@ class EvaluateSplit:
                 if curI > bestI:
                     bestRNode = node
                     bestCLprime = curCLprime
-                    bestDL = curDL
                     bestI = curI
                     bestType = 'in'
             for node in FinalParams['compos'][k].outNL:
@@ -448,7 +460,6 @@ class EvaluateSplit:
                 if curI > bestI:
                     bestRNode = node
                     bestCLprime = curCLprime
-                    bestDL = curDL
                     bestI = curI
                     bestType = 'out'
             if bestI > FinalParams['Pat'].I:
@@ -501,6 +512,14 @@ class EvaluateSplit:
             for i in nodes:
                 pos_I = PD.getPOS(node, i, case=2, isSimple=self.isSimple)
                 pos_F = PD.getPOS(node, i, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                if pos_I < 0.0000000001:
+                    pos_I = 0.0000000001
+                elif pos_I > 1.0 - 0.0000000001:
+                    pos_I = 1.0 - 0.0000000001
+                if pos_F < 0.0000000001:
+                    pos_F = 0.0000000001
+                elif pos_F > 1.0 - 0.0000000001:
+                    pos_F = 1.0 - 0.0000000001
                 numE = G.number_of_edges(node, i)
                 if self.isSimple:
                     CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -512,6 +531,14 @@ class EvaluateSplit:
             for i in nodes:
                 pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
                 pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                if pos_I < 0.0000000001:
+                    pos_I = 0.0000000001
+                elif pos_I > 1.0 - 0.0000000001:
+                    pos_I = 1.0 - 0.0000000001
+                if pos_F < 0.0000000001:
+                    pos_F = 0.0000000001
+                elif pos_F > 1.0 - 0.0000000001:
+                    pos_F = 1.0 - 0.0000000001
                 numE = G.number_of_edges(i, node)
                 if self.isSimple:
                     CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -548,7 +575,7 @@ class EvaluateSplit:
         change = 0.0
         if tp == 1:
             change += LN(Pat.InNCount) - LN(Pat.InNCount - 1)
-            change += ncr(WI, W) - ncr(WI, W-1)
+            change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
             pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
             nECount = Pat.ECount
             nNW = Pat.nw
@@ -561,7 +588,7 @@ class EvaluateSplit:
             change += pDLEdge - nDLEdge
         else:
             change += LN(Pat.OutNCount) - LN(Pat.OutNCount - 1)
-            change += ncr(WI, W) - ncr(WI, W-1)
+            change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
             pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
             nECount = Pat.ECount
             nNW = Pat.nw
@@ -667,20 +694,20 @@ class EvaluateSplit:
         if condition == 1:
             if self.gtype == 'U':
                 DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id]['Pat'].NCount, compos=self.Data[id]['compos'], excActionType=False, l=self.l, isSimple=self.isSimple )
-                IG = computeInterestingness( self.self.Data[id]['Pat'].IC_dssg, DL, mode=2 )
+                IG = computeInterestingness( self.Data[id]['Pat'].IC_dssg, DL, mode=2 )
                 self.Data[id]['Pat'].setDL(DL)
                 self.Data[id]['Pat'].setI(IG)
-            for k,v in self.Data[id]['compos'].items():
-                v.setDL( self.Data[id]['Pat'].DL )
-                v.setI( self.Data[id]['Pat'].I )
+                for k,v in self.Data[id]['compos'].items():
+                    v.setDL( self.Data[id]['Pat'].DL )
+                    v.setI( self.Data[id]['Pat'].I )
             else:
                 DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id]['Pat'].InNCount, WOS=self.Data[id]['Pat'].OutNCount, compos=self.Data[id]['compos'], excActionType=False, l=self.l, isSimple=self.isSimple )
                 IG = computeInterestingness( self.Data[id]['Pat'].IC_dssg, DL, mode=2 )
                 self.Data[id]['Pat'].setDL(DL)
                 self.Data[id]['Pat'].setI(IG)
-            for k,v in self.Data[id]['compos'].items():
-                v.setDL( self.Data[id]['Pat'].DL )
-                v.setI( self.Data[id]['Pat'].I )
+                for k,v in self.Data[id]['compos'].items():
+                    v.setDL( self.Data[id]['Pat'].DL )
+                    v.setI( self.Data[id]['Pat'].I )
         elif condition == 2:
             if self.gtype == 'U':
                 self.processAsU(G, PD, id)
@@ -703,7 +730,7 @@ class EvaluateSplit:
             both as prior and posterior
         """
         ### removing candidate if any other action was performed on it ###
-        if prevPat.pat_type is not 'split':
+        if 'split' not in prevPat.pat_type:
             if prevPat.pat_type in ['merge']:
                 for p in prevPat.prev_order:
                     if p in self.Data:
@@ -758,7 +785,7 @@ class EvaluateSplit:
         #* Here bestSp is a dictionary as saved in self.Data
         del self.Data[bestSp['Pat'].prev_order]
         out = PD.lprevUpdate.pop(bestSp['Pat'].prev_order, None)
-        if out is None:
+        if not out:
             print('Something is fishy')
         else:
             for k,v in bestSp['compos'].items():

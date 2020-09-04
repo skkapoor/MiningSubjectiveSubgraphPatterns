@@ -27,6 +27,8 @@ from src.Actions.merge import EvaluateMerge as EM
 from src.Actions.shrink import EvaluateShrink as ESH
 from src.Actions.remove import EvaluateRemove as ER
 from src.Actions.add import EvaluateAdd as EA
+
+from src.Utils.EvolvingPatterns import findAndSaveEPs
 ###################################################################################################################################################################
 def parseStr(x):
     """
@@ -216,8 +218,8 @@ def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype='U', is
     flag = True
     Summary = dict()
     action_id = 0
+    EA_o.evaluateNew(G_cur, PD)
     while flag:
-        EA_o.evaluateNew(G_cur, PD)
         EA_params = EA_o.getBestOption(G_cur, PD)
         # for k, v in EA_params.items():
         #     print('\t best Cand Add: {} ----- {}'.format(k,v))
@@ -233,17 +235,9 @@ def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype='U', is
                 df_patterns = writePattern(df_patterns, EA_params['Pat'])
             for k, v in EA_params.items():
                 print('\t{} --- {}'.format(k, v))
+            EA_o.checkAndUpdateAllPossibilities(G_cur, PD, EA_params['Pat'])
         else:
-            if EA_params is None:
-                print('\tEA_Params is None, moving to next state')
-            else:
-                print('\tFor EA_params I was negative')
-                for k, v in EA_params.items():
-                    print('\t{} --- {}'.format(k, v))
-
-                # print('Other Seeds: ')
-                # for it in EA_o.seeds:
-                #     print(it)
+            print('\tNo action with positive I was observed, hence moving to next state...!!!')
             flag = False
     return Summary, PD, pat_ids, df_patterns
 ###################################################################################################################################################################
@@ -540,18 +534,18 @@ def RunDSSGUtil(gname, PD, state_id, pat_ids, Params, df_patterns):
             pat_ids, bestParams = setNewDetails(bestParams, state_id, pat_ids)
             Summary[action_id] = bestParams #? is this valid? Check
             action_id += 1
-            postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
-            if df_patterns is not None:
-                df_patterns = writePatternsToDF(df_patterns, bestParams)
             for k, v in bestParams.items():
                 if k is 'compos':
                     print("\tCompos:")
-                    for k1, v1 in v:
-                        print('\t\t{} --- {}'.fomat(k1, v1))
+                    for k1, v1 in v.items():
+                        print('\t\t{} --- {}'.format(k1, v1))
                 else:
                     print('\t{} --- {}'.format(k, v))
+            postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
+            if df_patterns is not None:
+                df_patterns = writePatternsToDF(df_patterns, bestParams)
         else:
-            print('\tNo action with positive I was observed, hence moving to next state...!!!')
+            print('\tNo action with positive \'I\' was observed, hence moving to next state...!!!')
             flag = False
             if bestParams is not None:
                 for k, v in bestParams.items():
@@ -604,7 +598,7 @@ def writePatternsToDF(df, Params):
     elif Params['Pat'].pat_type in ['shrink']:
         df = writePattern(df, Params['SPat'])
     elif Params['Pat'].pat_type in ['split']:
-        for k, v in Params['compos']:
+        for k, v in Params['compos'].items():
             df = writePattern(df, v)
     return df
 ###################################################################################################################################################################
@@ -715,7 +709,7 @@ def writeActions(OSummary, wpath):
             dt['CL_f'] = u['codeLengthCprime']
             df = df.append(dt, ignore_index=True)
     writeToCSV(df, 'actions', wpath)
-    return
+    return df
 ###################################################################################################################################################################
 def DSSGMain(fname):
     """
@@ -755,16 +749,24 @@ def DSSGMain(fname):
 
         df_patterns = pd.DataFrame(columns = p_cols)
 
+        st_s = time.time()
         OSummary[0], PD, pat_ids, df_patterns = processInitialState(G_cur, PD, 0, pat_ids, df_patterns=df_patterns, gtype=gtype, isSimple=True, l=Params['l'], ic_mode=Params['icmode'], imode=Params['interesttype'], minsize=Params['minsize'], seedType=Params['seedmode'], seedRuns=Params['seedruns'], q=Params['q'], incEdges=Params['incedges'])
+        ft_s = time.time()
+        print('\n\n#\*\*\*\*\*\*\*\*\*\*\*\*\*\* Time taken to process State {}: {}\*\*\*\*\*\*\*\*\*\*\*\*\*\*#'.format(0, ft_s-st_s))
         writeConstraints(PD, c_cols, 'S'+str(0)+'_constr', wpath)
         for state_id in range(1, len(allStates)):
+            st_s = time.time()
             OSummary[state_id], pat_ids, df_patterns = RunDSSGUtil(path+'Data/DSSG/'+d+'/'+allStates[state_id], PD, state_id, pat_ids, Params, df_patterns)
+            ft_s = time.time()
+            print('\n\n#\*\*\*\*\*\*\*\*\*\*\*\*\*\* Time taken to process State {}: {}\*\*\*\*\*\*\*\*\*\*\*\*\*\*#'.format(0, ft_s-st_s))
             writeConstraints(PD, c_cols, 'S'+str(state_id)+'_constr', wpath)
         ftime = time.time()
-        writeActions(OSummary, wpath)
+        df_actions = writeActions(OSummary, wpath)
         writeToCSV(df_patterns, 'patterns', wpath)
         shutil.copy(path+'Confs/'+fname, wpath+'conf.txt')
-        print('\n\nTotal Time Taken: {:.4f} seconds'.format(ftime-stime))
+        print('\n\n########## Total Time Taken for this Experiment: {:.4f} seconds'.format(ftime-stime))
+        ################ Now computing the evolving patterns ####################
+        findAndSaveEPs(df_actions, wpath)
         log.close()
     return
 ###################################################################################################################################################################

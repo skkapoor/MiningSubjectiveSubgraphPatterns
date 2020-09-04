@@ -24,7 +24,7 @@ from src.Utils.Measures import AD, IC_DSIMP, getDirectedSubgraph
 import ray
 import time
 ##################################################################################################################################################################
-@ray.remote(num_return_vals=2)
+@ray.remote(num_return_vals=3)
 def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
     # G = Gid
     # PD = ray.get(PDid)
@@ -52,9 +52,9 @@ def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
             kws = nx.Graph(H).number_of_edges()
             dl = computeDescriptionLength(dlmode=dlmode, V=Gid.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=q, kws=kws)
         interestValue = computeInterestingness(ic, dl)
-    return LNit, interestValue
+    return LNit, interestValue, curlist
 ##################################################################################################################################################################
-@ray.remote(num_return_vals=2)
+@ray.remote(num_return_vals=4)
 def computeInterestParallelD(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
     # G = Gid
     # PD = ray.get(PDid)
@@ -83,7 +83,7 @@ def computeInterestParallelD(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q)
             kws = nx.DiGraph(H).number_of_edges()
             dl = computeDescriptionLength(dlmode=dlmode, V=Gid.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=q, kws=kws)
         interestValue = computeInterestingness(ic, dl)
-    return LNit, interestValue
+    return LNit, interestValue, curlistIn, curlistOut
 ##################################################################################################################################################################
 def getSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
     """Function to get seeds to run the hill climber
@@ -141,6 +141,51 @@ def getSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
     else:
         raise Exception('no valid seed mode given')
     return seedNodes
+
+def getAllInterestBasedSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
+    """Function to get seeds to run the hill climber
+
+    Raises:
+        Exception 1: if nKseed != mNumNodes:
+            raise Exception("Number of seeds should be equal to number of nodes here.")
+        Exception: raise Exception('no valid seed mode given')
+
+    Returns:
+        list: seed node's list
+    """
+    if 'interest' in seedMode:
+        ListNode = sorted(list(G.nodes()))
+        Gid = ray.put(G)
+        PDid = ray.put(PD)
+        interestListids = None
+        interestList = dict()
+        if gtype == 'U':
+            interestListids = [computeInterestParallel.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in ListNode]
+            for ii in interestListids:
+                interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2])]
+        else:
+            interestListids = [computeInterestParallelD.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in ListNode]
+            for ii in interestListids:
+                interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2]), ray.get(ii[3])]
+            # print([ray.get(ii[0]), ray.get(ii[1])])
+    else:
+        raise Exception('no valid seed mode given')
+    return interestList
+
+def evaluateSetSeedsInterest(G, PD, seedL, q, mode, gtype, isSimple, incEdge):
+    Gid = ray.put(G)
+    PDid = ray.put(PD)
+    interestListids = None
+    interestList = {}
+    if gtype == 'U':
+        interestListids = [computeInterestParallel.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in seedL]
+        for ii in interestListids:
+            interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2])]
+    else:
+        interestListids = [computeInterestParallelD.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in seedL]
+        for ii in interestListids:
+            interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2]), ray.get(ii[3])]
+    return interestList
 ##################################################################################################################################################################
 def extendPatternUtil(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge):
     """Util function to check for the best candidate node to add
@@ -438,7 +483,7 @@ def climbOneStep(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge):
         #         best_params = cur.copy()
         #         best_node = cand
 
-        if best_params is not None and best_params['I'] > pattern.I:
+        if best_params and best_params['I'] > pattern.I:
             # print('Added', best_node)
             bestPattern = extendPatternFinal(pattern, best_node, best_params, G, PD, q, mode, gtype, isSimple, incEdge)
             nodeAddedFinal = best_node
@@ -473,7 +518,7 @@ def climbOneStep(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge):
         # return relevant information
         # print('\tAfter Operation ', operation, ndprint)
         # # print('\tExPE:{}\tI:{}\tAD:{}\tDL:{}\t{}'.format(pattern.expectedEdges, pattern.I, pattern.AD, pattern.DL, pattern.NL))
-        # print('\tExPE:{}\tI:{}\tIC:{}\tDL:{}\t{}'.format(pattern.expectedEdges, pattern.I, pattern.IC_dsimp, pattern.DL, pattern.NL))
+        # print('\tExPE:{}\tI:{}\tIC:{}\tDL:{}\t{}'.format(pattern.expectedEdges, pattern.I, pattern.IC_ssg, pattern.DL, pattern.NL))
 
         return pattern, candidates, operation
 ##################################################################################################################################################################
@@ -872,8 +917,8 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
     bestOutNode, bestOutParams = extendPatternUtilD(pattern, candidatesOut, 1, G, PD, q, mode, gtype, isSimple, incEdge)
 
     #Perform best addition
-    if (bestInParams is not None and bestInParams['I'] > pattern.I) or (bestOutParams is not None and bestOutParams['I'] > pattern.I):
-        if bestInParams is not None and (bestOutParams is None or bestInParams['I'] > bestOutParams['I']):
+    if (bestInParams and bestInParams['I'] > pattern.I) or (bestOutParams and bestOutParams['I'] > pattern.I):
+        if bestInParams and (not bestOutParams or bestInParams['I'] > bestOutParams['I']):
             bestPattern = extendPatternFinal(pattern, bestInNode, bestInParams, 'in', G, PD, q, mode, gtype, isSimple, incEdge)
             nodeAddedFinal = bestInNode
             operation = 'inaddition'

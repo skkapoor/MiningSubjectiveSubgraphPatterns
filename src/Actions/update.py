@@ -156,7 +156,7 @@ class EvaluateUpdate:
             both as prior and posterior
         """
         ### removing candidate if any other action was performed on it ###
-        if prevPat.pat_type is not 'update':
+        if 'update' not in prevPat.pat_type:
             if prevPat.pat_type in ['merge']:
                 for p in prevPat.prev_order:
                     if p in self.Data:
@@ -210,7 +210,7 @@ class EvaluateUpdate:
         """
         del self.Data[bestU['Pat'].prev_order]
         out = PD.lprevUpdate.pop(bestU['Pat'].prev_order, None)
-        if out is None:
+        if not out:
             print('Something is fishy')
         else:
             PD.updateDistribution( bestU['Pat'].G, idx=bestU['Pat'].cur_order, val_return='save', case=2 )

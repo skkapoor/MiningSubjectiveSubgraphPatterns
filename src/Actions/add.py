@@ -7,11 +7,29 @@ import sys
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
 if path not in sys.path:
 	sys.path.append(path)
+import ray
+import time
 
 from src.Utils.Measures import getCodeLength, getCodeLengthParallel, getDirectedSubgraph
 from src.Utils.Measures import computeDescriptionLength, computeInterestingness
 from src.Patterns.Pattern import Pattern
-from src.HillClimbers.HC_v4 import findBestPattern, runNKseeds, runGivenSeeds, getSeeds
+from src.HillClimbers.HC_v4 import runGivenSeeds, getSeeds, getAllInterestBasedSeeds, evaluateSetSeedsInterest
+
+@ray.remote
+def checkIntersectionU(seedDet, seedL, NL):
+    IL = set()
+    for s in seedL:
+        if len(set(seedDet[s][1]).intersection(set(NL))) > 1:
+            IL.add(s)
+    return IL
+
+@ray.remote
+def checkIntersectionD(seedDet, seedL, inNL, outNL):
+    IL = set()
+    for s in seedL:
+        if len(set(seedDet[s][1]).intersection(set(inNL))) > 0 and len(set(seedDet[s][2]).intersection(set(outNL))):
+            IL.add(s)
+    return IL
 ###################################################################################################################################################################
 class EvaluateAdd:
     """
@@ -57,7 +75,25 @@ class EvaluateAdd:
         self.seedMode = seedType
         self.seedRuns = seedRuns
         self.incEdges = incEdges
+        self.allSeedDet = None
         print('Initialized EvaluateAdd')
+
+    def getInteresectionSeeds(self, PrevPat):
+        SL = set()
+        keysL = list(self.allSeedDet.keys())
+        seedDet = ray.put(self.allSeedDet)
+        ln = int(len(keysL)/os.cpu_count())+1
+        if self.gtype=='U':
+            P_NL = ray.put(PrevPat.NL)
+            Res = [checkIntersectionU.remote(seedDet, keysL[i:min(i+ln, len(keysL))], P_NL) for i in range(0, len(keysL), ln)]
+        else:
+            P_inNL = ray.put(PrevPat.inNL)
+            P_outNL = ray.put(PrevPat.outNL)
+            Res = [checkIntersectionD.remote(seedDet, keysL[i:min(i+ln, len(keysL))], P_inNL, P_outNL) for i in range(0, len(keysL), ln)]
+        res = ray.get(Res)
+        for r in res:
+            SL = SL.union(r)
+        return SL
 ###################################################################################################################################################################
     def evaluateNew(self, G, PD):
         """
@@ -70,9 +106,57 @@ class EvaluateAdd:
         PD : PDClass
             Input background distribution
         """
-        self.seeds = getSeeds(G, PD, self.q, self.seedMode, self.seedRuns, self.icmode, self.gtype, self.isSimple, self.incEdges)
-        print('IN EA seeds: ', self.seeds)
-        self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
+        ft1 = st1 = ft2 = st2 = 0.0
+        if 'interest' in self.seedMode:
+            st1 = time.time()
+            self.allSeedDet = getAllInterestBasedSeeds(G, PD, self.q, self.seedMode, self.seedRuns, self.icmode, self.gtype, self.isSimple, self.incEdges)
+            topKseeds = list(sorted(self.allSeedDet.items(), key = lambda kv: kv[1][0], reverse=True))[:min(len(self.allSeedDet), self.seedRuns)]
+            print('topKseeds', topKseeds)
+            self.seeds = []
+            for ts in topKseeds:
+                self.seeds.append(ts[0])
+            st2 = ft1 = time.time()
+            self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
+            ft2 = time.time()
+        else:
+            self.seeds = getSeeds(G, PD, self.q, self.seedMode, self.seedRuns, self.icmode, self.gtype, self.isSimple, self.incEdges)
+            self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
+        # print('IN EA seeds: ', self.seeds)
+        # print(self.seeds)
+        # print(self.Data)
+        print('################Time in Evaluate new for finding Top-k interest based seeds: {}'.format(ft1-st1)+'\n################Time in Evaluate new for running hill climber for Top-k interest based seeds: {}'.format(ft2-st2))
+        return
+
+    def evaluateSecond(self, G, PD, PrevPat):
+        """
+        function to evaluate all independent seed runs without checking Interest value of independent seed
+
+        Parameters
+        ----------
+        G : networkx graph
+            input graph
+        PD : PDClass
+            Input background distribution
+        """
+        ft1 = st1 = ft2 = st2 = 0.0
+        if 'interest' in self.seedMode:
+            st1 = time.time()
+            inSecSeed = self.getInteresectionSeeds(PrevPat)
+            inSecSeedDet = evaluateSetSeedsInterest(G, PD, inSecSeed, self.q, self.icmode, self.gtype, self.isSimple, self.incEdges)
+            self.allSeedDet.update(inSecSeedDet)
+            nseeds = sorted(self.allSeedDet, key = lambda kv: self.allSeedDet[kv][0], reverse=True)[:min(len(self.allSeedDet), self.seedRuns)]
+            ft1 = time.time()
+            if len(set(self.seeds).intersection(set(nseeds))) < len(self.seeds):
+                self.seeds = nseeds[:]
+                st2 = time.time()
+                self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
+                ft2 = time.time()
+        else:
+            print('Comming here')
+            self.seeds = getSeeds(G, PD, self.q, self.seedMode, self.seedRuns, self.icmode, self.gtype, self.isSimple, self.incEdges)
+            self.Data = runGivenSeeds(G, PD, self.q, self.seeds, self.icmode, self.gtype, self.isSimple, self.incEdges)
+        print('################Time in Evaluate Second for finding Top-k interest based seeds: {}'.format(ft1-st1)+'\n################Time in Evaluate new for running hill climber for Top-k interest based seeds: {}'.format(ft2-st2))
+        # print('IN EA seeds: ', self.seeds)
         return
 ###################################################################################################################################################################
     def checkAndUpdateAllPossibilities(self, G, PD, PrevPat):
@@ -90,18 +174,18 @@ class EvaluateAdd:
         """
         #First if the last action is add then we are required to find a new pattern again, that is, running a hill climber for top-k seeds fresh.
         if len(self.Data) < 1:
-            self.evaluateNew(G, PD)
+            self.evaluateSecond(G, PD, PrevPat)
         else:
             #second if there is an overlap of nodes affected (to specific a node-pair) then we find a new pattern and run the hill climber for top-k seeds fresh.
             bestPattern = max(self.Data, key=lambda x: x.I)
             if self.gtype == 'U':
                 if len(set(bestPattern.NL).intersection(set(PrevPat.NL))) > 1:
-                    self.evaluateNew(G, PD)
+                    self.evaluateSecond(G, PD, PrevPat)
             else:
                 inInt = len(set(bestPattern.inNL).intersection(set(PrevPat.inNL)))
                 outInt = len(set(bestPattern.outNL).intersection(set(PrevPat.outNL)))
                 if inInt > 1 and outInt > 1:
-                    self.evaluateNew(G, PD)
+                    self.evaluateSecond(G, PD, PrevPat)
         return
 ###################################################################################################################################################################
     def getBestOption(self, G, PD):
@@ -162,7 +246,6 @@ class EvaluateAdd:
             last added action details
         """
         self.Data = []
-        self.seeds = []
         la = PD.updateDistribution( bestA['Pat'].G, idx=bestA['Pat'].cur_order, val_return='save', case=2 )
         bestA['Pat'].setLambda(la)
         return

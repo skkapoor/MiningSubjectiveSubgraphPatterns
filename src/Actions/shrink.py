@@ -214,6 +214,14 @@ class EvaluateShrink:
         for i in nodes:
             pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
             pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+            if pos_I < 0.0000000001:
+                pos_I = 0.0000000001
+            elif pos_I > 1.0 - 0.0000000001:
+                pos_I = 1.0 - 0.0000000001
+            if pos_F < 0.0000000001:
+                pos_F = 0.0000000001
+            elif pos_F > 1.0 - 0.0000000001:
+                pos_F = 1.0 - 0.0000000001
             numE = G.number_of_edges(i, node)
             if self.isSimple:
                 CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -375,6 +383,14 @@ class EvaluateShrink:
             for i in nodes:
                 pos_I = PD.getPOS(node, i, case=2, isSimple=self.isSimple)
                 pos_F = PD.getPOS(node, i, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                if pos_I < 0.0000000001:
+                    pos_I = 0.0000000001
+                elif pos_I > 1.0 - 0.0000000001:
+                    pos_I = 1.0 - 0.0000000001
+                if pos_F < 0.0000000001:
+                    pos_F = 0.0000000001
+                elif pos_F > 1.0 - 0.0000000001:
+                    pos_F = 1.0 - 0.0000000001
                 numE = G.number_of_edges(node, i)
                 if self.isSimple:
                     CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -386,6 +402,14 @@ class EvaluateShrink:
             for i in nodes:
                 pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
                 pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                if pos_I < 0.0000000001:
+                    pos_I = 0.0000000001
+                elif pos_I > 1.0 - 0.0000000001:
+                    pos_I = 1.0 - 0.0000000001
+                if pos_F < 0.0000000001:
+                    pos_F = 0.0000000001
+                elif pos_F > 1.0 - 0.0000000001:
+                    pos_F = 1.0 - 0.0000000001
                 numE = G.number_of_edges(i, node)
                 if self.isSimple:
                     CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -540,7 +564,7 @@ class EvaluateShrink:
             both as prior and posterior
         """
         ### removing candidate if any other action was performed on it ###
-        if prevPat.pat_type is not 'shrink':
+        if 'shrink' in prevPat.pat_type:
             if prevPat.pat_type in ['merge']:
                 for p in prevPat.prev_order:
                     if p in self.Data:
@@ -595,7 +619,7 @@ class EvaluateShrink:
         #* Here bestSh is a dictionary as saved in self.Data
         del self.Data[bestSh['Pat'].prev_order]
         out = PD.lprevUpdate.pop(bestSh['Pat'].prev_order, None)
-        if out is None:
+        if not out:
             print('Something is fishy')
         else:
             la = PD.updateDistribution( bestSh['SPat'].G, idx=bestSh['SPat'].cur_order, val_return='save', case=2 )

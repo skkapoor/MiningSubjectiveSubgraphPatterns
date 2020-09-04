@@ -2,10 +2,14 @@
 ###################################################################################################################################################################
 ###################################################################################################################################################################
 ###################################################################################################################################################################
-import numpy as numpy
 import networkx as nx
 import math
 import ray
+import os
+path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
+import sys
+if path not in sys.path:
+    sys.path.append(path)
 ##################################################################################################################################################################
 def KL(q, p):
     """function to compute KL-divergence between two Bernoulli Distributions
@@ -641,9 +645,9 @@ def computeDescriptionLength(**kwargs):
         # Todo check this code
         assert 'C' in kwargs, "number of constraints 'C' is required"
         DL += math.log2(kwargs['C']) ## encoding constraint id
-        assert 'compos' in kwargs, "connected components ('comps') of a pattern is required"
+        assert 'compos' in kwargs, "connected components ('compos') of a pattern is required"
+        assert isinstance(kwargs['compos'], dict), "'compos' shall be a dictionary with key (int) and value (src.Patterns.Pattern)"
         if gtype == 'U':
-            assert isinstance(kwargs['compos'], dict) and isinstance(kwargs['compos'][0], nx.Graph), "'comps' shall be a dictionary with key (int) and value (networkx graph)"
             DL += LN(len(kwargs['compos'])) ### encoding number of components
             WST = 0 # to count sum of nodes in each component
             for k,v in kwargs['compos'].items():
@@ -656,7 +660,6 @@ def computeDescriptionLength(**kwargs):
             assert 'WS' in kwargs, "'WS' (initial #nodes) is required if dlmode is 7 and gtype is 'U'"
             DL += math.log2(ncr(kwargs['WS'], WST)) ## encoding nodes in each component
         else:
-            assert isinstance(kwargs['compos'], dict) and len(kwargs['compos'][0]) == 3 and isinstance(kwargs['compos'][0][0], nx.Graph) and isinstance(kwargs['compos'][0][1], list) and isinstance(kwargs['compos'][0][2], list), "'comps' shall be a dictionary with key (int) and value a 3 length tuple where first shall be networkx DiGraph, and rest shall be two list of IN and OUT Nodes"
             DL += LN(len(kwargs['compos'])) ### encoding number of components
             WST_i = 0 # to count sum of inNodes in each component
             WST_o = 0 # to count sum of outNodes in each component
@@ -1055,12 +1058,20 @@ def getCodeLengthUtil(G, PD, node, lst, **kwargs):
             if node != v:
                 pos = PD.getPOS(node, v, case=kwargs['case'], dropLidx=kwargs['dropLidx'], nlambda=kwargs['nlambda'], isSimple=kwargs['isSimple'])
                 numE = G.number_of_edges(node, v)
+                if pos < 0.0000000001:
+                    pos = 0.0000000001
+                elif pos > 1.0 - 0.0000000001:
+                    pos = 1.0 - 0.0000000001
                 codelength += math.log2(math.pow(1.0-pos, 1.0-numE)*math.pow(pos, numE))
     else:
         for v in lst:
             if node != v:
                 pos = PD.getPOS(node, v, case=kwargs['case'], dropLidx=kwargs['dropLidx'], nlambda=kwargs['nlambda'], isSimple=kwargs['isSimple'])
                 numE = G.number_of_edges(node, v)
+                if pos < 0.0000000001:
+                    pos = 0.0000000001
+                elif pos > 1.0 - 0.0000000001:
+                    pos = 1.0 - 0.0000000001
                 codelength += math.log2(math.pow(1.0-pos, numE)*pos)
     return codelength
 ###################################################################################################################################################################
