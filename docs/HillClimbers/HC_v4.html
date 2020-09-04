@@ -52,7 +52,7 @@ from src.Utils.Measures import AD, IC_DSIMP, getDirectedSubgraph
 import ray
 import time
 ##################################################################################################################################################################
-@ray.remote(num_return_vals=2)
+@ray.remote(num_return_vals=3)
 def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
     # G = Gid
     # PD = ray.get(PDid)
@@ -80,9 +80,9 @@ def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
             kws = nx.Graph(H).number_of_edges()
             dl = computeDescriptionLength(dlmode=dlmode, V=Gid.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=q, kws=kws)
         interestValue = computeInterestingness(ic, dl)
-    return LNit, interestValue
+    return LNit, interestValue, curlist
 ##################################################################################################################################################################
-@ray.remote(num_return_vals=2)
+@ray.remote(num_return_vals=4)
 def computeInterestParallelD(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
     # G = Gid
     # PD = ray.get(PDid)
@@ -111,7 +111,7 @@ def computeInterestParallelD(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q)
             kws = nx.DiGraph(H).number_of_edges()
             dl = computeDescriptionLength(dlmode=dlmode, V=Gid.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=q, kws=kws)
         interestValue = computeInterestingness(ic, dl)
-    return LNit, interestValue
+    return LNit, interestValue, curlistIn, curlistOut
 ##################################################################################################################################################################
 def getSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
     &#34;&#34;&#34;Function to get seeds to run the hill climber
@@ -169,6 +169,51 @@ def getSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
     else:
         raise Exception(&#39;no valid seed mode given&#39;)
     return seedNodes
+
+def getAllInterestBasedSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
+    &#34;&#34;&#34;Function to get seeds to run the hill climber
+
+    Raises:
+        Exception 1: if nKseed != mNumNodes:
+            raise Exception(&#34;Number of seeds should be equal to number of nodes here.&#34;)
+        Exception: raise Exception(&#39;no valid seed mode given&#39;)
+
+    Returns:
+        list: seed node&#39;s list
+    &#34;&#34;&#34;
+    if &#39;interest&#39; in seedMode:
+        ListNode = sorted(list(G.nodes()))
+        Gid = ray.put(G)
+        PDid = ray.put(PD)
+        interestListids = None
+        interestList = dict()
+        if gtype == &#39;U&#39;:
+            interestListids = [computeInterestParallel.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in ListNode]
+            for ii in interestListids:
+                interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2])]
+        else:
+            interestListids = [computeInterestParallelD.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in ListNode]
+            for ii in interestListids:
+                interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2]), ray.get(ii[3])]
+            # print([ray.get(ii[0]), ray.get(ii[1])])
+    else:
+        raise Exception(&#39;no valid seed mode given&#39;)
+    return interestList
+
+def evaluateSetSeedsInterest(G, PD, seedL, q, mode, gtype, isSimple, incEdge):
+    Gid = ray.put(G)
+    PDid = ray.put(PD)
+    interestListids = None
+    interestList = {}
+    if gtype == &#39;U&#39;:
+        interestListids = [computeInterestParallel.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in seedL]
+        for ii in interestListids:
+            interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2])]
+    else:
+        interestListids = [computeInterestParallelD.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in seedL]
+        for ii in interestListids:
+            interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2]), ray.get(ii[3])]
+    return interestList
 ##################################################################################################################################################################
 def extendPatternUtil(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge):
     &#34;&#34;&#34;Util function to check for the best candidate node to add
@@ -466,7 +511,7 @@ def climbOneStep(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge):
         #         best_params = cur.copy()
         #         best_node = cand
 
-        if best_params is not None and best_params[&#39;I&#39;] &gt; pattern.I:
+        if best_params and best_params[&#39;I&#39;] &gt; pattern.I:
             # print(&#39;Added&#39;, best_node)
             bestPattern = extendPatternFinal(pattern, best_node, best_params, G, PD, q, mode, gtype, isSimple, incEdge)
             nodeAddedFinal = best_node
@@ -501,7 +546,7 @@ def climbOneStep(pattern, candidates, G, PD, q, mode, gtype, isSimple, incEdge):
         # return relevant information
         # print(&#39;\tAfter Operation &#39;, operation, ndprint)
         # # print(&#39;\tExPE:{}\tI:{}\tAD:{}\tDL:{}\t{}&#39;.format(pattern.expectedEdges, pattern.I, pattern.AD, pattern.DL, pattern.NL))
-        # print(&#39;\tExPE:{}\tI:{}\tIC:{}\tDL:{}\t{}&#39;.format(pattern.expectedEdges, pattern.I, pattern.IC_dsimp, pattern.DL, pattern.NL))
+        # print(&#39;\tExPE:{}\tI:{}\tIC:{}\tDL:{}\t{}&#39;.format(pattern.expectedEdges, pattern.I, pattern.IC_ssg, pattern.DL, pattern.NL))
 
         return pattern, candidates, operation
 ##################################################################################################################################################################
@@ -900,8 +945,8 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
     bestOutNode, bestOutParams = extendPatternUtilD(pattern, candidatesOut, 1, G, PD, q, mode, gtype, isSimple, incEdge)
 
     #Perform best addition
-    if (bestInParams is not None and bestInParams[&#39;I&#39;] &gt; pattern.I) or (bestOutParams is not None and bestOutParams[&#39;I&#39;] &gt; pattern.I):
-        if bestInParams is not None and (bestOutParams is None or bestInParams[&#39;I&#39;] &gt; bestOutParams[&#39;I&#39;]):
+    if (bestInParams and bestInParams[&#39;I&#39;] &gt; pattern.I) or (bestOutParams and bestOutParams[&#39;I&#39;] &gt; pattern.I):
+        if bestInParams and (not bestOutParams or bestInParams[&#39;I&#39;] &gt; bestOutParams[&#39;I&#39;]):
             bestPattern = extendPatternFinal(pattern, bestInNode, bestInParams, &#39;in&#39;, G, PD, q, mode, gtype, isSimple, incEdge)
             nodeAddedFinal = bestInNode
             operation = &#39;inaddition&#39;
@@ -1179,7 +1224,7 @@ def runGivenSeeds(G, PD, q, seedNodes, mode = 1, gtype = &#39;U&#39;, isSimple=T
         #         best_params = cur.copy()
         #         best_node = cand
 
-        if best_params is not None and best_params[&#39;I&#39;] &gt; pattern.I:
+        if best_params and best_params[&#39;I&#39;] &gt; pattern.I:
             # print(&#39;Added&#39;, best_node)
             bestPattern = extendPatternFinal(pattern, best_node, best_params, G, PD, q, mode, gtype, isSimple, incEdge)
             nodeAddedFinal = best_node
@@ -1214,7 +1259,7 @@ def runGivenSeeds(G, PD, q, seedNodes, mode = 1, gtype = &#39;U&#39;, isSimple=T
         # return relevant information
         # print(&#39;\tAfter Operation &#39;, operation, ndprint)
         # # print(&#39;\tExPE:{}\tI:{}\tAD:{}\tDL:{}\t{}&#39;.format(pattern.expectedEdges, pattern.I, pattern.AD, pattern.DL, pattern.NL))
-        # print(&#39;\tExPE:{}\tI:{}\tIC:{}\tDL:{}\t{}&#39;.format(pattern.expectedEdges, pattern.I, pattern.IC_dsimp, pattern.DL, pattern.NL))
+        # print(&#39;\tExPE:{}\tI:{}\tIC:{}\tDL:{}\t{}&#39;.format(pattern.expectedEdges, pattern.I, pattern.IC_ssg, pattern.DL, pattern.NL))
 
         return pattern, candidates, operation</code></pre>
 </details>
@@ -1250,8 +1295,8 @@ def runGivenSeeds(G, PD, q, seedNodes, mode = 1, gtype = &#39;U&#39;, isSimple=T
     bestOutNode, bestOutParams = extendPatternUtilD(pattern, candidatesOut, 1, G, PD, q, mode, gtype, isSimple, incEdge)
 
     #Perform best addition
-    if (bestInParams is not None and bestInParams[&#39;I&#39;] &gt; pattern.I) or (bestOutParams is not None and bestOutParams[&#39;I&#39;] &gt; pattern.I):
-        if bestInParams is not None and (bestOutParams is None or bestInParams[&#39;I&#39;] &gt; bestOutParams[&#39;I&#39;]):
+    if (bestInParams and bestInParams[&#39;I&#39;] &gt; pattern.I) or (bestOutParams and bestOutParams[&#39;I&#39;] &gt; pattern.I):
+        if bestInParams and (not bestOutParams or bestInParams[&#39;I&#39;] &gt; bestOutParams[&#39;I&#39;]):
             bestPattern = extendPatternFinal(pattern, bestInNode, bestInParams, &#39;in&#39;, G, PD, q, mode, gtype, isSimple, incEdge)
             nodeAddedFinal = bestInNode
             operation = &#39;inaddition&#39;
@@ -1317,6 +1362,31 @@ def runGivenSeeds(G, PD, q, seedNodes, mode = 1, gtype = &#39;U&#39;, isSimple=T
     # print(&#34;outNL&#34;, bestPattern.outNL)
     # print(&#34;Operation&#34;, operation, bestInNode, bestOutNode)
     return bestPattern, candidatesIn, candidatesOut, operation</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v4.evaluateSetSeedsInterest"><code class="name flex">
+<span>def <span class="ident">evaluateSetSeedsInterest</span></span>(<span>G, PD, seedL, q, mode, gtype, isSimple, incEdge)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluateSetSeedsInterest(G, PD, seedL, q, mode, gtype, isSimple, incEdge):
+    Gid = ray.put(G)
+    PDid = ray.put(PD)
+    interestListids = None
+    interestList = {}
+    if gtype == &#39;U&#39;:
+        interestListids = [computeInterestParallel.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in seedL]
+        for ii in interestListids:
+            interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2])]
+    else:
+        interestListids = [computeInterestParallelD.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in seedL]
+        for ii in interestListids:
+            interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2]), ray.get(ii[3])]
+    return interestList</code></pre>
 </details>
 </dd>
 <dt id="src.HillClimbers.HC_v4.extendPatternFinal"><code class="name flex">
@@ -1589,6 +1659,59 @@ def runGivenSeeds(G, PD, q, seedNodes, mode = 1, gtype = &#39;U&#39;, isSimple=T
     # print(&#39;res length&#39;, len(Results))
     bestPattern = max(Results, key=lambda x: x.NCount)
     return bestPattern</code></pre>
+</details>
+</dd>
+<dt id="src.HillClimbers.HC_v4.getAllInterestBasedSeeds"><code class="name flex">
+<span>def <span class="ident">getAllInterestBasedSeeds</span></span>(<span>G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function to get seeds to run the hill climber</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>Exception 1</code></dt>
+<dd>if nKseed != mNumNodes:
+raise Exception("Number of seeds should be equal to number of nodes here.")</dd>
+<dt><code>Exception</code></dt>
+<dd>raise Exception('no valid seed mode given')</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>seed node's list</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getAllInterestBasedSeeds(G, PD, q, seedMode, nKseed, mode, gtype, isSimple, incEdge):
+    &#34;&#34;&#34;Function to get seeds to run the hill climber
+
+    Raises:
+        Exception 1: if nKseed != mNumNodes:
+            raise Exception(&#34;Number of seeds should be equal to number of nodes here.&#34;)
+        Exception: raise Exception(&#39;no valid seed mode given&#39;)
+
+    Returns:
+        list: seed node&#39;s list
+    &#34;&#34;&#34;
+    if &#39;interest&#39; in seedMode:
+        ListNode = sorted(list(G.nodes()))
+        Gid = ray.put(G)
+        PDid = ray.put(PD)
+        interestListids = None
+        interestList = dict()
+        if gtype == &#39;U&#39;:
+            interestListids = [computeInterestParallel.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in ListNode]
+            for ii in interestListids:
+                interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2])]
+        else:
+            interestListids = [computeInterestParallelD.remote(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q) for LNit in ListNode]
+            for ii in interestListids:
+                interestList[ray.get(ii[0])] = [ray.get(ii[1]), ray.get(ii[2]), ray.get(ii[3])]
+            # print([ray.get(ii[0]), ray.get(ii[1])])
+    else:
+        raise Exception(&#39;no valid seed mode given&#39;)
+    return interestList</code></pre>
 </details>
 </dd>
 <dt id="src.HillClimbers.HC_v4.getSeeds"><code class="name flex">
@@ -2296,11 +2419,13 @@ raise Exception("Number of seeds should be equal to number of nodes here.")</dd>
 <ul class="">
 <li><code><a title="src.HillClimbers.HC_v4.climbOneStep" href="#src.HillClimbers.HC_v4.climbOneStep">climbOneStep</a></code></li>
 <li><code><a title="src.HillClimbers.HC_v4.climbOneStepD" href="#src.HillClimbers.HC_v4.climbOneStepD">climbOneStepD</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v4.evaluateSetSeedsInterest" href="#src.HillClimbers.HC_v4.evaluateSetSeedsInterest">evaluateSetSeedsInterest</a></code></li>
 <li><code><a title="src.HillClimbers.HC_v4.extendPatternFinal" href="#src.HillClimbers.HC_v4.extendPatternFinal">extendPatternFinal</a></code></li>
 <li><code><a title="src.HillClimbers.HC_v4.extendPatternFinalD" href="#src.HillClimbers.HC_v4.extendPatternFinalD">extendPatternFinalD</a></code></li>
 <li><code><a title="src.HillClimbers.HC_v4.extendPatternUtil" href="#src.HillClimbers.HC_v4.extendPatternUtil">extendPatternUtil</a></code></li>
 <li><code><a title="src.HillClimbers.HC_v4.extendPatternUtilD" href="#src.HillClimbers.HC_v4.extendPatternUtilD">extendPatternUtilD</a></code></li>
 <li><code><a title="src.HillClimbers.HC_v4.findBestPattern" href="#src.HillClimbers.HC_v4.findBestPattern">findBestPattern</a></code></li>
+<li><code><a title="src.HillClimbers.HC_v4.getAllInterestBasedSeeds" href="#src.HillClimbers.HC_v4.getAllInterestBasedSeeds">getAllInterestBasedSeeds</a></code></li>
 <li><code><a title="src.HillClimbers.HC_v4.getSeeds" href="#src.HillClimbers.HC_v4.getSeeds">getSeeds</a></code></li>
 <li><code><a title="src.HillClimbers.HC_v4.runGivenSeeds" href="#src.HillClimbers.HC_v4.runGivenSeeds">runGivenSeeds</a></code></li>
 <li><code><a title="src.HillClimbers.HC_v4.runNKseeds" href="#src.HillClimbers.HC_v4.runNKseeds">runNKseeds</a></code></li>

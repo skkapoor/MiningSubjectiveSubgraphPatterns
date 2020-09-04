@@ -29,9 +29,6 @@
 <pre><code class="python">import pandas as pd
 from ast import literal_eval
 
-import os
-path = os.getcwd().split(&#39;MiningSubjectiveSubgraphPatterns&#39;)[0]+&#39;MiningSubjectiveSubgraphPatterns/&#39;
-
 class Node:
     def __init__(self, pid, sid, aid, action, tid = 0):
         self.pat_id = pid
@@ -45,7 +42,7 @@ class Node:
 class EPTree:
     def __init__(self, hd):
         self.head = hd
-        self.otherh = list()
+        self.otherh = set()
         self.cur = None
         # self.pats = set(hd.pat_id)
 
@@ -97,9 +94,9 @@ def findAllEPTrees(adf):
             prosPat[n2].child.append(ND)
             prosPat[adf[&#39;final_pats&#39;][i][0]] = ND
 
-            eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.append(eps[max(prosPat[n1].tid, prosPat[n2].tid)].head)
+            eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.add(eps[max(prosPat[n1].tid, prosPat[n2].tid)].head)
             for nd in eps[max(prosPat[n1].tid, prosPat[n2].tid)].otherh:
-                eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.append(nd)
+                eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.add(nd)
 
             # recursively change the tid of parents and all the branches of tree with max(prosPat[n1].tid, prosPat[n2].tid)
             obhnode = eps[max(prosPat[n1].tid, prosPat[n2].tid)].head
@@ -135,14 +132,12 @@ def findAllEPTrees(adf):
     print(&#39;Number of eps: {}, len of prosPat: {}&#39;.format(len(eps), len(prosPat)))
     return eps
 
-def printUtil(node):
-    return
-
-def printEP(ep):
+def writeEP(ep, f):
     curpts = [None]*(len(ep.otherh)+1)
     curpts[0] = ep.head
+    epoh = list(ep.otherh)
     for i in range(len(ep.otherh)):
-        curpts[i+1] = ep.otherh[i]
+        curpts[i+1] = epoh[i]
     flag = True
     curst = curpts[0].state_id
     prosID = set()
@@ -150,23 +145,94 @@ def printEP(ep):
     while flag:
         npts = []
         # print(len(curpts))
-        printc = 0
+        printset = []
         for hit in curpts:
-            if hit.state_id == curst and (hit.state_id, hit.action_id) not in prosID:# :
-                printc += 1
-                print(&#39;State id: {}, Action id: {}, Pat id: {}, action: {}&#39;.format(hit.state_id, hit.action_id, hit.pat_id, hit.action))
+            if hit.state_id == curst and (hit.state_id, hit.action_id, hit.pat_id) not in prosID:# :
+                parents = &#39;&#39;
+                if len(hit.parent) &gt; 0:
+                    for p in hit.parent:
+                        parents = parents+str(p.pat_id)+&#39;, &#39;
+                    parents = parents[:-2]
+                else:
+                    parents = &#39;NA&#39;
+                printset.append((hit.state_id, hit.action_id, hit.pat_id, hit.action, parents))
                 for c in hit.child:
                     npts.append(c)
-                prosID.add((hit.state_id, hit.action_id))
+                prosID.add((hit.state_id, hit.action_id, hit.pat_id))
                 lp = False
-            elif (hit.state_id, hit.action_id) not in prosID:
+            elif (hit.state_id, hit.action_id, hit.pat_id) not in prosID:
                 npts.append(hit)
-        if printc == 0:
+        if len(printset) &gt; 0:
+            printsetS = sorted(printset, key=lambda x:x[1])
+            for psS in printsetS:
+                f.write(&#39;State id: {}, Action id: {}, Pat id: {}, action: {}, Parent Pat ids: {}\n&#39;.format(psS[0], psS[1], psS[2], psS[3], psS[4]))
+        else:
+            curst += 1
+            if not lp:
+                f.write(&#39;********\n&#39;)
+                lp = True
+        if len(npts) == 0:
+            flag = False
+        else:
+            curpts = npts
+    f.write(&#39;---X---X---X---X---X---X---X---X---\n\n\n&#39;)
+    return
+
+def writeEPS(eps, path):
+    f = open(path+&#39;evolving_patterns.txt&#39;, &#39;a&#39;)
+    for k,v in eps.items():
+        f.write(&#39;E Pat {}: -------\n&#39;.format(k))
+        writeEP(v, f)
+
+    f.write(&#39;---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---&#39;)
+    f.close()
+    return
+
+def findAndSaveEPs(df, path):
+    eps = findAllEPTrees(df)
+    writeEPS(eps, path)
+    return
+
+def printEP(ep):
+    curpts = [None]*(len(ep.otherh)+1)
+    curpts[0] = ep.head
+    epoh = list(ep.otherh)
+    for i in range(len(ep.otherh)):
+        curpts[i+1] = epoh[i]
+    flag = True
+    curst = curpts[0].state_id
+    prosID = set()
+    lp = False
+    while flag:
+        npts = []
+        # print(len(curpts))
+        printset = []
+        for hit in curpts:
+            if hit.state_id == curst and (hit.state_id, hit.action_id, hit.pat_id) not in prosID:# :
+                parents = &#39;&#39;
+                if len(hit.parent) &gt; 0:
+                    for p in hit.parent:
+                        parents = parents+str(p.pat_id)+&#39;, &#39;
+                    parents = parents[:-2]
+                else:
+                    parents = &#39;NA&#39;
+                printset.append((hit.state_id, hit.action_id, hit.pat_id, hit.action, parents))
+                for c in hit.child:
+                    npts.append(c)
+                prosID.add((hit.state_id, hit.action_id, hit.pat_id))
+                lp = False
+            elif (hit.state_id, hit.action_id, hit.pat_id) not in prosID:
+                npts.append(hit)
+        if len(printset) &gt; 0:
+            printsetS = sorted(printset, key=lambda x:x[1])
+            for psS in printsetS:
+                print(&#39;State id: {}, Action id: {}, Pat id: {}, action: {}, Parent Pat ids: {}&#39;.format(psS[0], psS[1], psS[2], psS[3], psS[4]))
+        else:
             curst += 1
             if not lp:
                 print(&#39;********&#39;)
                 lp = True
-        if len(npts) == 0 or curst &gt; 40:
+        if len(npts) == 0:
             flag = False
         else:
             curpts = npts
@@ -175,18 +241,7 @@ def printEP(ep):
 
 def readCSV(pt):
     df = pd.read_csv(pt, converters={&#34;initial_pats&#34;: literal_eval, &#34;final_pats&#34;: literal_eval}, sep=&#39;;&#39;)
-    return df
-
-pt = &#39;Results/DSSG/HS/run_1597448258/actions.csv&#39;
-df = readCSV(path+pt)
-
-eps = findAllEPTrees(df)
-
-for k,v in eps.items():
-    print(&#39;E Pat {}: ------- &#39;.format(k))
-    printEP(v)
-
-print(&#39;---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---&#39;)</code></pre>
+    return df</code></pre>
 </details>
 </section>
 <section>
@@ -249,9 +304,9 @@ print(&#39;---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X-
             prosPat[n2].child.append(ND)
             prosPat[adf[&#39;final_pats&#39;][i][0]] = ND
 
-            eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.append(eps[max(prosPat[n1].tid, prosPat[n2].tid)].head)
+            eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.add(eps[max(prosPat[n1].tid, prosPat[n2].tid)].head)
             for nd in eps[max(prosPat[n1].tid, prosPat[n2].tid)].otherh:
-                eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.append(nd)
+                eps[min(prosPat[n1].tid, prosPat[n2].tid)].otherh.add(nd)
 
             # recursively change the tid of parents and all the branches of tree with max(prosPat[n1].tid, prosPat[n2].tid)
             obhnode = eps[max(prosPat[n1].tid, prosPat[n2].tid)].head
@@ -288,6 +343,21 @@ print(&#39;---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X-
     return eps</code></pre>
 </details>
 </dd>
+<dt id="src.Utils.EvolvingPatterns.findAndSaveEPs"><code class="name flex">
+<span>def <span class="ident">findAndSaveEPs</span></span>(<span>df, path)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def findAndSaveEPs(df, path):
+    eps = findAllEPTrees(df)
+    writeEPS(eps, path)
+    return</code></pre>
+</details>
+</dd>
 <dt id="src.Utils.EvolvingPatterns.printEP"><code class="name flex">
 <span>def <span class="ident">printEP</span></span>(<span>ep)</span>
 </code></dt>
@@ -300,8 +370,9 @@ print(&#39;---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X-
 <pre><code class="python">def printEP(ep):
     curpts = [None]*(len(ep.otherh)+1)
     curpts[0] = ep.head
+    epoh = list(ep.otherh)
     for i in range(len(ep.otherh)):
-        curpts[i+1] = ep.otherh[i]
+        curpts[i+1] = epoh[i]
     flag = True
     curst = curpts[0].state_id
     prosID = set()
@@ -309,40 +380,37 @@ print(&#39;---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X-
     while flag:
         npts = []
         # print(len(curpts))
-        printc = 0
+        printset = []
         for hit in curpts:
-            if hit.state_id == curst and (hit.state_id, hit.action_id) not in prosID:# :
-                printc += 1
-                print(&#39;State id: {}, Action id: {}, Pat id: {}, action: {}&#39;.format(hit.state_id, hit.action_id, hit.pat_id, hit.action))
+            if hit.state_id == curst and (hit.state_id, hit.action_id, hit.pat_id) not in prosID:# :
+                parents = &#39;&#39;
+                if len(hit.parent) &gt; 0:
+                    for p in hit.parent:
+                        parents = parents+str(p.pat_id)+&#39;, &#39;
+                    parents = parents[:-2]
+                else:
+                    parents = &#39;NA&#39;
+                printset.append((hit.state_id, hit.action_id, hit.pat_id, hit.action, parents))
                 for c in hit.child:
                     npts.append(c)
-                prosID.add((hit.state_id, hit.action_id))
+                prosID.add((hit.state_id, hit.action_id, hit.pat_id))
                 lp = False
-            elif (hit.state_id, hit.action_id) not in prosID:
+            elif (hit.state_id, hit.action_id, hit.pat_id) not in prosID:
                 npts.append(hit)
-        if printc == 0:
+        if len(printset) &gt; 0:
+            printsetS = sorted(printset, key=lambda x:x[1])
+            for psS in printsetS:
+                print(&#39;State id: {}, Action id: {}, Pat id: {}, action: {}, Parent Pat ids: {}&#39;.format(psS[0], psS[1], psS[2], psS[3], psS[4]))
+        else:
             curst += 1
             if not lp:
                 print(&#39;********&#39;)
                 lp = True
-        if len(npts) == 0 or curst &gt; 40:
+        if len(npts) == 0:
             flag = False
         else:
             curpts = npts
     print(&#39;---X---X---X---X---X---X---X---X---\n\n&#39;)
-    return</code></pre>
-</details>
-</dd>
-<dt id="src.Utils.EvolvingPatterns.printUtil"><code class="name flex">
-<span>def <span class="ident">printUtil</span></span>(<span>node)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def printUtil(node):
     return</code></pre>
 </details>
 </dd>
@@ -384,6 +452,82 @@ print(&#39;---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X-
     return eps</code></pre>
 </details>
 </dd>
+<dt id="src.Utils.EvolvingPatterns.writeEP"><code class="name flex">
+<span>def <span class="ident">writeEP</span></span>(<span>ep, f)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def writeEP(ep, f):
+    curpts = [None]*(len(ep.otherh)+1)
+    curpts[0] = ep.head
+    epoh = list(ep.otherh)
+    for i in range(len(ep.otherh)):
+        curpts[i+1] = epoh[i]
+    flag = True
+    curst = curpts[0].state_id
+    prosID = set()
+    lp = False
+    while flag:
+        npts = []
+        # print(len(curpts))
+        printset = []
+        for hit in curpts:
+            if hit.state_id == curst and (hit.state_id, hit.action_id, hit.pat_id) not in prosID:# :
+                parents = &#39;&#39;
+                if len(hit.parent) &gt; 0:
+                    for p in hit.parent:
+                        parents = parents+str(p.pat_id)+&#39;, &#39;
+                    parents = parents[:-2]
+                else:
+                    parents = &#39;NA&#39;
+                printset.append((hit.state_id, hit.action_id, hit.pat_id, hit.action, parents))
+                for c in hit.child:
+                    npts.append(c)
+                prosID.add((hit.state_id, hit.action_id, hit.pat_id))
+                lp = False
+            elif (hit.state_id, hit.action_id, hit.pat_id) not in prosID:
+                npts.append(hit)
+        if len(printset) &gt; 0:
+            printsetS = sorted(printset, key=lambda x:x[1])
+            for psS in printsetS:
+                f.write(&#39;State id: {}, Action id: {}, Pat id: {}, action: {}, Parent Pat ids: {}\n&#39;.format(psS[0], psS[1], psS[2], psS[3], psS[4]))
+        else:
+            curst += 1
+            if not lp:
+                f.write(&#39;********\n&#39;)
+                lp = True
+        if len(npts) == 0:
+            flag = False
+        else:
+            curpts = npts
+    f.write(&#39;---X---X---X---X---X---X---X---X---\n\n\n&#39;)
+    return</code></pre>
+</details>
+</dd>
+<dt id="src.Utils.EvolvingPatterns.writeEPS"><code class="name flex">
+<span>def <span class="ident">writeEPS</span></span>(<span>eps, path)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def writeEPS(eps, path):
+    f = open(path+&#39;evolving_patterns.txt&#39;, &#39;a&#39;)
+    for k,v in eps.items():
+        f.write(&#39;E Pat {}: -------\n&#39;.format(k))
+        writeEP(v, f)
+
+    f.write(&#39;---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---&#39;)
+    f.close()
+    return</code></pre>
+</details>
+</dd>
 </dl>
 </section>
 <section>
@@ -402,7 +546,7 @@ print(&#39;---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X-
 <pre><code class="python">class EPTree:
     def __init__(self, hd):
         self.head = hd
-        self.otherh = list()
+        self.otherh = set()
         self.cur = None</code></pre>
 </details>
 </dd>
@@ -445,10 +589,12 @@ print(&#39;---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X---X-
 <ul class="two-column">
 <li><code><a title="src.Utils.EvolvingPatterns.changeTid" href="#src.Utils.EvolvingPatterns.changeTid">changeTid</a></code></li>
 <li><code><a title="src.Utils.EvolvingPatterns.findAllEPTrees" href="#src.Utils.EvolvingPatterns.findAllEPTrees">findAllEPTrees</a></code></li>
+<li><code><a title="src.Utils.EvolvingPatterns.findAndSaveEPs" href="#src.Utils.EvolvingPatterns.findAndSaveEPs">findAndSaveEPs</a></code></li>
 <li><code><a title="src.Utils.EvolvingPatterns.printEP" href="#src.Utils.EvolvingPatterns.printEP">printEP</a></code></li>
-<li><code><a title="src.Utils.EvolvingPatterns.printUtil" href="#src.Utils.EvolvingPatterns.printUtil">printUtil</a></code></li>
 <li><code><a title="src.Utils.EvolvingPatterns.readCSV" href="#src.Utils.EvolvingPatterns.readCSV">readCSV</a></code></li>
 <li><code><a title="src.Utils.EvolvingPatterns.removeExtEP" href="#src.Utils.EvolvingPatterns.removeExtEP">removeExtEP</a></code></li>
+<li><code><a title="src.Utils.EvolvingPatterns.writeEP" href="#src.Utils.EvolvingPatterns.writeEP">writeEP</a></code></li>
+<li><code><a title="src.Utils.EvolvingPatterns.writeEPS" href="#src.Utils.EvolvingPatterns.writeEPS">writeEPS</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>

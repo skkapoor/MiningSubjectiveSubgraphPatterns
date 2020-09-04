@@ -127,7 +127,10 @@ class EvaluateSplit:
         it = 0
         for comp in components:
             if comp.number_of_nodes() &gt; self.minsize:
+                # print(&#39;Comp:{}\t #Nodes:{}&#39;.format(it, comp.number_of_nodes()))
                 fcomponents[it] = comp
+                it += 1
+        # print(fcomponents)
         if len(fcomponents) &gt; 1: #* If components are more than one then only we can split this pattern
             baseParams = dict()
             baseParams[&#39;Pat&#39;] = Pattern(H)
@@ -146,7 +149,8 @@ class EvaluateSplit:
             baseParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams[&#39;Pat&#39;].NCount, compos=baseParams[&#39;compos&#39;], isSimple=self.isSimple ) )
             baseParams[&#39;Pat&#39;].setI( computeInterestingness( baseParams[&#39;Pat&#39;].IC_dssg, baseParams[&#39;Pat&#39;].DL, mode=2 ) )
             baseParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
-
+            baseParams[&#39;Pat&#39;].setPrevOrder(id)
+            # print(baseParams)
             #now try reducing each component
             FinalParams = baseParams
             for k in baseParams[&#39;compos&#39;].keys():
@@ -159,6 +163,8 @@ class EvaluateSplit:
             FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
             FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams[&#39;Pat&#39;].NCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
             FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+            FinalParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+            FinalParams[&#39;Pat&#39;].setPrevOrder(id)
             # Now set these values to all component patterns
             for k,v in FinalParams[&#39;compos&#39;].items():
                 v.setIC_dssg( FinalParams[&#39;Pat&#39;].IC_dssg )
@@ -167,7 +173,7 @@ class EvaluateSplit:
                 v.setPrevOrder(id)
                 v.setPatType(&#39;split&#39;)
             self.Data[id] = FinalParams
-        return
+        return self.Data
 ###################################################################################################################################################################
     def getReducedComponentU(self, G, PD, FinalParams, Lid, k):
         &#34;&#34;&#34;
@@ -196,7 +202,6 @@ class EvaluateSplit:
             doshrink = False
             bestRNode = None
             bestCLprime = None
-            bestDL = None
             bestI = FinalParams[&#39;Pat&#39;].I
             for node in FinalParams[&#39;compos&#39;][k].NL:
                 curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeU(G, PD, list(set(FinalParams[&#39;compos&#39;][k].NL)-set([node])), node, [Lid])
@@ -206,7 +211,6 @@ class EvaluateSplit:
                 if curI &gt; bestI:
                     bestRNode = node
                     bestCLprime = curCLprime
-                    bestDL = curDL
                     bestI = curI
             if bestI &gt; FinalParams[&#39;Pat&#39;].I:
                 FinalParams[&#39;codeLengthCprime&#39;] = bestCLprime
@@ -248,6 +252,14 @@ class EvaluateSplit:
         for i in nodes:
             pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
             pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+            if pos_I &lt; 0.0000000001:
+                pos_I = 0.0000000001
+            elif pos_I &gt; 1.0 - 0.0000000001:
+                pos_I = 1.0 - 0.0000000001
+            if pos_F &lt; 0.0000000001:
+                pos_F = 0.0000000001
+            elif pos_F &gt; 1.0 - 0.0000000001:
+                pos_F = 1.0 - 0.0000000001
             numE = G.number_of_edges(i, node)
             if self.isSimple:
                 CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -280,7 +292,7 @@ class EvaluateSplit:
         &#34;&#34;&#34;
         change = 0.0
         change += LN(Pat.NCount) - LN(Pat.NCount - 1)
-        change += ncr(WI, W) - ncr(WI, W-1)
+        change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
         pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
         nECount = Pat.ECount
         nNW = Pat.nw
@@ -415,6 +427,8 @@ class EvaluateSplit:
             FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
             FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams[&#39;Pat&#39;].InNCount, WOS=FinalParams[&#39;Pat&#39;].OutNCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
             FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+            FinalParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+            FinalParams[&#39;Pat&#39;].setPrevOrder(id)
             # Now set these values to all component patterns
             #// Todo: Write Code
             for k,v in FinalParams[&#39;compos&#39;].items():
@@ -454,7 +468,6 @@ class EvaluateSplit:
             doshrink = False
             bestRNode = None
             bestCLprime = None
-            bestDL = None
             bestI = FinalParams[&#39;Pat&#39;].I
             bestType = None
             for node in FinalParams[&#39;compos&#39;][k].inNL:
@@ -465,7 +478,6 @@ class EvaluateSplit:
                 if curI &gt; bestI:
                     bestRNode = node
                     bestCLprime = curCLprime
-                    bestDL = curDL
                     bestI = curI
                     bestType = &#39;in&#39;
             for node in FinalParams[&#39;compos&#39;][k].outNL:
@@ -476,7 +488,6 @@ class EvaluateSplit:
                 if curI &gt; bestI:
                     bestRNode = node
                     bestCLprime = curCLprime
-                    bestDL = curDL
                     bestI = curI
                     bestType = &#39;out&#39;
             if bestI &gt; FinalParams[&#39;Pat&#39;].I:
@@ -529,6 +540,14 @@ class EvaluateSplit:
             for i in nodes:
                 pos_I = PD.getPOS(node, i, case=2, isSimple=self.isSimple)
                 pos_F = PD.getPOS(node, i, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                if pos_I &lt; 0.0000000001:
+                    pos_I = 0.0000000001
+                elif pos_I &gt; 1.0 - 0.0000000001:
+                    pos_I = 1.0 - 0.0000000001
+                if pos_F &lt; 0.0000000001:
+                    pos_F = 0.0000000001
+                elif pos_F &gt; 1.0 - 0.0000000001:
+                    pos_F = 1.0 - 0.0000000001
                 numE = G.number_of_edges(node, i)
                 if self.isSimple:
                     CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -540,6 +559,14 @@ class EvaluateSplit:
             for i in nodes:
                 pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
                 pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                if pos_I &lt; 0.0000000001:
+                    pos_I = 0.0000000001
+                elif pos_I &gt; 1.0 - 0.0000000001:
+                    pos_I = 1.0 - 0.0000000001
+                if pos_F &lt; 0.0000000001:
+                    pos_F = 0.0000000001
+                elif pos_F &gt; 1.0 - 0.0000000001:
+                    pos_F = 1.0 - 0.0000000001
                 numE = G.number_of_edges(i, node)
                 if self.isSimple:
                     CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -576,7 +603,7 @@ class EvaluateSplit:
         change = 0.0
         if tp == 1:
             change += LN(Pat.InNCount) - LN(Pat.InNCount - 1)
-            change += ncr(WI, W) - ncr(WI, W-1)
+            change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
             pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
             nECount = Pat.ECount
             nNW = Pat.nw
@@ -589,7 +616,7 @@ class EvaluateSplit:
             change += pDLEdge - nDLEdge
         else:
             change += LN(Pat.OutNCount) - LN(Pat.OutNCount - 1)
-            change += ncr(WI, W) - ncr(WI, W-1)
+            change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
             pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
             nECount = Pat.ECount
             nNW = Pat.nw
@@ -695,20 +722,20 @@ class EvaluateSplit:
         if condition == 1:
             if self.gtype == &#39;U&#39;:
                 DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id][&#39;Pat&#39;].NCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
-                IG = computeInterestingness( self.self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
+                IG = computeInterestingness( self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
                 self.Data[id][&#39;Pat&#39;].setDL(DL)
                 self.Data[id][&#39;Pat&#39;].setI(IG)
-            for k,v in self.Data[id][&#39;compos&#39;].items():
-                v.setDL( self.Data[id][&#39;Pat&#39;].DL )
-                v.setI( self.Data[id][&#39;Pat&#39;].I )
+                for k,v in self.Data[id][&#39;compos&#39;].items():
+                    v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+                    v.setI( self.Data[id][&#39;Pat&#39;].I )
             else:
                 DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id][&#39;Pat&#39;].InNCount, WOS=self.Data[id][&#39;Pat&#39;].OutNCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
                 IG = computeInterestingness( self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
                 self.Data[id][&#39;Pat&#39;].setDL(DL)
                 self.Data[id][&#39;Pat&#39;].setI(IG)
-            for k,v in self.Data[id][&#39;compos&#39;].items():
-                v.setDL( self.Data[id][&#39;Pat&#39;].DL )
-                v.setI( self.Data[id][&#39;Pat&#39;].I )
+                for k,v in self.Data[id][&#39;compos&#39;].items():
+                    v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+                    v.setI( self.Data[id][&#39;Pat&#39;].I )
         elif condition == 2:
             if self.gtype == &#39;U&#39;:
                 self.processAsU(G, PD, id)
@@ -731,7 +758,7 @@ class EvaluateSplit:
             both as prior and posterior
         &#34;&#34;&#34;
         ### removing candidate if any other action was performed on it ###
-        if prevPat.pat_type is not &#39;split&#39;:
+        if &#39;split&#39; not in prevPat.pat_type:
             if prevPat.pat_type in [&#39;merge&#39;]:
                 for p in prevPat.prev_order:
                     if p in self.Data:
@@ -786,7 +813,7 @@ class EvaluateSplit:
         #* Here bestSp is a dictionary as saved in self.Data
         del self.Data[bestSp[&#39;Pat&#39;].prev_order]
         out = PD.lprevUpdate.pop(bestSp[&#39;Pat&#39;].prev_order, None)
-        if out is None:
+        if not out:
             print(&#39;Something is fishy&#39;)
         else:
             for k,v in bestSp[&#39;compos&#39;].items():
@@ -915,7 +942,10 @@ along with pattern number as key and other parameters as value</p>
         it = 0
         for comp in components:
             if comp.number_of_nodes() &gt; self.minsize:
+                # print(&#39;Comp:{}\t #Nodes:{}&#39;.format(it, comp.number_of_nodes()))
                 fcomponents[it] = comp
+                it += 1
+        # print(fcomponents)
         if len(fcomponents) &gt; 1: #* If components are more than one then only we can split this pattern
             baseParams = dict()
             baseParams[&#39;Pat&#39;] = Pattern(H)
@@ -934,7 +964,8 @@ along with pattern number as key and other parameters as value</p>
             baseParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams[&#39;Pat&#39;].NCount, compos=baseParams[&#39;compos&#39;], isSimple=self.isSimple ) )
             baseParams[&#39;Pat&#39;].setI( computeInterestingness( baseParams[&#39;Pat&#39;].IC_dssg, baseParams[&#39;Pat&#39;].DL, mode=2 ) )
             baseParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
-
+            baseParams[&#39;Pat&#39;].setPrevOrder(id)
+            # print(baseParams)
             #now try reducing each component
             FinalParams = baseParams
             for k in baseParams[&#39;compos&#39;].keys():
@@ -947,6 +978,8 @@ along with pattern number as key and other parameters as value</p>
             FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
             FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams[&#39;Pat&#39;].NCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
             FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+            FinalParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+            FinalParams[&#39;Pat&#39;].setPrevOrder(id)
             # Now set these values to all component patterns
             for k,v in FinalParams[&#39;compos&#39;].items():
                 v.setIC_dssg( FinalParams[&#39;Pat&#39;].IC_dssg )
@@ -955,7 +988,7 @@ along with pattern number as key and other parameters as value</p>
                 v.setPrevOrder(id)
                 v.setPatType(&#39;split&#39;)
             self.Data[id] = FinalParams
-        return
+        return self.Data
 ###################################################################################################################################################################
     def getReducedComponentU(self, G, PD, FinalParams, Lid, k):
         &#34;&#34;&#34;
@@ -984,7 +1017,6 @@ along with pattern number as key and other parameters as value</p>
             doshrink = False
             bestRNode = None
             bestCLprime = None
-            bestDL = None
             bestI = FinalParams[&#39;Pat&#39;].I
             for node in FinalParams[&#39;compos&#39;][k].NL:
                 curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeU(G, PD, list(set(FinalParams[&#39;compos&#39;][k].NL)-set([node])), node, [Lid])
@@ -994,7 +1026,6 @@ along with pattern number as key and other parameters as value</p>
                 if curI &gt; bestI:
                     bestRNode = node
                     bestCLprime = curCLprime
-                    bestDL = curDL
                     bestI = curI
             if bestI &gt; FinalParams[&#39;Pat&#39;].I:
                 FinalParams[&#39;codeLengthCprime&#39;] = bestCLprime
@@ -1036,6 +1067,14 @@ along with pattern number as key and other parameters as value</p>
         for i in nodes:
             pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
             pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+            if pos_I &lt; 0.0000000001:
+                pos_I = 0.0000000001
+            elif pos_I &gt; 1.0 - 0.0000000001:
+                pos_I = 1.0 - 0.0000000001
+            if pos_F &lt; 0.0000000001:
+                pos_F = 0.0000000001
+            elif pos_F &gt; 1.0 - 0.0000000001:
+                pos_F = 1.0 - 0.0000000001
             numE = G.number_of_edges(i, node)
             if self.isSimple:
                 CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -1068,7 +1107,7 @@ along with pattern number as key and other parameters as value</p>
         &#34;&#34;&#34;
         change = 0.0
         change += LN(Pat.NCount) - LN(Pat.NCount - 1)
-        change += ncr(WI, W) - ncr(WI, W-1)
+        change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
         pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
         nECount = Pat.ECount
         nNW = Pat.nw
@@ -1203,6 +1242,8 @@ along with pattern number as key and other parameters as value</p>
             FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
             FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams[&#39;Pat&#39;].InNCount, WOS=FinalParams[&#39;Pat&#39;].OutNCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
             FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+            FinalParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+            FinalParams[&#39;Pat&#39;].setPrevOrder(id)
             # Now set these values to all component patterns
             #// Todo: Write Code
             for k,v in FinalParams[&#39;compos&#39;].items():
@@ -1242,7 +1283,6 @@ along with pattern number as key and other parameters as value</p>
             doshrink = False
             bestRNode = None
             bestCLprime = None
-            bestDL = None
             bestI = FinalParams[&#39;Pat&#39;].I
             bestType = None
             for node in FinalParams[&#39;compos&#39;][k].inNL:
@@ -1253,7 +1293,6 @@ along with pattern number as key and other parameters as value</p>
                 if curI &gt; bestI:
                     bestRNode = node
                     bestCLprime = curCLprime
-                    bestDL = curDL
                     bestI = curI
                     bestType = &#39;in&#39;
             for node in FinalParams[&#39;compos&#39;][k].outNL:
@@ -1264,7 +1303,6 @@ along with pattern number as key and other parameters as value</p>
                 if curI &gt; bestI:
                     bestRNode = node
                     bestCLprime = curCLprime
-                    bestDL = curDL
                     bestI = curI
                     bestType = &#39;out&#39;
             if bestI &gt; FinalParams[&#39;Pat&#39;].I:
@@ -1317,6 +1355,14 @@ along with pattern number as key and other parameters as value</p>
             for i in nodes:
                 pos_I = PD.getPOS(node, i, case=2, isSimple=self.isSimple)
                 pos_F = PD.getPOS(node, i, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                if pos_I &lt; 0.0000000001:
+                    pos_I = 0.0000000001
+                elif pos_I &gt; 1.0 - 0.0000000001:
+                    pos_I = 1.0 - 0.0000000001
+                if pos_F &lt; 0.0000000001:
+                    pos_F = 0.0000000001
+                elif pos_F &gt; 1.0 - 0.0000000001:
+                    pos_F = 1.0 - 0.0000000001
                 numE = G.number_of_edges(node, i)
                 if self.isSimple:
                     CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -1328,6 +1374,14 @@ along with pattern number as key and other parameters as value</p>
             for i in nodes:
                 pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
                 pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+                if pos_I &lt; 0.0000000001:
+                    pos_I = 0.0000000001
+                elif pos_I &gt; 1.0 - 0.0000000001:
+                    pos_I = 1.0 - 0.0000000001
+                if pos_F &lt; 0.0000000001:
+                    pos_F = 0.0000000001
+                elif pos_F &gt; 1.0 - 0.0000000001:
+                    pos_F = 1.0 - 0.0000000001
                 numE = G.number_of_edges(i, node)
                 if self.isSimple:
                     CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -1364,7 +1418,7 @@ along with pattern number as key and other parameters as value</p>
         change = 0.0
         if tp == 1:
             change += LN(Pat.InNCount) - LN(Pat.InNCount - 1)
-            change += ncr(WI, W) - ncr(WI, W-1)
+            change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
             pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
             nECount = Pat.ECount
             nNW = Pat.nw
@@ -1377,7 +1431,7 @@ along with pattern number as key and other parameters as value</p>
             change += pDLEdge - nDLEdge
         else:
             change += LN(Pat.OutNCount) - LN(Pat.OutNCount - 1)
-            change += ncr(WI, W) - ncr(WI, W-1)
+            change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
             pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
             nECount = Pat.ECount
             nNW = Pat.nw
@@ -1483,20 +1537,20 @@ along with pattern number as key and other parameters as value</p>
         if condition == 1:
             if self.gtype == &#39;U&#39;:
                 DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id][&#39;Pat&#39;].NCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
-                IG = computeInterestingness( self.self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
+                IG = computeInterestingness( self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
                 self.Data[id][&#39;Pat&#39;].setDL(DL)
                 self.Data[id][&#39;Pat&#39;].setI(IG)
-            for k,v in self.Data[id][&#39;compos&#39;].items():
-                v.setDL( self.Data[id][&#39;Pat&#39;].DL )
-                v.setI( self.Data[id][&#39;Pat&#39;].I )
+                for k,v in self.Data[id][&#39;compos&#39;].items():
+                    v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+                    v.setI( self.Data[id][&#39;Pat&#39;].I )
             else:
                 DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id][&#39;Pat&#39;].InNCount, WOS=self.Data[id][&#39;Pat&#39;].OutNCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
                 IG = computeInterestingness( self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
                 self.Data[id][&#39;Pat&#39;].setDL(DL)
                 self.Data[id][&#39;Pat&#39;].setI(IG)
-            for k,v in self.Data[id][&#39;compos&#39;].items():
-                v.setDL( self.Data[id][&#39;Pat&#39;].DL )
-                v.setI( self.Data[id][&#39;Pat&#39;].I )
+                for k,v in self.Data[id][&#39;compos&#39;].items():
+                    v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+                    v.setI( self.Data[id][&#39;Pat&#39;].I )
         elif condition == 2:
             if self.gtype == &#39;U&#39;:
                 self.processAsU(G, PD, id)
@@ -1519,7 +1573,7 @@ along with pattern number as key and other parameters as value</p>
             both as prior and posterior
         &#34;&#34;&#34;
         ### removing candidate if any other action was performed on it ###
-        if prevPat.pat_type is not &#39;split&#39;:
+        if &#39;split&#39; not in prevPat.pat_type:
             if prevPat.pat_type in [&#39;merge&#39;]:
                 for p in prevPat.prev_order:
                     if p in self.Data:
@@ -1574,7 +1628,7 @@ along with pattern number as key and other parameters as value</p>
         #* Here bestSp is a dictionary as saved in self.Data
         del self.Data[bestSp[&#39;Pat&#39;].prev_order]
         out = PD.lprevUpdate.pop(bestSp[&#39;Pat&#39;].prev_order, None)
-        if out is None:
+        if not out:
             print(&#39;Something is fishy&#39;)
         else:
             for k,v in bestSp[&#39;compos&#39;].items():
@@ -1619,7 +1673,7 @@ both as prior and posterior</dd>
         both as prior and posterior
     &#34;&#34;&#34;
     ### removing candidate if any other action was performed on it ###
-    if prevPat.pat_type is not &#39;split&#39;:
+    if &#39;split&#39; not in prevPat.pat_type:
         if prevPat.pat_type in [&#39;merge&#39;]:
             for p in prevPat.prev_order:
                 if p in self.Data:
@@ -1707,6 +1761,14 @@ This function is used if the input graph is directed.</p>
         for i in nodes:
             pos_I = PD.getPOS(node, i, case=2, isSimple=self.isSimple)
             pos_F = PD.getPOS(node, i, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+            if pos_I &lt; 0.0000000001:
+                pos_I = 0.0000000001
+            elif pos_I &gt; 1.0 - 0.0000000001:
+                pos_I = 1.0 - 0.0000000001
+            if pos_F &lt; 0.0000000001:
+                pos_F = 0.0000000001
+            elif pos_F &gt; 1.0 - 0.0000000001:
+                pos_F = 1.0 - 0.0000000001
             numE = G.number_of_edges(node, i)
             if self.isSimple:
                 CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -1718,6 +1780,14 @@ This function is used if the input graph is directed.</p>
         for i in nodes:
             pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
             pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+            if pos_I &lt; 0.0000000001:
+                pos_I = 0.0000000001
+            elif pos_I &gt; 1.0 - 0.0000000001:
+                pos_I = 1.0 - 0.0000000001
+            if pos_F &lt; 0.0000000001:
+                pos_F = 0.0000000001
+            elif pos_F &gt; 1.0 - 0.0000000001:
+                pos_F = 1.0 - 0.0000000001
             numE = G.number_of_edges(i, node)
             if self.isSimple:
                 CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -1784,6 +1854,14 @@ This function is used if the input graph is undirected.</p>
     for i in nodes:
         pos_I = PD.getPOS(i, node, case=2, isSimple=self.isSimple)
         pos_F = PD.getPOS(i, node, case=4, isSimple=self.isSimple, dropLidx=dropLidx)
+        if pos_I &lt; 0.0000000001:
+            pos_I = 0.0000000001
+        elif pos_I &gt; 1.0 - 0.0000000001:
+            pos_I = 1.0 - 0.0000000001
+        if pos_F &lt; 0.0000000001:
+            pos_F = 0.0000000001
+        elif pos_F &gt; 1.0 - 0.0000000001:
+            pos_F = 1.0 - 0.0000000001
         numE = G.number_of_edges(i, node)
         if self.isSimple:
             CL_I += math.log2(math.pow(1.0-pos_I, 1.0-numE)*math.pow(pos_I, numE))
@@ -2141,7 +2219,7 @@ This function is used when the input graph is directed</p>
     change = 0.0
     if tp == 1:
         change += LN(Pat.InNCount) - LN(Pat.InNCount - 1)
-        change += ncr(WI, W) - ncr(WI, W-1)
+        change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
         pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
         nECount = Pat.ECount
         nNW = Pat.nw
@@ -2154,7 +2232,7 @@ This function is used when the input graph is directed</p>
         change += pDLEdge - nDLEdge
     else:
         change += LN(Pat.OutNCount) - LN(Pat.OutNCount - 1)
-        change += ncr(WI, W) - ncr(WI, W-1)
+        change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
         pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
         nECount = Pat.ECount
         nNW = Pat.nw
@@ -2217,7 +2295,7 @@ This function is used when the input graph is undirected</p>
     &#34;&#34;&#34;
     change = 0.0
     change += LN(Pat.NCount) - LN(Pat.NCount - 1)
-    change += ncr(WI, W) - ncr(WI, W-1)
+    change += math.log2(ncr(WI, W)) - math.log2(ncr(WI, W-1))
     pDLEdge = DL_Edges(Pat.nw, Pat.ECount, self.isSimple, Pat.kws)
     nECount = Pat.ECount
     nNW = Pat.nw
@@ -2286,7 +2364,6 @@ This function is used when the input graph is undirected</p>
         doshrink = False
         bestRNode = None
         bestCLprime = None
-        bestDL = None
         bestI = FinalParams[&#39;Pat&#39;].I
         bestType = None
         for node in FinalParams[&#39;compos&#39;][k].inNL:
@@ -2297,7 +2374,6 @@ This function is used when the input graph is undirected</p>
             if curI &gt; bestI:
                 bestRNode = node
                 bestCLprime = curCLprime
-                bestDL = curDL
                 bestI = curI
                 bestType = &#39;in&#39;
         for node in FinalParams[&#39;compos&#39;][k].outNL:
@@ -2308,7 +2384,6 @@ This function is used when the input graph is undirected</p>
             if curI &gt; bestI:
                 bestRNode = node
                 bestCLprime = curCLprime
-                bestDL = curDL
                 bestI = curI
                 bestType = &#39;out&#39;
         if bestI &gt; FinalParams[&#39;Pat&#39;].I:
@@ -2384,7 +2459,6 @@ This function is used when the input graph is undirected</p>
         doshrink = False
         bestRNode = None
         bestCLprime = None
-        bestDL = None
         bestI = FinalParams[&#39;Pat&#39;].I
         for node in FinalParams[&#39;compos&#39;][k].NL:
             curCLprime = FinalParams[&#39;codeLengthCprime&#39;] - self.computeCLgainRemoveNodeU(G, PD, list(set(FinalParams[&#39;compos&#39;][k].NL)-set([node])), node, [Lid])
@@ -2394,7 +2468,6 @@ This function is used when the input graph is undirected</p>
             if curI &gt; bestI:
                 bestRNode = node
                 bestCLprime = curCLprime
-                bestDL = curDL
                 bestI = curI
         if bestI &gt; FinalParams[&#39;Pat&#39;].I:
             FinalParams[&#39;codeLengthCprime&#39;] = bestCLprime
@@ -2491,6 +2564,8 @@ This function idenfies the final components from each possible candidate split a
         FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
         FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=FinalParams[&#39;Pat&#39;].InNCount, WOS=FinalParams[&#39;Pat&#39;].OutNCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
         FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+        FinalParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+        FinalParams[&#39;Pat&#39;].setPrevOrder(id)
         # Now set these values to all component patterns
         #// Todo: Write Code
         for k,v in FinalParams[&#39;compos&#39;].items():
@@ -2543,7 +2618,10 @@ This function idenfies the final components from each possible candidate split a
     it = 0
     for comp in components:
         if comp.number_of_nodes() &gt; self.minsize:
+            # print(&#39;Comp:{}\t #Nodes:{}&#39;.format(it, comp.number_of_nodes()))
             fcomponents[it] = comp
+            it += 1
+    # print(fcomponents)
     if len(fcomponents) &gt; 1: #* If components are more than one then only we can split this pattern
         baseParams = dict()
         baseParams[&#39;Pat&#39;] = Pattern(H)
@@ -2562,7 +2640,8 @@ This function idenfies the final components from each possible candidate split a
         baseParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=baseParams[&#39;Pat&#39;].NCount, compos=baseParams[&#39;compos&#39;], isSimple=self.isSimple ) )
         baseParams[&#39;Pat&#39;].setI( computeInterestingness( baseParams[&#39;Pat&#39;].IC_dssg, baseParams[&#39;Pat&#39;].DL, mode=2 ) )
         baseParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
-
+        baseParams[&#39;Pat&#39;].setPrevOrder(id)
+        # print(baseParams)
         #now try reducing each component
         FinalParams = baseParams
         for k in baseParams[&#39;compos&#39;].keys():
@@ -2575,6 +2654,8 @@ This function idenfies the final components from each possible candidate split a
         FinalParams[&#39;Pat&#39;].setIC_dssg( FinalParams[&#39;codeLengthC&#39;] - FinalParams[&#39;codeLengthCprime&#39;] )
         FinalParams[&#39;Pat&#39;].setDL( computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=FinalParams[&#39;Pat&#39;].NCount, compos=FinalParams[&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple ) )
         FinalParams[&#39;Pat&#39;].setI( computeInterestingness( FinalParams[&#39;Pat&#39;].IC_dssg, FinalParams[&#39;Pat&#39;].DL, mode=2 ) )
+        FinalParams[&#39;Pat&#39;].setPatType(&#39;split&#39;)
+        FinalParams[&#39;Pat&#39;].setPrevOrder(id)
         # Now set these values to all component patterns
         for k,v in FinalParams[&#39;compos&#39;].items():
             v.setIC_dssg( FinalParams[&#39;Pat&#39;].IC_dssg )
@@ -2583,7 +2664,7 @@ This function idenfies the final components from each possible candidate split a
             v.setPrevOrder(id)
             v.setPatType(&#39;split&#39;)
         self.Data[id] = FinalParams
-    return</code></pre>
+    return self.Data</code></pre>
 </details>
 </dd>
 <dt id="src.Actions.split.EvaluateSplit.updateConstraintEvaluation"><code class="name flex">
@@ -2635,20 +2716,20 @@ This function idenfies the final components from each possible candidate split a
     if condition == 1:
         if self.gtype == &#39;U&#39;:
             DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WS=self.Data[id][&#39;Pat&#39;].NCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
-            IG = computeInterestingness( self.self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
+            IG = computeInterestingness( self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
             self.Data[id][&#39;Pat&#39;].setDL(DL)
             self.Data[id][&#39;Pat&#39;].setI(IG)
-        for k,v in self.Data[id][&#39;compos&#39;].items():
-            v.setDL( self.Data[id][&#39;Pat&#39;].DL )
-            v.setI( self.Data[id][&#39;Pat&#39;].I )
+            for k,v in self.Data[id][&#39;compos&#39;].items():
+                v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+                v.setI( self.Data[id][&#39;Pat&#39;].I )
         else:
             DL = computeDescriptionLength( dlmode=7, C=len(PD.lprevUpdate), gtype=self.gtype, WIS=self.Data[id][&#39;Pat&#39;].InNCount, WOS=self.Data[id][&#39;Pat&#39;].OutNCount, compos=self.Data[id][&#39;compos&#39;], excActionType=False, l=self.l, isSimple=self.isSimple )
             IG = computeInterestingness( self.Data[id][&#39;Pat&#39;].IC_dssg, DL, mode=2 )
             self.Data[id][&#39;Pat&#39;].setDL(DL)
             self.Data[id][&#39;Pat&#39;].setI(IG)
-        for k,v in self.Data[id][&#39;compos&#39;].items():
-            v.setDL( self.Data[id][&#39;Pat&#39;].DL )
-            v.setI( self.Data[id][&#39;Pat&#39;].I )
+            for k,v in self.Data[id][&#39;compos&#39;].items():
+                v.setDL( self.Data[id][&#39;Pat&#39;].DL )
+                v.setI( self.Data[id][&#39;Pat&#39;].I )
     elif condition == 2:
         if self.gtype == &#39;U&#39;:
             self.processAsU(G, PD, id)
@@ -2691,7 +2772,7 @@ This function idenfies the final components from each possible candidate split a
     #* Here bestSp is a dictionary as saved in self.Data
     del self.Data[bestSp[&#39;Pat&#39;].prev_order]
     out = PD.lprevUpdate.pop(bestSp[&#39;Pat&#39;].prev_order, None)
-    if out is None:
+    if not out:
         print(&#39;Something is fishy&#39;)
     else:
         for k,v in bestSp[&#39;compos&#39;].items():

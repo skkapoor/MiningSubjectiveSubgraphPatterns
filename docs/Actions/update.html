@@ -184,7 +184,7 @@ class EvaluateUpdate:
             both as prior and posterior
         &#34;&#34;&#34;
         ### removing candidate if any other action was performed on it ###
-        if prevPat.pat_type is not &#39;update&#39;:
+        if &#39;update&#39; not in prevPat.pat_type:
             if prevPat.pat_type in [&#39;merge&#39;]:
                 for p in prevPat.prev_order:
                     if p in self.Data:
@@ -238,7 +238,7 @@ class EvaluateUpdate:
         &#34;&#34;&#34;
         del self.Data[bestU[&#39;Pat&#39;].prev_order]
         out = PD.lprevUpdate.pop(bestU[&#39;Pat&#39;].prev_order, None)
-        if out is None:
+        if not out:
             print(&#39;Something is fishy&#39;)
         else:
             PD.updateDistribution( bestU[&#39;Pat&#39;].G, idx=bestU[&#39;Pat&#39;].cur_order, val_return=&#39;save&#39;, case=2 )
@@ -424,7 +424,7 @@ along with pattern number as key and other parameters as value</p>
             both as prior and posterior
         &#34;&#34;&#34;
         ### removing candidate if any other action was performed on it ###
-        if prevPat.pat_type is not &#39;update&#39;:
+        if &#39;update&#39; not in prevPat.pat_type:
             if prevPat.pat_type in [&#39;merge&#39;]:
                 for p in prevPat.prev_order:
                     if p in self.Data:
@@ -478,7 +478,7 @@ along with pattern number as key and other parameters as value</p>
         &#34;&#34;&#34;
         del self.Data[bestU[&#39;Pat&#39;].prev_order]
         out = PD.lprevUpdate.pop(bestU[&#39;Pat&#39;].prev_order, None)
-        if out is None:
+        if not out:
             print(&#39;Something is fishy&#39;)
         else:
             PD.updateDistribution( bestU[&#39;Pat&#39;].G, idx=bestU[&#39;Pat&#39;].cur_order, val_return=&#39;save&#39;, case=2 )
@@ -521,7 +521,7 @@ both as prior and posterior</dd>
         both as prior and posterior
     &#34;&#34;&#34;
     ### removing candidate if any other action was performed on it ###
-    if prevPat.pat_type is not &#39;update&#39;:
+    if &#39;update&#39; not in prevPat.pat_type:
         if prevPat.pat_type in [&#39;merge&#39;]:
             for p in prevPat.prev_order:
                 if p in self.Data:
@@ -767,7 +767,7 @@ both as prior and posterior</dd>
     &#34;&#34;&#34;
     del self.Data[bestU[&#39;Pat&#39;].prev_order]
     out = PD.lprevUpdate.pop(bestU[&#39;Pat&#39;].prev_order, None)
-    if out is None:
+    if not out:
         print(&#39;Something is fishy&#39;)
     else:
         PD.updateDistribution( bestU[&#39;Pat&#39;].G, idx=bestU[&#39;Pat&#39;].cur_order, val_return=&#39;save&#39;, case=2 )

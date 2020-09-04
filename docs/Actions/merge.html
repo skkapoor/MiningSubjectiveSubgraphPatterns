@@ -267,7 +267,7 @@ class EvaluateMerge:
             pkeys = list()
             for p in prevPat:
                 pkeys.append(p.cur_order)
-            keys = list(set(PD.lprevUpdate.keys()) - set([pkeys]))
+            keys = list(set(PD.lprevUpdate.keys()) - set(pkeys))
             for pk in pkeys:
                 for k in keys:
                     self.evaluateConstraintPair( G, PD, min(k, pk), max(k, pk) )
@@ -320,7 +320,7 @@ class EvaluateMerge:
         del self.Data[bestM[&#39;Pat&#39;].prev_order]
         out1 = PD.lprevUpdate.pop(bestM[&#39;Pat&#39;].prev_order[0], None)
         out2 = PD.lprevUpdate.pop(bestM[&#39;Pat&#39;].prev_order[1], None)
-        if out1 is None or out2 is None:
+        if not out1 or not out2:
             print(&#39;Something is fishy&#39;)
         else:
             la = PD.updateDistribution( bestM[&#39;Pat&#39;].G, idx=bestM[&#39;Pat&#39;].cur_order, val_return=&#39;save&#39;, case=2 )
@@ -605,7 +605,7 @@ along with pattern number as key and other parameters as value</p>
             pkeys = list()
             for p in prevPat:
                 pkeys.append(p.cur_order)
-            keys = list(set(PD.lprevUpdate.keys()) - set([pkeys]))
+            keys = list(set(PD.lprevUpdate.keys()) - set(pkeys))
             for pk in pkeys:
                 for k in keys:
                     self.evaluateConstraintPair( G, PD, min(k, pk), max(k, pk) )
@@ -658,7 +658,7 @@ along with pattern number as key and other parameters as value</p>
         del self.Data[bestM[&#39;Pat&#39;].prev_order]
         out1 = PD.lprevUpdate.pop(bestM[&#39;Pat&#39;].prev_order[0], None)
         out2 = PD.lprevUpdate.pop(bestM[&#39;Pat&#39;].prev_order[1], None)
-        if out1 is None or out2 is None:
+        if not out1 or not out2:
             print(&#39;Something is fishy&#39;)
         else:
             la = PD.updateDistribution( bestM[&#39;Pat&#39;].G, idx=bestM[&#39;Pat&#39;].cur_order, val_return=&#39;save&#39;, case=2 )
@@ -882,7 +882,7 @@ both as prior and posterior</dd>
         pkeys = list()
         for p in prevPat:
             pkeys.append(p.cur_order)
-        keys = list(set(PD.lprevUpdate.keys()) - set([pkeys]))
+        keys = list(set(PD.lprevUpdate.keys()) - set(pkeys))
         for pk in pkeys:
             for k in keys:
                 self.evaluateConstraintPair( G, PD, min(k, pk), max(k, pk) )
@@ -1143,7 +1143,7 @@ both as prior and posterior</dd>
     del self.Data[bestM[&#39;Pat&#39;].prev_order]
     out1 = PD.lprevUpdate.pop(bestM[&#39;Pat&#39;].prev_order[0], None)
     out2 = PD.lprevUpdate.pop(bestM[&#39;Pat&#39;].prev_order[1], None)
-    if out1 is None or out2 is None:
+    if not out1 or not out2:
         print(&#39;Something is fishy&#39;)
     else:
         la = PD.updateDistribution( bestM[&#39;Pat&#39;].G, idx=bestM[&#39;Pat&#39;].cur_order, val_return=&#39;save&#39;, case=2 )

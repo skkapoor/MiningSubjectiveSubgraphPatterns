@@ -55,6 +55,8 @@ from src.Actions.merge import EvaluateMerge as EM
 from src.Actions.shrink import EvaluateShrink as ESH
 from src.Actions.remove import EvaluateRemove as ER
 from src.Actions.add import EvaluateAdd as EA
+
+from src.Utils.EvolvingPatterns import findAndSaveEPs
 ###################################################################################################################################################################
 def parseStr(x):
     &#34;&#34;&#34;
@@ -244,8 +246,8 @@ def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype=&#39;U&
     flag = True
     Summary = dict()
     action_id = 0
+    EA_o.evaluateNew(G_cur, PD)
     while flag:
-        EA_o.evaluateNew(G_cur, PD)
         EA_params = EA_o.getBestOption(G_cur, PD)
         # for k, v in EA_params.items():
         #     print(&#39;\t best Cand Add: {} ----- {}&#39;.format(k,v))
@@ -261,17 +263,9 @@ def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype=&#39;U&
                 df_patterns = writePattern(df_patterns, EA_params[&#39;Pat&#39;])
             for k, v in EA_params.items():
                 print(&#39;\t{} --- {}&#39;.format(k, v))
+            EA_o.checkAndUpdateAllPossibilities(G_cur, PD, EA_params[&#39;Pat&#39;])
         else:
-            if EA_params is None:
-                print(&#39;\tEA_Params is None, moving to next state&#39;)
-            else:
-                print(&#39;\tFor EA_params I was negative&#39;)
-                for k, v in EA_params.items():
-                    print(&#39;\t{} --- {}&#39;.format(k, v))
-
-                # print(&#39;Other Seeds: &#39;)
-                # for it in EA_o.seeds:
-                #     print(it)
+            print(&#39;\tNo action with positive I was observed, hence moving to next state...!!!&#39;)
             flag = False
     return Summary, PD, pat_ids, df_patterns
 ###################################################################################################################################################################
@@ -568,18 +562,18 @@ def RunDSSGUtil(gname, PD, state_id, pat_ids, Params, df_patterns):
             pat_ids, bestParams = setNewDetails(bestParams, state_id, pat_ids)
             Summary[action_id] = bestParams #? is this valid? Check
             action_id += 1
-            postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
-            if df_patterns is not None:
-                df_patterns = writePatternsToDF(df_patterns, bestParams)
             for k, v in bestParams.items():
                 if k is &#39;compos&#39;:
                     print(&#34;\tCompos:&#34;)
-                    for k1, v1 in v:
-                        print(&#39;\t\t{} --- {}&#39;.fomat(k1, v1))
+                    for k1, v1 in v.items():
+                        print(&#39;\t\t{} --- {}&#39;.format(k1, v1))
                 else:
                     print(&#39;\t{} --- {}&#39;.format(k, v))
+            postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
+            if df_patterns is not None:
+                df_patterns = writePatternsToDF(df_patterns, bestParams)
         else:
-            print(&#39;\tNo action with positive I was observed, hence moving to next state...!!!&#39;)
+            print(&#39;\tNo action with positive \&#39;I\&#39; was observed, hence moving to next state...!!!&#39;)
             flag = False
             if bestParams is not None:
                 for k, v in bestParams.items():
@@ -632,7 +626,7 @@ def writePatternsToDF(df, Params):
     elif Params[&#39;Pat&#39;].pat_type in [&#39;shrink&#39;]:
         df = writePattern(df, Params[&#39;SPat&#39;])
     elif Params[&#39;Pat&#39;].pat_type in [&#39;split&#39;]:
-        for k, v in Params[&#39;compos&#39;]:
+        for k, v in Params[&#39;compos&#39;].items():
             df = writePattern(df, v)
     return df
 ###################################################################################################################################################################
@@ -743,7 +737,7 @@ def writeActions(OSummary, wpath):
             dt[&#39;CL_f&#39;] = u[&#39;codeLengthCprime&#39;]
             df = df.append(dt, ignore_index=True)
     writeToCSV(df, &#39;actions&#39;, wpath)
-    return
+    return df
 ###################################################################################################################################################################
 def DSSGMain(fname):
     &#34;&#34;&#34;
@@ -783,16 +777,24 @@ def DSSGMain(fname):
 
         df_patterns = pd.DataFrame(columns = p_cols)
 
+        st_s = time.time()
         OSummary[0], PD, pat_ids, df_patterns = processInitialState(G_cur, PD, 0, pat_ids, df_patterns=df_patterns, gtype=gtype, isSimple=True, l=Params[&#39;l&#39;], ic_mode=Params[&#39;icmode&#39;], imode=Params[&#39;interesttype&#39;], minsize=Params[&#39;minsize&#39;], seedType=Params[&#39;seedmode&#39;], seedRuns=Params[&#39;seedruns&#39;], q=Params[&#39;q&#39;], incEdges=Params[&#39;incedges&#39;])
+        ft_s = time.time()
+        print(&#39;\n\n#\*\*\*\*\*\*\*\*\*\*\*\*\*\* Time taken to process State {}: {}\*\*\*\*\*\*\*\*\*\*\*\*\*\*#&#39;.format(0, ft_s-st_s))
         writeConstraints(PD, c_cols, &#39;S&#39;+str(0)+&#39;_constr&#39;, wpath)
         for state_id in range(1, len(allStates)):
+            st_s = time.time()
             OSummary[state_id], pat_ids, df_patterns = RunDSSGUtil(path+&#39;Data/DSSG/&#39;+d+&#39;/&#39;+allStates[state_id], PD, state_id, pat_ids, Params, df_patterns)
+            ft_s = time.time()
+            print(&#39;\n\n#\*\*\*\*\*\*\*\*\*\*\*\*\*\* Time taken to process State {}: {}\*\*\*\*\*\*\*\*\*\*\*\*\*\*#&#39;.format(0, ft_s-st_s))
             writeConstraints(PD, c_cols, &#39;S&#39;+str(state_id)+&#39;_constr&#39;, wpath)
         ftime = time.time()
-        writeActions(OSummary, wpath)
+        df_actions = writeActions(OSummary, wpath)
         writeToCSV(df_patterns, &#39;patterns&#39;, wpath)
         shutil.copy(path+&#39;Confs/&#39;+fname, wpath+&#39;conf.txt&#39;)
-        print(&#39;\n\nTotal Time Taken: {:.4f} seconds&#39;.format(ftime-stime))
+        print(&#39;\n\n########## Total Time Taken for this Experiment: {:.4f} seconds&#39;.format(ftime-stime))
+        ################ Now computing the evolving patterns ####################
+        findAndSaveEPs(df_actions, wpath)
         log.close()
     return
 ###################################################################################################################################################################
@@ -866,16 +868,24 @@ if __name__==&#34;__main__&#34;:
 
         df_patterns = pd.DataFrame(columns = p_cols)
 
+        st_s = time.time()
         OSummary[0], PD, pat_ids, df_patterns = processInitialState(G_cur, PD, 0, pat_ids, df_patterns=df_patterns, gtype=gtype, isSimple=True, l=Params[&#39;l&#39;], ic_mode=Params[&#39;icmode&#39;], imode=Params[&#39;interesttype&#39;], minsize=Params[&#39;minsize&#39;], seedType=Params[&#39;seedmode&#39;], seedRuns=Params[&#39;seedruns&#39;], q=Params[&#39;q&#39;], incEdges=Params[&#39;incedges&#39;])
+        ft_s = time.time()
+        print(&#39;\n\n#\*\*\*\*\*\*\*\*\*\*\*\*\*\* Time taken to process State {}: {}\*\*\*\*\*\*\*\*\*\*\*\*\*\*#&#39;.format(0, ft_s-st_s))
         writeConstraints(PD, c_cols, &#39;S&#39;+str(0)+&#39;_constr&#39;, wpath)
         for state_id in range(1, len(allStates)):
+            st_s = time.time()
             OSummary[state_id], pat_ids, df_patterns = RunDSSGUtil(path+&#39;Data/DSSG/&#39;+d+&#39;/&#39;+allStates[state_id], PD, state_id, pat_ids, Params, df_patterns)
+            ft_s = time.time()
+            print(&#39;\n\n#\*\*\*\*\*\*\*\*\*\*\*\*\*\* Time taken to process State {}: {}\*\*\*\*\*\*\*\*\*\*\*\*\*\*#&#39;.format(0, ft_s-st_s))
             writeConstraints(PD, c_cols, &#39;S&#39;+str(state_id)+&#39;_constr&#39;, wpath)
         ftime = time.time()
-        writeActions(OSummary, wpath)
+        df_actions = writeActions(OSummary, wpath)
         writeToCSV(df_patterns, &#39;patterns&#39;, wpath)
         shutil.copy(path+&#39;Confs/&#39;+fname, wpath+&#39;conf.txt&#39;)
-        print(&#39;\n\nTotal Time Taken: {:.4f} seconds&#39;.format(ftime-stime))
+        print(&#39;\n\n########## Total Time Taken for this Experiment: {:.4f} seconds&#39;.format(ftime-stime))
+        ################ Now computing the evolving patterns ####################
+        findAndSaveEPs(df_actions, wpath)
         log.close()
     return</code></pre>
 </details>
@@ -988,18 +998,18 @@ if __name__==&#34;__main__&#34;:
             pat_ids, bestParams = setNewDetails(bestParams, state_id, pat_ids)
             Summary[action_id] = bestParams #? is this valid? Check
             action_id += 1
-            postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
-            if df_patterns is not None:
-                df_patterns = writePatternsToDF(df_patterns, bestParams)
             for k, v in bestParams.items():
                 if k is &#39;compos&#39;:
                     print(&#34;\tCompos:&#34;)
-                    for k1, v1 in v:
-                        print(&#39;\t\t{} --- {}&#39;.fomat(k1, v1))
+                    for k1, v1 in v.items():
+                        print(&#39;\t\t{} --- {}&#39;.format(k1, v1))
                 else:
                     print(&#39;\t{} --- {}&#39;.format(k, v))
+            postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
+            if df_patterns is not None:
+                df_patterns = writePatternsToDF(df_patterns, bestParams)
         else:
-            print(&#39;\tNo action with positive I was observed, hence moving to next state...!!!&#39;)
+            print(&#39;\tNo action with positive \&#39;I\&#39; was observed, hence moving to next state...!!!&#39;)
             flag = False
             if bestParams is not None:
                 for k, v in bestParams.items():
@@ -1654,8 +1664,8 @@ if __name__==&#34;__main__&#34;:
     flag = True
     Summary = dict()
     action_id = 0
+    EA_o.evaluateNew(G_cur, PD)
     while flag:
-        EA_o.evaluateNew(G_cur, PD)
         EA_params = EA_o.getBestOption(G_cur, PD)
         # for k, v in EA_params.items():
         #     print(&#39;\t best Cand Add: {} ----- {}&#39;.format(k,v))
@@ -1671,17 +1681,9 @@ if __name__==&#34;__main__&#34;:
                 df_patterns = writePattern(df_patterns, EA_params[&#39;Pat&#39;])
             for k, v in EA_params.items():
                 print(&#39;\t{} --- {}&#39;.format(k, v))
+            EA_o.checkAndUpdateAllPossibilities(G_cur, PD, EA_params[&#39;Pat&#39;])
         else:
-            if EA_params is None:
-                print(&#39;\tEA_Params is None, moving to next state&#39;)
-            else:
-                print(&#39;\tFor EA_params I was negative&#39;)
-                for k, v in EA_params.items():
-                    print(&#39;\t{} --- {}&#39;.format(k, v))
-
-                # print(&#39;Other Seeds: &#39;)
-                # for it in EA_o.seeds:
-                #     print(it)
+            print(&#39;\tNo action with positive I was observed, hence moving to next state...!!!&#39;)
             flag = False
     return Summary, PD, pat_ids, df_patterns</code></pre>
 </details>
@@ -1854,7 +1856,7 @@ if __name__==&#34;__main__&#34;:
             dt[&#39;CL_f&#39;] = u[&#39;codeLengthCprime&#39;]
             df = df.append(dt, ignore_index=True)
     writeToCSV(df, &#39;actions&#39;, wpath)
-    return</code></pre>
+    return df</code></pre>
 </details>
 </dd>
 <dt id="src.Algorithms.DSSG.writeConstraints"><code class="name flex">
@@ -1992,7 +1994,7 @@ if __name__==&#34;__main__&#34;:
     elif Params[&#39;Pat&#39;].pat_type in [&#39;shrink&#39;]:
         df = writePattern(df, Params[&#39;SPat&#39;])
     elif Params[&#39;Pat&#39;].pat_type in [&#39;split&#39;]:
-        for k, v in Params[&#39;compos&#39;]:
+        for k, v in Params[&#39;compos&#39;].items():
             df = writePattern(df, v)
     return df</code></pre>
 </details>
