@@ -40,17 +40,17 @@ def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
         if mode == 1:
             pw = computeSumOfEdgeProbablity(PDid, gtype=gtype, NL=curlist, isSimple=isSimple)
             ic = IC_SSG(3, pw=pw, W=H)
-            dl = computeDescriptionLength(dlmode=dlmode, V=Gid.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=q)
+            dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=Gid.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=q)
         elif mode == 2:
             mu_w = computeSumOfExpectations(PDid, gtype=gtype, NL=curlist, isSimple=isSimple)
             ic = AD(H.number_of_edges(), mu_w)
             kws = nx.Graph(H).number_of_edges()
-            dl = computeDescriptionLength(dlmode=dlmode, V=Gid.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=q, kws=kws)
+            dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=Gid.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=q, kws=kws)
         elif mode == 3:
             mu_w, p0 = computePWparameters(PDid, gtype=gtype, NL=curlist, isSimple=isSimple)
             ic = IC_DSIMP(H.number_of_edges(), NW(len(curlist)), mu_w, p0)
             kws = nx.Graph(H).number_of_edges()
-            dl = computeDescriptionLength(dlmode=dlmode, V=Gid.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=q, kws=kws)
+            dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=Gid.number_of_nodes(), W=H.number_of_nodes(), kw=H.number_of_edges(), q=q, kws=kws)
         interestValue = computeInterestingness(ic, dl)
     return LNit, interestValue, curlist
 ##################################################################################################################################################################
@@ -71,17 +71,17 @@ def computeInterestParallelD(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q)
         if mode == 1:
             pw = computeSumOfEdgeProbablity(PDid, gtype=gtype, inNL=curlistIn, outNL=curlistOut, isSimple=isSimple)
             ic = IC_SSG(3, pw=pw, W=H)
-            dl = computeDescriptionLength(dlmode=dlmode, V=Gid.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=q)
+            dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=Gid.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=q)
         elif mode == 2:
             mu_w = computeSumOfExpectations(PDid, gtype=gtype, inNL=curlistIn, outNL=curlistOut, isSimple=isSimple)
             ic = AD(H.number_of_edges(), mu_w)
             kws = nx.DiGraph(H).number_of_edges()
-            dl = computeDescriptionLength(dlmode=dlmode, V=Gid.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=q, kws=kws)
+            dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=Gid.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=q, kws=kws)
         elif mode == 3:
             mu_w, p0 = computePWparameters(PDid, gtype=gtype, inNL=curlistIn, outNL=curlistOut, isSimple=isSimple)
             ic = IC_DSIMP(H.number_of_edges(), NW_D(curlistIn, curlistOut), mu_w, p0)
             kws = nx.DiGraph(H).number_of_edges()
-            dl = computeDescriptionLength(dlmode=dlmode, V=Gid.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=q, kws=kws)
+            dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=Gid.number_of_nodes(), WI=curlistIn, WO=curlistOut, kw=H.number_of_edges(), q=q, kws=kws)
         interestValue = computeInterestingness(ic, dl)
     return LNit, interestValue, curlistIn, curlistOut
 ##################################################################################################################################################################
@@ -210,30 +210,30 @@ def extendPatternUtil(pattern, candidates, G, PD, q, mode, gtype, isSimple, incE
 
     if mode == 1:
         best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_SSG( 1, pw=pattern.sumPOS+x[1]['pw_surplus'], kw=pattern.ECount+x[1]['kw_surplus'], nw=NW(pattern.NCount+1) ),\
-            computeDescriptionLength( dlmode=dlmode, V=G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1]['kw_surplus'], q=q ) ) )
+            computeDescriptionLength( dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1]['kw_surplus'], q=q ) ) )
         params['pw_new'] = pattern.sumPOS + params['pw_surplus']
         params['kw_new'] = pattern.ECount + params['kw_surplus']
         params['nw_new'] = NW(pattern.NCount+1)
         ic = IC_SSG(1, pw=params['pw_new'], kw=params['kw_new'], nw=params['nw_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=pattern.NCount+1, kw=params['kw_new'], q=q)
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), W=pattern.NCount+1, kw=params['kw_new'], q=q)
     elif mode == 2:
         best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( AD( pattern.ECount+x[1]['kw_surplus'], pattern.expectedEdges + x[1]['mu_w_surplus'] ),\
-            computeDescriptionLength( dlmode=dlmode, V=G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1]['kw_surplus'], q=q, kws=pattern.kws+x[1]['kws_surplus'], isSimple = isSimple ) ) )
+            computeDescriptionLength( dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1]['kw_surplus'], q=q, kws=pattern.kws+x[1]['kws_surplus'], isSimple = isSimple ) ) )
         params['mu_w_new'] = pattern.expectedEdges + params['mu_w_surplus']
         params['kw_new'] = pattern.ECount + params['kw_surplus']
         params['kws_new'] = pattern.kws + params['kws_surplus']
         ic = AD(params['kw_new'], params['mu_w_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=pattern.NCount+1, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), W=pattern.NCount+1, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
     elif mode == 3:
         best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_DSIMP( pattern.ECount+x[1]['kw_surplus'], NW(pattern.NCount+1), pattern.expectedEdges + x[1]['mu_w_surplus'], min(pattern.minPOS, x[1]['p0_surplus']) ),\
-            computeDescriptionLength( dlmode=dlmode, V=G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1]['kw_surplus'], q=q, kws=pattern.kws+x[1]['kws_surplus'], isSimple = isSimple ) ) )
+            computeDescriptionLength( dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), W=pattern.NCount+1, kw=pattern.ECount+x[1]['kw_surplus'], q=q, kws=pattern.kws+x[1]['kws_surplus'], isSimple = isSimple ) ) )
         params['mu_w_new'] = pattern.expectedEdges + params['mu_w_surplus']
         params['p0_new'] = min(pattern.minPOS, params['p0_surplus'])
         params['kw_new'] = pattern.ECount + params['kw_surplus']
         params['kws_new'] = pattern.kws + params['kws_surplus']
         params['nw_new'] = NW(pattern.NCount+1)
         ic = IC_DSIMP(params['kw_new'], params['nw_new'], params['mu_w_new'], params['p0_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=pattern.NCount+1, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), W=pattern.NCount+1, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
     I = computeInterestingness(ic, dl)
 
     params['ic'] = ic
@@ -305,14 +305,14 @@ def shrinkPatternUtil(pattern, nodeToCheck, G, PD, q, mode, gtype, isSimple, inc
         params['kw_new'] = pattern.ECount - kw_deficit
         params['nw_new'] = NW(len(curNL)-1)
         ic = IC_SSG(1, pw=params['pw_new'], kw=params['kw_new'], nw=params['nw_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=len(curNL)-1, kw=params['kw_new'], q=q)
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), W=len(curNL)-1, kw=params['kw_new'], q=q)
     elif mode == 2:
         params['mu_w_deficit'] = computeSumOfExpectationsBetweenNodeAndList(PD, nodeToCheck, curNL, gtype=gtype, isSimple=isSimple)
         params['mu_w_new'] = pattern.expectedEdges - params['mu_w_deficit']
         params['kw_new'] = pattern.ECount - kw_deficit
         params['kws_new'] = pattern.kws - kws_deficit
         ic = AD(params['kw_new'], params['mu_w_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=len(curNL)-1, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), W=len(curNL)-1, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
     else:
         params['kw_new'] = pattern.ECount - kw_deficit
         params['kws_new'] = pattern.kws - kws_deficit
@@ -325,7 +325,7 @@ def shrinkPatternUtil(pattern, nodeToCheck, G, PD, q, mode, gtype, isSimple, inc
             params['p0_new'] = pattern.minPOS
             params['mu_w_new'] = pattern.expectedEdges - params['mu_w_deficit']
         ic = IC_DSIMP(params['kw_new'], params['nw_new'], params['mu_w_new'], params['p0_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), W=len(curNL)-1, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), W=len(curNL)-1, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
     I = computeInterestingness(ic, dl)
     params['ic'] = ic
     params['dl'] = dl
@@ -373,12 +373,12 @@ def updateCandidateAddition(best_node, bestPattern, candidates, G, PD, q, mode, 
     elif mode == 2:
         for u in candidates.keys():
             candidates[u]['kw_surplus'] += G.number_of_edges(best_node, u)
-            candidates[u]['kws_surplus'] += (G.number_of_edges(best_node, u)>0)
+            candidates[u]['kws_surplus'] += int(G.number_of_edges(best_node, u)>0)
             candidates[u]['mu_w_surplus'] += PD.getExpectation(best_node, u, isSimple=isSimple)
     elif mode == 3:
         for u in candidates.keys():
             candidates[u]['kw_surplus'] += G.number_of_edges(best_node, u)
-            candidates[u]['kws_surplus'] += (G.number_of_edges(best_node, u)>0)
+            candidates[u]['kws_surplus'] += int(G.number_of_edges(best_node, u)>0)
             candidates[u]['mu_w_surplus'] += PD.getExpectation(best_node, u, isSimple=isSimple)
             candidates[u]['p0_surplus'] = min(candidates[u]['p0_surplus'], PD.getPOS(best_node, u, isSimple=isSimple))
 
@@ -400,7 +400,7 @@ def updateCandidateAddition(best_node, bestPattern, candidates, G, PD, q, mode, 
             candidates[u]['mu_w_surplus'] = 0.0
             for v in bestPattern.NL:
                 candidates[u]['kw_surplus'] += G.number_of_edges(v, u)
-                candidates[u]['kws_surplus'] += (G.number_of_edges(v, u)>0)
+                candidates[u]['kws_surplus'] += int(G.number_of_edges(v, u)>0)
                 candidates[u]['mu_w_surplus'] += PD.getExpectation(v, u, isSimple=isSimple)
     elif mode == 3:
         for u in pot_add:
@@ -411,7 +411,7 @@ def updateCandidateAddition(best_node, bestPattern, candidates, G, PD, q, mode, 
             candidates[u]['p0_surplus'] = float("inf")
             for v in bestPattern.NL:
                 candidates[u]['kw_surplus'] += G.number_of_edges(v, u)
-                candidates[u]['kws_surplus'] += (G.number_of_edges(v, u)>0)
+                candidates[u]['kws_surplus'] += int(G.number_of_edges(v, u)>0)
                 candidates[u]['mu_w_surplus'] += PD.getExpectation(v, u, isSimple=isSimple)
                 candidates[u]['p0_surplus'] = min(candidates[u]['p0_surplus'], PD.getPOS(v, u, isSimple=isSimple))
 
@@ -436,12 +436,12 @@ def updateCandidateDeletion(best_node, bestPattern, candidates, G, PD, q, mode, 
     elif mode == 2:
         for u in candidates.keys():
             candidates[u]['kw_surplus'] -= G.number_of_edges(best_node, u)
-            candidates[u]['kws_surplus'] -= (G.number_of_edges(best_node, u)>0)
+            candidates[u]['kws_surplus'] -= int(G.number_of_edges(best_node, u)>0)
             candidates[u]['mu_w_surplus'] -= PD.getExpectation(best_node, u, isSimple=isSimple)
     elif mode == 3:
         for u in candidates.keys():
             candidates[u]['kw_surplus'] -= G.number_of_edges(best_node, u)
-            candidates[u]['kws_surplus'] -= (G.number_of_edges(best_node, u)>0)
+            candidates[u]['kws_surplus'] -= int(G.number_of_edges(best_node, u)>0)
             candidates[u]['mu_w_surplus'] -= PD.getExpectation(best_node, u, isSimple=isSimple)
             cur_minPOS = PD.getPOS(best_node, u, isSimple=isSimple)
             if abs(cur_minPOS - candidates[u]['p0_surplus']) < 1e-9:
@@ -549,31 +549,31 @@ def extendPatternUtilD(pattern, candidates, dir_mode, G, PD, q, mode, gtype, isS
 
     if mode == 1:
         best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_SSG( 1, pw=pattern.sumPOS+x[1]['pw_surplus'], kw=pattern.ECount+x[1]['kw_surplus'], nw=pattern.nw+x[1]['nw_surplus'] ),\
-            computeDescriptionLength( dlmode=dlmode, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1]['nw_surplus'], kw=pattern.ECount+x[1]['kw_surplus'], q=q ) ) )
+            computeDescriptionLength( dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1]['nw_surplus'], kw=pattern.ECount+x[1]['kw_surplus'], q=q ) ) )
         params['pw_new'] = pattern.sumPOS + params['pw_surplus']
         params['kw_new'] = pattern.ECount + params['kw_surplus']
         params['nw_new'] = pattern.nw + params['nw_surplus']
         ic = IC_SSG(1, pw=params['pw_new'], kw=params['kw_new'], nw=params['nw_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params['nw_new'], kw=params['kw_new'], q=q)
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params['nw_new'], kw=params['kw_new'], q=q)
     elif mode == 2:
         best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( AD( pattern.ECount+x[1]['kw_surplus'], pattern.expectedEdges + x[1]['mu_w_surplus'] ),\
-            computeDescriptionLength( dlmode=dlmode, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1]['nw_surplus'], kw=pattern.ECount+x[1]['kw_surplus'], q=q, isSimple=isSimple, kws=pattern.kws+x[1]['kws_surplus'] ) ) )
+            computeDescriptionLength( dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1]['nw_surplus'], kw=pattern.ECount+x[1]['kw_surplus'], q=q, isSimple=isSimple, kws=pattern.kws+x[1]['kws_surplus'] ) ) )
         params['mu_w_new'] = pattern.expectedEdges + params['mu_w_surplus']
         params['kw_new'] = pattern.ECount + params['kw_surplus']
         params['kws_new'] = pattern.kws + params['kws_surplus']
         params['nw_new'] = pattern.nw + params['nw_surplus']
         ic = AD(params['kw_new'], params['mu_w_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params['nw_new'], kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params['nw_new'], kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
     elif mode == 3:
         best_node, params = max(candidates.items(), key=lambda x: computeInterestingness( IC_DSIMP( pattern.ECount+x[1]['kw_surplus'], pattern.nw+x[1]['nw_surplus'], pattern.expectedEdges + x[1]['mu_w_surplus'], min(pattern.minPOS,x[1]['p0_surplus']) ),\
-            computeDescriptionLength( dlmode=dlmode, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1]['nw_surplus'], kw=pattern.ECount+x[1]['kw_surplus'], q=q, isSimple=isSimple, kws=pattern.kws+x[1]['kws_surplus'] ) ) )
+            computeDescriptionLength( dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=pattern.nw+x[1]['nw_surplus'], kw=pattern.ECount+x[1]['kw_surplus'], q=q, isSimple=isSimple, kws=pattern.kws+x[1]['kws_surplus'] ) ) )
         params['mu_w_new'] = pattern.expectedEdges + params['mu_w_surplus']
         params['p0_new'] = min(pattern.minPOS, params['p0_surplus'])
         params['kw_new'] = pattern.ECount + params['kw_surplus']
         params['kws_new'] = pattern.kws + params['kws_surplus']
         params['nw_new'] = pattern.nw + params['nw_surplus']
         ic = IC_DSIMP(params['kw_new'], params['nw_new'], params['mu_w_new'], params['p0_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params['nw_new'], kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), WI=wi_count, WO=wo_count, nw=params['nw_new'], kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
     I = computeInterestingness(ic, dl)
 
     params['ic'] = ic
@@ -584,15 +584,20 @@ def extendPatternUtilD(pattern, candidates, dir_mode, G, PD, q, mode, gtype, isS
 ##################################################################################################################################################################
 def extendPatternFinalD(pattern, nodeToAdd, params, typeOfAddition, G, PD, q, mode, gtype, isSimple, incEdge):
     H = nx.DiGraph()
-    if not  isSimple:
+    # print('Adding Node: {} when type of addition is {}\n Inside INlist: {}\n Inside OutList{}'.format(nodeToAdd, typeOfAddition, pattern.inNL, pattern.outNL))
+    if not isSimple:
         H = nx.MultiDiGraph()
     if 'in' in typeOfAddition:
         for p in pattern.outNL:
+            # print('Graph {}ly have {}->{} edges, when number of edges in G is {}'.format(G.has_edge(p, nodeToAdd), p, nodeToAdd, G.number_of_edges()))
             if G.has_edge(p, nodeToAdd):
+                # print('adding edges: ', [tuple([p, nodeToAdd])]*G.number_of_edges(p, nodeToAdd))
                 H.add_edges_from([tuple([p, nodeToAdd])]*G.number_of_edges(p, nodeToAdd))
     else:
         for p in pattern.inNL:
+            # print('Graph {}ly have {}->{} edges, when number of edges in G is {}'.format(G.has_edge(nodeToAdd, p), nodeToAdd, p, G.number_of_edges()))
             if G.has_edge(nodeToAdd, p):
+                # print('adding edges: ', [tuple([nodeToAdd, p])]*G.number_of_edges(nodeToAdd, p))
                 H.add_edges_from([tuple([nodeToAdd, p])]*G.number_of_edges(nodeToAdd, p))
     pattern.updateGraph(H)
     if mode == 1:
@@ -646,14 +651,14 @@ def shrinkPatternUtilD(pattern, nodeToCheck, dir_mode, G, PD, q, mode, gtype, is
         params['kw_new'] = pattern.ECount - kw_deficit
         params['nw_new'] = NW_D(curInNL, curOutNL)
         ic = IC_SSG(1, pw=params['pw_new'], kw=params['kw_new'], nw=params['nw_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=curInNL, WO=curOutNL, kw=params['kw_new'], q=q)
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), WI=curInNL, WO=curOutNL, kw=params['kw_new'], q=q)
     elif mode == 2:
         params['mu_w_deficit'] = computeSumOfExpectationsBetweenNodeAndList(PD, nodeToCheck, curFunc, dir_mode=dir_mode, gtype=gtype, isSimple=isSimple)
         params['mu_w_new'] = pattern.expectedEdges - params['mu_w_deficit']
         params['kw_new'] = pattern.ECount - kw_deficit
         params['kws_new'] = pattern.kws - kws_deficit
         ic = AD(params['kw_new'], params['mu_w_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=curInNL, WO=curOutNL, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), WI=curInNL, WO=curOutNL, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
     else:
         params['kw_new'] = pattern.ECount - kw_deficit
         params['kws_new'] = pattern.kws - kws_deficit
@@ -665,7 +670,7 @@ def shrinkPatternUtilD(pattern, nodeToCheck, dir_mode, G, PD, q, mode, gtype, is
             params['p0_new'] = pattern.minPOS
             params['mu_w_new'] = pattern.expectedEdges - params['mu_w_deficit']
         ic = IC_DSIMP(params['kw_new'], params['nw_new'], params['mu_w_new'], params['p0_new'])
-        dl = computeDescriptionLength(dlmode=dlmode, V=G.number_of_nodes(), WI=curInNL, WO=curOutNL, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
+        dl = computeDescriptionLength(dlmode=dlmode, gtype=gtype, V=G.number_of_nodes(), WI=curInNL, WO=curOutNL, kw=params['kw_new'], q=q, isSimple=isSimple, kws=params['kws_new'])
     I = computeInterestingness(ic, dl)
     params['ic'] = ic
     params['dl'] = dl
@@ -694,6 +699,10 @@ def shrinkPatternFinalD(pattern, nodeToRemove, params, typeOfDeletion, G, PD, q,
 def updateCandidateAdditionD(best_node, bestPattern, candidatesIn, candidatesOut, typeOfAddition, G, PD, q, mode, gtype, isSimple, incEdge):
     if 'in' in typeOfAddition:
         del candidatesIn[best_node]
+        if bestPattern.G.number_of_nodes() == 2:
+            kls = list(candidatesOut.keys())
+            for klsit in kls:
+                del candidatesOut[klsit]
         #update parameters of previously present candidateOut list as new in-node is added
         if mode == 1:
             for u in candidatesOut.keys():
@@ -705,14 +714,14 @@ def updateCandidateAdditionD(best_node, bestPattern, candidatesIn, candidatesOut
             for u in candidatesOut.keys():
                 if u != best_node:
                     candidatesOut[u]['kw_surplus'] += G.number_of_edges(u, best_node)
-                    candidatesOut[u]['kws_surplus'] += (G.number_of_edges(u, best_node)>0)
+                    candidatesOut[u]['kws_surplus'] += int(G.number_of_edges(u, best_node)>0)
                     candidatesOut[u]['mu_w_surplus'] += PD.getExpectation(u, best_node, isSimple=isSimple)
                     candidatesOut[u]['nw_surplus'] += 1
         elif mode == 3:
             for u in candidatesOut.keys():
                 if u != best_node:
                     candidatesOut[u]['kw_surplus'] += G.number_of_edges(u, best_node)
-                    candidatesOut[u]['kws_surplus'] += (G.number_of_edges(u, best_node)>0)
+                    candidatesOut[u]['kws_surplus'] += int(G.number_of_edges(u, best_node)>0)
                     candidatesOut[u]['mu_w_surplus'] += PD.getExpectation(u, best_node, isSimple=isSimple)
                     candidatesOut[u]['p0_surplus'] = min(candidatesOut[u]['p0_surplus'], PD.getPOS(u, best_node, isSimple=isSimple))
                     candidatesOut[u]['nw_surplus'] += 1
@@ -739,7 +748,7 @@ def updateCandidateAdditionD(best_node, bestPattern, candidatesIn, candidatesOut
                 for v in bestPattern.inNL:
                     if u != v:
                         candidatesOut[u]['kw_surplus'] += G.number_of_edges(u, v)
-                        candidatesOut[u]['kws_surplus'] += (G.number_of_edges(u, v)>0)
+                        candidatesOut[u]['kws_surplus'] += int(G.number_of_edges(u, v)>0)
                         candidatesOut[u]['mu_w_surplus'] += PD.getExpectation(u, v, isSimple=isSimple)
                         candidatesOut[u]['nw_surplus'] += 1
         elif mode == 3:
@@ -750,15 +759,22 @@ def updateCandidateAdditionD(best_node, bestPattern, candidatesIn, candidatesOut
                 candidatesOut[u]['nw_surplus'] = 0
                 candidatesOut[u]['mu_w_surplus'] = 0.0
                 candidatesOut[u]['p0_surplus'] = float("inf")
+                # print('Update and inNL is ', bestPattern.inNL)
                 for v in bestPattern.inNL:
+                    # print('outside', u, v)
                     if u != v:
+                        # print('Inside', u,v)
                         candidatesOut[u]['kw_surplus'] += G.number_of_edges(u, v)
-                        candidatesOut[u]['kws_surplus'] += (G.number_of_edges(u, v)>0)
+                        candidatesOut[u]['kws_surplus'] += int(G.number_of_edges(u, v)>0)
                         candidatesOut[u]['mu_w_surplus'] += PD.getExpectation(u, v, isSimple=isSimple)
                         candidatesOut[u]['p0_surplus'] = min(candidatesOut[u]['p0_surplus'], PD.getPOS(u, v, isSimple=isSimple))
                         candidatesOut[u]['nw_surplus'] += 1
     else:
         del candidatesOut[best_node]
+        if bestPattern.G.number_of_nodes() == 2:
+            kls = list(candidatesIn.keys())
+            for klsit in kls:
+                del candidatesIn[klsit]
         #update parameters of previously present candidateIn list as new out-node is added
         if mode == 1:
             for u in candidatesIn.keys():
@@ -770,14 +786,14 @@ def updateCandidateAdditionD(best_node, bestPattern, candidatesIn, candidatesOut
             for u in candidatesIn.keys():
                 if u != best_node:
                     candidatesIn[u]['kw_surplus'] += G.number_of_edges(best_node, u)
-                    candidatesIn[u]['kws_surplus'] += (G.number_of_edges(best_node, u)>0)
+                    candidatesIn[u]['kws_surplus'] += int(G.number_of_edges(best_node, u)>0)
                     candidatesIn[u]['mu_w_surplus'] += PD.getExpectation(best_node, u, isSimple=isSimple)
                     candidatesIn[u]['nw_surplus'] += 1
         elif mode == 3:
             for u in candidatesIn.keys():
                 if u != best_node:
                     candidatesIn[u]['kw_surplus'] += G.number_of_edges(best_node, u)
-                    candidatesIn[u]['kws_surplus'] += (G.number_of_edges(best_node, u)>0)
+                    candidatesIn[u]['kws_surplus'] += int(G.number_of_edges(best_node, u)>0)
                     candidatesIn[u]['mu_w_surplus'] += PD.getExpectation(best_node, u, isSimple=isSimple)
                     candidatesIn[u]['p0_surplus'] = min(candidatesIn[u]['p0_surplus'], PD.getPOS(best_node, u, isSimple=isSimple))
                     candidatesIn[u]['nw_surplus'] += 1
@@ -804,7 +820,7 @@ def updateCandidateAdditionD(best_node, bestPattern, candidatesIn, candidatesOut
                 for v in bestPattern.outNL:
                     if u != v:
                         candidatesIn[u]['kw_surplus'] += G.number_of_edges(v, u)
-                        candidatesIn[u]['kws_surplus'] += (G.number_of_edges(v, u)>0)
+                        candidatesIn[u]['kws_surplus'] += int(G.number_of_edges(v, u)>0)
                         candidatesIn[u]['mu_w_surplus'] += PD.getExpectation(v, u, isSimple=isSimple)
                         candidatesIn[u]['nw_surplus'] += 1
         elif mode == 3:
@@ -815,10 +831,13 @@ def updateCandidateAdditionD(best_node, bestPattern, candidatesIn, candidatesOut
                 candidatesIn[u]['nw_surplus'] = 0
                 candidatesIn[u]['mu_w_surplus'] = 0.0
                 candidatesIn[u]['p0_surplus'] = float("inf")
+                # print('Update and outNL is ', bestPattern.outNL)
                 for v in bestPattern.outNL:
+                    # print('outside', u, v)
                     if u != v:
+                        # print('Inside', u,v)
                         candidatesIn[u]['kw_surplus'] += G.number_of_edges(v, u)
-                        candidatesIn[u]['kws_surplus'] += (G.number_of_edges(v, u)>0)
+                        candidatesIn[u]['kws_surplus'] += int(G.number_of_edges(v, u)>0)
                         candidatesIn[u]['mu_w_surplus'] += PD.getExpectation(v, u, isSimple=isSimple)
                         candidatesIn[u]['p0_surplus'] = min(candidatesIn[u]['p0_surplus'], PD.getPOS(v, u, isSimple=isSimple))
                         candidatesIn[u]['nw_surplus'] += 1
@@ -846,14 +865,14 @@ def updateCandidateDeletionD(best_node, bestPattern, candidatesIn, candidatesOut
             for u in candidatesOut.keys():
                 if u != best_node:
                     candidatesOut[u]['kw_surplus'] -= G.number_of_edges(u, best_node)
-                    candidatesOut[u]['kws_surplus'] -= (G.number_of_edges(u, best_node)>0)
+                    candidatesOut[u]['kws_surplus'] -= int(G.number_of_edges(u, best_node)>0)
                     candidatesOut[u]['mu_w_surplus'] -= PD.getExpectation(u, best_node, isSimple=isSimple)
                     candidatesOut[u]['nw_surplus'] -= 1
         elif mode == 3:
             for u in candidatesOut.keys():
                 if u != best_node:
                     candidatesOut[u]['kw_surplus'] -= G.number_of_edges(u, best_node)
-                    candidatesOut[u]['kws_surplus'] -= (G.number_of_edges(u, best_node)>0)
+                    candidatesOut[u]['kws_surplus'] -= int(G.number_of_edges(u, best_node)>0)
                     candidatesOut[u]['mu_w_surplus'] -= PD.getExpectation(u, best_node, isSimple=isSimple)
                     candidatesOut[u]['nw_surplus'] -= 1
                     cur_minPOS = PD.getPOS(u, best_node, isSimple=isSimple)
@@ -879,14 +898,14 @@ def updateCandidateDeletionD(best_node, bestPattern, candidatesIn, candidatesOut
             for u in candidatesIn.keys():
                 if u != best_node:
                     candidatesIn[u]['kw_surplus'] -= G.number_of_edges(best_node, u)
-                    candidatesIn[u]['kws_surplus'] -= (G.number_of_edges(best_node, u)>0)
+                    candidatesIn[u]['kws_surplus'] -= int(G.number_of_edges(best_node, u)>0)
                     candidatesIn[u]['mu_w_surplus'] -= PD.getExpectation(best_node, u, isSimple=isSimple)
                     candidatesIn[u]['nw_surplus'] -= 1
         elif mode == 3:
             for u in candidatesIn.keys():
                 if u != best_node:
                     candidatesIn[u]['kw_surplus'] -= G.number_of_edges(best_node, u)
-                    candidatesIn[u]['kws_surplus'] -= (G.number_of_edges(best_node, u)>0)
+                    candidatesIn[u]['kws_surplus'] -= int(G.number_of_edges(best_node, u)>0)
                     candidatesIn[u]['mu_w_surplus'] -= PD.getExpectation(best_node, u, isSimple=isSimple)
                     candidatesIn[u]['nw_surplus'] -= 1
                     cur_minPOS = PD.getPOS(best_node, u, isSimple=isSimple)
@@ -919,15 +938,18 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
     #Perform best addition
     if (bestInParams and bestInParams['I'] > pattern.I) or (bestOutParams and bestOutParams['I'] > pattern.I):
         if bestInParams and (not bestOutParams or bestInParams['I'] > bestOutParams['I']):
-            bestPattern = extendPatternFinal(pattern, bestInNode, bestInParams, 'in', G, PD, q, mode, gtype, isSimple, incEdge)
+            bestPattern = extendPatternFinalD(pattern, bestInNode, bestInParams, 'in', G, PD, q, mode, gtype, isSimple, incEdge)
             nodeAddedFinal = bestInNode
             operation = 'inaddition'
         else:
-            bestPattern = extendPatternFinal(pattern, bestOutNode, bestOutParams, 'out', G, PD, q, mode, gtype, isSimple, incEdge)
+            bestPattern = extendPatternFinalD(pattern, bestOutNode, bestOutParams, 'out', G, PD, q, mode, gtype, isSimple, incEdge)
             nodeAddedFinal = bestOutNode
             operation = 'outaddition'
 
-
+    # print('bestInParams\n', bestInParams)
+    # print('bestOutParams\n', bestOutParams)
+    # print('\nBefore, InCandidates\n', candidatesIn)
+    # print('\nbefore, OutCandidates\n', candidatesOut)
     # If no extension, shrink pattern
     if 'none' in operation:
         bestInParams = dict()
@@ -938,7 +960,7 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
         bestOutParams['I'] = pattern.I
         bestOutNode = None
         #Check all possible in-node removal
-        if pattern.InNCount > 1:
+        if pattern.InNCount > 1 and pattern.OutNCount > 1:
             for node in pattern.inNL:
                 curIn = shrinkPatternUtilD(pattern, node, 2, G, PD, q, mode, gtype, isSimple, incEdge)
                 if bestInParams['I'] < curIn['I']:
@@ -946,7 +968,7 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
                     bestInNode = node
 
         #Check all possible out-node removal
-        if pattern.OutNCount>1:
+        if pattern.InNCount > 1 and pattern.OutNCount > 1:
             for node in pattern.outNL:
                 curOut = shrinkPatternUtilD(pattern, node, 1, G, PD, q, mode, gtype, isSimple, incEdge)
                 if bestOutParams['I'] < curOut['I']:
@@ -956,16 +978,16 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
         #Perform best removal
         if bestInParams['I'] > pattern.I or bestOutParams['I'] > pattern.I:
             if bestInParams['I'] > bestOutParams['I']:
-                bestPattern = shrinkPatternFinal(pattern, bestInNode, bestInParams, 'in', G, PD, q, mode, gtype, isSimple, incEdge)
+                bestPattern = shrinkPatternFinalD(pattern, bestInNode, bestInParams, 'in', G, PD, q, mode, gtype, isSimple, incEdge)
                 nodeRemovedFinal = bestInNode
                 operation = 'indeletion'
             else:
-                bestPattern = shrinkPatternFinal(pattern, bestOutNode, bestOutParams, 'out', G, PD, q, mode, gtype, isSimple, incEdge)
+                bestPattern = shrinkPatternFinalD(pattern, bestOutNode, bestOutParams, 'out', G, PD, q, mode, gtype, isSimple, incEdge)
                 nodeRemovedFinal = bestOutNode
                 operation = 'outdeletion'
 
     # update candidate list now
-    # print(operation, "\t", bestPattern.NL)
+    # print('\nNew step:', operation, "\n", bestPattern.inNL, '\n', bestPattern.outNL)
 
     if 'addition' in operation:
         if 'in' in operation:
@@ -983,6 +1005,8 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
     # print("inNL", bestPattern.inNL)
     # print("outNL", bestPattern.outNL)
     # print("Operation", operation, bestInNode, bestOutNode)
+    # print('\nAfter, InCandidates\n', candidatesIn)
+    # print('\nAfter, OutCandidates\n', candidatesOut)
     return bestPattern, candidatesIn, candidatesOut, operation
 ##################################################################################################################################################################
 @ray.remote
@@ -1007,13 +1031,13 @@ def searchPattern(seed, G, PD, q, mode, gtype, isSimple, incEdge):
             for u in list(G.neighbors(seed)):
                 candidates[u] = dict()
                 candidates[u]['kw_surplus'] = G.number_of_edges(seed, u)
-                candidates[u]['kws_surplus'] = (G.number_of_edges(seed, u)>0)
+                candidates[u]['kws_surplus'] = int(G.number_of_edges(seed, u)>0)
                 candidates[u]['mu_w_surplus'] = PD.getExpectation(seed, u, isSimple=isSimple)
         elif mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
             for u in list(G.neighbors(seed)):
                 candidates[u] = dict()
                 candidates[u]['kw_surplus'] = G.number_of_edges(seed, u)
-                candidates[u]['kws_surplus'] = (G.number_of_edges(seed, u)>0)
+                candidates[u]['kws_surplus'] = int(G.number_of_edges(seed, u)>0)
                 candidates[u]['mu_w_surplus'] = PD.getExpectation(seed, u, isSimple=isSimple)
                 candidates[u]['p0_surplus'] = PD.getPOS(seed, u, isSimple=isSimple)
         else:
@@ -1042,14 +1066,14 @@ def searchPattern(seed, G, PD, q, mode, gtype, isSimple, incEdge):
             for u in list(G.successors(seed)):
                 candidatesIn[u] = dict()
                 candidatesIn[u]['kw_surplus'] = G.number_of_edges(seed, u)
-                candidatesIn[u]['kws_surplus'] = (G.number_of_edges(seed, u)>0)
+                candidatesIn[u]['kws_surplus'] = int(G.number_of_edges(seed, u)>0)
                 candidatesIn[u]['mu_w_surplus'] = PD.getExpectation(seed, u, isSimple=isSimple)
                 candidatesIn[u]['nw_surplus'] = 1
         elif mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
             for u in list(G.successors(seed)):
                 candidatesIn[u] = dict()
                 candidatesIn[u]['kw_surplus'] = G.number_of_edges(seed, u)
-                candidatesIn[u]['kws_surplus'] = (G.number_of_edges(seed, u)>0)
+                candidatesIn[u]['kws_surplus'] = int(G.number_of_edges(seed, u)>0)
                 candidatesIn[u]['mu_w_surplus'] = PD.getExpectation(seed, u, isSimple=isSimple)
                 candidatesIn[u]['p0_surplus'] = PD.getPOS(seed, u, isSimple=isSimple)
                 candidatesIn[u]['nw_surplus'] = 1
@@ -1064,14 +1088,14 @@ def searchPattern(seed, G, PD, q, mode, gtype, isSimple, incEdge):
             for u in list(G.predecessors(seed)):
                 candidatesOut[u] = dict()
                 candidatesOut[u]['kw_surplus'] = G.number_of_edges(u, seed)
-                candidatesOut[u]['kws_surplus'] = (G.number_of_edges(u, seed)>0)
+                candidatesOut[u]['kws_surplus'] = int(G.number_of_edges(u, seed)>0)
                 candidatesOut[u]['mu_w_surplus'] = PD.getExpectation(u, seed, isSimple=isSimple)
                 candidatesOut[u]['nw_surplus'] = 1
         elif mode == 3: #we require three parameters: number of edges, expectedEdge_surplus and minp from node to pattern (subgraph)
             for u in list(G.predecessors(seed)):
                 candidatesOut[u] = dict()
                 candidatesOut[u]['kw_surplus'] = G.number_of_edges(u, seed)
-                candidatesOut[u]['kws_surplus'] = (G.number_of_edges(u, seed)>0)
+                candidatesOut[u]['kws_surplus'] = int(G.number_of_edges(u, seed)>0)
                 candidatesOut[u]['mu_w_surplus'] = PD.getExpectation(u, seed, isSimple=isSimple)
                 candidatesOut[u]['p0_surplus'] = PD.getPOS(u, seed, isSimple=isSimple)
                 candidatesOut[u]['nw_surplus'] = 1
@@ -1084,7 +1108,7 @@ def searchPattern(seed, G, PD, q, mode, gtype, isSimple, incEdge):
             pattern, candidatesIn, candidatesOut, operation = climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, isSimple, incEdge)
             if 'none' in operation:
                 term = True
-        if pattern.NCount < 3 or (pattern.InNCount < 2 and pattern.OutNCount < 2):
+        if pattern.InNCount < 1 and pattern.OutNCount < 1:
             pattern.I = 0.0
     #return pattern and other information
     return pattern
@@ -1106,7 +1130,7 @@ def findBestPattern(G, PD, q, seedMode, nKseed, mode = 1, gtype = 'U', isSimple=
     # for r in Results:
     #     print(r.IC_dsimp, r.DL, r.NCount, r.I, r.NL)
     # print('res length', len(Results))
-    bestPattern = max(Results, key=lambda x: x.NCount)
+    bestPattern = max(Results, key=lambda x: x.I)
     return bestPattern
 ##################################################################################################################################################################
 def runNKseeds(G, PD, q, seedMode, nKseed, mode = 1, gtype = 'U', isSimple=True, incEdge = False):

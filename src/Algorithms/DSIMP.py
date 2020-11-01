@@ -3,6 +3,7 @@
 ###################################################################################################################################################################
 ###################################################################################################################################################################
 import os
+import shutil
 import sys
 
 import pandas as pd
@@ -26,6 +27,8 @@ from src.Actions.merge import EvaluateMerge as EM
 from src.Actions.shrink import EvaluateShrink as ESH
 from src.Actions.remove import EvaluateRemove as ER
 from src.Actions.add import EvaluateAdd as EA
+
+from src.Utils.EvolvingPatterns import findAndSaveEPs
 ###################################################################################################################################################################
 def parseStr(x):
     """
@@ -154,9 +157,9 @@ def getInitGraphAndBD(gname, Params):
         G = nx.read_gml(gname, destringizer=nx.readwrite.gml.literal_destringizer)
     if G.is_directed():
         gtype = 'D'
-    if Params['priorbelief'] is 'c':
+    if 'c' in Params['priorbelief']:
         PD = PDUDM(G)
-    elif Params['priorbelief'] is 'i':
+    elif 'i' in Params['priorbelief']:
         if G.is_directed():
             PD = PDMEM1D(G)
         else:
@@ -165,7 +168,7 @@ def getInitGraphAndBD(gname, Params):
         raise Exception('Specified type of Belief is not yet implemented')
     return G, PD, gtype
 ###################################################################################################################################################################
-def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype='U', isSimple=True, l=6, ic_mode=1, imode=2, minsize=2, seedType='interest', seedRuns=10, q=0.01, incEdges=True):
+def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype='U', isSimple=False, l=6, ic_mode=3, imode=2, minsize=2, seedType='interest', seedRuns=10, q=0.01, incEdges=True):
     """
     This function is to only process the first state of the graph dataset. In this, only one action is performed that is 'add'
 
@@ -211,8 +214,8 @@ def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype='U', is
     flag = True
     Summary = dict()
     action_id = 0
+    EA_o.evaluateNew(G_cur, PD)
     while flag:
-        EA_o.evaluateNew(G_cur, PD)
         EA_params = EA_o.getBestOption(G_cur, PD)
         # for k, v in EA_params.items():
         #     print('\t best Cand Add: {} ----- {}'.format(k,v))
@@ -228,11 +231,13 @@ def processInitialState(G_cur, PD, state_id, pat_ids, df_patterns, gtype='U', is
                 df_patterns = writePattern(df_patterns, EA_params['Pat'])
             for k, v in EA_params.items():
                 print('\t{} --- {}'.format(k, v))
+            EA_o.checkAndUpdateAllPossibilities(G_cur, PD, EA_params['Pat'])
         else:
+            print('\tNo action with positive I was observed, hence moving to next state...!!!')
             flag = False
     return Summary, PD, pat_ids, df_patterns
 ###################################################################################################################################################################
-def initializeActionObjects(gtype='U', isSimple=True, l=6, ic_mode=3, imode=2, minsize=2, seedType='interest', seedRuns=10, q=0.01, incEdges=True):
+def initializeActionObjects(gtype='U', isSimple=False, l=6, ic_mode=3, imode=2, minsize=2, seedType='interest', seedRuns=10, q=0.01, incEdges=True):
     """
     Function to initialize the different action class objects
 
@@ -500,8 +505,10 @@ def RunDSIMPUtil(gname, PD, state_id, pat_ids, Params, df_patterns):
 
     if (G_cur.is_directed() and Params['gtype'] is 'U') or (not G_cur.is_directed() and Params['gtype'] is 'D'):
         raise Exception('************Mismatch graph type************ All states shall be either directed or undirected ******')
+    if not G_cur.is_multigraph():
+        raise Exception('********Encountered a simple graph********** Gname: {}'.format(gname))
 
-    EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o = initializeActionObjects(gtype=Params['gtype'], isSimple=True, l=Params['l'], ic_mode=Params['icmode'], imode=Params['interesttype'], minsize=Params['minsize'], seedType=Params['seedmode'], seedRuns=Params['seedruns'], q=Params['q'], incEdges=Params['incedges'])
+    EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o = initializeActionObjects(gtype=Params['gtype'], isSimple=False, l=Params['l'], ic_mode=Params['icmode'], imode=Params['interesttype'], minsize=Params['minsize'], seedType=Params['seedmode'], seedRuns=Params['seedruns'], q=Params['q'], incEdges=Params['incedges'])
 
     #PreProcessing as the state at this point is changed
     preProcessActionObjects(G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
@@ -521,18 +528,27 @@ def RunDSIMPUtil(gname, PD, state_id, pat_ids, Params, df_patterns):
             pat_ids, bestParams = setNewDetails(bestParams, state_id, pat_ids)
             Summary[action_id] = bestParams #? is this valid? Check
             action_id += 1
-            postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
-            if df_patterns is not None:
-                df_patterns = writePatternsToDF(df_patterns, bestParams)
             for k, v in bestParams.items():
                 if k is 'compos':
                     print("\tCompos:")
-                    for k1, v1 in v:
-                        print('\t\t{} --- {}'.fomat(k1, v1))
+                    for k1, v1 in v.items():
+                        print('\t\t{} --- {}'.format(k1, v1))
                 else:
                     print('\t{} --- {}'.format(k, v))
+            postProssessActionObjects(bestParams, G_cur, PD, EA_o, ER_o, EU_o, EM_o, ESH_o, ESP_o)
+            if df_patterns is not None:
+                df_patterns = writePatternsToDF(df_patterns, bestParams)
         else:
+            print('\tNo action with positive \'I\' was observed, hence moving to next state...!!!')
             flag = False
+            if bestParams is not None:
+                for k, v in bestParams.items():
+                    if k is 'compos':
+                        print("\tCompos:")
+                        for k1, v1 in v:
+                            print('\t\t{} --- {}'.fomat(k1, v1))
+                    else:
+                        print('\t{} --- {}'.format(k, v))
 
     return Summary, pat_ids, df_patterns
 ###################################################################################################################################################################
@@ -576,7 +592,7 @@ def writePatternsToDF(df, Params):
     elif Params['Pat'].pat_type in ['shrink']:
         df = writePattern(df, Params['SPat'])
     elif Params['Pat'].pat_type in ['split']:
-        for k, v in Params['compos']:
+        for k, v in Params['compos'].items():
             df = writePattern(df, v)
     return df
 ###################################################################################################################################################################
@@ -687,7 +703,7 @@ def writeActions(OSummary, wpath):
             dt['CL_f'] = u['codeLengthCprime']
             df = df.append(dt, ignore_index=True)
     writeToCSV(df, 'actions', wpath)
-    return
+    return df
 ###################################################################################################################################################################
 def DSIMPMain(fname):
     """
@@ -703,6 +719,9 @@ def DSIMPMain(fname):
     DS, Params = readConfFile(fname)
     print(Params)
     for d in DS:
+        wpath = makeWritePath(d)
+        log = open(wpath+'run.logs', 'a')
+        sys.stdout = log
         OSummary = dict()
         pat_ids = 0
         allStates = getAllStates(d)
@@ -721,18 +740,28 @@ def DSIMPMain(fname):
                 'I', 'DL', 'IC_ssg', 'AD', 'IC_dssg', 'IC_dsimp', 'la', 'sumPOS', 'expectedEdges', 'inNL',\
                 'outNL', 'kws', 'nw', 'minPOS']
             c_cols = ['order', 'inNL', 'outNL', 'kw', 'la']
-        wpath = makeWritePath(d)
+
         df_patterns = pd.DataFrame(columns = p_cols)
 
-        OSummary[0], PD, pat_ids, df_patterns = processInitialState(G_cur, PD, 0, pat_ids, df_patterns=df_patterns, gtype=gtype, isSimple=True, l=Params['l'], ic_mode=Params['icmode'], imode=Params['interesttype'], minsize=Params['minsize'], seedType=Params['seedmode'], seedRuns=Params['seedruns'], q=Params['q'], incEdges=Params['incedges'])
+        st_s = time.time()
+        OSummary[0], PD, pat_ids, df_patterns = processInitialState(G_cur, PD, 0, pat_ids, df_patterns=df_patterns, gtype=gtype, isSimple=False, l=Params['l'], ic_mode=Params['icmode'], imode=Params['interesttype'], minsize=Params['minsize'], seedType=Params['seedmode'], seedRuns=Params['seedruns'], q=Params['q'], incEdges=Params['incedges'])
+        ft_s = time.time()
+        print('\n\n#\*\*\*\*\*\*\*\*\*\*\*\*\*\* Time taken to process State {}: {}\*\*\*\*\*\*\*\*\*\*\*\*\*\*#'.format(0, ft_s-st_s))
         writeConstraints(PD, c_cols, 'S'+str(0)+'_constr', wpath)
         for state_id in range(1, len(allStates)):
+            st_s = time.time()
             OSummary[state_id], pat_ids, df_patterns = RunDSIMPUtil(path+'Data/DSIMP/'+d+'/'+allStates[state_id], PD, state_id, pat_ids, Params, df_patterns)
+            ft_s = time.time()
+            print('\n\n#\*\*\*\*\*\*\*\*\*\*\*\*\*\* Time taken to process State {}: {}\*\*\*\*\*\*\*\*\*\*\*\*\*\*#'.format(0, ft_s-st_s))
             writeConstraints(PD, c_cols, 'S'+str(state_id)+'_constr', wpath)
         ftime = time.time()
-        writeActions(OSummary, wpath)
+        df_actions = writeActions(OSummary, wpath)
         writeToCSV(df_patterns, 'patterns', wpath)
-        print('\n\nTotal Time Taken: {:.4f} seconds'.format(ftime-stime))
+        shutil.copy(path+'Confs/'+fname, wpath+'conf.txt')
+        print('\n\n########## Total Time Taken for this Experiment: {:.4f} seconds'.format(ftime-stime))
+        ################ Now computing the evolving patterns ####################
+        findAndSaveEPs(df_actions, wpath)
+        log.close()
     return
 ###################################################################################################################################################################
 if __name__=="__main__":

@@ -2,3 +2,5 @@ Data/**/
 Results/**/
 
 *.ipynb
+*.vscode
+*.ipynb_checkpoints

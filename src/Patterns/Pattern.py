@@ -47,11 +47,15 @@ class Pattern:
             self.inNL = []
             self.outNL = []
             for k,v in inL.items():
-                if v!=0:
+                if v!=0 or (v==0 and outL[k]==0):
                     self.inNL.append(k)
             for k,v in outL.items():
-                if v!=0:
+                if v!=0 or (v==0 and inL[k]==0):
                     self.outNL.append(k)
+
+            for nd in H.nodes():
+                if not self.G.has_node(nd):
+                    print(nd)
             # self.inNL = sorted(self.inNL)
             # self.outNL = sorted(self.outNL)
             self.InNCount = len(self.inNL)
@@ -81,10 +85,10 @@ class Pattern:
             self.inNL = []
             self.outNL = []
             for k,v in inL.items():
-                if v!=0:
+                if v!=0 or (v==0 and outL[k]==0):
                     self.inNL.append(k)
             for k,v in outL.items():
-                if v!=0:
+                if v!=0 or (v==0 and inL[k]==0):
                     self.outNL.append(k)
             self.inNL = sorted(self.inNL)
             self.outNL = sorted(self.outNL)
@@ -231,7 +235,7 @@ class Pattern:
         else:
             st += "\t\tNCount: {}\n".format(self.NCount)
         if self.G.is_multigraph():
-            st += "\t\tECount: {}\tkws: {}\n".format(self.ECount. self.kws)
+            st += "\t\tECount: {}\tkws: {}\n".format(self.ECount, self.kws)
         else:
             st += "\t\tECount: {}\n".format(self.ECount)
         st += "\t\tDensity: {:.5f}\n".format(nx.density(self.G))

@@ -251,8 +251,8 @@ class MaxEntMulti1D(PDClass):
                 else:
                     break
 
-            self.la = self.la+fbest*deltala;
-            self.mu = self.mu+fbest*deltamu;
+            self.la = self.la+fbest*deltala
+            self.mu = self.mu+fbest*deltamu
 
             if self.errors[k] < tol:
                 break
@@ -269,20 +269,29 @@ class MaxEntMulti1D(PDClass):
         self.errors = np.append(self.errors, np.linalg.norm(self.gla))
 ###################################################################################################################################################################
     def getAB(self):
-        mSmallestLambda = np.min(np.array(list(set(self.la).union(set(self.mu)))))
-        mLargestLambda = np.max(np.array(list(set(self.la).union(set(self.mu)))))
+        b = 0.0
+        epsilon = 1e-13
+        a = epsilon
+        for lit in self.la:
+            for mit in self.mu:
+                if b < math.fabs(lit+mit) + epsilon:
+                    b = math.fabs(lit+mit) + epsilon
 
-        epsilon = 1e-8
+        a = -2.0*b
+        # mSmallestLambda = np.min(np.array(list(set(self.la).union(set(self.mu)))))
+        # mLargestLambda = np.max(np.array(list(set(self.la).union(set(self.mu)))))
 
-        if math.fabs(mSmallestLambda) > math.fabs(mLargestLambda):
-            a = epsilon
-            b = 3*math.fabs(mSmallestLambda)
-        else:
-            a = epsilon
-            b = 3*math.fabs(mLargestLambda)
+        # if math.fabs(mSmallestLambda) > math.fabs(mLargestLambda):
+        #     a = epsilon
+        #     b = 3*math.fabs(mSmallestLambda)
+        # else:
+        #     a = epsilon
+        #     b = 3*math.fabs(mLargestLambda)
         return a,b
 ###################################################################################################################################################################
     def getExpectationFromExpLambda(self, a):
+        if 1-a < 1e-10:
+            return 1e10
         return a/(1-a)
 ###################################################################################################################################################################
     def getExpectationFromPOS(self, a):

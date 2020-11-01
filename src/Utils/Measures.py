@@ -187,7 +187,9 @@ def IC_DSIMP(kw, nw, mu, p_):
     Returns:
         float: The information content (as per definition in DSIMP) of a multigraph pattern
     """
-    ic = p_ * ( kw - mu ) + p_ * ( mu + nw ) * math.log ((mu + nw) / (kw + nw))
+    ic = 0.0
+    if kw + nw > 0.0 and mu + nw > 0.0:
+        ic = p_ * ( kw - mu ) + p_ * ( mu + nw ) * math.log ((mu + nw) / (kw + nw))
     # eps = kw/nw
     # ps = 1.0/(eps+1.0)
     # ic = KL_g(ps, p_)
@@ -230,7 +232,13 @@ def DL_Nodes(V, W, q):
     """
     incCost = math.log((1.0 - q) / q)
     excCost = V * math.log(1.0 / (1.0 - q))
-    dl = W * incCost + excCost
+    dl = excCost
+    if isinstance(W, int) or isinstance(W, float):
+        dl = W * incCost + excCost
+    elif isinstance(W, list):
+        dl = len(W) * incCost + excCost
+    else:
+        raise Exception('Input parameter W is invalid')
     return dl
 ##################################################################################################################################################################
 def DL_Edges(nw, kw, isSimple=True, kws=None, delta=2):
@@ -261,7 +269,10 @@ def DL_Edges(nw, kw, isSimple=True, kws=None, delta=2):
         dl = LN(remE)
     else:
         remE = nw - kws
-        kappa = round(kw/kws, delta)
+        if kw < 1 or kws < 1:
+            kappa = 0
+        else:
+            kappa = round(kw/kws, delta)
         dl += LN(remE)
         dl += math.log2(kappa+1)
         dl += math.log2(math.pow(10, delta))
@@ -545,7 +556,7 @@ def computeDescriptionLength(**kwargs):
         assert 'l' in kwargs, "'l' (number of action types) is required"
         excActionType = kwargs['excActionType']
     isSimple = True
-    if 'isSimple' in kwargs:
+    if 'isSimple' in kwargs and dlmode!=7:
         isSimple = kwargs['isSimple']
         if not isSimple:
             assert 'kws' in kwargs, "'kws' is required to encode edges if isSimple is False"
@@ -553,7 +564,9 @@ def computeDescriptionLength(**kwargs):
     if dlmode == 1:
         DL = 0.0
         if gtype == 'U':
-            assert 'V' in kwargs and 'W' in kwargs and 'q' in kwargs, "'V', 'W' and 'q' shall be provide if dlmode is 1 and gtype is 'U'"
+            assert 'V' in kwargs, "'V', 'W' and 'q' shall be provide if dlmode is 1 and gtype is 'U'"
+            assert 'W' in kwargs, "'V', 'W' and 'q' shall be provide if dlmode is 1 and gtype is 'U'"
+            assert 'q' in kwargs, "'V', 'W' and 'q' shall be provide if dlmode is 1 and gtype is 'U'"
             DL += DL_Nodes(kwargs['V'], kwargs['W'], kwargs['q']) ## encoding nodes in pattern
         else:
             assert 'V' in kwargs and 'WI' in kwargs and 'WO' in kwargs and 'q' in kwargs, "'V', 'WI', 'WO' and 'q' shall be provide if dlmode is 1 and gtype is 'D'"

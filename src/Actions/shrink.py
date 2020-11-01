@@ -564,7 +564,7 @@ class EvaluateShrink:
             both as prior and posterior
         """
         ### removing candidate if any other action was performed on it ###
-        if 'shrink' in prevPat.pat_type:
+        if 'shrink' not in prevPat.pat_type:
             if prevPat.pat_type in ['merge']:
                 for p in prevPat.prev_order:
                     if p in self.Data:

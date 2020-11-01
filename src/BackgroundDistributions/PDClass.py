@@ -25,7 +25,10 @@ class PDClass:
         self.mu = None
         self.ps = None
         self.lprevUpdate = dict()
-        self.tp = 'U'
+        if G.is_directed():
+            self.tp = 'D'
+        else:
+            self.tp = 'U'
 ##################################################################################################################################################################
     def findDistribution(self):
         """
@@ -158,16 +161,16 @@ class PDClass:
                     for j in range(i+1, numNodes):
                         expLambda[i][j] = self.explambdaIncLprevButDropSomeLas(nodes[i], nodes[j], dropLidx)
 
-        if pat.is_multigraph() and pat.is_directed():
-            for i in range(numOutNodes):
-                for j in range(numInNodes):
-                    if expLambda[i][j]!=0 and math.fabs(b) > math.fabs(math.log(expLambda[i][j])):
-                        b = math.fabs(math.log(expLambda[i][j]))
-        elif pat.is_multigraph():
-            for i in range(numNodes):
-                for j in range(i+1, numNodes):
-                    if math.fabs(b) > math.fabs(math.log(expLambda[i][j])):
-                        b = math.fabs(math.log(expLambda[i][j]))
+        # if pat.is_multigraph() and pat.is_directed():
+        #     for i in range(numOutNodes):
+        #         for j in range(numInNodes):
+        #             if expLambda[i][j]!=0 and math.fabs(b) > math.fabs(math.log(expLambda[i][j])):
+        #                 b = math.fabs(math.log(expLambda[i][j])) - 1e-13
+        # elif pat.is_multigraph():
+        #     for i in range(numNodes):
+        #         for j in range(i+1, numNodes):
+        #             if math.fabs(b) > math.fabs(math.log(expLambda[i][j])):
+        #                 b = math.fabs(math.log(expLambda[i][j])) - 1e-13
 
         while b-a > 1e-11:
             f_a = 0.0
@@ -179,12 +182,13 @@ class PDClass:
                 for i in range(numOutNodes):
                     for j in range(numInNodes):
                         try:
-                            v_a=expLambda[i][j]*math.exp(a)
-                            v_b=expLambda[i][j]*math.exp(b)
-                            v_c=expLambda[i][j]*math.exp(c)
-                            f_a+=self.getExpectationFromExpLambda(v_a)
-                            f_b+=self.getExpectationFromExpLambda(v_b)
-                            f_c+=self.getExpectationFromExpLambda(v_c)
+                            if i!=j:
+                                v_a=expLambda[i][j]*math.exp(a)
+                                v_b=expLambda[i][j]*math.exp(b)
+                                v_c=expLambda[i][j]*math.exp(c)
+                                f_a+=self.getExpectationFromExpLambda(v_a)
+                                f_b+=self.getExpectationFromExpLambda(v_b)
+                                f_c+=self.getExpectationFromExpLambda(v_c)
                         except OverflowError as error:
                             print(error,a,b)
             else:
@@ -200,6 +204,7 @@ class PDClass:
                         except OverflowError as error:
                             print(error,a,b)
 
+            print('idx:',idx,'f_c: ',f_c, 'a: ', a, 'b: ',b,'f_a: ',f_a,'f_b: ',f_b, 'numEdges: ', numEdges)
 
             f_a=f_a-numEdges
             f_b=f_b-numEdges
@@ -209,7 +214,6 @@ class PDClass:
                 a = c
             else:
                 b = c
-
         lambdac = round((a + b) / 2, 10)
         if 'save' in val_return:
             if pat.is_directed():

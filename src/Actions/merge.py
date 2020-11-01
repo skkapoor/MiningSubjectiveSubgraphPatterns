@@ -38,6 +38,7 @@ class EvaluateMerge:
         self.isSimple = isSimple
         self.l = l # possible types (give number) of action, default is 6
         self.imode = imode
+        self.curAdds = list()
         print('initialized EvaluateMerge')
 ###################################################################################################################################################################
     def evaluateAllConstraintPairs(self, G, PD):
@@ -118,9 +119,11 @@ class EvaluateMerge:
         Params['Pat'].setDL( computeDescriptionLength( dlmode=8, excActionType=False, l=6, gtype=self.gtype, W=Params['Pat'].NCount, kw=Params['Pat'].ECount, C=len(PD.lprevUpdate), kws=Params['Pat'].kws, isSimple=self.isSimple ) )
         Params['Pat'].setI( computeInterestingness( Params['Pat'].IC_dssg, Params['Pat'].DL, mode=self.imode) )
         if Params['Pat'].I > 0:
-            Params['Pat'].setPrevOrder((k1,k2))
+            Params['Pat'].setPrevOrder((int(k1),int(k2)))
             Params['Pat'].setPatType('merge')
             Params['Pat'].setLambda(nlambda)
+            if int(k1) in self.curAdds and int(k2) in self.curAdds:
+                raise Exception('ADD ADD MERGE EVALUATE HUA')
             self.Data[(k1,k2)] = Params
         return
 ###################################################################################################################################################################
@@ -148,7 +151,7 @@ class EvaluateMerge:
         Params['Pat'].setDL( computeDescriptionLength( dlmode=8, excActionType=False, l=6, gtype=self.gtype, WI=Params['Pat'].inNL, WO=Params['Pat'].outNL, kw=Params['Pat'].ECount, C=len(PD.lprevUpdate), kws=Params['Pat'].kws, isSimple=self.isSimple ) )
         Params['Pat'].setI( computeInterestingness( Params['Pat'].IC_dssg, Params['Pat'].DL, mode=self.imode) )
         if Params['Pat'].I > 0:
-            Params['Pat'].setPrevOrder((k1,k2))
+            Params['Pat'].setPrevOrder((int(k1),int(k2)))
             Params['Pat'].setPatType('merge')
             Params['Pat'].setLambda(nlambda)
             self.Data[(k1,k2)] = Params
@@ -247,9 +250,12 @@ class EvaluateMerge:
             if 'remove' in prevPat.pat_type:
                 return
             else:
+                if 'add' in prevPat.pat_type:
+                    self.curAdds.append(prevPat.cur_order)
                 keys = list(set(PD.lprevUpdate.keys()) - set([prevPat.cur_order]))
                 for k in keys:
-                    self.evaluateConstraintPair( G, PD, min(k, prevPat.cur_order), max(k, prevPat.cur_order) )
+                    if not (k in self.curAdds and prevPat.cur_order in self.curAdds):
+                        self.evaluateConstraintPair( G, PD, min(k, prevPat.cur_order), max(k, prevPat.cur_order) )
         return
 ###################################################################################################################################################################
     def removeCandidates(self, prevPat):
@@ -289,9 +295,9 @@ class EvaluateMerge:
         bestM : dict
             last merge action details
         """
-        del self.Data[bestM['Pat'].prev_order]
-        out1 = PD.lprevUpdate.pop(bestM['Pat'].prev_order[0], None)
-        out2 = PD.lprevUpdate.pop(bestM['Pat'].prev_order[1], None)
+        del self.Data[tuple([bestM['Pat'].prev_order[0], bestM['Pat'].prev_order[1]])]
+        out1 = PD.lprevUpdate.pop(int(bestM['Pat'].prev_order[0]), None)
+        out2 = PD.lprevUpdate.pop(int(bestM['Pat'].prev_order[1]), None)
         if not out1 or not out2:
             print('Something is fishy')
         else:
@@ -312,6 +318,8 @@ class EvaluateMerge:
             return None
         else:
             bestM = max(self.Data.items(), key=lambda x: x[1]['Pat'].I)
+            if bestM[1]['Pat'].prev_order[int(0)] in self.curAdds and bestM[1]['Pat'].prev_order[int(1)] in self.curAdds:
+                raise Exception('ADD ADD MERGE RETURN HUA')
             return bestM[1]
 ###################################################################################################################################################################
 ###################################################################################################################################################################

@@ -161,9 +161,9 @@ def getInitGraphAndBD(gname, Params):
         gtype = 'D'
     if G.is_multigraph():
         raise Exception('********Encountered a multigraph********** Gname: {}'.format(gname))
-    if Params['priorbelief'] is 'c':
+    if 'c' in Params['priorbelief']:
         PD = PDUDS(G)
-    elif Params['priorbelief'] is 'i':
+    elif 'i' in Params['priorbelief']:
         if G.is_directed():
             PD = PDMESD(G)
         else:
