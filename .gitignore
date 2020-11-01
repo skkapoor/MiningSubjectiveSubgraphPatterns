@@ -1,6 +1,9 @@
 Data/**/
 Results/**/
+__pycache__/
+.ipynb_checkpoints/
 
 *.ipynb
 *.vscode
 *.ipynb_checkpoints
+*.pyc
