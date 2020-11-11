@@ -372,7 +372,11 @@ class PDClass:
 
         pos = 1.0 - expL
         if isSimple:
-            pos = expL/(1+expL)
+            pos = expL/(1.0+expL)
+        # if pos < 1e-7:
+        #     raise Exception('pos less than epsilon', i, j)
+        # if pos > 1.0:
+        #     raise Exception('pos more than one', i, j)
         return pos
 ###################################################################################################################################################################
     def getExpectationFromExpLambda(self, a):

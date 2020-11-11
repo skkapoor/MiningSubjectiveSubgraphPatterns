@@ -4,25 +4,32 @@
 ##### 2. Seed Runs################################################################################################################################################
 import os
 import sys
+
 path = os.getcwd().split('MiningSubjectiveSubgraphPatterns')[0]+'MiningSubjectiveSubgraphPatterns/'
 if path not in sys.path:
 	sys.path.append(path)
-import math
-import numpy as np
 import copy
+import math
+import time
+
 import networkx as nx
-
-from src.Patterns.Pattern import Pattern
-from src.Utils.Measures import computeSumOfEdgeProbablity, IC_SSG, NW, NW_D
-from src.Utils.Measures import computeDescriptionLength, computeInterestingness
-from src.Utils.Measures import computeSumOfEdgeProbablityBetweenNodeAndList
-from src.Utils.Measures import computeSumOfExpectations, computeSumOfExpectationsBetweenNodeAndList
-from src.Utils.Measures import computePWparameters, computePWparametersBetweenNodeAndList, computeMinPOSBetweenNodeAndList
-from src.Utils.Measures import AD, IC_DSIMP, getDirectedSubgraph
-
+import numpy as np
 # import psutil
 import ray
-import time
+from src.Patterns.Pattern import Pattern
+from src.Utils.Measures import (AD, IC_DSIMP, IC_SSG, NW, NW_D,
+                                computeDescriptionLength,
+                                computeInterestingness,
+                                computeMinPOSBetweenNodeAndList,
+                                computePWparameters,
+                                computePWparametersBetweenNodeAndList,
+                                computeSumOfEdgeProbablity,
+                                computeSumOfEdgeProbablityBetweenNodeAndList,
+                                computeSumOfExpectations,
+                                computeSumOfExpectationsBetweenNodeAndList,
+                                getDirectedSubgraph)
+
+
 ##################################################################################################################################################################
 @ray.remote(num_return_vals=3)
 def computeInterestParallel(LNit, Gid, PDid, mode, gtype, isSimple, incEdge, q):
@@ -1001,6 +1008,7 @@ def climbOneStepD(pattern, candidatesIn, candidatesOut, G, PD, q, mode, gtype, i
             candidatesIn, candidatesOut = updateCandidateDeletionD(nodeRemovedFinal, bestPattern, candidatesIn, candidatesOut, 'out', G, PD, q, mode, gtype, isSimple, incEdge)
 
     # return relevant information
+    # print('\n\n')
     # print('Best Pattern eP: ', bestPattern.sumPOS, 'interest: ', bestPattern.I)
     # print("inNL", bestPattern.inNL)
     # print("outNL", bestPattern.outNL)

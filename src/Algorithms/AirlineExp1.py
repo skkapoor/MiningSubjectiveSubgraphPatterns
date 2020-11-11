@@ -162,7 +162,7 @@ def RunSIMPUtil(prefixA, prefixS, d, Params):
                     la = PD.updateDistribution(Pat.G, len(Patterns), 'save')
                     Pat.setLambda(la)
                     Patterns.append(Pat)
-                elif 'D' in gtype and (Pat.InNCount > 1 and Pat.OutNCount > 1 and Pat.InNCount+Pat.OutNCount > Params['minsize'] and Pat.I > Params['mininterest']):
+                elif 'D' in gtype and (Pat.InNCount >= 1 and Pat.OutNCount >= 1 and Pat.InNCount+Pat.OutNCount > Params['minsize'] and Pat.I > Params['mininterest']):
                     la = PD.updateDistribution(Pat.G, len(Patterns), 'save')
                     Pat.setLambda(la)
                     Patterns.append(Pat)
@@ -252,51 +252,52 @@ def RunSIMP(fname):
         filename of the configuration file found in "Confs" directory
     """
     _, Params = readConfFile(fname)
-    writePrefix = 'Airline-Belief-i-AD/HourWise/Scheduled/2016'
-    prefixA = 'Airline/HourWise/Scheduled/2016'
-    prefixS = 'Airline/HourWise/Scheduled/2016'
-    DS = ['01_01_01']
-    days_m = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
-    for i in range(1,13):
-        d1 = ''
-        if i < 10:
-            d1 = '0'+str(i)
-        else:
-            d1 = str(i)
-        for j in range(1, days_m[i]+1):
-            d2 = ''
-            if j < 10:
-                d2 = d1+'_0'+str(j)
+    for cyr in ['2016', '2017', '2018']:
+        writePrefix = 'Airline-Belief-i-SI/HourWise/Scheduled/'+cyr
+        prefixA = 'Airline/HourWise/Scheduled/'+cyr
+        prefixS = 'Airline/HourWise/Scheduled/'+cyr
+        DS = ['01_01_01']
+        days_m = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
+        for i in range(1,13):
+            d1 = ''
+            if i < 10:
+                d1 = '0'+str(i)
             else:
-                d2 = d1+'_'+str(j)
-            for k in range(1,23):
-                d = ''
-                if k < 10:
-                    d = d2+'_0'+str(k)
+                d1 = str(i)
+            for j in range(1, days_m[i]+1):
+                d2 = ''
+                if j < 10:
+                    d2 = d1+'_0'+str(j)
                 else:
-                    d = d2+'_'+str(k)
+                    d2 = d1+'_'+str(j)
+                for k in range(1,23):
+                    d = ''
+                    if k < 10:
+                        d = d2+'_0'+str(k)
+                    else:
+                        d = d2+'_'+str(k)
 
-                wpath = makeWritePath(writePrefix, d)
-                log = open(wpath+'run.logs', 'a')
-                sys.stdout = log
-                stime = time.time()
-                Patterns, gtype = RunSIMPUtil(prefixA, prefixS, d, Params)
-                ftime = time.time()
-                p_cols = None
-                if gtype is 'U':
-                    p_cols = ['state_info', 'pat_type', 'prev_order', 'cur_order', 'NCount', 'ECount', 'Density',\
-                        'I', 'DL', 'IC_ssg', 'AD', 'IC_dssg', 'IC_dsimp', 'la', 'sumPOS', 'expectedEdges', 'NL',\
-                        'kws', 'nw', 'minPOS']
-                else:
-                    p_cols = ['state_info', 'pat_type', 'prev_order', 'cur_order', 'InNCount', 'OutNCount', 'ECount', 'Density',\
-                        'I', 'DL', 'IC_ssg', 'AD', 'IC_dssg', 'IC_dsimp', 'la', 'sumPOS', 'expectedEdges', 'inNL',\
-                        'outNL', 'kws', 'nw', 'minPOS']
-                df_patterns = pd.DataFrame(columns = p_cols)
-                df_patterns = writeResults(Patterns, df_patterns)
-                writeToCSV(df_patterns, 'patterns', wpath)
-                shutil.copy(path+'Confs/'+fname, wpath+'conf.txt')
-                print('\n\n\nTotal Time Taken: {:.4f} seconds'.format(ftime-stime))
-                log.close()
+                    wpath = makeWritePath(writePrefix, d)
+                    log = open(wpath+'run.logs', 'a')
+                    sys.stdout = log
+                    stime = time.time()
+                    Patterns, gtype = RunSIMPUtil(prefixA, prefixS, d, Params)
+                    ftime = time.time()
+                    p_cols = None
+                    if gtype is 'U':
+                        p_cols = ['state_info', 'pat_type', 'prev_order', 'cur_order', 'NCount', 'ECount', 'Density',\
+                            'I', 'DL', 'IC_ssg', 'AD', 'IC_dssg', 'IC_dsimp', 'la', 'sumPOS', 'expectedEdges', 'NL',\
+                            'kws', 'nw', 'minPOS']
+                    else:
+                        p_cols = ['state_info', 'pat_type', 'prev_order', 'cur_order', 'InNCount', 'OutNCount', 'ECount', 'Density',\
+                            'I', 'DL', 'IC_ssg', 'AD', 'IC_dssg', 'IC_dsimp', 'la', 'sumPOS', 'expectedEdges', 'inNL',\
+                            'outNL', 'kws', 'nw', 'minPOS']
+                    df_patterns = pd.DataFrame(columns = p_cols)
+                    df_patterns = writeResults(Patterns, df_patterns)
+                    writeToCSV(df_patterns, 'patterns', wpath)
+                    shutil.copy(path+'Confs/'+fname, wpath+'conf.txt')
+                    print('\n\n\nTotal Time Taken: {:.4f} seconds'.format(ftime-stime))
+                    log.close()
     return
 ###################################################################################################################################################################
 if __name__ == "__main__":
