@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/275679767.svg)](https://zenodo.org/badge/latestdoi/275679767)
+
 <main>
 
 <article id="content">
