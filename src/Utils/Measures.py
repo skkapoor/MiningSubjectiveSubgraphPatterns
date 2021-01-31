@@ -975,8 +975,10 @@ def getDirectedSubgraph(G, WI, WO, isSimple):
 def getCodeLength(G, PD, **kwargs):
     assert 'gtype' in kwargs, "gtype is must to compute codelength"
     if 'case' in kwargs:
-        assert kwargs['case']>1 and 'dropLidx' in kwargs, "for case types 2-5, dropLidx shall be provided"
-        assert kwargs['case']>1 and kwargs['case']%2==1 and 'dropLidx' in kwargs, "for case types 3 and 5, nlambda shall be provided"
+        if kwargs['case']>3:
+            assert 'dropLidx' in kwargs and isinstance(kwargs['dropLidx'], list), "for case types 4-5, dropLidx (list) shall be provided"
+        if kwargs['case']>1 and kwargs['case']%2==1:
+            assert 'nlambda' in kwargs, "for case types 3 and 5, nlambda shall be provided"
     case = 2
     dropLidx = None
     nlambda = 0.0

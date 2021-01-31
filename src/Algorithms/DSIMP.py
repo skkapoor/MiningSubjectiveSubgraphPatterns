@@ -388,6 +388,7 @@ def setNewDetails(bestParams, state_id, pat_ids):
         pat_ids += 1
         if bestParams['Pat'].pat_type is 'shrink':
             bestParams['SPat'].setCurOrder(bestParams['Pat'].prev_order)
+            bestParams['SPat'].setCurOrder(pat_ids)
             bestParams['SPat'].setStateInfo(state_id)
     elif bestParams['Pat'].pat_type in ['remove']:
         bestParams['Pat'].setCurOrder(bestParams['Pat'].prev_order)

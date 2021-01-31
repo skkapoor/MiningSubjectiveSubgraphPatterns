@@ -204,7 +204,7 @@ class PDClass:
                         except OverflowError as error:
                             print(error,a,b)
 
-            print('idx:',idx,'f_c: ',f_c, 'a: ', a, 'b: ',b,'f_a: ',f_a,'f_b: ',f_b, 'numEdges: ', numEdges)
+            # print('idx:',idx,'f_c: ',f_c, 'a: ', a, 'b: ',b,'f_a: ',f_a,'f_b: ',f_b, 'numEdges: ', numEdges)
 
             f_a=f_a-numEdges
             f_b=f_b-numEdges

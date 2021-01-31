@@ -22,7 +22,7 @@ class MaxEntMulti2U(PDClass):
         base class
     """
 	def __init__(self, G = None):
-		super().__init__()
+		super().__init__(G)
 		self.la = None
 		self.mu = None
 		self.degreeNeighbor = None
@@ -33,7 +33,7 @@ class MaxEntMulti2U(PDClass):
 		self.ps_la = None
 		self.ps_mu = None
 		self.gla = None
-		self.lprevUpdate = {}
+		self.lprevUpdate = dict()
 		if G is not None:
 			self.findMaxEntDistribution()
 ###################################################################################################################################################################
@@ -154,10 +154,10 @@ class MaxEntMulti2U(PDClass):
 		E = self.returnExpectation(R, S)
 		return E
 ###################################################################################################################################################################
-	def updateDistribution(self, pat, idx): #lprevUpdate = list() Each item is a tuple (a, b); a = lambda; b = listofnodes()
+	def updateDistribution(self, pat, idx=None, val_return='save'): #lprevUpdate = list() Each item is a tuple (a, b); a = lambda; b = listofnodes()
 		numNodes = pat.number_of_nodes()
-		numEdges = pat.G.number_of_edges()
-		nodes = sorted(list(pat.G.nodes()))
+		numEdges = pat.number_of_edges()
+		nodes = sorted(list(pat.nodes()))
 
 		mSmallestLambda = np.min(self.la)
 		mLargestLambda = np.max(self.la)
@@ -219,7 +219,8 @@ class MaxEntMulti2U(PDClass):
 				b = c
 
 		lambdac = round((a + b) / 2, 10)
-		self.lprevUpdate[idx] = tuple([lambdac, nodes])
+		if 'save' in val_return:
+			self.lprevUpdate[idx] = tuple([lambdac, nodes, numEdges])
 
 		f_c = 0.0
 		for i in range(numNodes):
@@ -229,7 +230,7 @@ class MaxEntMulti2U(PDClass):
 
 		f_c = f_c-numEdges
 		# print('Final lamdba: ',lambdac, f_c, numEdges)
-		return
+		return lambdac
 ###################################################################################################################################################################
 ###################################################################################################################################################################
 ###################################################################################################################################################################
@@ -258,7 +259,7 @@ class  MaxEntMulti2D(PDClass):
 		self.ps_la = None
 		self.ps_mu = None
 		self.gla = None
-		self.lprevUpdate = {}
+		self.lprevUpdate = dict()
 		self.indegrees = None
 		self.outdegrees = None
 		self.predcount = None
@@ -474,7 +475,7 @@ class  MaxEntMulti2D(PDClass):
 		E = self.returnExpectation(R, S)
 		return E
 ###################################################################################################################################################################
-	def updateBackground(self, pat, idx): #lprevUpdate = list() Each item is a tuple (a, b); a = lambda; b = listofnodes()
+	def updateBackground(self, pat, idx=None, val_return='save'):#(self, pat, idx): #lprevUpdate = list() Each item is a tuple (a, b); a = lambda; b = listofnodes()
 		mSmallestLambda = np.min(np.array(list(set(self.la_r).union(set(self.la_c)))))
 		mLargestLambda = np.max(np.array(list(set(self.la_r).union(set(self.la_c)))))
 
@@ -555,7 +556,8 @@ class  MaxEntMulti2D(PDClass):
 				b = c
 
 		lambdac = round((a + b) / 2, 10)
-		self.lprevUpdate[idx] = tuple([lambdac, inNL, outNL])
+		if 'save' in val_return:
+			self.lprevUpdate[idx] = tuple([lambdac, inNL, outNL, numEdges])
 
 		f_c = 0.0
 		for i in range(numOutNodes):
@@ -565,7 +567,7 @@ class  MaxEntMulti2D(PDClass):
 
 		f_c = f_c-numEdges
 		# print('Final lamdba: ',lambdac, f_c, numEdges)
-		return
+		return lambdac
 ###################################################################################################################################################################
 ###################################################################################################################################################################
 ###################################################################################################################################################################
