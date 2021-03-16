@@ -51,14 +51,22 @@
 
 **DSSG:** ﻿
 
-<pre class="print">@Article{Kapoor2020b,
-	author={Kapoor, Sarang and Saxena, Dhish Kumar
-			and van Leeuwen, Matthijs},
-	title={Online Summarization of Dynamic Graphs using 
-		Subjective Interestingness for Sequential Data}},
-	journal={Data Mining and Knowledge Discovery},
-	year={Accepted},
-	month={In press}} </pre>
+<pre class="print">@Article{Kapoor2021,
+author={Kapoor, Sarang
+and Saxena, Dhish Kumar
+and van Leeuwen, Matthijs},
+title={Online summarization of dynamic graphs using subjective interestingness for sequential data},
+journal={Data Mining and Knowledge Discovery},
+year={2021},
+month={Jan},
+day={01},
+volume={35},
+number={1},
+pages={88-126},
+doi={10.1007/s10618-020-00714-8},
+url={https://doi.org/10.1007/s10618-020-00714-8}
+}
+ </pre>
 
 </div>
 
@@ -90,5 +98,15 @@ For any queries kindly write an email to [sarang.iitr@gmail.com](mailti:sarang.i
 
 </main>
 
+Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
+
+This work is licensed under a
+[Creative Commons Attribution 4.0 International License][cc-by].
+
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
 
 __© 2020 Copyright__  **Sarang Kapoor**
